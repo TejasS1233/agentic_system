@@ -9,3 +9,7 @@ wheels/
 # Virtual environments
 .venv
 .env
+
+# Workspace and benchmark outputs
+workspace/
+benchmark_results/

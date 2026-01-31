@@ -1,34 +1,54 @@
 #!/usr/bin/env python3
 import pandas as pd
+from io import StringIO
 
-# Load data
-df = pd.read_csv('sensitive_payroll.csv')
+# Step 1: Data Loading and Environment Setup
+try:
+    # Load the necessary data manipulation library (typically `pandas` for Python)
+    df = pd.read_csv('sensitive_payroll.csv', encoding='utf-8')
+except Exception as e:
+    print(f'Error loading file: {e}')
+    exit(1)
 
-# Inspect the first few rows and get information about the DataFrame
-df.head()
-df.info()
+# Step 2: Schema Inspection
+try:
+    # Load Header: Read the first few rows to identify the exact column names
+    header = df.head()
+    print(header)
+except Exception as e:
+    print(f'Error inspecting schema: {e}')
+    exit(1)
 
-# Identify the bonus column (example: 'Bonus_Amount')
-bonus_column = 'Bonus_Amount'
+# Step 3: Data Cleaning and Preprocessing
+try:
+    # Identify Target Column: Locate the column representing 'Bonuses'
+    bonus_columns = ['Bonus', 'Annual_Bonus', 'Bonus_Amount', 'Incentive_Pay']
+    for col in bonus_columns:
+        if col in df.columns:
+            bonus_col = col
+            break
+    else:
+        print('No bonus column found')
+        exit(1)
 
-# Clean data
-# Strip non-numeric characters and convert to float
-if df[bonus_column].dtype == 'object':
-    df[bonus_column] = df[bonus_column].str.replace('[^0-9.]', '', regex=True).astype(float)
+    # Handle Non-Numeric Characters: Remove currency symbols, commas, or whitespace
+    df[bonus_col] = df[bonus_col].str.replace('[^
+\d.]', '', regex=True)
 
-# Fill missing values with 0
-df[bonus_column].fillna(0, inplace=True)
+    # Type Conversion: Convert the cleaned column to a numeric data type (`float64`)
+    df[bonus_col] = pd.to_numeric(df[bonus_col], errors='coerce')
 
-# Calculate the sum of bonuses
-total_bonus = df[bonus_column].sum()
+    # Address Missing Values: Fill NaN or null entries with 0
+    df[bonus_col].fillna(0, inplace=True)
+except Exception as e:
+    print(f'Error cleaning and preprocessing data: {e}')
+    exit(1)
 
-# Output the result
-class Result:
-    def __init__(self, total_bonus):
-        self.total_bonus = total_bonus
-
-result = Result(total_bonus)
-print(result.total_bonus)
-
-# Clear dataframe from memory (optional)
-del df
+# Step 4: Calculation and Aggregation
+try:
+    # Summation: Execute the sum function on the processed bonus column
+    total_bonus = df[bonus_col].sum()
+    print(f'Total Bonus: ${total_bonus:.2f}')
+except Exception as e:
+    print(f'Error calculating total bonus: {e}')
+    exit(1)

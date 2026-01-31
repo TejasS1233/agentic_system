@@ -4,12 +4,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Ensure architecture and execution modules are importable
 sys.path.append(os.path.join(os.getcwd(), 'architecture'))
 
 from architecture.orchestrator import Orchestrator
 from architecture.dispatcher import Dispatcher
-from architecture.toolsmith import Toolsmith
 
 def main():
     print("=== IASCIS Architecture Demo ===")
@@ -20,14 +18,11 @@ def main():
     user_task = "Analyze the sensitive_payroll.csv and calculate the sum of bonuses."
     print(f"\n[User] Task: {user_task}")
 
-    # 1. Routing
     zone = dispatcher.route(task_description=user_task, file_context=["sensitive_payroll.csv"])
     
-    # 2. Planning
     print(f"\n[Orchestrator] Planning task...")
     plan = orchestrator.run(user_task)
     
-    # 3. Execution
     print(f"\n[System] Initializing Execution Agent for Zone: {zone.upper()}")
     
     workspace_path = os.path.join(os.getcwd(), "workspace")
@@ -65,6 +60,7 @@ def main():
     
     print(f"\n[Agent] Final Result:\n{result}")
     print("\n=== Demo Complete ===")
+
 
 if __name__ == "__main__":
     main()
