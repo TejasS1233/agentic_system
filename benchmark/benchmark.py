@@ -298,12 +298,14 @@ class BenchmarkRunner:
                  workspace_path: str = None,
                  run_count: int = 1,
                  mode: BenchmarkMode = BenchmarkMode.IASCIS,
-                 machine_id: str = None):
+                 machine_id: str = None,
+                 use_docker: bool = False):
         self.output_dir = output_dir
         self.mode = mode
         self.machine_id = machine_id or self._get_machine_id()
         self.workspace_path = workspace_path or os.path.join(os.getcwd(), "workspace")
         self.run_count = run_count
+        self.use_docker = use_docker
         
         # Mode and machine specific output directory
         if machine_id:
@@ -353,11 +355,11 @@ class BenchmarkRunner:
         
         print(f"[Benchmark] Created {len(test_files)} test files in {self.workspace_path}")
     
-    def run_single_task(self, task: BenchmarkTask, run_number: int = 1) -> Dict[str, Any]:
+    def run_single_task(self, task: BenchmarkTask, run_number: int = 1, use_docker: bool = False) -> Dict[str, Any]:
         """Run a single benchmark task with full instrumentation based on mode"""
         from architecture.orchestrator import Orchestrator
         from architecture.dispatcher import Dispatcher
-        from execution.tools import WriteFileTool, RunCommandTool, ReadFileTool
+        from execution.tools import WriteFileTool, RunCommandTool, ReadFileTool, DockerRunCommandTool
         from execution.llm import LiteLLMClient
         from execution.core import Agent
         from litellm import completion
@@ -445,9 +447,16 @@ class BenchmarkRunner:
             print(f"[Benchmark] Using model: {model_name}")
             
             # === EXECUTION PHASE ===
+            # Choose between Docker or local execution
+            if use_docker:
+                print("[Benchmark] Using Docker isolation for command execution")
+                run_tool = DockerRunCommandTool(self.workspace_path)
+            else:
+                run_tool = RunCommandTool(self.workspace_path)
+            
             tools = [
                 WriteFileTool(self.workspace_path),
-                RunCommandTool(self.workspace_path),
+                run_tool,
                 ReadFileTool(self.workspace_path)
             ]
             
@@ -596,7 +605,7 @@ Provide complete code and commands. You cannot iterate or fix errors."""
             
             for task in tasks:
                 try:
-                    result = self.run_single_task(task, run)
+                    result = self.run_single_task(task, run, use_docker=self.use_docker)
                     all_results.append(result)
                 except Exception as e:
                     print(f"[ERROR] Task {task.id} failed: {e}")
@@ -693,6 +702,9 @@ def main():
     parser.add_argument("--machine", 
                         help="Machine identifier for multi-machine benchmarking (e.g., 'laptop_tejas', 'desktop_friend'). "
                              "Results from different machines are stored separately for comparison.")
+    parser.add_argument("--docker", "-d", action="store_true",
+                        help="Run commands inside a Docker container (python:3.11-slim). "
+                             "Provides pip and full Python environment isolation.")
     
     args = parser.parse_args()
     
@@ -714,7 +726,8 @@ def main():
         output_dir=args.output,
         run_count=args.runs,
         mode=mode_map[args.mode],
-        machine_id=args.machine
+        machine_id=args.machine,
+        use_docker=args.docker
     )
     
     if args.quick:

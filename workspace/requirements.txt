@@ -1,1 +1,2 @@
-pandas
+prometheus_client
+flask

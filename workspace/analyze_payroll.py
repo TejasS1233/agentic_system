@@ -1,54 +1,51 @@
 #!/usr/bin/env python3
 import pandas as pd
-from io import StringIO
 
-# Step 1: Data Loading and Environment Setup
+# Load Libraries
+# Initial Load
 try:
-    # Load the necessary data manipulation library (typically `pandas` for Python)
-    df = pd.read_csv('sensitive_payroll.csv', encoding='utf-8')
+    df = pd.read_csv('sensitive_payroll.csv', nrows=5)
+    print(df.head())
 except Exception as e:
-    print(f'Error loading file: {e}')
-    exit(1)
+    print(f"Error loading file: {e}")
 
-# Step 2: Schema Inspection
+# Data Types
 try:
-    # Load Header: Read the first few rows to identify the exact column names
-    header = df.head()
-    print(header)
+    print(df.dtypes)
 except Exception as e:
-    print(f'Error inspecting schema: {e}')
-    exit(1)
+    print(f"Error checking data types: {e}")
 
-# Step 3: Data Cleaning and Preprocessing
+# Handle Missing Values
 try:
-    # Identify Target Column: Locate the column representing 'Bonuses'
-    bonus_columns = ['Bonus', 'Annual_Bonus', 'Bonus_Amount', 'Incentive_Pay']
-    for col in bonus_columns:
-        if col in df.columns:
-            bonus_col = col
-            break
-    else:
-        print('No bonus column found')
-        exit(1)
-
-    # Handle Non-Numeric Characters: Remove currency symbols, commas, or whitespace
-    df[bonus_col] = df[bonus_col].str.replace('[^
-\d.]', '', regex=True)
-
-    # Type Conversion: Convert the cleaned column to a numeric data type (`float64`)
-    df[bonus_col] = pd.to_numeric(df[bonus_col], errors='coerce')
-
-    # Address Missing Values: Fill NaN or null entries with 0
-    df[bonus_col].fillna(0, inplace=True)
+    df['Bonus'] = df['Bonus'].fillna(0)
 except Exception as e:
-    print(f'Error cleaning and preprocessing data: {e}')
-    exit(1)
+    print(f"Error handling missing values: {e}")
 
-# Step 4: Calculation and Aggregation
+# Format Conversion
 try:
-    # Summation: Execute the sum function on the processed bonus column
-    total_bonus = df[bonus_col].sum()
+    df['Bonus'] = df['Bonus'].str.replace('[\$,]', '', regex=True).astype(float)
+except Exception as e:
+    print(f"Error formatting bonus column: {e}")
+
+# Outlier Validation
+try:
+    if (df['Bonus'] < 0).any():
+        print("Negative values found in the Bonus column.")
+except Exception as e:
+    print(f"Error validating outliers: {e}")
+
+# Summation
+try:
+    total_bonus = df['Bonus'].sum()
     print(f'Total Bonus: ${total_bonus:.2f}')
 except Exception as e:
-    print(f'Error calculating total bonus: {e}')
-    exit(1)
+    print(f"Error calculating total bonus: {e}")
+
+# Summary Stats
+try:
+    count_bonuses = (df['Bonus'] > 0).sum()
+    avg_bonus = df['Bonus'].mean()
+    print(f'Count of Employees with Bonuses: {count_bonuses}')
+    print(f'Average Bonus Amount: ${avg_bonus:.2f}')
+except Exception as e:
+    print(f"Error calculating summary stats: {e}")
