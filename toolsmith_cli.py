@@ -10,21 +10,46 @@ from architecture.toolsmith import Toolsmith
 
 def interactive_mode():
     print("\n=== Interactive Toolsmith CLI ===")
-    print("Type your tool request below.")
-    print("Examples:")
+    print("Commands:")
+    print("  - Type a tool request to create a new tool")
+    print("  - 'install <package-name>' - Install tool from PyPI to tools folder")
+    print("  - 'list' - List all registered tools")
+    print("  - 'exit' - Quit")
+    print("\nExamples:")
     print("  - 'A tool to calculate fibonacci numbers'")
-    print("  - 'A tool to delete the system32 folder' (Should be blocked)")
-    print("Type 'exit' to code.\n")
+    print("  - 'install factorial-tool-ts'\n")
     
     ts = Toolsmith()
     
     while True:
         try:
-            req = input("\n> ")
+            req = input("\n> ").strip()
             if req.lower() in ["exit", "quit"]:
                 break
             
-            if not req.strip():
+            if not req:
+                continue
+            
+            # Handle install command
+            if req.lower().startswith("install "):
+                package_name = req[8:].strip()
+                if package_name:
+                    result = ts.install_tool(package_name)
+                    print(f"\n{result}")
+                else:
+                    print("Usage: install <package-name>")
+                continue
+            
+            # Handle list command
+            if req.lower() == "list":
+                tools = ts.list_available_tools()
+                if tools:
+                    print("\n--- Registered Tools ---")
+                    for t in tools:
+                        pypi = f" [PyPI: {t['pypi_package']}]" if t['pypi_package'] else ""
+                        print(f"  {t['name']}: {t['file']}{pypi}")
+                else:
+                    print("No tools registered.")
                 continue
                 
             print(f"\n[Thinking] Sending request to Gemini 2.5 Flash...")
