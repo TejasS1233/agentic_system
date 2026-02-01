@@ -12,4 +12,8 @@ dependencies = [
     "psutil>=7.2.2",
     "python-dotenv>=1.2.1",
     "seaborn>=0.13.2",
+    "loguru>=0.7.3",
+    "ollama>=0.6.1",
+    "isprimetool>=0.1.0",
+    "checkevenoddtool>=0.1.0",
 ]

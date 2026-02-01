@@ -1,14 +1,17 @@
 import os
 import re
 import json
-import ast
 import time
+
 from litellm import completion
+
+from architecture.gatekeeper import Gatekeeper
 
 
 class Toolsmith:
-    def __init__(self, safe_mode=True):
+    def __init__(self, safe_mode=False, gatekeeper=None):
         self.safe_mode = safe_mode
+        self.gatekeeper = gatekeeper or Gatekeeper(strict_mode=safe_mode)
         self.workspace_root = os.path.join(os.getcwd(), "workspace")
         self.tools_dir = os.path.join(self.workspace_root, "tools")
         self.registry_path = os.path.join(self.tools_dir, "registry.json")
@@ -82,63 +85,19 @@ class Toolsmith:
 
     def _is_safe_code(self, code: str) -> bool:
         """
-        Uses Python AST static analysis to reject dangerous operations.
+        Uses the Gatekeeper for static analysis to reject dangerous operations.
         Paper Claim: 'Autonomous Secure Tool Generation'.
         """
         if not self.safe_mode:
             return True
 
-        try:
-            tree = ast.parse(code)
-        except SyntaxError:
-            print("[Toolsmith] Safety Check Failed: Syntax Error in generated code.")
-            return False
+        result = self.gatekeeper.validate(code)
 
-        # Blacklist of functions and modules often used for malicious acts or system destabilization
-        # Per user request: Only ban 'shutil' to prevent mass deletion. Allow subprocess, sys, etc.
-        banned_imports = {"shutil"}
-        banned_calls = set()
-        # Note: 'open' is risky but sometimes needed. For strict safety, we ban it and force use of ReadFileTool/WriteFileTool.
+        if not result.is_safe:
+            for violation in result.violations:
+                print(f"[Toolsmith] Safety Violation: {violation}")
 
-        for node in ast.walk(tree):
-            # Check Imports
-            if isinstance(node, ast.Import):
-                for alias in node.names:
-                    if alias.name.split(".")[0] in banned_imports:
-                        print(
-                            f"[Toolsmith] Safety Violation: Banned import '{alias.name}' detected."
-                        )
-                        return False
-            elif isinstance(node, ast.ImportFrom):
-                if node.module and node.module.split(".")[0] in banned_imports:
-                    print(
-                        f"[Toolsmith] Safety Violation: Banned from-import '{node.module}' detected."
-                    )
-                    return False
-
-            # Check Function Calls
-            if isinstance(node, ast.Call):
-                if isinstance(node.func, ast.Name):
-                    if node.func.id in banned_calls:
-                        print(
-                            f"[Toolsmith] Safety Violation: Banned function call '{node.func.id}()' detected."
-                        )
-                        return False
-                # Check obj.method() calls if needed, e.g. os.system
-                elif isinstance(node.func, ast.Attribute):
-                    if isinstance(node.func.value, ast.Name):
-                        # Blocks os.system, os.popen, etc.
-                        if node.func.value.id == "os" and node.func.attr in [
-                            "system",
-                            "popen",
-                            "spawn",
-                        ]:
-                            print(
-                                f"[Toolsmith] Safety Violation: Banned os method '{node.func.attr}' detected."
-                            )
-                            return False
-
-        return True
+        return result.is_safe
 
     def _get_existing_tools_context(self):
         try:

@@ -208,11 +208,13 @@ class RequestNewTool(Tool):
 
     def __init__(self, workspace_path: str):
         self.workspace_path = workspace_path
-        # We instantiate a new toolsmith on the fly
-        if Toolsmith:
-            self.toolsmith = Toolsmith()
-        else:
-            self.toolsmith = None
+        self._toolsmith = None
+
+    @property
+    def toolsmith(self):
+        if self._toolsmith is None and Toolsmith:
+            self._toolsmith = Toolsmith()
+        return self._toolsmith
 
     def run(self, description: str) -> str:
         if not self.toolsmith:
