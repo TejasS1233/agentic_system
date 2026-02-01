@@ -1,12 +1,12 @@
 import os
 import sys
-import json
 from dotenv import load_dotenv
 
 load_dotenv()
 sys.path.append(os.getcwd())
 
-from architecture.toolsmith import Toolsmith
+from architecture.toolsmith import Toolsmith  # noqa: E402
+
 
 def interactive_mode():
     print("\n=== Interactive Toolsmith CLI ===")
@@ -17,10 +17,11 @@ def interactive_mode():
     print("  - 'exit' - Quit")
     print("\nExamples:")
     print("  - 'A tool to calculate fibonacci numbers'")
-    print("  - 'install factorial-tool-ts'\n")
+    print("  - 'install factorial-tool-ts'")
+    print("  - 'A tool to delete the system32 folder' (Should be blocked by Gatekeeper)\n")
     
     ts = Toolsmith()
-    
+
     while True:
         try:
             req = input("\n> ").strip()
@@ -51,19 +52,20 @@ def interactive_mode():
                 else:
                     print("No tools registered.")
                 continue
-                
-            print(f"\n[Thinking] Sending request to Gemini 2.5 Flash...")
+
+            print("\n[Thinking] Sending request to Gemini 2.5 Flash...")
             result = ts.create_tool(req)
-            
+
             print("\n----- RESULT -----")
             print(result)
             print("------------------")
-            
+
         except KeyboardInterrupt:
             print("\nExiting...")
             break
         except Exception as e:
             print(f"Error: {e}")
+
 
 if __name__ == "__main__":
     interactive_mode()

@@ -1,8 +1,8 @@
 import os
 import re
 import json
-import ast
 import time
+import ast
 import subprocess
 import tempfile
 import importlib.util
@@ -14,9 +14,13 @@ try:
 except ImportError:
     requests = None
 
+from architecture.gatekeeper import Gatekeeper
+
+
 class Toolsmith:
-    def __init__(self, safe_mode=True):
+    def __init__(self, safe_mode=True, gatekeeper=None):
         self.safe_mode = safe_mode
+        self.gatekeeper = gatekeeper or Gatekeeper(strict_mode=safe_mode)
         self.workspace_root = os.path.join(os.getcwd(), "workspace")
         self.tools_dir = os.path.join(self.workspace_root, "tools")
         self.packages_dir = os.path.join(self.workspace_root, "packages")
@@ -37,23 +41,46 @@ class Toolsmith:
 
         # Initialize metrics if not present
         if not os.path.exists(self.metrics_path):
-             self._log_metrics("init", {"message": "Metrics initialized"})
-                
-        #ignore common words in tag matching
+            self._log_metrics("init", {"message": "Metrics initialized"})
+
+        # ignore common words in tag matching
         self.stop_words = {
-            "a", "an", "the", "in", "on", "at", "to", "for", "of", "with", 
-            "by", "and", "or", "is", "it", "this", "that", "tool", "can",
-            "please", "make", "create", "write", "i", "need", "want", "use",
-            "help", "me", "from", "into"
+            "a",
+            "an",
+            "the",
+            "in",
+            "on",
+            "at",
+            "to",
+            "for",
+            "of",
+            "with",
+            "by",
+            "and",
+            "or",
+            "is",
+            "it",
+            "this",
+            "that",
+            "tool",
+            "can",
+            "please",
+            "make",
+            "create",
+            "write",
+            "i",
+            "need",
+            "want",
+            "use",
+            "help",
+            "me",
+            "from",
+            "into",
         }
 
     def _log_metrics(self, event_type, details):
         """Logs usage metrics to a JSONL file for paper analysis."""
-        entry = {
-            "timestamp": time.time(),
-            "event": event_type,
-            "details": details
-        }
+        entry = {"timestamp": time.time(), "event": event_type, "details": details}
         try:
             # We use append mode for a simpler log, or we could handle a JSON array.
             # For robustness, let's load, append, save.
@@ -64,7 +91,7 @@ class Toolsmith:
                         data = json.load(f)
                 except json.JSONDecodeError:
                     data = []
-            
+
             data.append(entry)
             with open(self.metrics_path, "w") as f:
                 json.dump(data, f, indent=2)
@@ -73,51 +100,19 @@ class Toolsmith:
 
     def _is_safe_code(self, code: str) -> bool:
         """
-        Uses Python AST static analysis to reject dangerous operations.
+        Uses the Gatekeeper for static analysis to reject dangerous operations.
         Paper Claim: 'Autonomous Secure Tool Generation'.
         """
         if not self.safe_mode:
             return True
-            
-        try:
-            tree = ast.parse(code)
-        except SyntaxError:
-            print("[Toolsmith] Safety Check Failed: Syntax Error in generated code.")
-            return False
 
-        # Blacklist of functions and modules often used for malicious acts or system destabilization
-        # Per user request: Only ban 'shutil' to prevent mass deletion. Allow subprocess, sys, etc.
-        banned_imports = {"shutil"}
-        banned_calls = set()
-        # Note: 'open' is risky but sometimes needed. For strict safety, we ban it and force use of ReadFileTool/WriteFileTool.
-        
-        for node in ast.walk(tree):
-            # Check Imports
-            if isinstance(node, ast.Import):
-                for alias in node.names:
-                    if alias.name.split('.')[0] in banned_imports:
-                        print(f"[Toolsmith] Safety Violation: Banned import '{alias.name}' detected.")
-                        return False
-            elif isinstance(node, ast.ImportFrom):
-                if node.module and node.module.split('.')[0] in banned_imports:
-                    print(f"[Toolsmith] Safety Violation: Banned from-import '{node.module}' detected.")
-                    return False
-            
-            # Check Function Calls
-            if isinstance(node, ast.Call):
-                if isinstance(node.func, ast.Name):
-                    if node.func.id in banned_calls:
-                        print(f"[Toolsmith] Safety Violation: Banned function call '{node.func.id}()' detected.")
-                        return False
-                # Check obj.method() calls if needed, e.g. os.system
-                elif isinstance(node.func, ast.Attribute):
-                    if isinstance(node.func.value, ast.Name):
-                         # Blocks os.system, os.popen, etc.
-                         if node.func.value.id == "os" and node.func.attr in ["system", "popen", "spawn"]:
-                             print(f"[Toolsmith] Safety Violation: Banned os method '{node.func.attr}' detected.")
-                             return False
-        
-        return True
+        result = self.gatekeeper.validate(code)
+
+        if not result.is_safe:
+            for violation in result.violations:
+                print(f"[Toolsmith] Safety Violation: {violation}")
+
+        return result.is_safe
 
     def _get_existing_tools_context(self):
         try:
@@ -128,7 +123,7 @@ class Toolsmith:
 
     def _tokenize(self, text):
         # Replace non-alphanumeric with space
-        clean_text = re.sub(r'[^a-z0-9\s]', ' ', text.lower())
+        clean_text = re.sub(r"[^a-z0-9\s]", " ", text.lower())
         tokens = set(clean_text.split())
         return tokens - self.stop_words
 
@@ -138,17 +133,17 @@ class Toolsmith:
         """
         start_time = time.time()
         print(f"[Toolsmith] Received request: '{requirement}'")
-        
+
         # 1. Tag-Based Deduplication Check
         try:
             with open(self.registry_path, "r") as f:
                 registry = json.load(f)
-            
+
             req_tokens = self._tokenize(requirement)
-            
+
             best_match = None
             highest_score = 0.0
-            
+
             for name, meta in registry.items():
                 tool_tags = set(meta.get("tags", []))
                 # Fallback to tokenizing description if tags missing
@@ -167,7 +162,7 @@ class Toolsmith:
                 
                 # Jaccard-like Overlap Score: Intersection / Request Size
                 # (How much of the request is covered by the tool?)
-                if not req_tokens: 
+                if not req_tokens:
                     continue
                     
                 intersection = req_tokens & all_tool_terms
@@ -177,7 +172,7 @@ class Toolsmith:
                     continue
                 
                 score = len(intersection) / len(req_tokens)
-                
+
                 if score > highest_score:
                     highest_score = score
                     best_match = name
@@ -185,19 +180,24 @@ class Toolsmith:
             # Threshold: 50% overlap implies relevance (raised from 30%)
             if highest_score >= 0.5:
                 desc = registry[best_match].get("description", "No description")
-                print(f"[Toolsmith] Deduplication HIT. Match: '{best_match}' (Score: {highest_score:.2f})")
-                
-                self._log_metrics("deduplication_hit", {
-                    "request": requirement,
-                    "matched_tool": best_match,
-                    "score": highest_score,
-                    "latency": time.time() - start_time
-                })
-                
+                print(
+                    f"[Toolsmith] Deduplication HIT. Match: '{best_match}' (Score: {highest_score:.2f})"
+                )
+
+                self._log_metrics(
+                    "deduplication_hit",
+                    {
+                        "request": requirement,
+                        "matched_tool": best_match,
+                        "score": highest_score,
+                        "latency": time.time() - start_time,
+                    },
+                )
+
                 return f"EXISTING TOOL FOUND: '{best_match}' seems to match your request (Score: {highest_score:.2f}).\nDescription: {desc}\nPlease use this tool instead of creating a new one."
-            
-            self._log_metrics("generation_start", { "request": requirement })
-                
+
+            self._log_metrics("generation_start", {"request": requirement})
+
         except Exception as e:
             print(f"[Toolsmith] Deduplication check failed: {e}")
 
@@ -209,9 +209,10 @@ class Toolsmith:
         try:
             response = completion(
                 model="gemini/gemini-2.5-flash",
-                messages=[{
-                    "role": "system", 
-                    "content": f"""You are an expert Python Tool Generator.
+                messages=[
+                    {
+                        "role": "system",
+                        "content": f"""You are an expert Python Tool Generator.
 You MUST generate a JSON object containing the tool code and metadata.
 
 REFERENCE CODE STYLE:
@@ -250,10 +251,10 @@ RULES:
                 }],
                 response_format={ "type": "json_object" }
             )
-            
+
             content = response.choices[0].message.content
             tool_data = json.loads(content)
-            
+
             class_name = tool_data["class_name"]
             file_name = tool_data["filename"]
             tags = tool_data.get("tags", [])
@@ -261,22 +262,22 @@ RULES:
             output_types = tool_data.get("output_types", [])
             domain = tool_data.get("domain", "")
             tool_code = tool_data["code"]
-            
+
             # --- SAFETY CHECK ---
             if not self._is_safe_code(tool_code):
-                self._log_metrics("safety_violation", {
-                    "request": requirement,
-                    "generated_code_snippet": tool_code[:100]
-                })
+                self._log_metrics(
+                    "safety_violation",
+                    {"request": requirement, "generated_code_snippet": tool_code[:100]},
+                )
                 return "Error: Generated tool code failed Safety Check (contains banned imports/calls). Request rejected for security."
             # --------------------
-            
+
             file_path = os.path.join(self.tools_dir, file_name)
 
             # 4. Save to Disk
             with open(file_path, "w") as f:
                 f.write(tool_code)
-            
+
             print(f"[Toolsmith] Wrote new tool to {file_path}")
 
             # 5. Detect dependencies and publish to PyPI
@@ -319,18 +320,18 @@ RULES:
 
         except Exception as e:
             import traceback
+
             traceback.print_exc()
-            self._log_metrics("generation_failed", {
-                "request": requirement,
-                "error": str(e)
-            })
+            self._log_metrics(
+                "generation_failed", {"request": requirement, "error": str(e)}
+            )
             return f"Tool creation failed: {e}"
 
     def _update_registry(self, class_name, file_name, description, tags, input_types=None, output_types=None, domain=None, pypi_package=None):
         try:
             with open(self.registry_path, "r") as f:
                 data = json.load(f)
-        except:
+        except Exception:
             data = {}
         
         data[class_name] = {
@@ -458,7 +459,7 @@ RULES:
         
         # Write the tool code as __init__.py
         # Escape triple quotes in tool_code for embedding
-        escaped_code_for_init = tool_code.replace('"""', '\\"\\"\\"')
+        escaped_code_for_init = tool_code.replace('"""', '\\"\\"\\"\\"')
         with open(os.path.join(src_dir, "__init__.py"), "w") as f:
             f.write(f'"""Auto-generated tool: {class_name}"""\n\n')
             f.write(tool_code)
@@ -470,7 +471,7 @@ RULES:
         # It copies the tool to workspace/tools/ AND updates registry.json
         
         # Escape the tool code for embedding
-        escaped_tool_code = tool_code.replace('\\', '\\\\').replace('"""', '\\"\\"\\"')
+        escaped_tool_code = tool_code.replace('\\', '\\\\').replace('"""', '\\"\\"\\"\\"')
         escaped_tags = json.dumps(tags)
         escaped_input_types = json.dumps(input_types)
         escaped_output_types = json.dumps(output_types)
@@ -752,9 +753,11 @@ where = ["src"]
                 tools.append({
                     "name": name,
                     "file": meta.get("file", ""),
-                    "pypi_package": meta.get("pypi_package", ""),
-                    "description": meta.get("description", "")[:50]
+                    "description": meta.get("description", ""),
+                    "tags": meta.get("tags", []),
+                    "pypi_package": meta.get("pypi_package", "")
                 })
             return tools
-        except:
+        except Exception as e:
+            print(f"[Toolsmith] Failed to list tools: {e}")
             return []
