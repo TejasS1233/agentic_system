@@ -64,10 +64,30 @@ class WriteFileTool(Tool):
     )
     args_schema = WriteFileArgs
 
-    def __init__(self, workspace_path: str):
+    def __init__(self, workspace_path: str, gatekeeper=None):
         self.workspace_path = workspace_path
+        self._gatekeeper = gatekeeper
+
+    @property
+    def gatekeeper(self):
+        """Lazy-load Gatekeeper to avoid circular imports."""
+        if self._gatekeeper is None:
+            try:
+                from architecture.gatekeeper import Gatekeeper
+
+                self._gatekeeper = Gatekeeper(strict_mode=True)
+            except ImportError:
+                pass
+        return self._gatekeeper
 
     def run(self, filepath: str, content: str) -> str:
+        # Security check for Python files
+        if filepath.endswith(".py") and self.gatekeeper:
+            result = self.gatekeeper.validate(content)
+            if not result.is_safe:
+                violations = "; ".join(result.violations[:3])
+                return f"BLOCKED: Security violation detected. {violations}"
+
         full_path = os.path.join(self.workspace_path, filepath)
         # Ensure the directory exists
         os.makedirs(os.path.dirname(full_path), exist_ok=True)

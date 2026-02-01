@@ -106,6 +106,7 @@ class LiteLLMClient(LLMClient):
 
         tools_map = {t.name: t for t in self.tools}
         tools_schema = self._get_tools_schema()
+        security_blocks = 0  # Track consecutive security blocks
 
         for turn in range(self.max_turns):
             logger.debug(f"Turn {turn + 1}/{self.max_turns}")
@@ -121,7 +122,16 @@ class LiteLLMClient(LLMClient):
                 return response_message.content
 
             self.history.append(response_message)
-            self._execute_tool_calls(response_message.tool_calls, tools_map)
+            blocked = self._execute_tool_calls(response_message.tool_calls, tools_map)
+
+            # Early stop if security is repeatedly blocking
+            if blocked:
+                security_blocks += 1
+                if security_blocks >= 2:
+                    logger.warning("Security blocked execution - stopping")
+                    return "Task blocked: Security violations detected. The requested operation is not permitted."
+            else:
+                security_blocks = 0
 
         logger.warning("Max turns reached")
         return "Error: Max tool turns reached."
@@ -147,8 +157,9 @@ class LiteLLMClient(LLMClient):
             logger.error(f"LLM call failed: {e}")
             return f"LiteLLM Error: {e}"
 
-    def _execute_tool_calls(self, tool_calls: list, tools_map: dict[str, Tool]):
-        """Execute tool calls and append results to history."""
+    def _execute_tool_calls(self, tool_calls, tools_map: dict) -> bool:
+        """Execute tool calls and return True if any were blocked."""
+        blocked = False
         for tool_call in tool_calls:
             func_name = tool_call.function.name
             func_args = json.loads(tool_call.function.arguments)
@@ -159,6 +170,9 @@ class LiteLLMClient(LLMClient):
             if func_name in tools_map:
                 try:
                     result = tools_map[func_name].run(**func_args)
+                    # Detect security blocks
+                    if isinstance(result, str) and result.startswith("BLOCKED:"):
+                        blocked = True
                 except Exception as e:
                     result = f"Error executing {func_name}: {e}"
                     logger.error(result)
@@ -176,3 +190,5 @@ class LiteLLMClient(LLMClient):
                     "content": str(result),
                 }
             )
+
+        return blocked

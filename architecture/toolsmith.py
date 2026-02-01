@@ -9,7 +9,7 @@ from architecture.gatekeeper import Gatekeeper
 
 
 class Toolsmith:
-    def __init__(self, safe_mode=False, gatekeeper=None):
+    def __init__(self, safe_mode=True, gatekeeper=None):
         self.safe_mode = safe_mode
         self.gatekeeper = gatekeeper or Gatekeeper(strict_mode=safe_mode)
         self.workspace_root = os.path.join(os.getcwd(), "workspace")
