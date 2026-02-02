@@ -1,0 +1,80 @@
+2026-02-01 19:30:18 | INFO | __main__:test_gatekeeper:12 | === Testing Gatekeeper ===
+2026-02-01 19:30:18 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-01 19:30:18 | INFO | __main__:test_gatekeeper:29 | Safe code: SAFE
+2026-02-01 19:30:18 | WARNING | architecture.gatekeeper:validate:272 | Validation failed: ["[STRICT] Risky import: 'subprocess'", "[STRICT] Risky method: 'subprocess.call()'"]
+2026-02-01 19:30:18 | INFO | __main__:test_gatekeeper:29 | Dangerous import: BLOCKED
+2026-02-01 19:30:18 | WARNING | __main__:test_gatekeeper:32 |   - [STRICT] Risky import: 'subprocess'
+2026-02-01 19:30:18 | WARNING | __main__:test_gatekeeper:32 |   - [STRICT] Risky method: 'subprocess.call()'
+2026-02-01 19:30:18 | WARNING | architecture.gatekeeper:validate:272 | Validation failed: ["Banned call: 'eval()'"]
+2026-02-01 19:30:18 | INFO | __main__:test_gatekeeper:29 | Eval usage: BLOCKED
+2026-02-01 19:30:18 | WARNING | __main__:test_gatekeeper:32 |   - Banned call: 'eval()'
+2026-02-01 19:30:18 | WARNING | architecture.gatekeeper:validate:272 | Validation failed: ["Banned call: 'exec()'", '[STRICT] Escalation: write -> execute']
+2026-02-01 19:30:18 | INFO | __main__:test_gatekeeper:29 | Exec usage: BLOCKED
+2026-02-01 19:30:18 | WARNING | __main__:test_gatekeeper:32 |   - Banned call: 'exec()'
+2026-02-01 19:30:18 | WARNING | __main__:test_gatekeeper:32 |   - [STRICT] Escalation: write -> execute
+2026-02-01 19:30:18 | WARNING | architecture.gatekeeper:validate:272 | Validation failed: ["Banned method: 'os.system()'"]
+2026-02-01 19:30:18 | INFO | __main__:test_gatekeeper:29 | OS system call: BLOCKED
+2026-02-01 19:30:18 | WARNING | __main__:test_gatekeeper:32 |   - Banned method: 'os.system()'
+2026-02-01 19:30:18 | WARNING | architecture.gatekeeper:validate:272 | Validation failed: ["[STRICT] Risky method: 'os.remove()'"]
+2026-02-01 19:30:18 | INFO | __main__:test_gatekeeper:29 | File deletion: BLOCKED
+2026-02-01 19:30:18 | WARNING | __main__:test_gatekeeper:32 |   - [STRICT] Risky method: 'os.remove()'
+2026-02-01 19:30:18 | INFO | __main__:test_gatekeeper:29 | Network access: SAFE
+2026-02-01 19:30:18 | WARNING | architecture.gatekeeper:scan:121 | Vulnerability: DESER-001
+2026-02-01 19:30:18 | WARNING | architecture.gatekeeper:validate:272 | Validation failed: ["[STRICT] Risky import: 'pickle'", '[DESER-001] Insecure deserialization']
+2026-02-01 19:30:18 | INFO | __main__:test_gatekeeper:29 | Pickle load: BLOCKED
+2026-02-01 19:30:18 | WARNING | __main__:test_gatekeeper:32 |   - [STRICT] Risky import: 'pickle'
+2026-02-01 19:30:18 | INFO | __main__:test_gatekeeper:34 | Gatekeeper testing complete
+
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:39 | === Testing Reflector ===
+2026-02-01 19:30:18 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-01 19:30:18 | INFO | architecture.reflector:reflect:295 | Reflected: import, retry=True, remaining=3
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:72 | Import error:
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:73 |   Category: import
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:74 |   Root cause: Required module is not available...
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:75 |   Should retry: True
+2026-02-01 19:30:18 | INFO | architecture.reflector:reflect:295 | Reflected: syntax, retry=True, remaining=3
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:72 | Syntax error:
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:73 |   Category: syntax
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:74 |   Root cause: Code contains syntax errors...
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:75 |   Should retry: True
+2026-02-01 19:30:18 | INFO | architecture.reflector:reflect:295 | Reflected: type, retry=True, remaining=3
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:72 | Type error:
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:73 |   Category: type
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:74 |   Root cause: Type mismatch in operation...
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:75 |   Should retry: True
+2026-02-01 19:30:18 | INFO | architecture.reflector:reflect:295 | Reflected: file_not_found, retry=True, remaining=3
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:72 | File not found:
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:73 |   Category: file_not_found
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:74 |   Root cause: File or directory does not exist...
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:75 |   Should retry: True
+2026-02-01 19:30:18 | INFO | architecture.reflector:reflect:295 | Reflected: permission, retry=False, remaining=3
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:72 | Permission denied:
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:73 |   Category: permission
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:74 |   Root cause: Insufficient permissions for operation...
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:75 |   Should retry: False
+2026-02-01 19:30:18 | INFO | architecture.reflector:reflect:295 | Reflected: timeout, retry=True, remaining=3
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:72 | Timeout:
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:73 |   Category: timeout
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:74 |   Root cause: Operation exceeded time limit...
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:75 |   Should retry: True
+2026-02-01 19:30:18 | INFO | architecture.reflector:reflect:295 | Reflected: network, retry=True, remaining=3
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:72 | Network error:
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:73 |   Category: network
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:74 |   Root cause: Network connection failed...
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:75 |   Should retry: True
+2026-02-01 19:30:18 | INFO | __main__:test_reflector:78 | Reflector testing complete
+
+2026-02-01 19:30:18 | INFO | __main__:test_integration:83 | === Testing Integration ===
+2026-02-01 19:30:22 | INFO | architecture.orchestrator:__init__:32 | Orchestrator initialized (model=groq/llama-3.3-70b-versatile)
+2026-02-01 19:30:22 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-01 19:30:22 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-01 19:30:22 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-01 19:30:22 | INFO | main:__init__:61 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace)
+2026-02-01 19:30:22 | WARNING | architecture.gatekeeper:validate:272 | Validation failed: ["Banned method: 'os.system()'", "Banned call: 'eval()'", "[STRICT] Risky import: 'subprocess'", "[STRICT] Risky method: 'subprocess.Popen()'"]
+2026-02-01 19:30:22 | INFO | __main__:test_integration:96 | Dangerous code validation: BLOCKED
+2026-02-01 19:30:22 | INFO | __main__:test_integration:99 | Violations found: 4
+2026-02-01 19:30:22 | WARNING | __main__:test_integration:101 |   - Banned method: 'os.system()'
+2026-02-01 19:30:22 | WARNING | __main__:test_integration:101 |   - Banned call: 'eval()'
+2026-02-01 19:30:22 | WARNING | __main__:test_integration:101 |   - [STRICT] Risky import: 'subprocess'
+2026-02-01 19:30:22 | INFO | __main__:test_integration:103 | Integration testing complete
+

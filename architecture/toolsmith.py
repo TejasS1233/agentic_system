@@ -208,11 +208,11 @@ class Toolsmith:
         print("[Toolsmith] Tool not found. Contacting Gemini 2.5 Flash...")
         try:
             response = completion(
-                model="gemini/gemini-2.5-flash",
+                model="groq/llama-3.3-70b-versatile",
                 messages=[
                     {
                         "role": "system",
-                        "content": f"""You are an expert Python Tool Generator.
+                        "content": f"""You are an expert Python Tool Generator. 
 You MUST generate a JSON object containing the tool code and metadata.
 
 REFERENCE CODE STYLE:
@@ -226,24 +226,31 @@ OUTPUT FORMAT (JSON ONLY):
   "input_types": ["string", "number", "file", "list", "dict"],
   "output_types": ["string", "number", "file", "image", "json"],
   "domain": "math|text|file|web|visualization|data|system",
+  "dependencies": ["library_name_1", "library_name_2"],
   "code": "import ... class NameOfTool(Tool): ..."
 }}
 
 RULES:
-1. `code` must be a valid, escaped python string.
-2. `tags` should be 3-5 keywords describing the tool's purpose.
-3. `input_types` should list the data types the tool accepts (e.g., string, number, file, list, csv, json).
-4. `output_types` should list what the tool produces (e.g., string, number, file, image, json, chart).
-5. `domain` should be ONE of: math, text, file, web, visualization, data, system, conversion, search.
-6. STRUCTURE REQUIREMENTS:
-   - IMPORTS: `from pydantic import BaseModel, Field`
+1. `code` must be a valid, escaped python string. Ensure all newlines are escaped as \\n and quotes are escaped as \\".
+2. `tags` should be 3-5 keywords.
+3. `dependencies` must list specific PyPI package names required (e.g., ["pandas", "requests"]). If none, use [].
+4. `domain` must be ONE of: math, text, file, web, visualization, data, system, conversion, search.
+5. CODE STRUCTURE REQUIREMENTS:
+   - IMPORTS: Include all necessary standard and third-party imports.
    - ARGS CLASS: Define `class {{ClassName}}Args(BaseModel):` with fields.
-   - TOOL CLASS: Define `class {{ClassName}}(Tool):`
+   - TOOL CLASS: Define `class {{ClassName}}(Tool):` inheriting from the base Tool class.
    - ATTRIBUTE: Set `args_schema = {{ClassName}}Args` inside the tool class.
-   - METHOD: `def run(self, arg1: Type, ...) -> str:` matching the args.
-7. Use standard libraries (math, datetime) or allowed system modules (subprocess, sys).
-8. DO NOT use `shutil` or key-value stores unless necessary.
-9. The tools must be self-contained (include the `Tool` base class definition if distinct from `execution.tools`, or import it if the environment allows. Prefer defining a simple `Tool` abstract base class if unsure of environment).
+   - METHOD: `def run(self, arg1: Type, ...) -> Any:` matching the args.
+6. HANDLING CREDENTIALS:
+   - Do NOT hardcode API keys. 
+   - If an API key is needed, it MUST be passed as an argument to the `run` method (e.g., `api_key: str`).
+7. REAL IMPLEMENTATION ONLY:
+   - NO MOCK APIS. NO FAKE DATA.
+   - Use real logic (e.g., `requests.get`, `math.sqrt`).
+   - If the task requires external libraries (like `pandas`, `praw`, `github`), IMPORT them and list them in the `dependencies` key.
+8. BASE CLASS DEFINITION:
+   - Assume a `Tool` base class exists in the environment that has a `run` method.
+   - Do NOT redefine `Tool` unless necessary for standalone testing.
 """
                 }, {
                     "role": "user", 
