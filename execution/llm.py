@@ -6,7 +6,7 @@ import platform
 import warnings
 from abc import ABC, abstractmethod
 
-from litellm import completion
+from architecture.llm_manager import get_llm_manager
 
 from utils.logger import get_logger
 
@@ -137,7 +137,9 @@ class LiteLLMClient(LLMClient):
         return "Error: Max tool turns reached."
 
     def _call_llm(self, tools_schema: list[dict]):
-        """Make LLM API call."""
+        """Make LLM API call using the centralized LLM manager."""
+        from litellm import completion
+        
         kwargs = {
             "model": self.model_name,
             "messages": self.history,
@@ -152,6 +154,7 @@ class LiteLLMClient(LLMClient):
             kwargs["extra_headers"] = self.extra_headers
 
         try:
+            # Use direct completion for tool calling (manager doesn't support tools yet)
             return completion(**kwargs)
         except Exception as e:
             logger.error(f"LLM call failed: {e}")

@@ -173,7 +173,7 @@ class InstrumentedLiteLLMClient:
 
     def send_message(self, chat, message: str) -> str:
         """Instrumented send_message with full metrics collection"""
-        from litellm import completion
+        from litellm import completion  # Keep for tool calling support
         import json
 
         self.client.history.append({"role": "user", "content": message})
@@ -407,7 +407,7 @@ class BenchmarkRunner:
         )
         from execution.llm import LiteLLMClient
         from execution.core import Agent
-        from litellm import completion
+        from litellm import completion  # Keep for single-shot mode
 
         task_id = f"{task.id}_run{run_number}"
         print(f"\n{'=' * 60}")

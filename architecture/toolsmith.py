@@ -6,7 +6,7 @@ import ast
 import subprocess
 import tempfile
 import importlib.util
-from litellm import completion
+from architecture.llm_manager import get_llm_manager
 
 # For PyPI name checking
 try:
@@ -205,14 +205,11 @@ class Toolsmith:
         existing_code = self._get_existing_tools_context()
 
         # 3. Generate Code (JSON Mode)
-        print("[Toolsmith] Tool not found. Contacting Gemini 2.5 Flash...")
+        print("[Toolsmith] Tool not found. Generating with LLM...")
         try:
-            response = completion(
-                model="groq/llama-3.3-70b-versatile",
-                messages=[
-                    {
-                        "role": "system",
-                        "content": f"""You are an expert Python Tool Generator. 
+            llm = get_llm_manager()
+            
+            system_prompt = f"""You are an expert Python Tool Generator. 
 You MUST generate a JSON object containing the tool code and metadata.
 
 REFERENCE CODE STYLE:
@@ -252,14 +249,19 @@ RULES:
    - Assume a `Tool` base class exists in the environment that has a `run` method.
    - Do NOT redefine `Tool` unless necessary for standalone testing.
 """
-                }, {
-                    "role": "user", 
-                    "content": f"Create a tool for: {requirement}"
-                }],
-                response_format={ "type": "json_object" }
+
+            response = llm.generate_json(
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": f"Create a tool for: {requirement}"}
+                ],
+                max_tokens=4096
             )
 
-            content = response.choices[0].message.content
+            if response.get("error"):
+                return f"Tool creation failed: {response['error']}"
+
+            content = response["content"]
             tool_data = json.loads(content)
 
             class_name = tool_data["class_name"]
