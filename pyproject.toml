@@ -19,6 +19,9 @@ dependencies = [
     "ollama>=0.6.1",
     "isprimetool>=0.1.0",
     "checkevenoddtool>=0.1.0",
+    "networkx>=3.6.1",
+    "sentence-transformers>=5.2.2",
+    "faiss-cpu>=1.13.2",
 ]
 
 [dependency-groups]
