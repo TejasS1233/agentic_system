@@ -138,7 +138,7 @@ class ExecutorAgent:
 
 Arguments needed: {arg_names}
 Task description: {step.description}
-Previous step result (if any): {input_data[:500] if input_data else "None"}
+Previous step result (if any): {str(input_data)[:500] if input_data else "None"}
 
 IMPORTANT: Return the ACTUAL VALUES, not the description text.
 - For numeric arguments, return the number (e.g., 144, not "calculate 144")

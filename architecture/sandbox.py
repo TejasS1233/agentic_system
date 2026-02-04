@@ -249,9 +249,20 @@ sys.path.insert(0, '/tools')
 
 from {tool_path.stem} import *
 
+# Find tool class by looking for classes with 'name' attribute and 'run' method
+# This handles both 'FooTool' naming and 'FooDownloader' naming conventions
 tool_class = None
-for name, obj in list(globals().items()):
-    if isinstance(obj, type) and 'Tool' in name and name != 'Tool' and 'Args' not in name:
+for cls_name, obj in list(globals().items()):
+    if not isinstance(obj, type):
+        continue
+    if 'Args' in cls_name or cls_name in ('BaseModel', 'Tool'):
+        continue
+    # Check if it has the tool contract: name attribute and run method
+    if hasattr(obj, 'name') and hasattr(obj, 'run'):
+        tool_class = obj
+        break
+    # Fallback: any non-Args class with a run method
+    if hasattr(obj, 'run') and callable(getattr(obj, 'run', None)):
         tool_class = obj
         break
 
@@ -263,9 +274,10 @@ try:
     tool = tool_class()
     args = json.loads('{args_json}')
     result = tool.run(**args)
-    print(json.dumps({{"success": True, "result": str(result)}}))
+    print(json.dumps({{"success": True, "result": result}}))
 except Exception as e:
-    print(json.dumps({{"error": str(e)}}))
+    import traceback
+    print(json.dumps({{"error": str(e), "traceback": traceback.format_exc()}}))
 """
         # Write runner to container
         runner_name = f"_runner_{tool_name}.py"

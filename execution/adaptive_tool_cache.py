@@ -1,30 +1,3 @@
-"""
-Adaptive Tool Cache (ATC) for IASCIS
-
-A sophisticated tool management system combining multiple caching strategies:
-- ARC (Adaptive Replacement Cache): LFU + LRU hybrid
-- Segmented LRU: Tier-based tool organization
-- Dynamic TTL: Adaptive time-to-live based on frequency
-- Semantic Grouping: Tools categorized by functionality
-
-Decay Score Formula (Linear Frequency Scaling):
-    half_life = 9400 × (1 + min(frequency × 0.01, 2.0))
-    score = exp(-TSU / half_life)
-
-Where:
-    - 9400 seconds (~2.6 hours) = base half-life
-    - Frequency bonus = 0.01 per call (gentle linear scaling)
-    - Max bonus = 2.0 (total multiplier 3x) at 200+ calls
-
-Examples (Survival Time):
-    - 1 call:   6.0 hours (baseline)
-    - 10 calls: 6.6 hours
-    - 100 calls: 12.0 hours
-    - 200+ calls: 18.0 hours (max capped)
-
-Tools with score < 0.1 are candidates for eviction.
-"""
-
 import time
 import math
 import threading
@@ -47,11 +20,7 @@ class ToolTier(Enum):
 @dataclass
 class ToolMetrics:
     """
-    Comprehensive metrics for a single tool.
-    Aligns with METRICS_DOCUMENTATION.md tool metrics.
-    
-    Note: Success/failure tracking is removed because tools are validated
-    before registration, so they always succeed when executed.
+    Tool metrics
     """
     name: str
     

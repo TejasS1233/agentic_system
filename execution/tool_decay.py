@@ -1,27 +1,3 @@
-"""
-Tool Decay Module - Backward Compatibility Layer
-
-This module provides backward compatibility with the original ToolDecayManager
-while using the new AdaptiveToolCache under the hood.
-
-For new implementations, use AdaptiveToolCache directly:
-    from execution.adaptive_tool_cache import AdaptiveToolCache
-
-Decay Score Formula (Linear Frequency Scaling):
-    half_life = 9400 × (1 + min(frequency × 0.01, 2.0))
-    score = exp(-TSU / half_life)
-
-Where:
-    - 9400 seconds (~2.6 hours) = base half-life
-    - Frequency bonus = 0.01 per call
-    - Max bonus = 2.0 (total multiplier 3x) at 200+ calls
-
-Examples (Survival Time):
-    - 1 call:   6.0 hours (baseline)
-    - 10 calls: 6.6 hours
-    - 100 calls: 12.0 hours
-    - 200+ calls: 18.0 hours
-"""
 
 from typing import Optional, List, Dict, Any, Callable
 from dataclasses import dataclass, field
@@ -44,17 +20,7 @@ from .adaptive_tool_cache import (
 @dataclass
 class ToolUsageStats:
     """
-    Backward-compatible wrapper for ToolMetrics.
-    
-    Provides the original ToolUsageStats interface while internally
-    using the new ToolMetrics structure.
-    
-    Original interface:
-        - name, last_used, use_count, created_at
-        - mark_used(), is_expired(), time_since_last_use()
-    
-    Note: Success/failure tracking is removed because tools always succeed
-    (they are validated before registration).
+    Retrieves tool metrics 
     """
     name: str
     last_used: float = field(default_factory=time.time)

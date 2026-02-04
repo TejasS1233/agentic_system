@@ -793,3 +793,287 @@ number
 2026-02-04 20:54:20 | INFO | __main__:main:190 | Zone: public
 2026-02-04 20:54:25 | INFO | architecture.sandbox:stop:163 | Sandbox container stopped: 3da4663dca65
 2026-02-04 20:54:25 | INFO | __main__:_shutdown_runtime:92 | Runtime shutdown complete
+2026-02-04 21:02:43 | INFO | __main__:main:184 | Starting IASCIS with Sandbox
+2026-02-04 21:02:43 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-04 21:02:43 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-04 21:02:43 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-04 21:02:43 | INFO | __main__:__init__:64 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace)
+2026-02-04 21:02:43 | INFO | architecture.sandbox:__init__:132 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools
+2026-02-04 21:02:43 | INFO | architecture.sandbox:start:156 | Sandbox container started: 3b81624ede30
+2026-02-04 21:02:43 | INFO | architecture.executor:load_registry:33 | Loaded 12 tool definitions
+2026-02-04 21:02:43 | INFO | architecture.llm_manager:__init__:78 | Loaded 1 GROQ API key(s)
+2026-02-04 21:02:43 | INFO | architecture.executor:__init__:26 | ExecutorAgent initialized with Sandbox
+2026-02-04 21:02:47 | INFO | architecture.orchestrator:__init__:52 | Orchestrator initialized with ToolRetriever
+2026-02-04 21:02:47 | INFO | __main__:_initialize_runtime:83 | Runtime initialized with Sandbox
+2026-02-04 21:02:47 | INFO | __main__:run:112 | Task received: Download the top 10 Hacker News stories, extract their titles, count the word frequency across all t...
+2026-02-04 21:02:47 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-04 21:02:47 | INFO | __main__:run:116 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-04 21:02:47 | INFO | architecture.orchestrator:run:56 | Processing,Download the top 10 Hacker News stories, extract their titles, count the word fr...
+2026-02-04 21:02:48 | INFO | architecture.orchestrator:run:59 | Decomposed into 5 subtasks
+2026-02-04 21:02:48 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_1 → SocialMediaProfiler (dist: 1.584, matched: False)
+2026-02-04 21:02:48 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_2 → ExtractProductNameTool (dist: 1.191, matched: False)
+2026-02-04 21:02:48 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_3 → TextToUppercaseTool (dist: 1.454, matched: False)
+2026-02-04 21:02:48 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_4 → ExtractProductNameTool (dist: 1.555, matched: False)
+2026-02-04 21:02:48 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_5 → SpotifyGenrePlotter (dist: 1.364, matched: False)
+2026-02-04 21:02:48 | INFO | architecture.orchestrator:_ensure_tools:156 | Toolsmith creating: Download the top 10 Hacker News stories
+2026-02-04 21:02:49 | INFO | architecture.orchestrator:_ensure_tools:159 | Toolsmith: Successfully created HackerNewsDownloader with tags ['download']....
+2026-02-04 21:02:49 | INFO | architecture.orchestrator:_ensure_tools:183 | Tool assigned: HackerNewsDownloader
+2026-02-04 21:02:49 | INFO | architecture.orchestrator:_ensure_tools:156 | Toolsmith creating: Extract titles from the downloaded stories
+2026-02-04 21:02:51 | INFO | architecture.orchestrator:_ensure_tools:159 | Toolsmith: Successfully created ExtractTitlesTool with tags ['text']....
+2026-02-04 21:02:51 | INFO | architecture.orchestrator:_ensure_tools:183 | Tool assigned: ExtractTitlesTool
+2026-02-04 21:02:51 | INFO | architecture.orchestrator:_ensure_tools:156 | Toolsmith creating: Count the word frequency across all titles
+2026-02-04 21:02:52 | INFO | architecture.orchestrator:_ensure_tools:159 | Toolsmith: Successfully created WordFrequencyTool with tags ['text']....
+2026-02-04 21:02:52 | INFO | architecture.orchestrator:_ensure_tools:183 | Tool assigned: WordFrequencyTool
+2026-02-04 21:02:52 | INFO | architecture.orchestrator:_ensure_tools:156 | Toolsmith creating: Identify the top 5 most common words
+2026-02-04 21:02:53 | INFO | architecture.orchestrator:_ensure_tools:159 | Toolsmith: Successfully created MostCommonWordsTool with tags ['text']....
+2026-02-04 21:02:53 | INFO | architecture.orchestrator:_ensure_tools:183 | Tool assigned: MostCommonWordsTool
+2026-02-04 21:02:53 | INFO | architecture.orchestrator:_ensure_tools:156 | Toolsmith creating: Create a bar chart of the top 5 most common words
+2026-02-04 21:02:53 | WARNING | architecture.llm_manager:generate:146 | Rate limit hit on key 1, attempt 1/3
+2026-02-04 21:02:53 | INFO | architecture.llm_manager:generate:152 | Retrying in 1.0s...
+2026-02-04 21:02:54 | WARNING | architecture.llm_manager:generate:146 | Rate limit hit on key 1, attempt 2/3
+2026-02-04 21:02:54 | INFO | architecture.llm_manager:generate:152 | Retrying in 2.0s...
+2026-02-04 21:02:57 | INFO | architecture.orchestrator:_ensure_tools:159 | Toolsmith: Successfully created TopWordsBarChart with tags ['chart']....
+2026-02-04 21:02:57 | INFO | architecture.orchestrator:_ensure_tools:183 | Tool assigned: TopWordsBarChart
+2026-02-04 21:02:57 | INFO | architecture.executor:execute:39 | Executing plan: Download the top 10 Hacker News stories, extract their titles, count the word frequency across all titles, and create a bar chart of the top 5 most common words
+2026-02-04 21:02:57 | INFO | architecture.executor:execute:40 | Total steps: 5
+2026-02-04 21:02:57 | INFO | architecture.executor:_execute_step:69 | Step 1: Download the top 10 Hacker News stories using HackerNewsDownloader
+2026-02-04 21:02:57 | INFO | architecture.executor:load_registry:33 | Loaded 17 tool definitions
+2026-02-04 21:02:57 | WARNING | architecture.llm_manager:generate:146 | Rate limit hit on key 1, attempt 1/3
+2026-02-04 21:02:57 | INFO | architecture.llm_manager:generate:152 | Retrying in 1.0s...
+2026-02-04 21:02:58 | INFO | architecture.executor:_infer_args:162 | LLM extracted args: {'num_stories': 10}
+2026-02-04 21:02:58 | INFO | architecture.executor:_execute_step:103 | DEBUG: Executor inferred args = {'num_stories': 10}
+2026-02-04 21:02:58 | INFO | architecture.executor:_execute_step:104 | DEBUG: Args type = <class 'dict'>
+2026-02-04 21:02:58 | INFO | architecture.executor:_execute_step:107 | DEBUG: Calling sandbox.execute_with_args(HackerNewsDownloader, hacker_news_downloader.py, {'num_stories': 10})
+2026-02-04 21:02:58 | INFO | architecture.sandbox:_install_deps:176 | Installing dependencies: pydantic requests pydantic
+2026-02-04 21:03:02 | INFO | architecture.sandbox:execute_with_args:274 | DEBUG: sandbox received args = {'num_stories': 10}
+2026-02-04 21:03:02 | INFO | architecture.sandbox:execute_with_args:275 | DEBUG: args_json = {"num_stories": 10}
+2026-02-04 21:03:02 | INFO | architecture.sandbox:execute_with_args:276 | DEBUG: Runner script line: args = json.loads('{"num_stories": 10}')
+2026-02-04 21:03:02 | INFO | architecture.sandbox:execute_with_args:281 | Executing tool with args: HackerNewsDownloader
+2026-02-04 21:03:02 | INFO | architecture.sandbox:execute_with_args:282 | Args JSON being passed: {"num_stories": 10}
+2026-02-04 21:03:02 | ERROR | architecture.executor:_execute_step:120 | Step 1: Failed after 4.28s - No Tool class found
+2026-02-04 21:03:02 | INFO | __main__:main:189 | Completed in 15161.44ms
+2026-02-04 21:03:02 | INFO | __main__:main:190 | Zone: public
+2026-02-04 21:03:07 | INFO | architecture.sandbox:stop:163 | Sandbox container stopped: 3b81624ede30
+2026-02-04 21:03:07 | INFO | __main__:_shutdown_runtime:92 | Runtime shutdown complete
+2026-02-04 21:05:08 | INFO | __main__:main:184 | Starting IASCIS with Sandbox
+2026-02-04 21:05:08 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-04 21:05:08 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-04 21:05:08 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-04 21:05:08 | INFO | __main__:__init__:64 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace)
+2026-02-04 21:05:08 | INFO | architecture.sandbox:__init__:132 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools
+2026-02-04 21:05:09 | INFO | architecture.sandbox:start:156 | Sandbox container started: 350f3fd1ba5a
+2026-02-04 21:05:09 | INFO | architecture.executor:load_registry:33 | Loaded 17 tool definitions
+2026-02-04 21:05:09 | INFO | architecture.llm_manager:__init__:78 | Loaded 1 GROQ API key(s)
+2026-02-04 21:05:09 | INFO | architecture.executor:__init__:26 | ExecutorAgent initialized with Sandbox
+2026-02-04 21:05:12 | INFO | architecture.orchestrator:__init__:52 | Orchestrator initialized with ToolRetriever
+2026-02-04 21:05:12 | INFO | __main__:_initialize_runtime:83 | Runtime initialized with Sandbox
+2026-02-04 21:05:12 | INFO | __main__:run:112 | Task received: Calculate the square root of 144, then multiply by 2...
+2026-02-04 21:05:12 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-04 21:05:12 | INFO | __main__:run:116 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-04 21:05:12 | INFO | architecture.orchestrator:run:56 | Processing,Calculate the square root of 144, then multiply by 2...
+2026-02-04 21:05:13 | INFO | architecture.orchestrator:run:59 | Decomposed into 2 subtasks
+2026-02-04 21:05:13 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_1 → SquareRootTool (dist: 0.704, matched: True)
+2026-02-04 21:05:13 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_2 → SquareRootTool (dist: 1.206, matched: False)
+2026-02-04 21:05:13 | INFO | architecture.orchestrator:_ensure_tools:156 | Toolsmith creating: Multiply the result by 2
+2026-02-04 21:05:14 | INFO | architecture.orchestrator:_ensure_tools:159 | Toolsmith: Successfully created MultiplyByTwoTool with tags ['arithmetic']....
+2026-02-04 21:05:14 | INFO | architecture.orchestrator:_ensure_tools:183 | Tool assigned: MultiplyByTwoTool
+2026-02-04 21:05:14 | INFO | architecture.executor:execute:39 | Executing plan: Calculate the square root of 144, then multiply by 2
+2026-02-04 21:05:14 | INFO | architecture.executor:execute:40 | Total steps: 2
+2026-02-04 21:05:14 | INFO | architecture.executor:_execute_step:69 | Step 1: Calculate the square root of 144 using SquareRootTool
+2026-02-04 21:05:14 | INFO | architecture.executor:load_registry:33 | Loaded 18 tool definitions
+2026-02-04 21:05:14 | INFO | architecture.executor:_infer_args:162 | LLM extracted args: {'number': 144}
+2026-02-04 21:05:14 | INFO | architecture.executor:_execute_step:103 | DEBUG: Executor inferred args = {'number': 144}
+2026-02-04 21:05:14 | INFO | architecture.executor:_execute_step:104 | DEBUG: Args type = <class 'dict'>
+2026-02-04 21:05:14 | INFO | architecture.executor:_execute_step:107 | DEBUG: Calling sandbox.execute_with_args(SquareRootTool, square_root_tool.py, {'number': 144})
+2026-02-04 21:05:14 | INFO | architecture.sandbox:_install_deps:176 | Installing dependencies: pydantic pydantic
+2026-02-04 21:05:18 | INFO | architecture.sandbox:execute_with_args:286 | DEBUG: sandbox received args = {'number': 144}
+2026-02-04 21:05:18 | INFO | architecture.sandbox:execute_with_args:287 | DEBUG: args_json = {"number": 144}
+2026-02-04 21:05:18 | INFO | architecture.sandbox:execute_with_args:288 | DEBUG: Runner script line: args = json.loads('{"number": 144}')
+2026-02-04 21:05:18 | INFO | architecture.sandbox:execute_with_args:293 | Executing tool with args: SquareRootTool
+2026-02-04 21:05:18 | INFO | architecture.sandbox:execute_with_args:294 | Args JSON being passed: {"number": 144}
+2026-02-04 21:05:18 | INFO | architecture.executor:_execute_step:116 | Step 1: Completed in 3.98s
+2026-02-04 21:05:18 | INFO | architecture.executor:_execute_step:69 | Step 2: Multiply the result by 2 using MultiplyByTwoTool
+2026-02-04 21:05:18 | INFO | architecture.executor:load_registry:33 | Loaded 18 tool definitions
+2026-02-04 21:05:18 | ERROR | __main__:run:121 | Execution failed: 'float' object is not subscriptable
+2026-02-04 21:05:18 | INFO | __main__:main:189 | Completed in 5787.56ms
+2026-02-04 21:05:18 | INFO | __main__:main:190 | Zone: public
+2026-02-04 21:05:23 | INFO | architecture.sandbox:stop:163 | Sandbox container stopped: 350f3fd1ba5a
+2026-02-04 21:05:23 | INFO | __main__:_shutdown_runtime:92 | Runtime shutdown complete
+2026-02-04 21:06:06 | INFO | __main__:main:184 | Starting IASCIS with Sandbox
+2026-02-04 21:06:06 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-04 21:06:06 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-04 21:06:06 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-04 21:06:06 | INFO | __main__:__init__:64 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace)
+2026-02-04 21:06:06 | INFO | architecture.sandbox:__init__:132 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools
+2026-02-04 21:06:06 | INFO | architecture.sandbox:start:156 | Sandbox container started: 5df0c66b63ea
+2026-02-04 21:06:06 | INFO | architecture.executor:load_registry:33 | Loaded 18 tool definitions
+2026-02-04 21:06:06 | INFO | architecture.llm_manager:__init__:78 | Loaded 1 GROQ API key(s)
+2026-02-04 21:06:06 | INFO | architecture.executor:__init__:26 | ExecutorAgent initialized with Sandbox
+2026-02-04 21:06:10 | INFO | architecture.orchestrator:__init__:52 | Orchestrator initialized with ToolRetriever
+2026-02-04 21:06:10 | INFO | __main__:_initialize_runtime:83 | Runtime initialized with Sandbox
+2026-02-04 21:06:10 | INFO | __main__:run:112 | Task received: Enter your task (or press Enter for demo): Download the top 10 Hacker News stories, extract their ti...
+2026-02-04 21:06:10 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-04 21:06:10 | INFO | __main__:run:116 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-04 21:06:10 | INFO | architecture.orchestrator:run:56 | Processing,Enter your task (or press Enter for demo): Download the top 10 Hacker News stori...
+2026-02-04 21:06:11 | INFO | architecture.orchestrator:run:59 | Decomposed into 5 subtasks
+2026-02-04 21:06:11 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_1 → HackerNewsDownloader (dist: 0.537, matched: True)
+2026-02-04 21:06:11 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_2 → ExtractTitlesTool (dist: 0.347, matched: True)
+2026-02-04 21:06:11 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_3 → WordFrequencyTool (dist: 0.484, matched: True)
+2026-02-04 21:06:11 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_4 → MostCommonWordsTool (dist: 0.731, matched: True)
+2026-02-04 21:06:11 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_5 → TopWordsBarChart (dist: 0.366, matched: True)
+2026-02-04 21:06:11 | INFO | architecture.executor:execute:39 | Executing plan: Download the top 10 Hacker News stories, extract their titles, count the word frequency across all titles, and create a bar chart of the top 5 most common words
+2026-02-04 21:06:11 | INFO | architecture.executor:execute:40 | Total steps: 5
+2026-02-04 21:06:11 | INFO | architecture.executor:_execute_step:69 | Step 1: Download the top 10 Hacker News stories using HackerNewsDownloader
+2026-02-04 21:06:11 | INFO | architecture.executor:load_registry:33 | Loaded 18 tool definitions
+2026-02-04 21:06:11 | INFO | architecture.executor:_infer_args:162 | LLM extracted args: {'num_stories': 10}
+2026-02-04 21:06:11 | INFO | architecture.executor:_execute_step:103 | DEBUG: Executor inferred args = {'num_stories': 10}
+2026-02-04 21:06:11 | INFO | architecture.executor:_execute_step:104 | DEBUG: Args type = <class 'dict'>
+2026-02-04 21:06:11 | INFO | architecture.executor:_execute_step:107 | DEBUG: Calling sandbox.execute_with_args(HackerNewsDownloader, hacker_news_downloader.py, {'num_stories': 10})
+2026-02-04 21:06:11 | INFO | architecture.sandbox:_install_deps:176 | Installing dependencies: pydantic requests pydantic
+2026-02-04 21:06:15 | INFO | architecture.sandbox:execute_with_args:286 | DEBUG: sandbox received args = {'num_stories': 10}
+2026-02-04 21:06:15 | INFO | architecture.sandbox:execute_with_args:287 | DEBUG: args_json = {"num_stories": 10}
+2026-02-04 21:06:15 | INFO | architecture.sandbox:execute_with_args:288 | DEBUG: Runner script line: args = json.loads('{"num_stories": 10}')
+2026-02-04 21:06:15 | INFO | architecture.sandbox:execute_with_args:293 | Executing tool with args: HackerNewsDownloader
+2026-02-04 21:06:15 | INFO | architecture.sandbox:execute_with_args:294 | Args JSON being passed: {"num_stories": 10}
+2026-02-04 21:06:22 | INFO | architecture.executor:_execute_step:116 | Step 1: Completed in 11.26s
+2026-02-04 21:06:22 | INFO | architecture.executor:_execute_step:69 | Step 2: Extract titles from the downloaded stories using ExtractTitlesTool
+2026-02-04 21:06:22 | INFO | architecture.executor:load_registry:33 | Loaded 18 tool definitions
+2026-02-04 21:06:22 | ERROR | __main__:run:121 | Execution failed: slice(None, 500, None)
+2026-02-04 21:06:22 | INFO | __main__:main:189 | Completed in 12291.89ms
+2026-02-04 21:06:22 | INFO | __main__:main:190 | Zone: public
+2026-02-04 21:06:27 | INFO | architecture.sandbox:stop:163 | Sandbox container stopped: 5df0c66b63ea
+2026-02-04 21:06:27 | INFO | __main__:_shutdown_runtime:92 | Runtime shutdown complete
+2026-02-04 21:07:06 | INFO | __main__:main:184 | Starting IASCIS with Sandbox
+2026-02-04 21:07:06 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-04 21:07:06 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-04 21:07:06 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-04 21:07:06 | INFO | __main__:__init__:64 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace)
+2026-02-04 21:07:06 | INFO | architecture.sandbox:__init__:132 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools
+2026-02-04 21:07:07 | INFO | architecture.sandbox:start:156 | Sandbox container started: 1a6fb624c440
+2026-02-04 21:07:07 | INFO | architecture.executor:load_registry:33 | Loaded 18 tool definitions
+2026-02-04 21:07:07 | INFO | architecture.llm_manager:__init__:78 | Loaded 1 GROQ API key(s)
+2026-02-04 21:07:07 | INFO | architecture.executor:__init__:26 | ExecutorAgent initialized with Sandbox
+2026-02-04 21:07:10 | INFO | architecture.orchestrator:__init__:52 | Orchestrator initialized with ToolRetriever
+2026-02-04 21:07:10 | INFO | __main__:_initialize_runtime:83 | Runtime initialized with Sandbox
+2026-02-04 21:07:10 | INFO | __main__:run:112 | Task received: Download the top 10 Hacker News stories, extract their titles, count the word frequency across all t...
+2026-02-04 21:07:10 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-04 21:07:10 | INFO | __main__:run:116 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-04 21:07:10 | INFO | architecture.orchestrator:run:56 | Processing,Download the top 10 Hacker News stories, extract their titles, count the word fr...
+2026-02-04 21:07:11 | INFO | architecture.orchestrator:run:59 | Decomposed into 5 subtasks
+2026-02-04 21:07:11 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_1 → HackerNewsDownloader (dist: 0.521, matched: True)
+2026-02-04 21:07:11 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_2 → ExtractTitlesTool (dist: 0.629, matched: True)
+2026-02-04 21:07:11 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_3 → WordFrequencyTool (dist: 0.484, matched: True)
+2026-02-04 21:07:11 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_4 → MostCommonWordsTool (dist: 0.731, matched: True)
+2026-02-04 21:07:11 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_5 → TopWordsBarChart (dist: 0.366, matched: True)
+2026-02-04 21:07:11 | INFO | architecture.executor:execute:39 | Executing plan: Download the top 10 Hacker News stories, extract their titles, count the word frequency across all titles, and create a bar chart of the top 5 most common words
+2026-02-04 21:07:11 | INFO | architecture.executor:execute:40 | Total steps: 5
+2026-02-04 21:07:11 | INFO | architecture.executor:_execute_step:69 | Step 1: Download the top 10 Hacker News stories from the web using HackerNewsDownloader
+2026-02-04 21:07:11 | INFO | architecture.executor:load_registry:33 | Loaded 18 tool definitions
+2026-02-04 21:07:11 | INFO | architecture.executor:_infer_args:162 | LLM extracted args: {'num_stories': 10}
+2026-02-04 21:07:11 | INFO | architecture.executor:_execute_step:103 | DEBUG: Executor inferred args = {'num_stories': 10}
+2026-02-04 21:07:11 | INFO | architecture.executor:_execute_step:104 | DEBUG: Args type = <class 'dict'>
+2026-02-04 21:07:11 | INFO | architecture.executor:_execute_step:107 | DEBUG: Calling sandbox.execute_with_args(HackerNewsDownloader, hacker_news_downloader.py, {'num_stories': 10})
+2026-02-04 21:07:11 | INFO | architecture.sandbox:_install_deps:176 | Installing dependencies: pydantic requests pydantic
+2026-02-04 21:07:15 | INFO | architecture.sandbox:execute_with_args:286 | DEBUG: sandbox received args = {'num_stories': 10}
+2026-02-04 21:07:15 | INFO | architecture.sandbox:execute_with_args:287 | DEBUG: args_json = {"num_stories": 10}
+2026-02-04 21:07:15 | INFO | architecture.sandbox:execute_with_args:288 | DEBUG: Runner script line: args = json.loads('{"num_stories": 10}')
+2026-02-04 21:07:15 | INFO | architecture.sandbox:execute_with_args:293 | Executing tool with args: HackerNewsDownloader
+2026-02-04 21:07:15 | INFO | architecture.sandbox:execute_with_args:294 | Args JSON being passed: {"num_stories": 10}
+2026-02-04 21:07:23 | INFO | architecture.executor:_execute_step:116 | Step 1: Completed in 11.56s
+2026-02-04 21:07:23 | INFO | architecture.executor:_execute_step:69 | Step 2: Extract the titles from the downloaded Hacker News stories using ExtractTitlesTool
+2026-02-04 21:07:23 | INFO | architecture.executor:load_registry:33 | Loaded 18 tool definitions
+2026-02-04 21:07:23 | ERROR | __main__:run:121 | Execution failed: slice(None, 500, None)
+2026-02-04 21:07:23 | INFO | __main__:main:189 | Completed in 12511.66ms
+2026-02-04 21:07:23 | INFO | __main__:main:190 | Zone: public
+2026-02-04 21:07:28 | INFO | architecture.sandbox:stop:163 | Sandbox container stopped: 1a6fb624c440
+2026-02-04 21:07:28 | INFO | __main__:_shutdown_runtime:92 | Runtime shutdown complete
+2026-02-04 21:08:23 | INFO | __main__:main:184 | Starting IASCIS with Sandbox
+2026-02-04 21:08:23 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-04 21:08:23 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-04 21:08:23 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-04 21:08:23 | INFO | __main__:__init__:64 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace)
+2026-02-04 21:08:23 | INFO | architecture.sandbox:__init__:132 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools
+2026-02-04 21:08:23 | INFO | architecture.sandbox:start:156 | Sandbox container started: c5acced9cb24
+2026-02-04 21:08:23 | INFO | architecture.executor:load_registry:33 | Loaded 18 tool definitions
+2026-02-04 21:08:23 | INFO | architecture.llm_manager:__init__:78 | Loaded 1 GROQ API key(s)
+2026-02-04 21:08:23 | INFO | architecture.executor:__init__:26 | ExecutorAgent initialized with Sandbox
+2026-02-04 21:08:27 | INFO | architecture.orchestrator:__init__:52 | Orchestrator initialized with ToolRetriever
+2026-02-04 21:08:27 | INFO | __main__:_initialize_runtime:83 | Runtime initialized with Sandbox
+2026-02-04 21:08:27 | INFO | __main__:run:112 | Task received: Download the top 10 Hacker News stories, extract their titles, count the word frequency across all t...
+2026-02-04 21:08:27 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-04 21:08:27 | INFO | __main__:run:116 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-04 21:08:27 | INFO | architecture.orchestrator:run:56 | Processing,Download the top 10 Hacker News stories, extract their titles, count the word fr...
+2026-02-04 21:08:28 | INFO | architecture.orchestrator:run:59 | Decomposed into 5 subtasks
+2026-02-04 21:08:28 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_1 → HackerNewsDownloader (dist: 0.521, matched: True)
+2026-02-04 21:08:28 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_2 → ExtractTitlesTool (dist: 0.367, matched: True)
+2026-02-04 21:08:28 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_3 → WordFrequencyTool (dist: 0.484, matched: True)
+2026-02-04 21:08:28 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_4 → MostCommonWordsTool (dist: 0.731, matched: True)
+2026-02-04 21:08:28 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_5 → TopWordsBarChart (dist: 0.366, matched: True)
+2026-02-04 21:08:28 | INFO | architecture.executor:execute:39 | Executing plan: Download the top 10 Hacker News stories, extract their titles, count the word frequency across all titles, and create a bar chart of the top 5 most common words
+2026-02-04 21:08:28 | INFO | architecture.executor:execute:40 | Total steps: 5
+2026-02-04 21:08:28 | INFO | architecture.executor:_execute_step:69 | Step 1: Download the top 10 Hacker News stories from the web using HackerNewsDownloader
+2026-02-04 21:08:28 | INFO | architecture.executor:load_registry:33 | Loaded 18 tool definitions
+2026-02-04 21:08:28 | INFO | architecture.executor:_infer_args:162 | LLM extracted args: {'num_stories': 10}
+2026-02-04 21:08:28 | INFO | architecture.executor:_execute_step:103 | DEBUG: Executor inferred args = {'num_stories': 10}
+2026-02-04 21:08:28 | INFO | architecture.executor:_execute_step:104 | DEBUG: Args type = <class 'dict'>
+2026-02-04 21:08:28 | INFO | architecture.executor:_execute_step:107 | DEBUG: Calling sandbox.execute_with_args(HackerNewsDownloader, hacker_news_downloader.py, {'num_stories': 10})
+2026-02-04 21:08:28 | INFO | architecture.sandbox:_install_deps:176 | Installing dependencies: pydantic requests pydantic
+2026-02-04 21:08:34 | INFO | architecture.sandbox:execute_with_args:286 | DEBUG: sandbox received args = {'num_stories': 10}
+2026-02-04 21:08:34 | INFO | architecture.sandbox:execute_with_args:287 | DEBUG: args_json = {"num_stories": 10}
+2026-02-04 21:08:34 | INFO | architecture.sandbox:execute_with_args:288 | DEBUG: Runner script line: args = json.loads('{"num_stories": 10}')
+2026-02-04 21:08:34 | INFO | architecture.sandbox:execute_with_args:293 | Executing tool with args: HackerNewsDownloader
+2026-02-04 21:08:34 | INFO | architecture.sandbox:execute_with_args:294 | Args JSON being passed: {"num_stories": 10}
+2026-02-04 21:08:41 | INFO | architecture.executor:_execute_step:116 | Step 1: Completed in 12.17s
+2026-02-04 21:08:41 | INFO | architecture.executor:_execute_step:69 | Step 2: Extract the titles from the downloaded stories using ExtractTitlesTool
+2026-02-04 21:08:41 | INFO | architecture.executor:load_registry:33 | Loaded 18 tool definitions
+2026-02-04 21:08:41 | INFO | architecture.executor:_infer_args:162 | LLM extracted args: {'filepath': 'stories.json'}
+2026-02-04 21:08:41 | INFO | architecture.executor:_execute_step:103 | DEBUG: Executor inferred args = {'filepath': 'stories.json'}
+2026-02-04 21:08:41 | INFO | architecture.executor:_execute_step:104 | DEBUG: Args type = <class 'dict'>
+2026-02-04 21:08:41 | INFO | architecture.executor:_execute_step:107 | DEBUG: Calling sandbox.execute_with_args(ExtractTitlesTool, extract_titles.py, {'filepath': 'stories.json'})
+2026-02-04 21:08:41 | INFO | architecture.sandbox:_install_deps:176 | Installing dependencies: beautifulsoup4
+2026-02-04 21:08:42 | INFO | architecture.sandbox:execute_with_args:286 | DEBUG: sandbox received args = {'filepath': 'stories.json'}
+2026-02-04 21:08:42 | INFO | architecture.sandbox:execute_with_args:287 | DEBUG: args_json = {"filepath": "stories.json"}
+2026-02-04 21:08:42 | INFO | architecture.sandbox:execute_with_args:288 | DEBUG: Runner script line: args = json.loads('{"filepath": "stories.json"}')
+2026-02-04 21:08:42 | INFO | architecture.sandbox:execute_with_args:293 | Executing tool with args: ExtractTitlesTool
+2026-02-04 21:08:42 | INFO | architecture.sandbox:execute_with_args:294 | Args JSON being passed: {"filepath": "stories.json"}
+2026-02-04 21:08:42 | INFO | architecture.executor:_execute_step:116 | Step 2: Completed in 1.59s
+2026-02-04 21:08:42 | INFO | architecture.executor:_execute_step:69 | Step 3: Count the word frequency across all extracted titles using WordFrequencyTool
+2026-02-04 21:08:42 | INFO | architecture.executor:load_registry:33 | Loaded 18 tool definitions
+2026-02-04 21:08:42 | INFO | architecture.executor:_infer_args:162 | LLM extracted args: {'titles': None}
+2026-02-04 21:08:42 | INFO | architecture.executor:_execute_step:103 | DEBUG: Executor inferred args = {'titles': None}
+2026-02-04 21:08:42 | INFO | architecture.executor:_execute_step:104 | DEBUG: Args type = <class 'dict'>
+2026-02-04 21:08:42 | INFO | architecture.executor:_execute_step:107 | DEBUG: Calling sandbox.execute_with_args(WordFrequencyTool, word_frequency.py, {'titles': None})
+2026-02-04 21:08:42 | INFO | architecture.sandbox:_install_deps:176 | Installing dependencies: nltk pandas
+2026-02-04 21:08:55 | INFO | architecture.sandbox:execute_with_args:286 | DEBUG: sandbox received args = {'titles': None}
+2026-02-04 21:08:55 | INFO | architecture.sandbox:execute_with_args:287 | DEBUG: args_json = {"titles": null}
+2026-02-04 21:08:55 | INFO | architecture.sandbox:execute_with_args:288 | DEBUG: Runner script line: args = json.loads('{"titles": null}')
+2026-02-04 21:08:55 | INFO | architecture.sandbox:execute_with_args:293 | Executing tool with args: WordFrequencyTool
+2026-02-04 21:08:55 | INFO | architecture.sandbox:execute_with_args:294 | Args JSON being passed: {"titles": null}
+2026-02-04 21:08:56 | ERROR | architecture.executor:_execute_step:120 | Step 3: Failed after 13.73s - 
+**********************************************************************
+  Resource [93mstopwords[0m not found.
+  Please use the NLTK Downloader to obtain the resource:
+
+  [31m>>> import nltk
+  >>> nltk.download('stopwords')
+  [0m
+  For more information see: https://www.nltk.org/data.html
+
+  Attempted to load [93mcorpora/stopwords[0m
+
+  Searched in:
+    - '/root/nltk_data'
+    - '/usr/local/nltk_data'
+    - '/usr/local/share/nltk_data'
+    - '/usr/local/lib/nltk_data'
+    - '/usr/share/nltk_data'
+    - '/usr/local/share/nltk_data'
+    - '/usr/lib/nltk_data'
+    - '/usr/local/lib/nltk_data'
+**********************************************************************
+
+2026-02-04 21:08:56 | INFO | __main__:main:189 | Completed in 28892.03ms
+2026-02-04 21:08:56 | INFO | __main__:main:190 | Zone: public
+2026-02-04 21:09:01 | INFO | architecture.sandbox:stop:163 | Sandbox container stopped: c5acced9cb24
+2026-02-04 21:09:01 | INFO | __main__:_shutdown_runtime:92 | Runtime shutdown complete
+2026-02-04 21:44:19 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)

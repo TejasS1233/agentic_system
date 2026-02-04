@@ -51,6 +51,54 @@ class Toolsmith:
         # Initialize metrics if not present
         if not os.path.exists(self.metrics_path):
             self._log_metrics("init", {"message": "Metrics initialized"})
+        
+        # Migrate legacy registry entries to include status fields
+        self._migrate_registry_status()
+
+    def _migrate_registry_status(self):
+        """
+        Migrate legacy registry entries to include status and timestamp fields.
+        This ensures backward compatibility with older registries.
+        """
+        try:
+            with open(self.registry_path, "r") as f:
+                data = json.load(f)
+            
+            modified = False
+            current_time = time.time()
+            
+            for name, meta in data.items():
+                # Add status if missing
+                if "status" not in meta:
+                    meta["status"] = "active"
+                    modified = True
+                
+                # Add created_at if missing (use current time as fallback)
+                if "created_at" not in meta:
+                    meta["created_at"] = current_time
+                    modified = True
+                
+                # Add updated_at if missing
+                if "updated_at" not in meta:
+                    meta["updated_at"] = current_time
+                    modified = True
+                
+                # Add use_count if missing (default to 0)
+                if "use_count" not in meta:
+                    meta["use_count"] = 0
+                    modified = True
+                
+                # Add last_used if missing (default to None)
+                if "last_used" not in meta:
+                    meta["last_used"] = None
+                    modified = True
+            
+            if modified:
+                with open(self.registry_path, "w") as f:
+                    json.dump(data, f, indent=2)
+                print(f"[Toolsmith] Migrated registry entries to include status fields")
+        except Exception as e:
+            print(f"[Toolsmith] Registry migration failed: {e}")
 
         # ignore common words in tag matching
         self.stop_words = {
@@ -112,6 +160,72 @@ class Toolsmith:
                 json.dump(data, f, indent=2)
         except Exception as e:
             print(f"[Toolsmith] Metrics logging failed: {e}")
+
+    def get_tool_creation_timestamps(self) -> dict:
+        """
+        Get creation timestamps for all tools from metrics.json.
+        
+        Returns:
+            Dict mapping tool names to their creation timestamps (Unix epoch).
+            Tools that don't have a recorded creation time are not included.
+        """
+        timestamps = {}
+        try:
+            if os.path.exists(self.metrics_path):
+                with open(self.metrics_path, "r") as f:
+                    data = json.load(f)
+                
+                # Parse metrics to find tool_created events
+                for entry in data:
+                    if entry.get("event") == "tool_created":
+                        details = entry.get("details", {})
+                        tool_name = details.get("tool_name")
+                        if tool_name:
+                            # Use the timestamp from the entry
+                            timestamps[tool_name] = entry.get("timestamp")
+        except Exception as e:
+            print(f"[Toolsmith] Failed to read tool timestamps: {e}")
+        
+        return timestamps
+
+    def get_tool_last_used_timestamps(self) -> dict:
+        """
+        Get the last usage timestamp for all tools from metrics.json.
+        
+        This includes both tool_created events (creation = first "use") and
+        deduplication_hit events (tool was matched/used).
+        
+        Returns:
+            Dict mapping tool names to their last used timestamps (Unix epoch).
+        """
+        last_used = {}
+        try:
+            if os.path.exists(self.metrics_path):
+                with open(self.metrics_path, "r") as f:
+                    data = json.load(f)
+                
+                for entry in data:
+                    event = entry.get("event")
+                    details = entry.get("details", {})
+                    timestamp = entry.get("timestamp")
+                    
+                    if event == "tool_created":
+                        tool_name = details.get("tool_name")
+                        if tool_name:
+                            # Update if this is the most recent event
+                            if tool_name not in last_used or timestamp > last_used[tool_name]:
+                                last_used[tool_name] = timestamp
+                    
+                    elif event == "deduplication_hit":
+                        tool_name = details.get("matched_tool")
+                        if tool_name:
+                            if tool_name not in last_used or timestamp > last_used[tool_name]:
+                                last_used[tool_name] = timestamp
+        except Exception as e:
+            print(f"[Toolsmith] Failed to read last used timestamps: {e}")
+        
+        return last_used
+
 
     def _is_safe_code(self, code: str) -> bool:
         """
@@ -495,12 +609,19 @@ RULES:
         output_types=None,
         domain=None,
         pypi_package=None,
+        status="active"
     ):
         try:
             with open(self.registry_path, "r") as f:
                 data = json.load(f)
         except Exception:
             data = {}
+        
+        # Preserve existing fields if tool already exists
+        existing_entry = data.get(class_name, {})
+        created_at = existing_entry.get("created_at", time.time())
+        use_count = existing_entry.get("use_count", 0)  # Preserve use_count
+        last_used = existing_entry.get("last_used")  # Preserve last_used
 
         data[class_name] = {
             "file": file_name,
@@ -510,10 +631,103 @@ RULES:
             "output_types": output_types or [],
             "domain": domain or "",
             "pypi_package": pypi_package or "",
+            "status": status,  # active, inactive, deprecated, failed
+            "created_at": created_at,
+            "updated_at": time.time(),
+            "use_count": use_count,
+            "last_used": last_used
         }
 
         with open(self.registry_path, "w") as f:
             json.dump(data, f, indent=2)
+
+    def update_tool_status(self, tool_name: str, status: str) -> bool:
+        """
+        Update the status of a tool in the registry.
+        
+        Args:
+            tool_name: Name of the tool to update
+            status: New status - one of: active, inactive, deprecated, failed
+            
+        Returns:
+            True if successful, False if tool not found
+        """
+        valid_statuses = {"active", "inactive", "deprecated", "failed"}
+        if status not in valid_statuses:
+            print(f"[Toolsmith] Invalid status: {status}. Must be one of {valid_statuses}")
+            return False
+        
+        try:
+            with open(self.registry_path, "r") as f:
+                data = json.load(f)
+            
+            if tool_name not in data:
+                print(f"[Toolsmith] Tool not found in registry: {tool_name}")
+                return False
+            
+            data[tool_name]["status"] = status
+            data[tool_name]["updated_at"] = time.time()
+            
+            with open(self.registry_path, "w") as f:
+                json.dump(data, f, indent=2)
+            
+            self._log_metrics("status_change", {
+                "tool_name": tool_name,
+                "new_status": status
+            })
+            
+            print(f"[Toolsmith] Updated {tool_name} status to: {status}")
+            return True
+            
+        except Exception as e:
+            print(f"[Toolsmith] Failed to update tool status: {e}")
+            return False
+
+    def get_tool_status(self, tool_name: str) -> str:
+        """
+        Get the current status of a tool.
+        
+        Args:
+            tool_name: Name of the tool
+            
+        Returns:
+            Status string or "unknown" if tool not found
+        """
+        try:
+            with open(self.registry_path, "r") as f:
+                data = json.load(f)
+            
+            if tool_name in data:
+                return data[tool_name].get("status", "active")  # Default to active for legacy entries
+            return "unknown"
+        except Exception as e:
+            print(f"[Toolsmith] Failed to get tool status: {e}")
+            return "unknown"
+
+    def get_tools_by_status(self, status: str) -> list:
+        """
+        Get all tools with a specific status.
+        
+        Args:
+            status: Status to filter by (active, inactive, deprecated, failed)
+            
+        Returns:
+            List of tool names with the specified status
+        """
+        try:
+            with open(self.registry_path, "r") as f:
+                data = json.load(f)
+            
+            tools = []
+            for name, meta in data.items():
+                # Default to "active" for legacy entries without status
+                tool_status = meta.get("status", "active")
+                if tool_status == status:
+                    tools.append(name)
+            return tools
+        except Exception as e:
+            print(f"[Toolsmith] Failed to get tools by status: {e}")
+            return []
 
     def _detect_dependencies(self, code: str) -> list:
         """
