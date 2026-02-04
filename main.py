@@ -1,12 +1,11 @@
 """
 IASCIS - Independent Autonomous Self-Correcting Intelligent System
 
-Main entry point integrating all architecture components:
-- Orchestrator: High-level planning
-- Dispatcher: Privacy-aware routing (public/private zones)
-- Gatekeeper: Three-layer static safety (AST, vulnerability, state)
-- Reflector: Execution analysis and self-correction
+Main entry point integrating:
+- Orchestrator: Domain-based decomposition + tool retrieval
+- Executor: Plan execution with dependency ordering
 - Toolsmith: Dynamic tool generation
+- Gatekeeper: Safety validation
 """
 
 import os
@@ -17,16 +16,17 @@ from dotenv import load_dotenv
 from architecture.dispatcher import Dispatcher
 from architecture.gatekeeper import Gatekeeper, ValidationResult
 from architecture.orchestrator import Orchestrator
-from architecture.reflector import ExecutionResult, Reflector
+from architecture.executor import ExecutorAgent
 from architecture.toolsmith import Toolsmith
-from execution.core import Agent
-from execution.llm import LiteLLMClient
-from execution.tools import ReadFileTool, RequestNewTool, RunCommandTool, WriteFileTool
+from architecture.reflector import ExecutionResult, Reflector
 from utils.logger import get_logger
 
 load_dotenv()
 
 logger = get_logger(__name__)
+
+WORKSPACE_PATH = os.path.join(os.getcwd(), "workspace")
+TOOLS_DIR = os.path.join(WORKSPACE_PATH, "tools")
 
 
 class IASCIS:
@@ -39,50 +39,53 @@ class IASCIS:
         private_model: str = "groq/llama-3.3-70b-versatile",
         safe_mode: bool = True,
     ):
-        self.workspace_path = workspace_path or os.path.join(os.getcwd(), "workspace")
+        self.workspace_path = workspace_path or WORKSPACE_PATH
+        self.tools_dir = os.path.join(self.workspace_path, "tools")
         os.makedirs(self.workspace_path, exist_ok=True)
+        os.makedirs(self.tools_dir, exist_ok=True)
 
         self.public_model = public_model
         self.private_model = private_model
 
-        self.orchestrator = Orchestrator(model_name=public_model)
-        self.dispatcher = Dispatcher()
+        # Initialize components
         self.gatekeeper = Gatekeeper(strict_mode=safe_mode, stateful=True)
-        self.reflector = Reflector(max_retries=3)
         self.toolsmith = Toolsmith(safe_mode=safe_mode, gatekeeper=self.gatekeeper)
+        self.dispatcher = Dispatcher()
+        self.reflector = Reflector(max_retries=3)
 
-        self.tools = [
-            WriteFileTool(self.workspace_path),
-            RunCommandTool(self.workspace_path),
-            ReadFileTool(self.workspace_path),
-            RequestNewTool(self.workspace_path),
-        ]
+        # Initialize Executor
+        self.executor = ExecutorAgent(
+            workspace_path=self.workspace_path,
+            tools_dir=self.tools_dir
+        )
+
+        # Initialize Orchestrator with Executor
+        self.orchestrator = Orchestrator(
+            toolsmith=self.toolsmith,
+            executor=self.executor,
+            registry_path=os.path.join(self.tools_dir, "registry.json")
+        )
 
         logger.info(f"IASCIS initialized (workspace={self.workspace_path})")
 
     def run(self, task: str, file_context: list[str] = None) -> dict:
-        """Execute a task through the full pipeline."""
+        """Execute a task through the orchestrator-executor pipeline."""
         file_context = file_context or []
         start_time = time.perf_counter()
 
         logger.info(f"Task received: {task[:100]}...")
 
+        # Route to appropriate zone
         zone = self.dispatcher.route(task, file_context)
         model = self.private_model if zone == "private" else self.public_model
         logger.info(f"Routed to {zone} zone, model: {model}")
 
-        plan = self.orchestrator.plan(task)
-        logger.info(f"Plan generated: {len(plan)} chars")
-
-        llm_client = LiteLLMClient(model_name=model, tools=self.tools)
-        agent = Agent(
-            workspace_path=self.workspace_path,
-            tools=self.tools,
-            llm_client=llm_client,
-        )
-
-        goal = f"Execute this plan:\n{plan}\n\nWrite the necessary code and run it. NOTE: Always use Docker to run the code AND This is a Windows Machine"
-        result = self._execute_with_reflection(agent, goal)
+        # Run through orchestrator (which calls executor)
+        try:
+            result = self.orchestrator.run(task)
+        except Exception as e:
+            logger.error(f"Execution failed: {e}")
+            result = f"Error: {e}"
 
         duration_ms = (time.perf_counter() - start_time) * 1000
 
@@ -90,41 +93,37 @@ class IASCIS:
             "task": task,
             "zone": zone,
             "model": model,
-            "plan": plan,
             "result": result,
             "duration_ms": duration_ms,
         }
 
-    def _execute_with_reflection(
-        self, agent: Agent, goal: str, max_attempts: int = 3
-    ) -> str:
+    def run_with_reflection(self, task: str, max_attempts: int = 3) -> dict:
         """Execute with self-correction loop."""
         for attempt in range(max_attempts):
-            logger.info(f"Execution attempt {attempt + 1}/{max_attempts}")
+            logger.info(f"Attempt {attempt + 1}/{max_attempts}")
 
-            try:
-                result = agent.run(goal)
+            result = self.run(task)
+
+            if "Error" not in str(result.get("result", "")):
                 return result
 
-            except Exception as e:
-                exec_result = ExecutionResult(
-                    success=False,
-                    error=str(e),
-                    exit_code=1,
-                )
+            # Analyze failure
+            exec_result = ExecutionResult(
+                success=False,
+                error=str(result.get("result")),
+                exit_code=1,
+            )
 
-                reflection = self.reflector.reflect(exec_result)
-                logger.warning(
-                    f"Attempt {attempt + 1} failed: {reflection.diagnosis.category.value}"
-                )
+            reflection = self.reflector.reflect(exec_result)
+            logger.warning(f"Attempt {attempt + 1} failed: {reflection.diagnosis.category.value}")
 
-                if not reflection.should_retry:
-                    logger.error("No retry recommended")
-                    return f"Failed: {reflection.diagnosis.root_cause}"
+            if not reflection.should_retry:
+                logger.error("No retry recommended")
+                break
 
-                goal = reflection.corrective_prompt
+            task = reflection.corrective_prompt
 
-        return "Failed after max attempts"
+        return result
 
     def validate_code(self, code: str) -> ValidationResult:
         """Validate code through Gatekeeper."""
@@ -141,16 +140,21 @@ class IASCIS:
 
 
 def main():
+    """Main entry point."""
     system = IASCIS()
 
-    task = "Write a Python function that calculates 20 armstrong numbers sequence up to n terms and save it to armstrong.py"
+    # Example task
+    task = input("Enter your task (or press Enter for demo): ").strip()
+    if not task:
+        task = "Calculate the square root of 144, then multiply by 2, and save the result to a file called result.txt"
 
-    logger.info("Starting IASCIS demo")
+    logger.info("Starting IASCIS")
     result = system.run(task)
 
     logger.info(f"Completed in {result['duration_ms']:.2f}ms")
     logger.info(f"Zone: {result['zone']}")
-    print(f"\nResult:\n{result['result']}")
+    print(f"\n{'='*50}")
+    print(f"Result:\n{result['result']}")
 
 
 if __name__ == "__main__":

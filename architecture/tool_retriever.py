@@ -1,6 +1,6 @@
 from pathlib import Path
-from tool_graph import load_registry, build_tool_graph, get_similar_tools, get_composable_tools
-from tool_embedder import ToolEmbedder
+from architecture.tool_graph import load_registry, build_tool_graph, get_similar_tools, get_composable_tools
+from architecture.tool_embedder import ToolEmbedder
 
 class ToolRetriever:
     def __init__(self,registry_path:str):

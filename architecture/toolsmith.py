@@ -312,30 +312,31 @@ OUTPUT FORMAT (JSON ONLY):
   "output_types": ["string", "number", "file", "image", "json"],
   "domain": "{domain_options}",
   "dependencies": ["library_name_1", "library_name_2"],
-  "code": "import ... class NameOfTool(Tool): ..."
+  "code": "import ... class NameOfTool: ..."
 }}
 
 RULES:
 1. `code` must be a valid, escaped python string. Ensure all newlines are escaped as \\n and quotes are escaped as \\".
 2. `tags` should be 3-5 keywords.
-3. `dependencies` must list specific PyPI package names required (e.g., ["pandas", "requests"]). If none, use [].
+3. `dependencies` must list ALL PyPI package names the code imports (e.g., ["pandas", "requests", "beautifulsoup4"]). Map imports correctly: bs4 -> beautifulsoup4, PIL -> Pillow.
 4. `domain` must be EXACTLY ONE of: {allowed_domains_list}. Do NOT invent new domains.
-5. CODE STRUCTURE REQUIREMENTS:
-   - IMPORTS: Include all necessary standard and third-party imports.
-   - ARGS CLASS: Define `class {{ClassName}}Args(BaseModel):` with fields.
-   - TOOL CLASS: Define `class {{ClassName}}(Tool):` inheriting from the base Tool class.
-   - ATTRIBUTE: Set `args_schema = {{ClassName}}Args` inside the tool class.
-   - METHOD: `def run(self, arg1: Type, ...) -> Any:` matching the args.
+5. CODE STRUCTURE REQUIREMENTS - GENERATE STANDALONE CODE:
+   - IMPORTS: Start with ALL necessary imports. Include: `from pydantic import BaseModel, Field`
+   - ARGS CLASS: Define `class {{ClassName}}Args(BaseModel):` with typed fields using Field(..., description="...").
+   - TOOL CLASS: Define `class {{ClassName}}:` as a standalone class (NO inheritance from Tool or any base class).
+   - ATTRIBUTES: Set `name = "tool_name"`, `description = "..."`, `args_schema = {{ClassName}}Args` as class attributes.
+   - METHOD: `def run(self, arg1: Type, ...) -> ReturnType:` matching the args schema fields.
 6. HANDLING CREDENTIALS:
    - Do NOT hardcode API keys. 
    - If an API key is needed, it MUST be passed as an argument to the `run` method (e.g., `api_key: str`).
 7. REAL IMPLEMENTATION ONLY:
    - NO MOCK APIS. NO FAKE DATA.
    - Use real logic (e.g., `requests.get`, `math.sqrt`).
-   - If the task requires external libraries (like `pandas`, `praw`, `github`), IMPORT them and list them in the `dependencies` key.
-8. BASE CLASS DEFINITION:
-   - Assume a `Tool` base class exists in the environment that has a `run` method.
-   - Do NOT redefine `Tool` unless necessary for standalone testing.
+   - If the task requires external libraries, IMPORT them and list them in the `dependencies` key.
+8. STANDALONE EXECUTION:
+   - The generated code must run in a fresh Python environment with only standard library + listed dependencies.
+   - Do NOT assume any external base classes or modules exist.
+   - Include ALL imports at the top of the file.
 """
 
             response = llm.generate_json(
