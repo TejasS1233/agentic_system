@@ -220,9 +220,9 @@ class Sandbox:
             return {"success": False, "output": "", "error": str(e)}
 
     def execute_with_args(self, tool_name: str, tool_file: str, args: dict) -> dict:
-        """Execute a tool with specific arguments inside the sandbox."""
+        """Execute a tool with specific arguments inside the sandbox with profiling."""
         if not self.container:
-            return {"success": False, "error": "Sandbox not started", "output": ""}
+            return {"success": False, "error": "Sandbox not started", "output": "", "profile": None}
 
         tool_path = self.tools_dir / tool_file
         if not tool_path.exists():
@@ -230,6 +230,7 @@ class Sandbox:
                 "success": False,
                 "error": f"Tool file not found: {tool_file}",
                 "output": "",
+                "profile": None,
             }
 
         # Install dependencies
@@ -237,20 +238,23 @@ class Sandbox:
         deps.append("pydantic")  # Always needed
         self._install_deps(deps)
 
-        # Create runner script
+        # Create runner script with PROFILING
         import json as json_module
 
         args_json = json_module.dumps(args)
 
-        runner_code = f"""
+        runner_code = f'''
 import sys
 import json
+import time
+import tracemalloc
+import traceback
+
 sys.path.insert(0, '/tools')
 
 from {tool_path.stem} import *
 
-# Find tool class by looking for classes with 'name' attribute and 'run' method
-# This handles both 'FooTool' naming and 'FooDownloader' naming conventions
+# Find tool class via robust search
 tool_class = None
 for cls_name, obj in list(globals().items()):
     if not isinstance(obj, type):
@@ -267,18 +271,91 @@ for cls_name, obj in list(globals().items()):
         break
 
 if tool_class is None:
-    print(json.dumps({{"error": "No Tool class found"}}))
+    print(json.dumps({{"error": "No Tool class found", "profile": None}}))
     sys.exit(1)
 
 try:
+    # Start profiling
+    tracemalloc.start()
+    start_time = time.perf_counter()
+    start_memory = tracemalloc.get_traced_memory()[0]
+    
+    # Execute tool
     tool = tool_class()
     args = json.loads('{args_json}')
     result = tool.run(**args)
-    print(json.dumps({{"success": True, "result": result}}))
+    
+    # Stop profiling
+    end_time = time.perf_counter()
+    current, peak = tracemalloc.get_traced_memory()
+    tracemalloc.stop()
+    
+    # Calculate metrics
+    execution_time_ms = (end_time - start_time) * 1000
+    memory_delta_mb = (current - start_memory) / (1024 * 1024)
+    peak_memory_mb = peak / (1024 * 1024)
+    
+    # Determine latency grade
+    if execution_time_ms < 10:
+        grade = "fast"
+    elif execution_time_ms < 100:
+        grade = "moderate"
+    elif execution_time_ms < 1000:
+        grade = "slow"
+    else:
+        grade = "critical"
+    
+    # Output result with profile
+    output = {{
+        "success": True,
+        "result": result,  # Return raw result, JSONEncoder will handle serialization
+        "profile": {{
+            "tool_name": "{tool_name}",
+            "execution_time_ms": round(execution_time_ms, 3),
+            "peak_memory_mb": round(peak_memory_mb, 4),
+            "memory_delta_mb": round(memory_delta_mb, 4),
+            "latency_grade": grade,
+            "success": True
+        }}
+    }}
+    
+    # Custom encoder for non-serializable objects if needed
+    class CustomEncoder(json.JSONEncoder):
+        def default(self, obj):
+            try:
+                return super().default(obj)
+            except TypeError:
+                return str(obj)
+                
+    print(json.dumps(output, cls=CustomEncoder))
+    
 except Exception as e:
-    import traceback
-    print(json.dumps({{"error": str(e), "traceback": traceback.format_exc()}}))
-"""
+    # Stop profiling even on error
+    try:
+        end_time = time.perf_counter()
+        current, peak = tracemalloc.get_traced_memory()
+        tracemalloc.stop()
+        execution_time_ms = (end_time - start_time) * 1000
+        peak_memory_mb = peak / (1024 * 1024)
+    except:
+        execution_time_ms = 0
+        peak_memory_mb = 0
+    
+    output = {{
+        "error": str(e),
+        "traceback": traceback.format_exc(),
+        "profile": {{
+            "tool_name": "{tool_name}",
+            "execution_time_ms": round(execution_time_ms, 3),
+            "peak_memory_mb": round(peak_memory_mb, 4),
+            "memory_delta_mb": 0,
+            "latency_grade": "critical",
+            "success": False,
+            "error_message": str(e)
+        }}
+    }}
+    print(json.dumps(output))
+'''
         # Write runner to container
         runner_name = f"_runner_{tool_name}.py"
         runner_path = self.tools_dir / runner_name
@@ -303,25 +380,58 @@ except Exception as e:
             if runner_path.exists():
                 runner_path.unlink()
 
-            # Parse output
+            # Parse output with profile
             try:
                 lines = output_str.strip().split("\n")
-                data = json_module.loads(lines[-1])
+                # Look for the last valid JSON line
+                json_line = None
+                for line in reversed(lines):
+                    try:
+                        json_module.loads(line)
+                        json_line = line
+                        break
+                    except json_module.JSONDecodeError:
+                        continue
+                
+                if not json_line:
+                    raise ValueError("No valid JSON output found")
+
+                data = json_module.loads(json_line)
+                
+                # Extract profile
+                profile = data.get("profile", None)
+                
                 if "error" in data:
-                    return {"success": False, "error": data["error"], "output": ""}
+                    return {
+                        "success": False, 
+                        "error": data["error"], 
+                        "output": "",
+                        "profile": profile
+                    }
+                
+                # Handle result which might be in "result" field or raw output
+                result_val = data.get("result", output_str)
+                # Ensure result is distinct from output string if possible
+                if isinstance(result_val, (dict, list)):
+                    result_val = json_module.dumps(result_val)
+                elif not isinstance(result_val, str):
+                    result_val = str(result_val)
+
                 return {
                     "success": True,
-                    "output": data.get("result", output_str),
+                    "output": result_val,
                     "error": "",
+                    "profile": profile,
                 }
-            except Exception:
+            except Exception as e:
+                logger.warning(f"Failed to parse sandbox output: {e}, Raw output: {output_str}")
                 if exit_code == 0:
-                    return {"success": True, "output": output_str, "error": ""}
-                return {"success": False, "error": output_str, "output": ""}
+                    return {"success": True, "output": output_str, "error": "", "profile": None}
+                return {"success": False, "error": output_str, "output": "", "profile": None}
 
         except Exception as e:
             logger.error(f"Execution error: {e}")
-            return {"success": False, "output": "", "error": str(e)}
+            return {"success": False, "output": "", "error": str(e), "profile": None}
 
     def __enter__(self):
         self.start()

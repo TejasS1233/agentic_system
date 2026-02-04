@@ -41,6 +41,8 @@ class IASCIS:
         public_model: str = "groq/llama-3.3-70b-versatile",
         private_model: str = "groq/llama-3.3-70b-versatile",
         safe_mode: bool = True,
+        enable_profiling: bool = True,
+        profiling_mode: str = "standard",
     ):
         self.workspace_path = Path(workspace_path) if workspace_path else WORKSPACE_PATH
         self.tools_dir = self.workspace_path / "tools"
@@ -49,6 +51,8 @@ class IASCIS:
 
         self.public_model = public_model
         self.private_model = private_model
+        self._enable_profiling = enable_profiling
+        self._profiling_mode = profiling_mode
 
         # Initialize components
         self.gatekeeper = Gatekeeper(strict_mode=safe_mode, stateful=True)
@@ -61,7 +65,7 @@ class IASCIS:
         self.executor = None
         self.orchestrator = None
 
-        logger.info(f"IASCIS initialized (workspace={self.workspace_path})")
+        logger.info(f"IASCIS initialized (workspace={self.workspace_path}, profiling={enable_profiling})")
 
     def _initialize_runtime(self):
         """Initialize Sandbox, Executor, and Orchestrator."""
@@ -72,6 +76,8 @@ class IASCIS:
             workspace_path=str(self.workspace_path),
             tools_dir=str(self.tools_dir),
             sandbox=self.sandbox,
+            enable_profiling=self._enable_profiling,
+            profiling_mode=self._profiling_mode,
         )
 
         self.orchestrator = Orchestrator(
@@ -174,6 +180,26 @@ class IASCIS:
         self.gatekeeper.reset_state()
         self.reflector.reset()
 
+    # ========== Profiling Methods ==========
+
+    def get_profiler_statistics(self) -> dict:
+        """Get aggregate profiling statistics from the executor."""
+        if self.executor is None:
+            return {"error": "Runtime not initialized"}
+        return self.executor.get_profiler_statistics()
+
+    def get_tool_performance_summary(self) -> dict:
+        """Get performance summary per tool."""
+        if self.executor is None:
+            return {"error": "Runtime not initialized"}
+        return self.executor.get_tool_performance_summary()
+
+    def get_execution_profiles(self, tool_name: str = None) -> list:
+        """Get execution profiles, optionally filtered by tool name."""
+        if self.executor is None:
+            return []
+        return self.executor.get_execution_profiles(tool_name)
+
 
 def main():
     """Main entry point."""
@@ -181,15 +207,39 @@ def main():
     if not task:
         task = "Calculate the square root of 144, then multiply by 2"
 
-    logger.info("Starting IASCIS with Sandbox")
+    logger.info("Starting IASCIS with Sandbox and Profiling")
 
-    with IASCIS() as system:
+    with IASCIS(enable_profiling=True, profiling_mode="standard") as system:
         result = system.run(task)
 
         logger.info(f"Completed in {result['duration_ms']:.2f}ms")
         logger.info(f"Zone: {result['zone']}")
         print(f"\n{'=' * 50}")
         print(f"Result:\n{result['result']}")
+        
+        # Display profiling information
+        print(f"\n{'=' * 50}")
+        print("📊 PROFILING SUMMARY")
+        print('=' * 50)
+        
+        perf_summary = system.get_tool_performance_summary()
+        if perf_summary:
+            for tool_name, stats in perf_summary.items():
+                print(f"\n  {tool_name}:")
+                print(f"    Calls: {stats['call_count']}")
+                print(f"    Avg Time: {stats['avg_time_ms']:.2f}ms")
+                print(f"    Max Time: {stats['max_time_ms']:.2f}ms")
+                print(f"    Avg Memory: {stats['avg_memory_mb']:.2f}MB")
+                print(f"    Grade: {stats['last_grade']}")
+        else:
+            print("  No tools were executed.")
+        
+        # Overall stats
+        profiler_stats = system.get_profiler_statistics()
+        if profiler_stats.get("profiling_enabled"):
+            print(f"\n  Total Profiles: {profiler_stats.get('count', 0)}")
+            if profiler_stats.get('count', 0) > 0:
+                print(f"  Success Rate: {profiler_stats.get('success_rate', 0):.0%}")
 
 
 if __name__ == "__main__":
