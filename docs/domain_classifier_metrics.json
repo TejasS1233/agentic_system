@@ -1,0 +1,224 @@
+{
+    "project": "Agentic Toolsmith - Domain Classifier",
+    "date_recorded": "2026-02-04",
+    "accuracy_by_phase": [
+        {
+            "phase": 1,
+            "name": "Keywords Only",
+            "description": "Simple dictionary lookup of domain keywords",
+            "accuracy_min": 50,
+            "accuracy_max": 60,
+            "accuracy_avg": 55,
+            "components": [
+                "keyword_dict"
+            ]
+        },
+        {
+            "phase": 2,
+            "name": "Weighted Keywords",
+            "description": "Added weights (0.0-1.0) to keywords per domain",
+            "accuracy_min": 65,
+            "accuracy_max": 70,
+            "accuracy_avg": 67.5,
+            "components": [
+                "keyword_dict",
+                "keyword_weights"
+            ]
+        },
+        {
+            "phase": 3,
+            "name": "Entity Indicators",
+            "description": "Added noun-based domain detection for domain-specific terms",
+            "accuracy_min": 70,
+            "accuracy_max": 75,
+            "accuracy_avg": 72.5,
+            "components": [
+                "keyword_dict",
+                "keyword_weights",
+                "entity_indicators"
+            ]
+        },
+        {
+            "phase": 4,
+            "name": "spaCy Integration",
+            "description": "Added NLP-based verb-object extraction with initial pattern table",
+            "accuracy_min": 76,
+            "accuracy_max": 76,
+            "accuracy_avg": 76,
+            "components": [
+                "keyword_dict",
+                "keyword_weights",
+                "entity_indicators",
+                "spacy_nlp",
+                "verb_object_patterns_v1"
+            ]
+        },
+        {
+            "phase": 5,
+            "name": "Pattern Expansion",
+            "description": "Expanded verb-object patterns from ~50 to 260+, fixed noun-as-verb parsing",
+            "accuracy_min": 85,
+            "accuracy_max": 85,
+            "accuracy_avg": 85,
+            "components": [
+                "keyword_dict",
+                "keyword_weights",
+                "entity_indicators",
+                "spacy_nlp",
+                "verb_object_patterns_v2",
+                "action_verb_priority"
+            ]
+        },
+        {
+            "phase": 6,
+            "name": "TF-IDF ML Fallback",
+            "description": "Added sklearn TF-IDF + Logistic Regression, phrase patterns, balanced training data",
+            "accuracy_min": 91.4,
+            "accuracy_max": 91.4,
+            "accuracy_avg": 91.4,
+            "components": [
+                "keyword_dict",
+                "keyword_weights",
+                "entity_indicators",
+                "spacy_nlp",
+                "verb_object_patterns_v2",
+                "action_verb_priority",
+                "phrase_patterns",
+                "tfidf_classifier"
+            ]
+        }
+    ],
+    "stress_test_final": {
+        "total_cases": 500,
+        "passed": 457,
+        "failed": 43,
+        "accuracy_percent": 91.4,
+        "test_file": "tests/stress_test.py"
+    },
+    "hard_cases_test": {
+        "accuracy_percent": 100,
+        "test_file": "tests/test_hard_cases.py",
+        "notes": "Manual edge cases with targeted pattern additions"
+    },
+    "domains": [
+        {
+            "name": "math",
+            "examples": [
+                "factorial",
+                "prime check",
+                "square root"
+            ]
+        },
+        {
+            "name": "text",
+            "examples": [
+                "palindrome",
+                "word count",
+                "uppercase"
+            ]
+        },
+        {
+            "name": "file",
+            "examples": [
+                "list directory",
+                "read file",
+                "compress"
+            ]
+        },
+        {
+            "name": "web",
+            "examples": [
+                "fetch URL",
+                "API call",
+                "download"
+            ]
+        },
+        {
+            "name": "data",
+            "examples": [
+                "parse JSON",
+                "convert CSV",
+                "serialize"
+            ]
+        },
+        {
+            "name": "system",
+            "examples": [
+                "run command",
+                "process info",
+                "env variable"
+            ]
+        },
+        {
+            "name": "visualization",
+            "examples": [
+                "bar chart",
+                "line plot",
+                "histogram"
+            ]
+        },
+        {
+            "name": "conversion",
+            "examples": [
+                "celsius to fahrenheit",
+                "PDF to Word"
+            ]
+        },
+        {
+            "name": "search",
+            "examples": [
+                "web search",
+                "document search",
+                "lookup"
+            ]
+        },
+        {
+            "name": "validation",
+            "examples": [
+                "email validation",
+                "type check",
+                "verify"
+            ]
+        }
+    ],
+    "component_counts": {
+        "verb_object_patterns": 260,
+        "domain_keywords_per_domain": 40,
+        "entity_indicators_per_domain": 30,
+        "phrase_patterns": 50,
+        "tfidf_seed_examples_per_domain": 35,
+        "total_domains": 10
+    },
+    "classification_tiers": [
+        {
+            "tier": 1,
+            "name": "Phrase Patterns",
+            "method": "regex",
+            "confidence": 0.95
+        },
+        {
+            "tier": 2,
+            "name": "Verb-Object",
+            "method": "spacy_nlp",
+            "confidence": 0.90
+        },
+        {
+            "tier": 3,
+            "name": "Entity Matching",
+            "method": "noun_lookup",
+            "confidence": 0.80
+        },
+        {
+            "tier": 4,
+            "name": "Weighted Keywords",
+            "method": "weighted_sum",
+            "confidence": 0.70
+        },
+        {
+            "tier": 5,
+            "name": "TF-IDF Classifier",
+            "method": "sklearn_ml",
+            "confidence": 0.60
+        }
+    ]
+}

@@ -19,7 +19,8 @@ from architecture.intent_classifier import (
     IntentClassifier, 
     get_domain_prompt_string, 
     validate_domain,
-    get_allowed_domains
+    get_allowed_domains,
+    DOMAIN_KEYWORDS
 )
 
 
@@ -141,6 +142,52 @@ class Toolsmith:
         clean_text = re.sub(r"[^a-z0-9\s]", " ", text.lower())
         tokens = set(clean_text.split())
         return tokens - self.stop_words
+
+    def _filter_tags_for_domain(self, tags: list, domain: str, max_tags: int = 4) -> list:
+        """
+        Filter tags to only include keywords from DOMAIN_KEYWORDS for the given domain.
+        Limits output to max_tags (default 4).
+        
+        Args:
+            tags: Raw tags from LLM
+            domain: The validated domain for this tool
+            max_tags: Maximum number of tags to return
+            
+        Returns:
+            Filtered list of valid domain-specific tags
+        """
+        if not domain or domain not in DOMAIN_KEYWORDS:
+            # If domain is unknown, return original tags limited to max_tags
+            return tags[:max_tags] if tags else []
+        
+        # Get valid keywords for this domain
+        valid_keywords = set(DOMAIN_KEYWORDS[domain].keys())
+        
+        # Filter tags - keep only those that are valid domain keywords
+        filtered_tags = []
+        for tag in tags:
+            tag_lower = tag.lower().strip()
+            if tag_lower in valid_keywords:
+                filtered_tags.append(tag_lower)
+        
+        # If no valid tags found, try to extract from the domain's top keywords
+        if not filtered_tags:
+            # Get top weighted keywords from this domain
+            domain_kw = DOMAIN_KEYWORDS[domain]
+            sorted_keywords = sorted(domain_kw.items(), key=lambda x: x[1], reverse=True)
+            filtered_tags = [kw for kw, weight in sorted_keywords[:max_tags] if weight >= 0.7]
+        
+        # Limit to max_tags and remove duplicates while preserving order
+        seen = set()
+        unique_tags = []
+        for tag in filtered_tags:
+            if tag not in seen:
+                seen.add(tag)
+                unique_tags.append(tag)
+                if len(unique_tags) >= max_tags:
+                    break
+        
+        return unique_tags
 
     def create_tool(self, requirement: str):
         """
@@ -330,6 +377,14 @@ RULES:
             
             domain = validated_domain
             # -------------------------
+
+            # --- TAG FILTERING ---
+            # Filter tags to only use domain-specific keywords, max 4 tags
+            raw_tags = tags
+            tags = self._filter_tags_for_domain(raw_tags, domain, max_tags=4)
+            if raw_tags != tags:
+                print(f"[Toolsmith] Tags filtered: {raw_tags} → {tags}")
+            # ---------------------
 
             # --- SAFETY CHECK ---
             if not self._is_safe_code(tool_code):
