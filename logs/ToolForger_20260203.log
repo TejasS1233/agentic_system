@@ -1,0 +1,4 @@
+2026-02-03 13:12:17 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-03 13:44:08 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-03 13:44:22 | INFO | architecture.llm_manager:__init__:76 | Loaded 1 GROQ API key(s)
+2026-02-03 13:56:58 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
