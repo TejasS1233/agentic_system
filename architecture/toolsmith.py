@@ -15,6 +15,12 @@ except ImportError:
     requests = None
 
 from architecture.gatekeeper import Gatekeeper
+from architecture.intent_classifier import (
+    IntentClassifier, 
+    get_domain_prompt_string, 
+    validate_domain,
+    get_allowed_domains
+)
 
 
 class Toolsmith:
@@ -27,6 +33,9 @@ class Toolsmith:
         self.registry_path = os.path.join(self.tools_dir, "registry.json")
         self.metrics_path = os.path.join(self.tools_dir, "metrics.json")
         self.tools_source_path = os.path.join(os.getcwd(), "execution", "tools.py")
+        
+        # Initialize intent classifier for domain-aware deduplication (lazy loaded)
+        self._intent_classifier = None
         
         # PyPI credentials from environment
         self.pypi_username = os.environ.get("PYPI_USERNAME", "__token__")
@@ -77,6 +86,12 @@ class Toolsmith:
             "from",
             "into",
         }
+
+    def _get_intent_classifier(self):
+        """Lazy load the intent classifier."""
+        if self._intent_classifier is None:
+            self._intent_classifier = IntentClassifier(self.registry_path)
+        return self._intent_classifier
 
     def _log_metrics(self, event_type, details):
         """Logs usage metrics to a JSONL file for paper analysis."""
@@ -129,22 +144,36 @@ class Toolsmith:
 
     def create_tool(self, requirement: str):
         """
-        Generates a new python tool based on a requirement using Tag-Based deduplication.
+        Generates a new python tool based on a requirement using domain-aware deduplication.
+        Uses IntentClassifier to first classify the request domain, then matches within that domain.
         """
         start_time = time.time()
         print(f"[Toolsmith] Received request: '{requirement}'")
 
-        # 1. Tag-Based Deduplication Check
+        # 1. Domain-Aware Deduplication Check
         try:
             with open(self.registry_path, "r") as f:
                 registry = json.load(f)
 
+            # Classify request domain using IntentClassifier
+            classifier = self._get_intent_classifier()
+            request_domain, classification_method, domain_confidence = classifier.classify(requirement)
+            print(f"[Toolsmith] Domain classified: '{request_domain}' (method: {classification_method}, confidence: {domain_confidence:.2f})")
+            
             req_tokens = self._tokenize(requirement)
 
             best_match = None
             highest_score = 0.0
 
             for name, meta in registry.items():
+                tool_domain = meta.get("domain", "").lower()
+                
+                # Domain filtering: Only match tools in the same domain (if domain is known)
+                # Skip domain filtering if request domain is unknown or confidence is low
+                if request_domain != "unknown" and domain_confidence >= 0.7:
+                    if tool_domain and tool_domain != request_domain.lower():
+                        continue  # Skip tools in different domains
+                
                 tool_tags = set(meta.get("tags", []))
                 # Fallback to tokenizing description if tags missing
                 if not tool_tags:
@@ -153,15 +182,13 @@ class Toolsmith:
                 # Also include input_types, output_types, and domain in matching
                 input_types = set(meta.get("input_types", []))
                 output_types = set(meta.get("output_types", []))
-                domain = meta.get("domain", "")
                 
                 # Combine all matchable terms
                 all_tool_terms = tool_tags | input_types | output_types
-                if domain:
-                    all_tool_terms.add(domain)
+                if tool_domain:
+                    all_tool_terms.add(tool_domain)
                 
                 # Jaccard-like Overlap Score: Intersection / Request Size
-                # (How much of the request is covered by the tool?)
                 if not req_tokens:
                     continue
                     
@@ -172,31 +199,41 @@ class Toolsmith:
                     continue
                 
                 score = len(intersection) / len(req_tokens)
+                
+                # Boost score for same-domain matches
+                if tool_domain and tool_domain == request_domain.lower():
+                    score *= 1.2  # 20% boost for domain match
+                    score = min(score, 1.0)  # Cap at 1.0
 
                 if score > highest_score:
                     highest_score = score
                     best_match = name
 
-            # Threshold: 50% overlap implies relevance (raised from 30%)
+            # Threshold: 50% overlap implies relevance
             if highest_score >= 0.5:
                 desc = registry[best_match].get("description", "No description")
+                matched_domain = registry[best_match].get("domain", "unknown")
                 print(
-                    f"[Toolsmith] Deduplication HIT. Match: '{best_match}' (Score: {highest_score:.2f})"
+                    f"[Toolsmith] Deduplication HIT. Match: '{best_match}' (Score: {highest_score:.2f}, Domain: {matched_domain})"
                 )
 
                 self._log_metrics(
                     "deduplication_hit",
                     {
                         "request": requirement,
+                        "request_domain": request_domain,
                         "matched_tool": best_match,
+                        "matched_domain": matched_domain,
                         "score": highest_score,
+                        "classification_method": classification_method,
                         "latency": time.time() - start_time,
                     },
                 )
 
                 return f"EXISTING TOOL FOUND: '{best_match}' seems to match your request (Score: {highest_score:.2f}).\nDescription: {desc}\nPlease use this tool instead of creating a new one."
 
-            self._log_metrics("generation_start", {"request": requirement})
+            self._log_metrics("generation_start", {"request": requirement, "classified_domain": request_domain})
+
 
         except Exception as e:
             print(f"[Toolsmith] Deduplication check failed: {e}")
@@ -208,6 +245,10 @@ class Toolsmith:
         print("[Toolsmith] Tool not found. Generating with LLM...")
         try:
             llm = get_llm_manager()
+            
+            # Get canonical domain list
+            domain_options = get_domain_prompt_string()
+            allowed_domains_list = ", ".join(get_allowed_domains())
             
             system_prompt = f"""You are an expert Python Tool Generator. 
 You MUST generate a JSON object containing the tool code and metadata.
@@ -222,7 +263,7 @@ OUTPUT FORMAT (JSON ONLY):
   "tags": ["tag1", "tag2", "tag3"],
   "input_types": ["string", "number", "file", "list", "dict"],
   "output_types": ["string", "number", "file", "image", "json"],
-  "domain": "math|text|file|web|visualization|data|system",
+  "domain": "{domain_options}",
   "dependencies": ["library_name_1", "library_name_2"],
   "code": "import ... class NameOfTool(Tool): ..."
 }}
@@ -231,7 +272,7 @@ RULES:
 1. `code` must be a valid, escaped python string. Ensure all newlines are escaped as \\n and quotes are escaped as \\".
 2. `tags` should be 3-5 keywords.
 3. `dependencies` must list specific PyPI package names required (e.g., ["pandas", "requests"]). If none, use [].
-4. `domain` must be ONE of: math, text, file, web, visualization, data, system, conversion, search.
+4. `domain` must be EXACTLY ONE of: {allowed_domains_list}. Do NOT invent new domains.
 5. CODE STRUCTURE REQUIREMENTS:
    - IMPORTS: Include all necessary standard and third-party imports.
    - ARGS CLASS: Define `class {{ClassName}}Args(BaseModel):` with fields.
@@ -269,8 +310,26 @@ RULES:
             tags = tool_data.get("tags", [])
             input_types = tool_data.get("input_types", [])
             output_types = tool_data.get("output_types", [])
-            domain = tool_data.get("domain", "")
+            raw_domain = tool_data.get("domain", "")
             tool_code = tool_data["code"]
+            
+            # --- DOMAIN VALIDATION ---
+            # Validate and normalize the domain using canonical list
+            validated_domain, was_valid = validate_domain(raw_domain)
+            
+            if not was_valid:
+                # Use IntentClassifier to determine correct domain from requirement
+                classifier = self._get_intent_classifier()
+                classified_domain, method, confidence = classifier.classify(requirement)
+                
+                if classified_domain != "unknown" and confidence >= 0.7:
+                    validated_domain = classified_domain
+                    print(f"[Toolsmith] Domain corrected: '{raw_domain}' → '{validated_domain}' (via {method})")
+                else:
+                    print(f"[Toolsmith] Domain corrected: '{raw_domain}' → '{validated_domain}' (fallback)")
+            
+            domain = validated_domain
+            # -------------------------
 
             # --- SAFETY CHECK ---
             if not self._is_safe_code(tool_code):
