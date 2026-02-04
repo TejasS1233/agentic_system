@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field
 
 class Domain(str, Enum):
     """Tool domains matching Toolsmith categories."""
+
     MATH = "math"
     TEXT = "text"
     FILE = "file"
@@ -19,21 +20,28 @@ class Domain(str, Enum):
 
 class SubTask(BaseModel):
     """A granular subtask from the main query."""
+
     id: str = Field(..., description="Unique subtask ID like 'st_1', 'st_2'")
     description: str = Field(..., description="What this subtask needs to do")
     domain: Domain = Field(..., description="Primary domain for this subtask")
-    depends_on: list[str] = Field(default_factory=list, description="IDs of subtasks this depends on")
-    input_from: str | None = Field(None, description="Which subtask's output to use as input")
+    depends_on: list[str] = Field(
+        default_factory=list, description="IDs of subtasks this depends on"
+    )
+    input_from: str | None = Field(
+        None, description="Which subtask's output to use as input"
+    )
 
 
 class DecompositionResult(BaseModel):
     """LLM output after decomposition."""
+
     original_query: str
     subtasks: list[SubTask]
 
 
 class ToolMatch(BaseModel):
     """A tool matched to a subtask."""
+
     subtask_id: str
     tool_name: str
     tool_file: str
@@ -43,6 +51,7 @@ class ToolMatch(BaseModel):
 
 class ExecutionStep(BaseModel):
     """Single step in execution plan."""
+
     step_number: int
     subtask_id: str
     description: str
@@ -56,6 +65,7 @@ class ExecutionStep(BaseModel):
 
 class ExecutionPlan(BaseModel):
     """Detailed plan passed to executor agent."""
+
     original_query: str
     steps: list[ExecutionStep]
 
@@ -63,7 +73,8 @@ class ExecutionPlan(BaseModel):
         """Return steps whose dependencies are all completed."""
         completed = {s.step_number for s in self.steps if s.status == "completed"}
         return [
-            s for s in self.steps
+            s
+            for s in self.steps
             if s.status == "pending" and all(d in completed for d in s.depends_on)
         ]
 

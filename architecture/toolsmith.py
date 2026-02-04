@@ -5,7 +5,6 @@ import time
 import ast
 import subprocess
 import tempfile
-import importlib.util
 from architecture.llm_manager import get_llm_manager
 
 # For PyPI name checking
@@ -16,11 +15,11 @@ except ImportError:
 
 from architecture.gatekeeper import Gatekeeper
 from architecture.intent_classifier import (
-    IntentClassifier, 
-    get_domain_prompt_string, 
+    IntentClassifier,
+    get_domain_prompt_string,
     validate_domain,
     get_allowed_domains,
-    DOMAIN_KEYWORDS
+    DOMAIN_KEYWORDS,
 )
 
 
@@ -34,14 +33,14 @@ class Toolsmith:
         self.registry_path = os.path.join(self.tools_dir, "registry.json")
         self.metrics_path = os.path.join(self.tools_dir, "metrics.json")
         self.tools_source_path = os.path.join(os.getcwd(), "execution", "tools.py")
-        
+
         # Initialize intent classifier for domain-aware deduplication (lazy loaded)
         self._intent_classifier = None
-        
+
         # PyPI credentials from environment
         self.pypi_username = os.environ.get("PYPI_USERNAME", "__token__")
         self.pypi_token = os.environ.get("PYPI_TOKEN", "")
-        
+
         # Ensure directories exist
         os.makedirs(self.tools_dir, exist_ok=True)
         os.makedirs(self.packages_dir, exist_ok=True)
@@ -143,40 +142,46 @@ class Toolsmith:
         tokens = set(clean_text.split())
         return tokens - self.stop_words
 
-    def _filter_tags_for_domain(self, tags: list, domain: str, max_tags: int = 4) -> list:
+    def _filter_tags_for_domain(
+        self, tags: list, domain: str, max_tags: int = 4
+    ) -> list:
         """
         Filter tags to only include keywords from DOMAIN_KEYWORDS for the given domain.
         Limits output to max_tags (default 4).
-        
+
         Args:
             tags: Raw tags from LLM
             domain: The validated domain for this tool
             max_tags: Maximum number of tags to return
-            
+
         Returns:
             Filtered list of valid domain-specific tags
         """
         if not domain or domain not in DOMAIN_KEYWORDS:
             # If domain is unknown, return original tags limited to max_tags
             return tags[:max_tags] if tags else []
-        
+
         # Get valid keywords for this domain
         valid_keywords = set(DOMAIN_KEYWORDS[domain].keys())
-        
+
         # Filter tags - keep only those that are valid domain keywords
         filtered_tags = []
         for tag in tags:
             tag_lower = tag.lower().strip()
             if tag_lower in valid_keywords:
                 filtered_tags.append(tag_lower)
-        
+
         # If no valid tags found, try to extract from the domain's top keywords
         if not filtered_tags:
             # Get top weighted keywords from this domain
             domain_kw = DOMAIN_KEYWORDS[domain]
-            sorted_keywords = sorted(domain_kw.items(), key=lambda x: x[1], reverse=True)
-            filtered_tags = [kw for kw, weight in sorted_keywords[:max_tags] if weight >= 0.7]
-        
+            sorted_keywords = sorted(
+                domain_kw.items(), key=lambda x: x[1], reverse=True
+            )
+            filtered_tags = [
+                kw for kw, weight in sorted_keywords[:max_tags] if weight >= 0.7
+            ]
+
         # Limit to max_tags and remove duplicates while preserving order
         seen = set()
         unique_tags = []
@@ -186,7 +191,7 @@ class Toolsmith:
                 unique_tags.append(tag)
                 if len(unique_tags) >= max_tags:
                     break
-        
+
         return unique_tags
 
     def create_tool(self, requirement: str):
@@ -204,9 +209,13 @@ class Toolsmith:
 
             # Classify request domain using IntentClassifier
             classifier = self._get_intent_classifier()
-            request_domain, classification_method, domain_confidence = classifier.classify(requirement)
-            print(f"[Toolsmith] Domain classified: '{request_domain}' (method: {classification_method}, confidence: {domain_confidence:.2f})")
-            
+            request_domain, classification_method, domain_confidence = (
+                classifier.classify(requirement)
+            )
+            print(
+                f"[Toolsmith] Domain classified: '{request_domain}' (method: {classification_method}, confidence: {domain_confidence:.2f})"
+            )
+
             req_tokens = self._tokenize(requirement)
 
             best_match = None
@@ -214,39 +223,39 @@ class Toolsmith:
 
             for name, meta in registry.items():
                 tool_domain = meta.get("domain", "").lower()
-                
+
                 # Domain filtering: Only match tools in the same domain (if domain is known)
                 # Skip domain filtering if request domain is unknown or confidence is low
                 if request_domain != "unknown" and domain_confidence >= 0.7:
                     if tool_domain and tool_domain != request_domain.lower():
                         continue  # Skip tools in different domains
-                
+
                 tool_tags = set(meta.get("tags", []))
                 # Fallback to tokenizing description if tags missing
                 if not tool_tags:
                     tool_tags = self._tokenize(meta.get("description", ""))
-                
+
                 # Also include input_types, output_types, and domain in matching
                 input_types = set(meta.get("input_types", []))
                 output_types = set(meta.get("output_types", []))
-                
+
                 # Combine all matchable terms
                 all_tool_terms = tool_tags | input_types | output_types
                 if tool_domain:
                     all_tool_terms.add(tool_domain)
-                
+
                 # Jaccard-like Overlap Score: Intersection / Request Size
                 if not req_tokens:
                     continue
-                    
+
                 intersection = req_tokens & all_tool_terms
-                
+
                 # Require at least 2 matching keywords to avoid single-word false positives
                 if len(intersection) < 2:
                     continue
-                
+
                 score = len(intersection) / len(req_tokens)
-                
+
                 # Boost score for same-domain matches
                 if tool_domain and tool_domain == request_domain.lower():
                     score *= 1.2  # 20% boost for domain match
@@ -279,8 +288,10 @@ class Toolsmith:
 
                 return f"EXISTING TOOL FOUND: '{best_match}' seems to match your request (Score: {highest_score:.2f}).\nDescription: {desc}\nPlease use this tool instead of creating a new one."
 
-            self._log_metrics("generation_start", {"request": requirement, "classified_domain": request_domain})
-
+            self._log_metrics(
+                "generation_start",
+                {"request": requirement, "classified_domain": request_domain},
+            )
 
         except Exception as e:
             print(f"[Toolsmith] Deduplication check failed: {e}")
@@ -292,11 +303,11 @@ class Toolsmith:
         print("[Toolsmith] Tool not found. Generating with LLM...")
         try:
             llm = get_llm_manager()
-            
+
             # Get canonical domain list
             domain_options = get_domain_prompt_string()
             allowed_domains_list = ", ".join(get_allowed_domains())
-            
+
             system_prompt = f"""You are an expert Python Tool Generator. 
 You MUST generate a JSON object containing the tool code and metadata.
 
@@ -342,9 +353,9 @@ RULES:
             response = llm.generate_json(
                 messages=[
                     {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": f"Create a tool for: {requirement}"}
+                    {"role": "user", "content": f"Create a tool for: {requirement}"},
                 ],
-                max_tokens=4096
+                max_tokens=4096,
             )
 
             if response.get("error"):
@@ -360,22 +371,26 @@ RULES:
             output_types = tool_data.get("output_types", [])
             raw_domain = tool_data.get("domain", "")
             tool_code = tool_data["code"]
-            
+
             # --- DOMAIN VALIDATION ---
             # Validate and normalize the domain using canonical list
             validated_domain, was_valid = validate_domain(raw_domain)
-            
+
             if not was_valid:
                 # Use IntentClassifier to determine correct domain from requirement
                 classifier = self._get_intent_classifier()
                 classified_domain, method, confidence = classifier.classify(requirement)
-                
+
                 if classified_domain != "unknown" and confidence >= 0.7:
                     validated_domain = classified_domain
-                    print(f"[Toolsmith] Domain corrected: '{raw_domain}' → '{validated_domain}' (via {method})")
+                    print(
+                        f"[Toolsmith] Domain corrected: '{raw_domain}' → '{validated_domain}' (via {method})"
+                    )
                 else:
-                    print(f"[Toolsmith] Domain corrected: '{raw_domain}' → '{validated_domain}' (fallback)")
-            
+                    print(
+                        f"[Toolsmith] Domain corrected: '{raw_domain}' → '{validated_domain}' (fallback)"
+                    )
+
             domain = validated_domain
             # -------------------------
 
@@ -407,14 +422,21 @@ RULES:
             # 5. Detect dependencies and publish to PyPI
             dependencies = self._detect_dependencies(tool_code)
             print(f"[Toolsmith] Detected dependencies: {dependencies}")
-            
+
             pypi_success, pypi_package, pypi_message = self._publish_to_pypi(
-                class_name, tool_code, requirement, dependencies, tags, input_types, output_types, domain
+                class_name,
+                tool_code,
+                requirement,
+                dependencies,
+                tags,
+                input_types,
+                output_types,
+                domain,
             )
-            
+
             if pypi_success:
                 print(f"[Toolsmith] PyPI: {pypi_message}")
-                
+
                 # If package name differs from class name, update file and registry names
                 expected_file = pypi_package.replace("-", "_") + "_tool.py"
                 if file_name != expected_file:
@@ -428,15 +450,27 @@ RULES:
                 pypi_package = ""
 
             # 6. Update Registry with Tags, Capability Schema, and PyPI package name
-            self._update_registry(class_name, file_name, requirement, tags, input_types, output_types, domain, pypi_package)
-            
-            self._log_metrics("tool_created", {
-                "request": requirement,
-                "tool_name": class_name,
-                "pypi_package": pypi_package,
-                "latency": time.time() - start_time
-            })
-            
+            self._update_registry(
+                class_name,
+                file_name,
+                requirement,
+                tags,
+                input_types,
+                output_types,
+                domain,
+                pypi_package,
+            )
+
+            self._log_metrics(
+                "tool_created",
+                {
+                    "request": requirement,
+                    "tool_name": class_name,
+                    "pypi_package": pypi_package,
+                    "latency": time.time() - start_time,
+                },
+            )
+
             result_msg = f"Successfully created {class_name} with tags {tags}."
             if pypi_package:
                 result_msg += f" Published to PyPI as: pip install {pypi_package}"
@@ -451,13 +485,23 @@ RULES:
             )
             return f"Tool creation failed: {e}"
 
-    def _update_registry(self, class_name, file_name, description, tags, input_types=None, output_types=None, domain=None, pypi_package=None):
+    def _update_registry(
+        self,
+        class_name,
+        file_name,
+        description,
+        tags,
+        input_types=None,
+        output_types=None,
+        domain=None,
+        pypi_package=None,
+    ):
         try:
             with open(self.registry_path, "r") as f:
                 data = json.load(f)
         except Exception:
             data = {}
-        
+
         data[class_name] = {
             "file": file_name,
             "description": description,
@@ -465,9 +509,9 @@ RULES:
             "input_types": input_types or [],
             "output_types": output_types or [],
             "domain": domain or "",
-            "pypi_package": pypi_package or ""
+            "pypi_package": pypi_package or "",
         }
-        
+
         with open(self.registry_path, "w") as f:
             json.dump(data, f, indent=2)
 
@@ -478,14 +522,46 @@ RULES:
         """
         # Standard library modules to exclude
         stdlib = {
-            "os", "sys", "re", "json", "ast", "time", "math", "datetime", 
-            "collections", "itertools", "functools", "typing", "abc",
-            "subprocess", "tempfile", "pathlib", "io", "csv", "random",
-            "hashlib", "base64", "urllib", "http", "email", "html", "xml",
-            "logging", "warnings", "copy", "pickle", "sqlite3", "threading",
-            "multiprocessing", "asyncio", "socket", "ssl", "uuid", "platform"
+            "os",
+            "sys",
+            "re",
+            "json",
+            "ast",
+            "time",
+            "math",
+            "datetime",
+            "collections",
+            "itertools",
+            "functools",
+            "typing",
+            "abc",
+            "subprocess",
+            "tempfile",
+            "pathlib",
+            "io",
+            "csv",
+            "random",
+            "hashlib",
+            "base64",
+            "urllib",
+            "http",
+            "email",
+            "html",
+            "xml",
+            "logging",
+            "warnings",
+            "copy",
+            "pickle",
+            "sqlite3",
+            "threading",
+            "multiprocessing",
+            "asyncio",
+            "socket",
+            "ssl",
+            "uuid",
+            "platform",
         }
-        
+
         # Known import-to-package mappings
         import_to_package = {
             "cv2": "opencv-python",
@@ -494,30 +570,30 @@ RULES:
             "yaml": "pyyaml",
             "bs4": "beautifulsoup4",
         }
-        
+
         dependencies = set()
-        
+
         try:
             tree = ast.parse(code)
             for node in ast.walk(tree):
                 if isinstance(node, ast.Import):
                     for alias in node.names:
-                        module = alias.name.split('.')[0]
+                        module = alias.name.split(".")[0]
                         if module not in stdlib:
                             pkg = import_to_package.get(module, module)
                             dependencies.add(pkg)
                 elif isinstance(node, ast.ImportFrom):
                     if node.module:
-                        module = node.module.split('.')[0]
+                        module = node.module.split(".")[0]
                         if module not in stdlib:
                             pkg = import_to_package.get(module, module)
                             dependencies.add(pkg)
         except:
             pass
-        
+
         # Always include pydantic since our tools use it
         dependencies.add("pydantic")
-        
+
         return list(dependencies)
 
     def _check_pypi_name(self, name: str) -> bool:
@@ -526,9 +602,11 @@ RULES:
         Returns True if available, False if taken.
         """
         if not requests:
-            print("[Toolsmith] Warning: requests not installed, skipping PyPI name check")
+            print(
+                "[Toolsmith] Warning: requests not installed, skipping PyPI name check"
+            )
             return True
-        
+
         try:
             response = requests.get(f"https://pypi.org/pypi/{name}/json", timeout=5)
             return response.status_code == 404  # 404 means available
@@ -540,9 +618,9 @@ RULES:
         Find an available PyPI package name, trying variations if needed.
         """
         # Normalize to PyPI naming convention (lowercase, hyphens)
-        base_name = re.sub(r'[^a-z0-9]', '-', base_name.lower())
-        base_name = re.sub(r'-+', '-', base_name).strip('-')
-        
+        base_name = re.sub(r"[^a-z0-9]", "-", base_name.lower())
+        base_name = re.sub(r"-+", "-", base_name).strip("-")
+
         candidates = [
             base_name,
             f"{base_name}-ts",  # toolsmith suffix
@@ -550,16 +628,27 @@ RULES:
             f"{base_name}-gen",
             f"{base_name}-{int(time.time()) % 10000}",  # timestamp suffix
         ]
-        
+
         for candidate in candidates:
             if self._check_pypi_name(candidate):
                 return candidate
-        
+
         # Last resort: add random suffix
         import random
+
         return f"{base_name}-{random.randint(1000, 9999)}"
 
-    def _publish_to_pypi(self, class_name: str, tool_code: str, description: str, dependencies: list, tags: list = None, input_types: list = None, output_types: list = None, domain: str = "") -> tuple:
+    def _publish_to_pypi(
+        self,
+        class_name: str,
+        tool_code: str,
+        description: str,
+        dependencies: list,
+        tags: list = None,
+        input_types: list = None,
+        output_types: list = None,
+        domain: str = "",
+    ) -> tuple:
         """
         Build and publish the tool as a minimal PyPI package.
         The package is just the tool code file, installable via pip.
@@ -570,36 +659,38 @@ RULES:
         output_types = output_types or []
         if not self.pypi_token:
             return False, "", "PyPI token not configured. Set PYPI_TOKEN in .env"
-        
+
         # Get available package name
         package_name = self._get_available_pypi_name(class_name)
         module_name = package_name.replace("-", "_")
         print(f"[Toolsmith] Publishing as PyPI package: {package_name}")
-        
+
         # Create minimal package directory with src layout
         pkg_dir = os.path.join(self.packages_dir, package_name)
         src_dir = os.path.join(pkg_dir, "src", module_name)
         os.makedirs(src_dir, exist_ok=True)
-        
+
         # Write the tool code as __init__.py
         # Escape triple quotes in tool_code for embedding
         escaped_code_for_init = tool_code.replace('"""', '\\"\\"\\"\\"')
         with open(os.path.join(src_dir, "__init__.py"), "w") as f:
             f.write(f'"""Auto-generated tool: {class_name}"""\n\n')
             f.write(tool_code)
-            f.write(f'\n\n__version__ = "0.1.0"\n')
+            f.write('\n\n__version__ = "0.1.0"\n')
             f.write(f'TOOL_CODE = """{escaped_code_for_init}"""\n')
-        
+
         # Write __main__.py for auto-install capability
         # When user runs: pip install {package} && python -m {module_name}
         # It copies the tool to workspace/tools/ AND updates registry.json
-        
+
         # Escape the tool code for embedding
-        escaped_tool_code = tool_code.replace('\\', '\\\\').replace('"""', '\\"\\"\\"\\"')
+        escaped_tool_code = tool_code.replace("\\", "\\\\").replace(
+            '"""', '\\"\\"\\"\\"'
+        )
         escaped_tags = json.dumps(tags)
         escaped_input_types = json.dumps(input_types)
         escaped_output_types = json.dumps(output_types)
-        
+
         main_code = f'''"""Auto-install script for {class_name}"""
 import os
 import sys
@@ -677,10 +768,10 @@ def install():
 if __name__ == "__main__":
     install()
 '''
-        
+
         with open(os.path.join(src_dir, "__main__.py"), "w") as f:
             f.write(main_code)
-        
+
         # Create pyproject.toml with console script entry point
         pyproject_content = f'''[build-system]
 requires = ["setuptools>=61.0", "wheel"]
@@ -698,10 +789,10 @@ requires-python = ">=3.8"
 [tool.setuptools.packages.find]
 where = ["src"]
 '''
-        
+
         with open(os.path.join(pkg_dir, "pyproject.toml"), "w") as f:
             f.write(pyproject_content)
-        
+
         # Build the package
         print("[Toolsmith] Building package...")
         try:
@@ -710,48 +801,63 @@ where = ["src"]
                 cwd=pkg_dir,
                 capture_output=True,
                 text=True,
-                timeout=60
+                timeout=60,
             )
             if build_result.returncode != 0:
                 return False, package_name, f"Build failed: {build_result.stderr}"
         except FileNotFoundError:
-            return False, package_name, "Build failed: 'build' module not installed. Run: pip install build"
+            return (
+                False,
+                package_name,
+                "Build failed: 'build' module not installed. Run: pip install build",
+            )
         except subprocess.TimeoutExpired:
             return False, package_name, "Build timed out"
-        
+
         # Upload to PyPI using twine
         print("[Toolsmith] Uploading to PyPI...")
         import glob
+
         dist_dir = os.path.join(pkg_dir, "dist")
         dist_files = glob.glob(os.path.join(dist_dir, "*"))
-        
+
         if not dist_files:
             return False, package_name, "Build produced no dist files"
-        
+
         try:
             upload_result = subprocess.run(
                 [
-                    "python3", "-m", "twine", "upload",
-                    "--username", self.pypi_username,
-                    "--password", self.pypi_token,
-                    "--non-interactive"
-                ] + dist_files,
+                    "python3",
+                    "-m",
+                    "twine",
+                    "upload",
+                    "--username",
+                    self.pypi_username,
+                    "--password",
+                    self.pypi_token,
+                    "--non-interactive",
+                ]
+                + dist_files,
                 cwd=pkg_dir,
                 capture_output=True,
                 text=True,
-                timeout=120
+                timeout=120,
             )
-            
+
             if upload_result.returncode != 0:
                 if "already exists" in upload_result.stderr.lower():
                     return True, package_name, "Package already exists on PyPI"
                 return False, package_name, f"Upload failed: {upload_result.stderr}"
-            
+
         except FileNotFoundError:
-            return False, package_name, "Upload failed: 'twine' not installed. Run: pip install twine"
+            return (
+                False,
+                package_name,
+                "Upload failed: 'twine' not installed. Run: pip install twine",
+            )
         except subprocess.TimeoutExpired:
             return False, package_name, "Upload timed out"
-        
+
         print(f"[Toolsmith] Successfully published to PyPI: {package_name}")
         return True, package_name, f"Published as pip install {package_name}"
 
@@ -760,88 +866,100 @@ where = ["src"]
         Install a tool from PyPI into the workspace/tools folder.
         Downloads the package, extracts the .py file, and places it in tools/.
         Also updates the registry.
-        
+
         Args:
             package_name: The PyPI package name (e.g., 'factorial-tool-ts')
-        
+
         Returns:
             Success or error message
         """
         import zipfile
         import tarfile
-        
+
         module_name = package_name.replace("-", "_")
         tool_file = f"{module_name}.py"
         target_path = os.path.join(self.tools_dir, tool_file)
-        
+
         # Check if already installed
         if os.path.exists(target_path):
             return f"Tool already installed: {tool_file}"
-        
+
         print(f"[Toolsmith] Installing {package_name} from PyPI...")
-        
+
         # Create temp directory for download
         with tempfile.TemporaryDirectory() as tmp_dir:
             # Download the package using pip
             try:
                 download_result = subprocess.run(
-                    ["python3", "-m", "pip", "download", package_name, "--no-deps", "-d", tmp_dir],
+                    [
+                        "python3",
+                        "-m",
+                        "pip",
+                        "download",
+                        package_name,
+                        "--no-deps",
+                        "-d",
+                        tmp_dir,
+                    ],
                     capture_output=True,
                     text=True,
-                    timeout=60
+                    timeout=60,
                 )
-                
+
                 if download_result.returncode != 0:
                     return f"Download failed: {download_result.stderr}"
-                    
+
             except subprocess.TimeoutExpired:
                 return "Download timed out"
             except Exception as e:
                 return f"Download error: {e}"
-            
+
             # Find the downloaded file
             downloaded_files = os.listdir(tmp_dir)
             if not downloaded_files:
                 return "No package found on PyPI"
-            
+
             pkg_file = os.path.join(tmp_dir, downloaded_files[0])
-            
+
             # Extract the .py file from the package
             tool_code = None
-            
+
             if pkg_file.endswith(".whl"):
                 # Wheel file (zip format)
                 try:
-                    with zipfile.ZipFile(pkg_file, 'r') as zf:
+                    with zipfile.ZipFile(pkg_file, "r") as zf:
                         for name in zf.namelist():
-                            if name.endswith(f"{module_name}.py") or name == f"{module_name}.py":
-                                tool_code = zf.read(name).decode('utf-8')
+                            if (
+                                name.endswith(f"{module_name}.py")
+                                or name == f"{module_name}.py"
+                            ):
+                                tool_code = zf.read(name).decode("utf-8")
                                 break
                 except Exception as e:
                     return f"Failed to extract wheel: {e}"
-                    
+
             elif pkg_file.endswith(".tar.gz"):
                 # Source distribution
                 try:
-                    with tarfile.open(pkg_file, 'r:gz') as tf:
+                    with tarfile.open(pkg_file, "r:gz") as tf:
                         for member in tf.getmembers():
                             if member.name.endswith(f"{module_name}.py"):
                                 f = tf.extractfile(member)
                                 if f:
-                                    tool_code = f.read().decode('utf-8')
+                                    tool_code = f.read().decode("utf-8")
                                 break
                 except Exception as e:
                     return f"Failed to extract tarball: {e}"
-            
+
             if not tool_code:
                 return f"Could not find {module_name}.py in package"
-            
+
             # Write to tools directory
             with open(target_path, "w") as f:
                 f.write(tool_code)
-            
+
             print(f"[Toolsmith] Installed tool to: {target_path}")
-            
+
             # Try to extract class name from the code
             class_name = module_name.replace("_", " ").title().replace(" ", "") + "Tool"
             try:
@@ -852,16 +970,16 @@ where = ["src"]
                         break
             except:
                 pass
-            
+
             # Update registry
             self._update_registry(
                 class_name=class_name,
                 file_name=tool_file,
                 description=f"Installed from PyPI: {package_name}",
                 tags=[module_name],
-                pypi_package=package_name
+                pypi_package=package_name,
             )
-            
+
             return f"Successfully installed {package_name} as {tool_file}"
 
     def list_available_tools(self) -> list:
@@ -871,16 +989,18 @@ where = ["src"]
         try:
             with open(self.registry_path, "r") as f:
                 registry = json.load(f)
-            
+
             tools = []
             for name, meta in registry.items():
-                tools.append({
-                    "name": name,
-                    "file": meta.get("file", ""),
-                    "description": meta.get("description", ""),
-                    "tags": meta.get("tags", []),
-                    "pypi_package": meta.get("pypi_package", "")
-                })
+                tools.append(
+                    {
+                        "name": name,
+                        "file": meta.get("file", ""),
+                        "description": meta.get("description", ""),
+                        "tags": meta.get("tags", []),
+                        "pypi_package": meta.get("pypi_package", ""),
+                    }
+                )
             return tools
         except Exception as e:
             print(f"[Toolsmith] Failed to list tools: {e}")

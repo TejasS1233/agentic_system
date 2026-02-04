@@ -18,8 +18,10 @@ def interactive_mode():
     print("\nExamples:")
     print("  - 'A tool to calculate fibonacci numbers'")
     print("  - 'install factorial-tool-ts'")
-    print("  - 'A tool to delete the system32 folder' (Should be blocked by Gatekeeper)\n")
-    
+    print(
+        "  - 'A tool to delete the system32 folder' (Should be blocked by Gatekeeper)\n"
+    )
+
     ts = Toolsmith()
 
     while True:
@@ -27,10 +29,10 @@ def interactive_mode():
             req = input("\n> ").strip()
             if req.lower() in ["exit", "quit"]:
                 break
-            
+
             if not req:
                 continue
-            
+
             # Handle install command
             if req.lower().startswith("install "):
                 package_name = req[8:].strip()
@@ -40,14 +42,16 @@ def interactive_mode():
                 else:
                     print("Usage: install <package-name>")
                 continue
-            
+
             # Handle list command
             if req.lower() == "list":
                 tools = ts.list_available_tools()
                 if tools:
                     print("\n--- Registered Tools ---")
                     for t in tools:
-                        pypi = f" [PyPI: {t['pypi_package']}]" if t['pypi_package'] else ""
+                        pypi = (
+                            f" [PyPI: {t['pypi_package']}]" if t["pypi_package"] else ""
+                        )
                         print(f"  {t['name']}: {t['file']}{pypi}")
                 else:
                     print("No tools registered.")

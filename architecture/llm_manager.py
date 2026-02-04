@@ -48,26 +48,28 @@ class LLMManager:
 
     def __init__(self, provider: str = "groq", model: Optional[str] = None):
         if provider not in self.PROVIDER_CONFIG:
-            raise ValueError(f"Unknown provider: {provider}. Supported: {list(self.PROVIDER_CONFIG.keys())}")
-        
+            raise ValueError(
+                f"Unknown provider: {provider}. Supported: {list(self.PROVIDER_CONFIG.keys())}"
+            )
+
         self.provider = provider
         config = self.PROVIDER_CONFIG[provider]
         env_prefix = config["env_prefix"]
-        
+
         # Set model with provider prefix
         model_name = model or config["default_model"]
         self.model = f"{config['litellm_prefix']}/{model_name}"
-        
+
         # Try numbered keys first (e.g., GROQ_API_KEY_1, GROQ_API_KEY_2, ...)
         self.api_keys = [os.getenv(f"{env_prefix}_{i}") for i in range(1, 16)]
         self.api_keys = [key for key in self.api_keys if key]
-        
+
         # Fallback to single key (e.g., GROQ_API_KEY)
         if not self.api_keys:
             single_key = os.getenv(env_prefix)
             if single_key:
                 self.api_keys = [single_key]
-        
+
         if not self.api_keys:
             logger.warning(f"No {provider.upper()} API keys found!")
             self.key_pool = None
@@ -91,7 +93,7 @@ class LLMManager:
     ) -> Dict[str, Any]:
         """
         Generate completion with automatic retry and key rotation.
-        
+
         Args:
             messages: List of message dicts with 'role' and 'content'
             response_format: Optional format spec (e.g., {"type": "json_object"})
@@ -99,7 +101,7 @@ class LLMManager:
             temperature: Sampling temperature
             max_retries: Retries per key before switching
             initial_delay: Initial backoff delay in seconds
-            
+
         Returns:
             Dict with 'content' (str) and optional 'error' or 'rate_limit_warning'
         """
@@ -123,7 +125,7 @@ class LLMManager:
                         "temperature": temperature,
                         "api_key": api_key,
                     }
-                    
+
                     if response_format:
                         kwargs["response_format"] = response_format
 
@@ -134,16 +136,19 @@ class LLMManager:
 
                 except Exception as e:
                     error_str = str(e)
-                    
+
                     # Rate limit errors
-                    if any(x in error_str for x in ["429", "rate_limit", "ResourceExhausted", "quota"]):
+                    if any(
+                        x in error_str
+                        for x in ["429", "rate_limit", "ResourceExhausted", "quota"]
+                    ):
                         last_error = e
                         logger.warning(
                             f"Rate limit hit on key {key_attempt + 1}, attempt {retry_attempt + 1}/{max_retries}"
                         )
 
                         if retry_attempt < max_retries - 1:
-                            delay = initial_delay * (2 ** retry_attempt)
+                            delay = initial_delay * (2**retry_attempt)
                             logger.info(f"Retrying in {delay}s...")
                             time.sleep(delay)
                         else:
@@ -151,16 +156,18 @@ class LLMManager:
                                 f"Max retries reached for key {key_attempt + 1}, trying next key..."
                             )
                             break
-                    
+
                     # JSON generation failure - retry with same key
                     elif "json_validate_failed" in error_str:
                         last_error = e
-                        logger.warning(f"JSON generation failed, retrying... ({retry_attempt + 1}/{max_retries})")
+                        logger.warning(
+                            f"JSON generation failed, retrying... ({retry_attempt + 1}/{max_retries})"
+                        )
                         if retry_attempt < max_retries - 1:
                             time.sleep(0.5)
                         else:
                             break
-                    
+
                     # Other errors - don't retry
                     else:
                         last_error = e
@@ -175,31 +182,25 @@ class LLMManager:
         }
 
     def generate_json(
-        self,
-        messages: List[Dict[str, str]],
-        max_tokens: int = 4096,
-        **kwargs
+        self, messages: List[Dict[str, str]], max_tokens: int = 4096, **kwargs
     ) -> Dict[str, Any]:
         """Convenience method for JSON mode generation."""
         return self.generate(
             messages=messages,
             response_format={"type": "json_object"},
             max_tokens=max_tokens,
-            **kwargs
+            **kwargs,
         )
 
     def generate_text(
-        self,
-        prompt: str,
-        system_prompt: Optional[str] = None,
-        **kwargs
+        self, prompt: str, system_prompt: Optional[str] = None, **kwargs
     ) -> Dict[str, Any]:
         """Convenience method for simple text generation."""
         messages = []
         if system_prompt:
             messages.append({"role": "system", "content": system_prompt})
         messages.append({"role": "user", "content": prompt})
-        
+
         return self.generate(messages=messages, **kwargs)
 
 
@@ -207,25 +208,22 @@ class LLMManager:
 _llm_managers: Dict[str, LLMManager] = {}
 
 
-def get_llm_manager(
-    provider: str = "groq",
-    model: Optional[str] = None
-) -> LLMManager:
+def get_llm_manager(provider: str = "groq", model: Optional[str] = None) -> LLMManager:
     """
     Get or create the LLM manager instance for a provider.
-    
+
     Args:
         provider: "groq", "gemini", "openai", or "anthropic"
         model: Optional model override (uses provider default if not specified)
     """
     global _llm_managers
-    
+
     # Create unique key based on provider and model
     cache_key = f"{provider}:{model or 'default'}"
-    
+
     if cache_key not in _llm_managers:
         _llm_managers[cache_key] = LLMManager(provider=provider, model=model)
-    
+
     return _llm_managers[cache_key]
 
 

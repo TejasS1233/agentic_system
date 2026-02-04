@@ -6,7 +6,6 @@ import platform
 import warnings
 from abc import ABC, abstractmethod
 
-from architecture.llm_manager import get_llm_manager
 
 from utils.logger import get_logger
 
@@ -139,7 +138,7 @@ class LiteLLMClient(LLMClient):
     def _call_llm(self, tools_schema: list[dict]):
         """Make LLM API call using the centralized LLM manager."""
         from litellm import completion
-        
+
         kwargs = {
             "model": self.model_name,
             "messages": self.history,

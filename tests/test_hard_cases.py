@@ -21,7 +21,7 @@ from collections import defaultdict
 # Add parent to path for imports
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from architecture.intent_classifier import IntentClassifier, get_allowed_domains
+from architecture.intent_classifier import IntentClassifier
 from pathlib import Path
 
 
@@ -602,67 +602,56 @@ AMBIGUOUS_CASES = [
     ("count the files", "file"),
     ("sum of numbers", "math"),  # Math context
     ("count the numbers", "math"),
-    
     # Ambiguous between web and file
     ("download the file", "web"),  # Action matters
     ("read the file", "file"),
     ("fetch the data", "web"),
     ("load the data", "data"),
-    
     # Ambiguous between text and validation
     ("check if string is valid", "validation"),
     ("check the string content", "text"),
     ("validate the text format", "validation"),
     ("format the text", "text"),
-    
     # Ambiguous between data and file
     ("parse the file", "data"),
     ("read CSV file", "data"),
     ("write to CSV", "data"),
     ("save the file", "file"),
-    
     # Ambiguous between conversion and data
     ("convert JSON", "data"),
     ("transform JSON to XML", "conversion"),
     ("encode the data", "conversion"),
     ("serialize the data", "data"),
-    
     # Ambiguous check operations
     ("check if prime", "math"),
     ("check email", "validation"),
     ("check file exists", "file"),
     ("check connection", "web"),
     ("check system status", "system"),
-    
     # Ambiguous between math and data
     ("calculate statistics", "math"),
     ("analyze the data", "data"),
     ("compute metrics", "math"),
     ("aggregate values", "data"),
-    
     # Ambiguous between visualization and conversion
     ("render the chart", "visualization"),
     ("render markdown", "conversion"),
     ("export as image", "visualization"),
     ("convert to PNG", "conversion"),
-    
     # Ambiguous search operations
     ("find the file", "file"),
     ("find in database", "search"),
     ("search for text", "search"),
     ("find pattern in string", "text"),
-    
     # Queries that could go multiple ways
     ("process the data", "data"),
     ("process the request", "web"),
     ("process the command", "system"),
-    
     # Format ambiguity
     ("format the date", "conversion"),
     ("format the disk", "system"),
     ("format the string", "text"),
     ("format the code", "text"),
-    
     # Various tricky cases
     ("encrypt the message", "conversion"),
     ("compress the archive", "file"),
@@ -674,38 +663,32 @@ AMBIGUOUS_CASES = [
     ("profile the code", "system"),
     ("generate report", "visualization"),
     ("build the chart", "visualization"),
-    
     # Multi-domain hints
     ("download and parse JSON", "web"),
     ("read file and compute sum", "file"),
     ("fetch URL and validate", "web"),
     ("convert and save file", "conversion"),
-    
     # Unusual phrasing
     ("gimme the file contents", "file"),
     ("whatcha got for primes", "math"),
     ("yo download that stuff", "web"),
     ("make it uppercase plz", "text"),
     ("check dat email fam", "validation"),
-    
     # Technical jargon
     ("CRUD operations on database", "data"),
     ("RESTful API call", "web"),
     ("regex pattern matching", "text"),
     ("bitwise operations", "math"),
     ("filesystem traversal", "file"),
-    
     # Context-dependent
     ("count items", "math"),
     ("count files", "file"),
     ("count words", "text"),
     ("count records", "data"),
-    
     # Verb-first priorities
     ("download the matplotlib chart", "web"),
     ("validate the downloaded file", "validation"),
     ("fetch and store CSV", "web"),
-    
     # Complex queries
     ("find largest prime under 1000", "math"),
     ("search for pattern in directory", "search"),
@@ -715,9 +698,17 @@ AMBIGUOUS_CASES = [
 
 # Combine all cases
 ALL_DOMAIN_CASES = (
-    MATH_CASES + TEXT_CASES + FILE_CASES + WEB_CASES + 
-    DATA_CASES + VISUALIZATION_CASES + CONVERSION_CASES +
-    VALIDATION_CASES + SEARCH_CASES + SYSTEM_CASES + AMBIGUOUS_CASES
+    MATH_CASES
+    + TEXT_CASES
+    + FILE_CASES
+    + WEB_CASES
+    + DATA_CASES
+    + VISUALIZATION_CASES
+    + CONVERSION_CASES
+    + VALIDATION_CASES
+    + SEARCH_CASES
+    + SYSTEM_CASES
+    + AMBIGUOUS_CASES
 )
 
 
@@ -734,17 +725,17 @@ def generate_variants(template: str) -> list[str]:
 
 def run_tests(num_cases: int = 1000):
     """Run classification tests on hard cases."""
-    print(f"\n{'='*70}")
+    print(f"\n{'=' * 70}")
     print(f"  INTENT CLASSIFIER STRESS TEST - {num_cases} HARD CASES")
-    print(f"{'='*70}\n")
-    
+    print(f"{'=' * 70}\n")
+
     # Initialize classifier
     registry_path = Path(__file__).parent / "workspace" / "tools" / "registry.json"
     classifier = IntentClassifier(str(registry_path))
-    
+
     # Generate test cases
     test_cases = []
-    
+
     # Add base cases with variants
     for template, expected in ALL_DOMAIN_CASES:
         if "{n}" in template or "{m}" in template:
@@ -752,7 +743,7 @@ def run_tests(num_cases: int = 1000):
                 test_cases.append((variant, expected))
         else:
             test_cases.append((template, expected))
-    
+
     # If we need more cases, duplicate with slight variations
     while len(test_cases) < num_cases:
         template, expected = random.choice(ALL_DOMAIN_CASES)
@@ -771,14 +762,14 @@ def run_tests(num_cases: int = 1000):
                 f"I need to {template}",
             ]
             test_cases.append((random.choice(variations), expected))
-        
+
         if len(test_cases) >= num_cases:
             break
-    
+
     # Truncate to exact count
     test_cases = test_cases[:num_cases]
     random.shuffle(test_cases)
-    
+
     # Run tests
     results = {
         "correct": 0,
@@ -786,64 +777,68 @@ def run_tests(num_cases: int = 1000):
         "by_domain": defaultdict(lambda: {"correct": 0, "incorrect": 0}),
         "failed_cases": [],
     }
-    
+
     print(f"Testing {len(test_cases)} cases...\n")
-    
+
     for i, (query, expected) in enumerate(test_cases):
         domain, method, confidence = classifier.classify(query)
-        
+
         if domain == expected:
             results["correct"] += 1
             results["by_domain"][expected]["correct"] += 1
         else:
             results["incorrect"] += 1
             results["by_domain"][expected]["incorrect"] += 1
-            results["failed_cases"].append({
-                "query": query,
-                "expected": expected,
-                "got": domain,
-                "method": method,
-                "confidence": confidence,
-            })
-        
+            results["failed_cases"].append(
+                {
+                    "query": query,
+                    "expected": expected,
+                    "got": domain,
+                    "method": method,
+                    "confidence": confidence,
+                }
+            )
+
         # Progress indicator
         if (i + 1) % 100 == 0:
             acc = results["correct"] / (i + 1) * 100
-            print(f"  [{i+1:4d}/{num_cases}] Accuracy so far: {acc:.1f}%")
-    
+            print(f"  [{i + 1:4d}/{num_cases}] Accuracy so far: {acc:.1f}%")
+
     # Print results
     total = results["correct"] + results["incorrect"]
     accuracy = results["correct"] / total * 100 if total > 0 else 0
-    
-    print(f"\n{'='*70}")
-    print(f"  RESULTS")
-    print(f"{'='*70}\n")
-    
+
+    print(f"\n{'=' * 70}")
+    print("  RESULTS")
+    print(f"{'=' * 70}\n")
+
     print(f"  Total:    {total}")
     print(f"  Correct:  {results['correct']}")
     print(f"  Incorrect: {results['incorrect']}")
     print(f"  Accuracy: {accuracy:.2f}%")
-    
-    print(f"\n  Per-Domain Breakdown:")
-    print(f"  {'-'*50}")
-    
+
+    print("\n  Per-Domain Breakdown:")
+    print(f"  {'-' * 50}")
+
     for domain in sorted(results["by_domain"].keys()):
         stats = results["by_domain"][domain]
         total_d = stats["correct"] + stats["incorrect"]
         acc_d = stats["correct"] / total_d * 100 if total_d > 0 else 0
         print(f"    {domain:15s}: {acc_d:5.1f}% ({stats['correct']}/{total_d})")
-    
+
     if results["failed_cases"]:
-        print(f"\n  Failed Cases (first 20):")
-        print(f"  {'-'*50}")
-        
+        print("\n  Failed Cases (first 20):")
+        print(f"  {'-' * 50}")
+
         for case in results["failed_cases"][:20]:
             print(f"    Query:    {case['query'][:50]}")
-            print(f"    Expected: {case['expected']}, Got: {case['got']} ({case['method']}, {case['confidence']:.2f})")
+            print(
+                f"    Expected: {case['expected']}, Got: {case['got']} ({case['method']}, {case['confidence']:.2f})"
+            )
             print()
-    
-    print(f"\n{'='*70}")
-    
+
+    print(f"\n{'=' * 70}")
+
     return accuracy >= 95  # Return True if 95%+ accuracy
 
 
