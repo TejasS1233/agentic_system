@@ -305,6 +305,14 @@ try:
     else:
         grade = "critical"
     
+    # Calculate efficiency score (0.0 - 1.0)
+    # Based on: latency (50%), memory (40%), success (10%)
+    latency_score = max(0, 1 - (execution_time_ms / 1000))  # 1.0 at 0ms, 0.0 at 1000ms+
+    memory_score = max(0, 1 - (peak_memory_mb / 100))  # 1.0 at 0MB, 0.0 at 100MB+
+    success_score = 1.0
+    efficiency = (latency_score * 0.5) + (memory_score * 0.4) + (success_score * 0.1)
+    efficiency = round(min(1.0, max(0.0, efficiency)), 4)
+    
     # Output result with profile
     output = {{
         "success": True,
@@ -315,6 +323,7 @@ try:
             "peak_memory_mb": round(peak_memory_mb, 4),
             "memory_delta_mb": round(memory_delta_mb, 4),
             "latency_grade": grade,
+            "efficiency_score": efficiency,
             "success": True
         }}
     }}

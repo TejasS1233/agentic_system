@@ -350,19 +350,11 @@ class ProfileResult:
         }
     
     def summary(self) -> str:
-        """Human-readable summary of the profile."""
-        grade_emoji = {
-            LatencyGrade.FAST: "🟢",
-            LatencyGrade.MODERATE: "🟡",
-            LatencyGrade.SLOW: "🟠",
-            LatencyGrade.CRITICAL: "🔴",
-            LatencyGrade.UNKNOWN: "⚪",
-        }
-        
+
         lines = [
             f"═══ Profile: {self.tool_name or 'Anonymous'} ═══",
             f"  Mode: {self.profiling_mode.value}",
-            f"  Time: {self.execution_time_ms:.2f}ms {grade_emoji[self.latency_grade]} {self.latency_grade.value}",
+            f"  Time: {self.execution_time_ms:.2f}ms {self.latency_grade.value}",
             f"  Memory: {self.peak_memory_mb:.2f}MB peak (Δ{self.memory_delta_mb:+.2f}MB)",
         ]
         
@@ -1102,3 +1094,217 @@ if __name__ == "__main__":
     print("\n" + "=" * 60)
     print("SELF-TEST COMPLETE")
     print("=" * 60)
+
+
+# =============================================================================
+#                     PROFILE METRICS FROM LOGS
+# =============================================================================
+
+def get_weighted_metrics_from_logs(logs_dir: str = None) -> Dict[str, Dict[str, float]]:
+    """
+    Load the latest profiles JSON from logs folder and calculate scaled weighted metrics.
+    
+    Process:
+    1. Sum raw metrics for each tool across all calls in an iteration
+    2. Divide by call count to get average raw metrics per tool
+    3. Scale the averaged values using MinMax
+    4. Apply formula to calculate final weighted score
+    
+    Args:
+        logs_dir: Path to logs directory. Defaults to project's logs folder.
+    
+    Returns:
+        Dictionary with tool names as keys and their scaled weighted metrics as values.
+    """
+    import os
+    import glob
+    from pathlib import Path
+    
+    # Find logs directory
+    if logs_dir is None:
+        # Default to project root/logs
+        current_dir = Path(__file__).parent.parent
+        logs_dir = current_dir / "logs"
+    else:
+        logs_dir = Path(logs_dir)
+    
+    if not logs_dir.exists():
+        logger.warning(f"Logs directory not found: {logs_dir}")
+        return {}
+    
+    # Find latest profile JSON
+    profile_files = sorted(glob.glob(str(logs_dir / "profiles_*.json")))
+    if not profile_files:
+        logger.warning("No profile JSON files found in logs directory")
+        return {}
+    
+    latest_file = profile_files[-1]  # Most recent by filename (timestamp-sorted)
+    logger.info(f"Loading profiles from: {latest_file}")
+    
+    # Load the JSON
+    import json
+    with open(latest_file, 'r') as f:
+        data = json.load(f)
+    
+    raw_profiles = data.get("raw_profiles", {})
+    
+    # Step 1: For each tool, sum raw metrics and calculate averages
+    tool_avg_metrics: Dict[str, Dict[str, float]] = {}
+    
+    for tool_name, profiles in raw_profiles.items():
+        # Initialize sums
+        sum_execution_time = 0.0
+        sum_peak_memory = 0.0
+        sum_memory_delta = 0.0
+        sum_efficiency = 0.0
+        sum_success = 0.0
+        call_count = len(profiles)
+        
+        # Sum all metrics for this tool
+        for profile in profiles:
+            sum_execution_time += profile.get("execution_time_ms", 0)
+            sum_peak_memory += profile.get("peak_memory_mb", 0)
+            sum_memory_delta += profile.get("memory_delta_mb", 0)
+            sum_efficiency += profile.get("efficiency_score", 0)
+            sum_success += 1.0 if profile.get("success", False) else 0.0
+        
+        # Calculate average raw metrics for this tool
+        if call_count > 0:
+            tool_avg_metrics[tool_name] = {
+                "execution_time": sum_execution_time / call_count,
+                "peak_memory": sum_peak_memory / call_count,
+                "memory_delta": sum_memory_delta / call_count,
+                "efficiency": sum_efficiency / call_count,
+                "success": sum_success / call_count,
+                "call_count": call_count,
+            }
+            logger.info(f"{tool_name} avg raw metrics (calls={call_count}): "
+                       f"time={tool_avg_metrics[tool_name]['execution_time']:.4f}ms, "
+                       f"mem={tool_avg_metrics[tool_name]['peak_memory']:.4f}MB")
+    
+    # Step 2: Calculate min/max for MinMax scaling using averaged values
+    def get_min_max(values):
+        if not values:
+            return 0, 1
+        min_val = min(values)
+        max_val = max(values)
+        return min_val, max_val
+    
+    def minmax_scale(value, min_val, max_val):
+        if max_val == min_val:
+            # No variance - all tools have the same value
+            # Return the actual normalized value (capped to 0-1)
+            # This handles cases like: all tools succeeded (1.0) → return 1.0
+            # Or all tools have same time → return 0.5 (neutral)
+            if min_val == 0:
+                return 0.5  # Neutral for zero values
+            return min(max(value, 0.0), 1.0)  # Return actual value, clamped to 0-1
+        return (value - min_val) / (max_val - min_val)
+    
+    # Collect all averaged metrics for scaling
+    all_avg_metrics = {
+        "execution_time": [m["execution_time"] for m in tool_avg_metrics.values()],
+        "peak_memory": [m["peak_memory"] for m in tool_avg_metrics.values()],
+        "memory_delta": [m["memory_delta"] for m in tool_avg_metrics.values()],
+        "efficiency": [m["efficiency"] for m in tool_avg_metrics.values()],
+        "success": [m["success"] for m in tool_avg_metrics.values()],
+    }
+    
+    # Get scaling parameters from averaged values
+    scales = {}
+    for metric_name, values in all_avg_metrics.items():
+        scales[metric_name] = get_min_max(values)
+        logger.info(f"Scaler for avg_{metric_name}: min={scales[metric_name][0]:.4f}, max={scales[metric_name][1]:.4f}")
+    
+    # Step 3 & 4: Scale the averaged values, invert cost metrics, and apply weighted average
+    # 
+    # IMPORTANT: For cost metrics (time, memory), LOWER is BETTER.
+    # After MinMax scaling, the slowest/heaviest tool gets 1.0 and fastest/lightest gets 0.0.
+    # We INVERT these so that 1.0 = BEST (fastest/lightest) and 0.0 = WORST (slowest/heaviest).
+    # 
+    # For benefit metrics (efficiency, success), HIGHER is BETTER - no inversion needed.
+    #
+    # Weights (must sum to 1.0):
+    #   - Execution Time: 40% (most critical for tool performance)
+    #   - Peak Memory: 20%
+    #   - Memory Delta: 10% (less important than absolute memory)
+    #   - Success Rate: 30% (critical - failed tools are useless)
+    #
+    # Note: We exclude the pre-calculated 'efficiency' metric to avoid double-counting
+    # since it already incorporates time, memory, and success internally.
+    
+    WEIGHT_TIME = 0.40
+    WEIGHT_PEAK_MEM = 0.20
+    WEIGHT_MEM_DELTA = 0.10
+    WEIGHT_SUCCESS = 0.30
+    
+    tool_totals: Dict[str, Dict[str, float]] = {}
+    
+    for tool_name, avg in tool_avg_metrics.items():
+        # Scale each averaged metric to 0-1 range
+        scaled_exec = minmax_scale(avg["execution_time"], *scales["execution_time"])
+        scaled_peak = minmax_scale(avg["peak_memory"], *scales["peak_memory"])
+        scaled_delta = minmax_scale(avg["memory_delta"], *scales["memory_delta"])
+        scaled_eff = minmax_scale(avg["efficiency"], *scales["efficiency"])
+        scaled_succ = minmax_scale(avg["success"], *scales["success"])
+        
+        # INVERT cost metrics: 1.0 - scaled_value
+        # After inversion: 1.0 = fastest/lightest (BEST), 0.0 = slowest/heaviest (WORST)
+        score_time = 1.0 - scaled_exec
+        score_peak_mem = 1.0 - scaled_peak
+        score_mem_delta = 1.0 - scaled_delta
+        
+        # Benefit metrics remain as-is (higher = better)
+        score_success = scaled_succ
+        
+        # Apply weighted average formula (result is 0-1, then scale to 0-100)
+        final_score = (
+            (score_time * WEIGHT_TIME) +
+            (score_peak_mem * WEIGHT_PEAK_MEM) +
+            (score_mem_delta * WEIGHT_MEM_DELTA) +
+            (score_success * WEIGHT_SUCCESS)
+        ) * 100  # Scale to 0-100
+        
+        tool_totals[tool_name] = {
+            "avg_execution_time": round(avg["execution_time"], 4),
+            "avg_peak_memory": round(avg["peak_memory"], 4),
+            "avg_memory_delta": round(avg["memory_delta"], 4),
+            "avg_efficiency": round(avg["efficiency"], 4),
+            "avg_success": round(avg["success"], 4),
+            "scaled_execution_time": round(scaled_exec, 4),
+            "scaled_peak_memory": round(scaled_peak, 4),
+            "scaled_memory_delta": round(scaled_delta, 4),
+            "scaled_efficiency": round(scaled_eff, 4),
+            "scaled_success": round(scaled_succ, 4),
+            "score_time": round(score_time, 4),
+            "score_peak_mem": round(score_peak_mem, 4),
+            "score_mem_delta": round(score_mem_delta, 4),
+            "score_success": round(score_success, 4),
+            "call_count": avg["call_count"],
+            "combined_score": round(final_score, 4),  # 0-100 scale
+        }
+        
+        logger.info(
+            f"Tool '{tool_name}': time_score={score_time:.4f}, "
+            f"mem_score={score_peak_mem:.4f}, success_score={score_success:.4f} "
+            f"→ final={final_score:.2f}/100"
+        )
+    
+    return tool_totals
+
+
+def get_all_tool_metrics_list(logs_dir: str = None) -> List[Dict[str, Any]]:
+    """
+    Get a flat list of all tool metrics from latest profiles.
+    
+    Returns:
+        List of dictionaries, each containing tool name and its weighted metrics.
+    """
+    tool_totals = get_weighted_metrics_from_logs(logs_dir)
+    
+    metrics_list = []
+    for tool_name, metrics in tool_totals.items():
+        entry = {"tool_name": tool_name, **metrics}
+        metrics_list.append(entry)
+    
+    return metrics_list

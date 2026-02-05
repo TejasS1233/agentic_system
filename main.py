@@ -42,7 +42,7 @@ class IASCIS:
         private_model: str = "groq/llama-3.3-70b-versatile",
         safe_mode: bool = True,
         enable_profiling: bool = True,
-        profiling_mode: str = "standard",
+        profiling_mode: str = "lightweight",
     ):
         self.workspace_path = Path(workspace_path) if workspace_path else WORKSPACE_PATH
         self.tools_dir = self.workspace_path / "tools"
@@ -209,7 +209,7 @@ def main():
 
     logger.info("Starting IASCIS with Sandbox and Profiling")
 
-    with IASCIS(enable_profiling=True, profiling_mode="standard") as system:
+    with IASCIS(enable_profiling=True) as system:
         result = system.run(task)
 
         logger.info(f"Completed in {result['duration_ms']:.2f}ms")
@@ -229,7 +229,9 @@ def main():
                 print(f"    Calls: {stats['call_count']}")
                 print(f"    Avg Time: {stats['avg_time_ms']:.2f}ms")
                 print(f"    Max Time: {stats['max_time_ms']:.2f}ms")
-                print(f"    Avg Memory: {stats['avg_memory_mb']:.2f}MB")
+                print(f"    Avg Memory: {stats['avg_memory_mb']:.4f}MB")
+                print(f"    Memory Delta: {stats.get('avg_memory_delta_mb', 0):.4f}MB")
+                print(f"    Efficiency: {stats.get('avg_efficiency', 0):.2%}")
                 print(f"    Grade: {stats['last_grade']}")
         else:
             print("  No tools were executed.")
@@ -240,6 +242,16 @@ def main():
             print(f"\n  Total Profiles: {profiler_stats.get('count', 0)}")
             if profiler_stats.get('count', 0) > 0:
                 print(f"  Success Rate: {profiler_stats.get('success_rate', 0):.0%}")
+        
+        # Export profiles to JSON
+        if system.executor:
+            export_path = system.executor.export_profiles()
+            print(f"\n  Profiles exported to: {export_path}")
+            
+            # Update registry.json with calculated performance metrics
+            updated_metrics = system.toolsmith.update_metrics_from_profiles()
+            if updated_metrics:
+                print(f"  Registry updated with metrics for {len(updated_metrics)} tools")
 
 
 if __name__ == "__main__":

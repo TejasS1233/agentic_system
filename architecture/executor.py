@@ -164,7 +164,9 @@ class ExecutorAgent:
             logger.info(
                 f"Step {step.step_number} SANDBOX Profile: "
                 f"time={sandbox_profile['execution_time_ms']:.3f}ms, "
-                f"memory={sandbox_profile['peak_memory_mb']:.4f}MB, "
+                f"peak_mem={sandbox_profile['peak_memory_mb']:.4f}MB, "
+                f"delta_mem={sandbox_profile.get('memory_delta_mb', 0):.4f}MB, "
+                f"efficiency={sandbox_profile.get('efficiency_score', 0):.2%}, "
                 f"grade={sandbox_profile['latency_grade']}"
             )
             
@@ -266,6 +268,8 @@ class ExecutorAgent:
             # Profiles are now dicts from sandbox, not ProfileResult objects
             times = [p["execution_time_ms"] for p in profiles if p]
             memories = [p["peak_memory_mb"] for p in profiles if p]
+            memory_deltas = [p.get("memory_delta_mb", 0) for p in profiles if p]
+            efficiencies = [p.get("efficiency_score", 0) for p in profiles if p]
             
             summary[tool_name] = {
                 "call_count": len(profiles),
@@ -274,10 +278,43 @@ class ExecutorAgent:
                 "min_time_ms": min(times) if times else 0,
                 "avg_memory_mb": sum(memories) / len(memories) if memories else 0,
                 "max_memory_mb": max(memories) if memories else 0,
+                "avg_memory_delta_mb": sum(memory_deltas) / len(memory_deltas) if memory_deltas else 0,
+                "avg_efficiency": sum(efficiencies) / len(efficiencies) if efficiencies else 0,
                 "last_grade": profiles[-1].get("latency_grade", "unknown") if profiles else "unknown",
             }
         
         return summary
+
+    def export_profiles(self, filepath: str = None) -> str:
+        """
+        Export all profiles to a JSON file.
+        
+        Args:
+            filepath: Optional path. Defaults to logs/profiles_<timestamp>.json
+        
+        Returns:
+            Path to the exported file
+        """
+        from datetime import datetime
+        
+        if filepath is None:
+            logs_dir = self.workspace.parent / "logs"
+            logs_dir.mkdir(exist_ok=True)
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            filepath = str(logs_dir / f"profiles_{timestamp}.json")
+        
+        export_data = {
+            "exported_at": datetime.now().isoformat(),
+            "summary": self.get_tool_performance_summary(),
+            "statistics": self.get_profiler_statistics(),
+            "raw_profiles": self._execution_profiles,
+        }
+        
+        with open(filepath, "w") as f:
+            json.dump(export_data, f, indent=2)
+        
+        logger.info(f"Profiles exported to: {filepath}")
+        return filepath
 
     def _infer_args(
         self, step: ExecutionStep, input_data: str, definition: dict
