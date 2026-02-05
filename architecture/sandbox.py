@@ -222,7 +222,12 @@ class Sandbox:
     def execute_with_args(self, tool_name: str, tool_file: str, args: dict) -> dict:
         """Execute a tool with specific arguments inside the sandbox with profiling."""
         if not self.container:
-            return {"success": False, "error": "Sandbox not started", "output": "", "profile": None}
+            return {
+                "success": False,
+                "error": "Sandbox not started",
+                "output": "",
+                "profile": None,
+            }
 
         tool_path = self.tools_dir / tool_file
         if not tool_path.exists():
@@ -401,23 +406,23 @@ except Exception as e:
                         break
                     except json_module.JSONDecodeError:
                         continue
-                
+
                 if not json_line:
                     raise ValueError("No valid JSON output found")
 
                 data = json_module.loads(json_line)
-                
+
                 # Extract profile
                 profile = data.get("profile", None)
-                
+
                 if "error" in data:
                     return {
-                        "success": False, 
-                        "error": data["error"], 
+                        "success": False,
+                        "error": data["error"],
                         "output": "",
-                        "profile": profile
+                        "profile": profile,
                     }
-                
+
                 # Handle result which might be in "result" field or raw output
                 result_val = data.get("result", output_str)
                 # Ensure result is distinct from output string if possible
@@ -433,10 +438,22 @@ except Exception as e:
                     "profile": profile,
                 }
             except Exception as e:
-                logger.warning(f"Failed to parse sandbox output: {e}, Raw output: {output_str}")
+                logger.warning(
+                    f"Failed to parse sandbox output: {e}, Raw output: {output_str}"
+                )
                 if exit_code == 0:
-                    return {"success": True, "output": output_str, "error": "", "profile": None}
-                return {"success": False, "error": output_str, "output": "", "profile": None}
+                    return {
+                        "success": True,
+                        "output": output_str,
+                        "error": "",
+                        "profile": None,
+                    }
+                return {
+                    "success": False,
+                    "error": output_str,
+                    "output": "",
+                    "profile": None,
+                }
 
         except Exception as e:
             logger.error(f"Execution error: {e}")

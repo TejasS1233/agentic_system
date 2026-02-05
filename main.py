@@ -65,7 +65,9 @@ class IASCIS:
         self.executor = None
         self.orchestrator = None
 
-        logger.info(f"IASCIS initialized (workspace={self.workspace_path}, profiling={enable_profiling})")
+        logger.info(
+            f"IASCIS initialized (workspace={self.workspace_path}, profiling={enable_profiling})"
+        )
 
     def _initialize_runtime(self):
         """Initialize Sandbox, Executor, and Orchestrator."""
@@ -216,12 +218,12 @@ def main():
         logger.info(f"Zone: {result['zone']}")
         print(f"\n{'=' * 50}")
         print(f"Result:\n{result['result']}")
-        
+
         # Display profiling information
         print(f"\n{'=' * 50}")
         print("PROFILING SUMMARY")
-        print('=' * 50)
-        
+        print("=" * 50)
+
         perf_summary = system.get_tool_performance_summary()
         if perf_summary:
             for tool_name, stats in perf_summary.items():
@@ -235,23 +237,25 @@ def main():
                 print(f"    Grade: {stats['last_grade']}")
         else:
             print("  No tools were executed.")
-        
+
         # Overall stats
         profiler_stats = system.get_profiler_statistics()
         if profiler_stats.get("profiling_enabled"):
             print(f"\n  Total Profiles: {profiler_stats.get('count', 0)}")
-            if profiler_stats.get('count', 0) > 0:
+            if profiler_stats.get("count", 0) > 0:
                 print(f"  Success Rate: {profiler_stats.get('success_rate', 0):.0%}")
-        
+
         # Export profiles to JSON
         if system.executor:
             export_path = system.executor.export_profiles()
             print(f"\n  Profiles exported to: {export_path}")
-            
+
             # Update registry.json with calculated performance metrics
             updated_metrics = system.toolsmith.update_metrics_from_profiles()
             if updated_metrics:
-                print(f"  Registry updated with metrics for {len(updated_metrics)} tools")
+                print(
+                    f"  Registry updated with metrics for {len(updated_metrics)} tools"
+                )
 
 
 if __name__ == "__main__":

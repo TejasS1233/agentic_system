@@ -3,7 +3,7 @@
 import time
 import json
 from pathlib import Path
-from typing import Optional, Dict, Any
+from typing import Dict
 
 from architecture.schemas import ExecutionPlan, ExecutionStep
 from architecture.sandbox import Sandbox
@@ -18,6 +18,7 @@ try:
         ProfileResult,
         profile_to_registry_update,
     )
+
     HAS_PROFILER = True
 except ImportError:
     HAS_PROFILER = False
@@ -31,9 +32,9 @@ class ExecutorAgent:
     """Executes ExecutionPlan by running tools in a persistent Docker container with profiling."""
 
     def __init__(
-        self, 
-        workspace_path: str, 
-        tools_dir: str, 
+        self,
+        workspace_path: str,
+        tools_dir: str,
         sandbox: Sandbox,
         enable_profiling: bool = True,
         profiling_mode: str = "standard",
@@ -44,7 +45,7 @@ class ExecutorAgent:
         self.sandbox = sandbox
         self._definitions = {}
         self._execution_profiles: Dict[str, list] = {}  # Store profiles per tool
-        
+
         # Initialize profiler
         self._enable_profiling = enable_profiling and HAS_PROFILER
         if self._enable_profiling:
@@ -63,7 +64,7 @@ class ExecutorAgent:
             self._profiler = None
             if enable_profiling and not HAS_PROFILER:
                 logger.warning("Profiling requested but profiler module not available")
-        
+
         self.load_registry()
         self.llm = get_llm_manager()
         logger.info("ExecutorAgent initialized with Sandbox")
@@ -153,13 +154,13 @@ class ExecutorAgent:
 
         # Extract profile from sandbox result (profiling done inside container)
         sandbox_profile = result.get("profile")
-        
+
         if sandbox_profile:
             # Store the profile data
             if step.tool_name not in self._execution_profiles:
                 self._execution_profiles[step.tool_name] = []
             self._execution_profiles[step.tool_name].append(sandbox_profile)
-            
+
             # Log profile from INSIDE the container
             logger.info(
                 f"Step {step.step_number} SANDBOX Profile: "
@@ -169,11 +170,9 @@ class ExecutorAgent:
                 f"efficiency={sandbox_profile.get('efficiency_score', 0):.2%}, "
                 f"grade={sandbox_profile['latency_grade']}"
             )
-            
+
             # Also log total round-trip time for comparison
-            logger.info(
-                f"   (Total round-trip: {host_latency * 1000:.2f}ms)"
-            )
+            logger.info(f"   (Total round-trip: {host_latency * 1000:.2f}ms)")
 
         if result["success"]:
             step.result = result["output"]
@@ -192,31 +191,31 @@ class ExecutorAgent:
         self, tool_name: str, tool_file: str, args: dict
     ) -> tuple:
         """Execute a tool with profiling wrapper."""
+
         # Create a wrapper function for the sandbox execution
         def sandbox_execution():
             return self.sandbox.execute_with_args(tool_name, tool_file, args)
-        
+
         # Profile the execution
         result, profile = self._profiler.profile(
-            sandbox_execution, 
-            _profile_name=tool_name
+            sandbox_execution, _profile_name=tool_name
         )
-        
+
         return result, profile
 
     def get_execution_profiles(self, tool_name: str = None) -> list:
         """
         Get execution profiles for tools.
-        
+
         Args:
             tool_name: Optional tool name to filter by. If None, returns all.
-        
+
         Returns:
             List of profile dicts from sandbox execution
         """
         if tool_name:
             return self._execution_profiles.get(tool_name, [])
-        
+
         # Return all profiles flattened
         all_profiles = []
         for profiles in self._execution_profiles.values():
@@ -226,7 +225,7 @@ class ExecutorAgent:
     def get_profiler_statistics(self) -> dict:
         """Get aggregate profiling statistics from sandbox profiles."""
         all_profiles = self.get_execution_profiles()
-        
+
         if not all_profiles:
             return {
                 "profiling_enabled": True,
@@ -234,11 +233,11 @@ class ExecutorAgent:
                 "count": 0,
                 "tools_profiled": list(self._execution_profiles.keys()),
             }
-        
+
         times = [p["execution_time_ms"] for p in all_profiles if p]
         memories = [p["peak_memory_mb"] for p in all_profiles if p]
         successes = [p.get("success", True) for p in all_profiles if p]
-        
+
         return {
             "profiling_enabled": True,
             "source": "sandbox",
@@ -260,17 +259,17 @@ class ExecutorAgent:
     def get_tool_performance_summary(self) -> dict:
         """Get a summary of performance metrics per tool from sandbox profiles."""
         summary = {}
-        
+
         for tool_name, profiles in self._execution_profiles.items():
             if not profiles:
                 continue
-            
+
             # Profiles are now dicts from sandbox, not ProfileResult objects
             times = [p["execution_time_ms"] for p in profiles if p]
             memories = [p["peak_memory_mb"] for p in profiles if p]
             memory_deltas = [p.get("memory_delta_mb", 0) for p in profiles if p]
             efficiencies = [p.get("efficiency_score", 0) for p in profiles if p]
-            
+
             summary[tool_name] = {
                 "call_count": len(profiles),
                 "avg_time_ms": sum(times) / len(times) if times else 0,
@@ -278,41 +277,47 @@ class ExecutorAgent:
                 "min_time_ms": min(times) if times else 0,
                 "avg_memory_mb": sum(memories) / len(memories) if memories else 0,
                 "max_memory_mb": max(memories) if memories else 0,
-                "avg_memory_delta_mb": sum(memory_deltas) / len(memory_deltas) if memory_deltas else 0,
-                "avg_efficiency": sum(efficiencies) / len(efficiencies) if efficiencies else 0,
-                "last_grade": profiles[-1].get("latency_grade", "unknown") if profiles else "unknown",
+                "avg_memory_delta_mb": sum(memory_deltas) / len(memory_deltas)
+                if memory_deltas
+                else 0,
+                "avg_efficiency": sum(efficiencies) / len(efficiencies)
+                if efficiencies
+                else 0,
+                "last_grade": profiles[-1].get("latency_grade", "unknown")
+                if profiles
+                else "unknown",
             }
-        
+
         return summary
 
     def export_profiles(self, filepath: str = None) -> str:
         """
         Export all profiles to a JSON file.
-        
+
         Args:
             filepath: Optional path. Defaults to logs/profiles_<timestamp>.json
-        
+
         Returns:
             Path to the exported file
         """
         from datetime import datetime
-        
+
         if filepath is None:
             logs_dir = self.workspace.parent / "logs"
             logs_dir.mkdir(exist_ok=True)
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             filepath = str(logs_dir / f"profiles_{timestamp}.json")
-        
+
         export_data = {
             "exported_at": datetime.now().isoformat(),
             "summary": self.get_tool_performance_summary(),
             "statistics": self.get_profiler_statistics(),
             "raw_profiles": self._execution_profiles,
         }
-        
+
         with open(filepath, "w") as f:
             json.dump(export_data, f, indent=2)
-        
+
         logger.info(f"Profiles exported to: {filepath}")
         return filepath
 

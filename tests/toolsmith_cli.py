@@ -14,7 +14,7 @@ load_dotenv()
 sys.path.append(os.getcwd())
 
 from architecture.toolsmith import Toolsmith  # noqa: E402
-from execution.tool_decay import ToolDecayManager, create_decay_manager  # noqa: E402
+from execution.tool_decay import create_decay_manager  # noqa: E402
 
 
 class ToolsmithCLI:
@@ -22,53 +22,56 @@ class ToolsmithCLI:
 
     def __init__(self):
         self.toolsmith = Toolsmith()
-        
+
         # Initialize decay manager for tracking tool usage
         self.decay_manager = create_decay_manager(
             decay_minutes=30.0,  # Tools decay after 30 min of inactivity
-            protected_tools=[],   # Will be populated from registry
+            protected_tools=[],  # Will be populated from registry
             auto_cleanup=True,
             cleanup_interval=30.0,  # Check every 30 seconds for visible decay updates
             max_capacity=50,
         )
-        
+
         # Load existing tools into decay manager
         self._load_tools_from_registry()
 
     def _load_tools_from_registry(self):
         """Load existing tools from registry into the decay manager with historical timestamps."""
         tools = self.toolsmith.list_available_tools()
-        
+
         # Get historical timestamps from metrics.json
         creation_times = self.toolsmith.get_tool_creation_timestamps()
         last_used_times = self.toolsmith.get_tool_last_used_timestamps()
-        
+
         loaded_count = 0
         for tool in tools:
-            tool_name = tool['name']
-            
+            tool_name = tool["name"]
+
             # Get timestamps if available
             created_at = creation_times.get(tool_name)
             last_used = last_used_times.get(tool_name)
-            
+
             # Register each tool with semantic grouping based on domain
             self.decay_manager.register_tool(
                 name=tool_name,
                 tool=tool,  # Store the metadata as the "tool"
                 protected=False,
-                semantic_group=tool.get('domain', 'general'),
+                semantic_group=tool.get("domain", "general"),
                 created_at=created_at,
-                last_used=last_used
+                last_used=last_used,
             )
             loaded_count += 1
-            
+
             # Log if using historical timestamps
             if created_at:
                 import time
+
                 age_days = (time.time() - created_at) / 86400
                 print(f"[Decay] {tool_name}: created {age_days:.1f} days ago")
-        
-        print(f"[Decay] Loaded {loaded_count} tools from registry (with historical timestamps)")
+
+        print(
+            f"[Decay] Loaded {loaded_count} tools from registry (with historical timestamps)"
+        )
 
     def _record_tool_creation(self, tool_name: str, duration_ms: float):
         """Record a tool creation event for decay tracking."""
@@ -79,12 +82,9 @@ class ToolsmithCLI:
                 tool={"name": tool_name, "created_via": "cli"},
                 protected=False,
             )
-        
+
         # Record the usage with execution time
-        self.decay_manager.record_usage(
-            name=tool_name,
-            execution_time_ms=duration_ms
-        )
+        self.decay_manager.record_usage(name=tool_name, execution_time_ms=duration_ms)
 
     def _record_tool_install(self, tool_name: str):
         """Record a tool installation for decay tracking."""
@@ -126,17 +126,17 @@ class ToolsmithCLI:
 
         print("\n--- Registered Tools ---")
         for t in tools:
-            pypi = f" [PyPI: {t['pypi_package']}]" if t.get('pypi_package') else ""
-            
+            pypi = f" [PyPI: {t['pypi_package']}]" if t.get("pypi_package") else ""
+
             # Get decay metrics if available
-            metrics = self.decay_manager.get_metrics(t['name'])
+            metrics = self.decay_manager.get_metrics(t["name"])
             if metrics:
                 score = metrics.calculate_decay_score()
-                tier = metrics.tier.value if hasattr(metrics, 'tier') else 'unknown'
+                tier = metrics.tier.value if hasattr(metrics, "tier") else "unknown"
                 decay_info = f" | Score: {score:.3f} | Tier: {tier}"
             else:
                 decay_info = " | Not tracked"
-            
+
             print(f"  {t['name']}: {t['file']}{pypi}{decay_info}")
 
     def cmd_status(self):
@@ -188,11 +188,11 @@ class ToolsmithCLI:
         def format_time(seconds):
             """Format seconds into human-readable time."""
             if seconds >= 86400:
-                return f"{seconds/86400:.1f}d"
+                return f"{seconds / 86400:.1f}d"
             elif seconds >= 3600:
-                return f"{seconds/3600:.1f}h"
+                return f"{seconds / 3600:.1f}h"
             elif seconds >= 60:
-                return f"{seconds/60:.1f}m"
+                return f"{seconds / 60:.1f}m"
             else:
                 return f"{seconds:.0f}s"
 
@@ -202,7 +202,9 @@ class ToolsmithCLI:
             if metrics:
                 last_used_ago = format_time(metrics.time_since_use)
                 age = format_time(metrics.age)
-                print(f"  {name}: score={score:.4f}, last_used={last_used_ago} ago, age={age}, calls={metrics.total_calls}")
+                print(
+                    f"  {name}: score={score:.4f}, last_used={last_used_ago} ago, age={age}, calls={metrics.total_calls}"
+                )
             else:
                 print(f"  {name}: score={score:.4f}")
 
@@ -210,7 +212,7 @@ class ToolsmithCLI:
         """Force cleanup of expired and low-performing tools."""
         expired = self.decay_manager.cleanup_expired_tools()
         low_perf = self.decay_manager.cleanup_low_performers(min_score=0.001)
-        
+
         if expired:
             print(f"Expired tools removed: {', '.join(expired)}")
         if low_perf:
@@ -221,37 +223,40 @@ class ToolsmithCLI:
     def cmd_install(self, package_name: str):
         """Install a tool from PyPI."""
         result = self.toolsmith.install_tool(package_name)
-        
+
         # Extract tool name from package name (remove -ts suffix if present)
         tool_name = package_name.replace("-ts", "").replace("-", "_")
         self._record_tool_install(tool_name)
-        
+
         print(f"\n{result}")
 
     def cmd_create(self, requirement: str):
         """Create a new tool from description."""
         print("\n[Thinking] Sending request to Gemini 2.5 Flash...")
-        
+
         start_time = time.time()
         result = self.toolsmith.create_tool(requirement)
         duration_ms = (time.time() - start_time) * 1000
-        
+
         # Try to extract tool name from result
         created = "created" in result.lower() or "saved" in result.lower()
-        
+
         # Extract tool name if possible (look for class name pattern)
         import re
+
         match = re.search(r"class\s+(\w+)", result)
         tool_name = match.group(1) if match else f"tool_{int(time.time())}"
-        
+
         self._record_tool_creation(tool_name, duration_ms)
-        
+
         print("\n----- RESULT -----")
         print(result)
         print("------------------")
-        
+
         if created:
-            print(f"\n[Decay] Tool '{tool_name}' registered (creation time: {duration_ms:.0f}ms)")
+            print(
+                f"\n[Decay] Tool '{tool_name}' registered (creation time: {duration_ms:.0f}ms)"
+            )
 
     def run(self):
         """Run the interactive CLI."""
@@ -265,7 +270,7 @@ class ToolsmithCLI:
 
                 # Parse command
                 cmd_lower = req.lower()
-                
+
                 if cmd_lower in ["exit", "quit"]:
                     self.shutdown()
                     break
@@ -310,11 +315,13 @@ class ToolsmithCLI:
         """Clean shutdown."""
         print("\n[Decay] Stopping background cleanup...")
         self.decay_manager.stop_background_cleanup()
-        
+
         # Show final stats
         stats = self.decay_manager.get_statistics()
-        print(f"[Decay] Final stats: {stats.get('cache_size', 0)} tools tracked, "
-              f"{stats.get('cache_hits', 0)} hits, {stats.get('cache_misses', 0)} misses")
+        print(
+            f"[Decay] Final stats: {stats.get('cache_size', 0)} tools tracked, "
+            f"{stats.get('cache_hits', 0)} hits, {stats.get('cache_misses', 0)} misses"
+        )
         print("Goodbye!")
 
 

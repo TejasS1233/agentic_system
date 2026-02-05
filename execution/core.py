@@ -8,7 +8,7 @@ from utils.logger import get_logger
 from .llm import LLMClient
 from .schemas import AgentState
 from .tools import Tool
-from .tool_decay import ToolDecayManager, create_decay_manager
+from .tool_decay import create_decay_manager
 
 # Import profiler (optional dependency)
 try:
@@ -18,6 +18,7 @@ try:
         ProfileResult,
         profile_to_metrics_update,
     )
+
     HAS_PROFILER = True
 except ImportError:
     HAS_PROFILER = False
@@ -65,7 +66,7 @@ class Agent:
         self.chat = None
         self._enable_tool_decay = enable_tool_decay
         self._enable_profiling = enable_profiling and HAS_PROFILER
-        
+
         # Initialize profiler
         if self._enable_profiling:
             mode_map = {
@@ -84,7 +85,7 @@ class Agent:
             self._profiler = None
             if enable_profiling and not HAS_PROFILER:
                 logger.warning("Profiling requested but profiler not available")
-        
+
         # Initialize tool decay manager
         if enable_tool_decay:
             self._decay_manager = create_decay_manager(
@@ -104,7 +105,7 @@ class Agent:
         else:
             self._decay_manager = None
             self.tools = {t.name: t for t in tools}
-            
+
         logger.info(
             f"Agent initialized (workspace={workspace_path}, tools={len(tools)}, "
             f"profiling={self._enable_profiling})"
@@ -157,14 +158,14 @@ class Agent:
         if self._decay_manager is None:
             self.tools[tool.name] = tool
             return
-        
+
         # Determine semantic group based on tool name
         semantic_group = None
         for group, patterns in DEFAULT_SEMANTIC_GROUPS.items():
             if any(pattern in tool.name.lower() for pattern in patterns):
                 semantic_group = group
                 break
-        
+
         self._decay_manager.register_tool(
             name=tool.name,
             tool=tool,
@@ -175,7 +176,7 @@ class Agent:
     def get_tool(self, name: str) -> Optional[Tool]:
         """
         Get a tool by name. Uses decay-aware retrieval if enabled.
-        
+
         This method will:
         - Return the tool from cache or archive
         - Restore archived tools automatically
@@ -183,64 +184,60 @@ class Agent:
         """
         if self._decay_manager is None:
             return self.tools.get(name)
-        
+
         # Use get_or_restore to automatically bring back archived tools
         return self._decay_manager.get_or_restore(name)
 
     def record_tool_usage(
-        self, 
-        name: str, 
-        success: bool = True, 
+        self,
+        name: str,
+        success: bool = True,
         execution_time_ms: float = 0.0,
         profile: Optional[Any] = None,  # ProfileResult if available
     ) -> bool:
         """
         Record a tool usage event for decay scoring.
-        
+
         Should be called after each tool execution to track:
         - Success/failure rates
         - Execution time
         - Usage frequency
         - Performance profile (if profiling enabled)
-        
+
         Args:
             name: The tool name
             success: Whether the execution succeeded
             execution_time_ms: Execution time in milliseconds
             profile: Optional ProfileResult from profiler
-        
+
         Returns:
             True if the usage was recorded, False if tool not found
         """
         # Use profile data if available
-        if profile is not None and hasattr(profile, 'execution_time_ms'):
+        if profile is not None and hasattr(profile, "execution_time_ms"):
             execution_time_ms = profile.execution_time_ms
             success = profile.success
-        
+
         if self._decay_manager is None:
             return name in self.tools
-        
+
         metrics = self._decay_manager.record_usage(name, execution_time_ms)
         return metrics is not None
 
-    def execute_tool(
-        self,
-        name: str,
-        **kwargs
-    ) -> Tuple[Any, Optional[Any]]:
+    def execute_tool(self, name: str, **kwargs) -> Tuple[Any, Optional[Any]]:
         """
         Execute a tool with automatic profiling and usage tracking.
-        
+
         This is the recommended way to execute tools as it:
         1. Retrieves the tool (restoring from archive if needed)
         2. Profiles the execution (if profiling enabled)
         3. Records usage for decay scoring
         4. Returns both result and profile
-        
+
         Args:
             name: The tool name
             **kwargs: Arguments to pass to the tool's run() method
-        
+
         Returns:
             Tuple of (result, profile) where profile is ProfileResult or None
         """
@@ -248,10 +245,10 @@ class Agent:
         if tool is None:
             logger.warning(f"Tool not found: {name}")
             return None, None
-        
+
         result = None
         profile = None
-        
+
         if self._enable_profiling and self._profiler is not None:
             # Profile the tool execution
             try:
@@ -269,21 +266,27 @@ class Agent:
             try:
                 result = tool.run(**kwargs)
                 execution_time_ms = (time.perf_counter() - start_time) * 1000
-            except Exception as e:
+            except Exception:
                 execution_time_ms = (time.perf_counter() - start_time) * 1000
-                self.record_tool_usage(name, success=False, execution_time_ms=execution_time_ms)
+                self.record_tool_usage(
+                    name, success=False, execution_time_ms=execution_time_ms
+                )
                 raise
-        
+
         # Record the usage
-        self.record_tool_usage(name, profile=profile, execution_time_ms=execution_time_ms if profile is None else 0)
-        
+        self.record_tool_usage(
+            name,
+            profile=profile,
+            execution_time_ms=execution_time_ms if profile is None else 0,
+        )
+
         return result, profile
 
     def get_profiler_statistics(self) -> dict:
         """Get aggregate statistics from the profiler."""
         if self._profiler is None:
             return {"profiling_enabled": False}
-        
+
         stats = self._profiler.get_statistics()
         stats["profiling_enabled"] = True
         return stats
@@ -292,12 +295,8 @@ class Agent:
         """Get profiling history for a specific tool."""
         if self._profiler is None:
             return []
-        
-        return [
-            p.to_dict() 
-            for p in self._profiler.history 
-            if p.tool_name == tool_name
-        ]
+
+        return [p.to_dict() for p in self._profiler.history if p.tool_name == tool_name]
 
     @property
     def tools(self) -> dict[str, Tool]:

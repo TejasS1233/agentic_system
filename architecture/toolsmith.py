@@ -51,7 +51,7 @@ class Toolsmith:
         # Initialize metrics if not present
         if not os.path.exists(self.metrics_path):
             self._log_metrics("init", {"message": "Metrics initialized"})
-        
+
         # Migrate legacy registry entries to include status fields
         self._migrate_registry_status()
 
@@ -63,45 +63,47 @@ class Toolsmith:
         try:
             with open(self.registry_path, "r") as f:
                 data = json.load(f)
-            
+
             modified = False
             current_time = time.time()
-            
+
             for name, meta in data.items():
                 # Add status if missing
                 if "status" not in meta:
                     meta["status"] = "active"
                     modified = True
-                
+
                 # Add created_at if missing (use current time as fallback)
                 if "created_at" not in meta:
                     meta["created_at"] = current_time
                     modified = True
-                
+
                 # Add updated_at if missing
                 if "updated_at" not in meta:
                     meta["updated_at"] = current_time
                     modified = True
-                
+
                 # Add use_count if missing (default to 0)
                 if "use_count" not in meta:
                     meta["use_count"] = 0
                     modified = True
-                
+
                 # Add last_used if missing (default to None)
                 if "last_used" not in meta:
                     meta["last_used"] = None
                     modified = True
-                
+
                 # Add metrics if missing (default to 0.0 - weighted performance score)
                 if "metrics" not in meta:
                     meta["metrics"] = 0.0
                     modified = True
-            
+
             if modified:
                 with open(self.registry_path, "w") as f:
                     json.dump(data, f, indent=2)
-                print(f"[Toolsmith] Migrated registry entries to include status and metrics fields")
+                print(
+                    "[Toolsmith] Migrated registry entries to include status and metrics fields"
+                )
         except Exception as e:
             print(f"[Toolsmith] Registry migration failed: {e}")
 
@@ -169,7 +171,7 @@ class Toolsmith:
     def get_tool_creation_timestamps(self) -> dict:
         """
         Get creation timestamps for all tools from metrics.json.
-        
+
         Returns:
             Dict mapping tool names to their creation timestamps (Unix epoch).
             Tools that don't have a recorded creation time are not included.
@@ -179,7 +181,7 @@ class Toolsmith:
             if os.path.exists(self.metrics_path):
                 with open(self.metrics_path, "r") as f:
                     data = json.load(f)
-                
+
                 # Parse metrics to find tool_created events
                 for entry in data:
                     if entry.get("event") == "tool_created":
@@ -190,16 +192,16 @@ class Toolsmith:
                             timestamps[tool_name] = entry.get("timestamp")
         except Exception as e:
             print(f"[Toolsmith] Failed to read tool timestamps: {e}")
-        
+
         return timestamps
 
     def get_tool_last_used_timestamps(self) -> dict:
         """
         Get the last usage timestamp for all tools from metrics.json.
-        
+
         This includes both tool_created events (creation = first "use") and
         deduplication_hit events (tool was matched/used).
-        
+
         Returns:
             Dict mapping tool names to their last used timestamps (Unix epoch).
         """
@@ -208,29 +210,34 @@ class Toolsmith:
             if os.path.exists(self.metrics_path):
                 with open(self.metrics_path, "r") as f:
                     data = json.load(f)
-                
+
                 for entry in data:
                     event = entry.get("event")
                     details = entry.get("details", {})
                     timestamp = entry.get("timestamp")
-                    
+
                     if event == "tool_created":
                         tool_name = details.get("tool_name")
                         if tool_name:
                             # Update if this is the most recent event
-                            if tool_name not in last_used or timestamp > last_used[tool_name]:
+                            if (
+                                tool_name not in last_used
+                                or timestamp > last_used[tool_name]
+                            ):
                                 last_used[tool_name] = timestamp
-                    
+
                     elif event == "deduplication_hit":
                         tool_name = details.get("matched_tool")
                         if tool_name:
-                            if tool_name not in last_used or timestamp > last_used[tool_name]:
+                            if (
+                                tool_name not in last_used
+                                or timestamp > last_used[tool_name]
+                            ):
                                 last_used[tool_name] = timestamp
         except Exception as e:
             print(f"[Toolsmith] Failed to read last used timestamps: {e}")
-        
-        return last_used
 
+        return last_used
 
     def _is_safe_code(self, code: str) -> bool:
         """
@@ -614,20 +621,22 @@ RULES:
         output_types=None,
         domain=None,
         pypi_package=None,
-        status="active"
+        status="active",
     ):
         try:
             with open(self.registry_path, "r") as f:
                 data = json.load(f)
         except Exception:
             data = {}
-        
+
         # Preserve existing fields if tool already exists
         existing_entry = data.get(class_name, {})
         created_at = existing_entry.get("created_at", time.time())
         use_count = existing_entry.get("use_count", 0)  # Preserve use_count
         last_used = existing_entry.get("last_used")  # Preserve last_used
-        metrics = existing_entry.get("metrics", 0.0)  # Preserve metrics (weighted score)
+        metrics = existing_entry.get(
+            "metrics", 0.0
+        )  # Preserve metrics (weighted score)
 
         data[class_name] = {
             "file": file_name,
@@ -651,41 +660,42 @@ RULES:
     def update_tool_status(self, tool_name: str, status: str) -> bool:
         """
         Update the status of a tool in the registry.
-        
+
         Args:
             tool_name: Name of the tool to update
             status: New status - one of: active, inactive, deprecated, failed
-            
+
         Returns:
             True if successful, False if tool not found
         """
         valid_statuses = {"active", "inactive", "deprecated", "failed"}
         if status not in valid_statuses:
-            print(f"[Toolsmith] Invalid status: {status}. Must be one of {valid_statuses}")
+            print(
+                f"[Toolsmith] Invalid status: {status}. Must be one of {valid_statuses}"
+            )
             return False
-        
+
         try:
             with open(self.registry_path, "r") as f:
                 data = json.load(f)
-            
+
             if tool_name not in data:
                 print(f"[Toolsmith] Tool not found in registry: {tool_name}")
                 return False
-            
+
             data[tool_name]["status"] = status
             data[tool_name]["updated_at"] = time.time()
-            
+
             with open(self.registry_path, "w") as f:
                 json.dump(data, f, indent=2)
-            
-            self._log_metrics("status_change", {
-                "tool_name": tool_name,
-                "new_status": status
-            })
-            
+
+            self._log_metrics(
+                "status_change", {"tool_name": tool_name, "new_status": status}
+            )
+
             print(f"[Toolsmith] Updated {tool_name} status to: {status}")
             return True
-            
+
         except Exception as e:
             print(f"[Toolsmith] Failed to update tool status: {e}")
             return False
@@ -693,19 +703,21 @@ RULES:
     def get_tool_status(self, tool_name: str) -> str:
         """
         Get the current status of a tool.
-        
+
         Args:
             tool_name: Name of the tool
-            
+
         Returns:
             Status string or "unknown" if tool not found
         """
         try:
             with open(self.registry_path, "r") as f:
                 data = json.load(f)
-            
+
             if tool_name in data:
-                return data[tool_name].get("status", "active")  # Default to active for legacy entries
+                return data[tool_name].get(
+                    "status", "active"
+                )  # Default to active for legacy entries
             return "unknown"
         except Exception as e:
             print(f"[Toolsmith] Failed to get tool status: {e}")
@@ -714,17 +726,17 @@ RULES:
     def get_tools_by_status(self, status: str) -> list:
         """
         Get all tools with a specific status.
-        
+
         Args:
             status: Status to filter by (active, inactive, deprecated, failed)
-            
+
         Returns:
             List of tool names with the specified status
         """
         try:
             with open(self.registry_path, "r") as f:
                 data = json.load(f)
-            
+
             tools = []
             for name, meta in data.items():
                 # Default to "active" for legacy entries without status
@@ -739,51 +751,51 @@ RULES:
     def update_metrics_from_profiles(self, logs_dir: str = None) -> dict:
         """
         Update the metrics field in registry.json using scaled weighted scores from profile logs.
-        
+
         Process:
         1. Sum raw metrics for each tool across all calls in an iteration
         2. Divide by call count to get average raw metrics per tool
         3. Scale the averaged values using MinMax
         4. Apply formula to calculate final weighted score
-        
+
         Args:
             logs_dir: Path to logs directory. Defaults to project's logs folder.
-        
+
         Returns:
             Dictionary with tool names and their updated scaled metrics
         """
         import glob
         from pathlib import Path
-        
+
         # Find logs directory
         if logs_dir is None:
             project_root = Path(self.tools_dir).parent.parent
             logs_dir = project_root / "logs"
         else:
             logs_dir = Path(logs_dir)
-        
+
         if not logs_dir.exists():
             print(f"[Toolsmith] Logs directory not found: {logs_dir}")
             return {}
-        
+
         # Find latest profile JSON
         profile_files = sorted(glob.glob(str(logs_dir / "profiles_*.json")))
         if not profile_files:
             print("[Toolsmith] No profile JSON files found in logs directory")
             return {}
-        
+
         latest_file = profile_files[-1]
         print(f"[Toolsmith] Loading profiles from: {latest_file}")
-        
+
         # Load the profiles
-        with open(latest_file, 'r') as f:
+        with open(latest_file, "r") as f:
             profile_data = json.load(f)
-        
+
         raw_profiles = profile_data.get("raw_profiles", {})
-        
+
         # Step 1: For each tool, sum raw metrics across all calls and calculate averages
         tool_avg_metrics = {}  # Store averaged raw metrics per tool
-        
+
         for tool_name, profiles in raw_profiles.items():
             # Initialize sums
             sum_execution_time = 0.0
@@ -792,7 +804,7 @@ RULES:
             sum_efficiency = 0.0
             sum_success = 0.0
             call_count = len(profiles)
-            
+
             # Sum all metrics for this tool
             for profile in profiles:
                 sum_execution_time += profile.get("execution_time_ms", 0)
@@ -800,7 +812,7 @@ RULES:
                 sum_memory_delta += profile.get("memory_delta_mb", 0)
                 sum_efficiency += profile.get("efficiency_score", 0)
                 sum_success += 1.0 if profile.get("success", False) else 0.0
-            
+
             # Calculate average raw metrics for this tool
             if call_count > 0:
                 tool_avg_metrics[tool_name] = {
@@ -811,10 +823,12 @@ RULES:
                     "success": sum_success / call_count,
                     "call_count": call_count,
                 }
-                print(f"[Toolsmith] {tool_name} avg raw metrics (calls={call_count}): "
-                      f"time={tool_avg_metrics[tool_name]['execution_time']:.4f}ms, "
-                      f"mem={tool_avg_metrics[tool_name]['peak_memory']:.4f}MB")
-        
+                print(
+                    f"[Toolsmith] {tool_name} avg raw metrics (calls={call_count}): "
+                    f"time={tool_avg_metrics[tool_name]['execution_time']:.4f}ms, "
+                    f"mem={tool_avg_metrics[tool_name]['peak_memory']:.4f}MB"
+                )
+
         # Step 2: Calculate min/max for MinMax scaling using averaged values
         def get_min_max(values):
             if not values:
@@ -822,7 +836,7 @@ RULES:
             min_val = min(values)
             max_val = max(values)
             return min_val, max_val
-        
+
         def minmax_scale(value, min_val, max_val):
             if max_val == min_val:
                 # No variance - all tools have the same value
@@ -833,7 +847,7 @@ RULES:
                     return 0.5  # Neutral for zero values
                 return min(max(value, 0.0), 1.0)  # Return actual value, clamped to 0-1
             return (value - min_val) / (max_val - min_val)
-        
+
         # Collect all averaged metrics for scaling
         all_avg_metrics = {
             "execution_time": [m["execution_time"] for m in tool_avg_metrics.values()],
@@ -842,19 +856,21 @@ RULES:
             "efficiency": [m["efficiency"] for m in tool_avg_metrics.values()],
             "success": [m["success"] for m in tool_avg_metrics.values()],
         }
-        
+
         # Get scaling parameters from averaged values
         scales = {}
         for metric_name, values in all_avg_metrics.items():
             scales[metric_name] = get_min_max(values)
-            print(f"[Toolsmith] Scaler for avg_{metric_name}: min={scales[metric_name][0]:.4f}, max={scales[metric_name][1]:.4f}")
-        
+            print(
+                f"[Toolsmith] Scaler for avg_{metric_name}: min={scales[metric_name][0]:.4f}, max={scales[metric_name][1]:.4f}"
+            )
+
         # Step 3 & 4: Scale the averaged values, invert cost metrics, and apply weighted average
-        # 
+        #
         # IMPORTANT: For cost metrics (time, memory), LOWER is BETTER.
         # After MinMax scaling, the slowest/heaviest tool gets 1.0 and fastest/lightest gets 0.0.
         # We INVERT these so that 1.0 = BEST (fastest/lightest) and 0.0 = WORST (slowest/heaviest).
-        # 
+        #
         # For benefit metrics (success), HIGHER is BETTER - no inversion needed.
         #
         # Weights (must sum to 1.0):
@@ -865,61 +881,67 @@ RULES:
         #
         # Note: We exclude the pre-calculated 'efficiency' metric to avoid double-counting
         # since it already incorporates time, memory, and success internally.
-        
+
         WEIGHT_TIME = 0.40
         WEIGHT_PEAK_MEM = 0.20
         WEIGHT_MEM_DELTA = 0.10
         WEIGHT_SUCCESS = 0.30
-        
+
         tool_metrics = {}
         for tool_name, avg in tool_avg_metrics.items():
             # Scale each averaged metric to 0-1 range
-            scaled_exec_time = minmax_scale(avg["execution_time"], *scales["execution_time"])
+            scaled_exec_time = minmax_scale(
+                avg["execution_time"], *scales["execution_time"]
+            )
             scaled_peak_mem = minmax_scale(avg["peak_memory"], *scales["peak_memory"])
-            scaled_mem_delta = minmax_scale(avg["memory_delta"], *scales["memory_delta"])
+            scaled_mem_delta = minmax_scale(
+                avg["memory_delta"], *scales["memory_delta"]
+            )
             scaled_efficiency = minmax_scale(avg["efficiency"], *scales["efficiency"])
             scaled_success = minmax_scale(avg["success"], *scales["success"])
-            
+
             # INVERT cost metrics: 1.0 - scaled_value
             # After inversion: 1.0 = fastest/lightest (BEST), 0.0 = slowest/heaviest (WORST)
             score_time = 1.0 - scaled_exec_time
             score_peak_mem = 1.0 - scaled_peak_mem
             score_mem_delta = 1.0 - scaled_mem_delta
-            
+
             # Benefit metrics remain as-is (higher = better)
             score_success = scaled_success
-            
+
             # Apply weighted average formula (result is 0-1, then scale to 0-100)
             final_score = (
-                (score_time * WEIGHT_TIME) +
-                (score_peak_mem * WEIGHT_PEAK_MEM) +
-                (score_mem_delta * WEIGHT_MEM_DELTA) +
-                (score_success * WEIGHT_SUCCESS)
+                (score_time * WEIGHT_TIME)
+                + (score_peak_mem * WEIGHT_PEAK_MEM)
+                + (score_mem_delta * WEIGHT_MEM_DELTA)
+                + (score_success * WEIGHT_SUCCESS)
             ) * 100  # Scale to 0-100
-            
+
             tool_metrics[tool_name] = round(final_score, 4)
-            print(f"[Toolsmith] {tool_name} scores: time={score_time:.4f}, mem={score_peak_mem:.4f}, "
-                  f"success={score_success:.4f} → final={final_score:.2f}/100")
-        
+            print(
+                f"[Toolsmith] {tool_name} scores: time={score_time:.4f}, mem={score_peak_mem:.4f}, "
+                f"success={score_success:.4f} → final={final_score:.2f}/100"
+            )
+
         # Update registry with metrics
         try:
             with open(self.registry_path, "r") as f:
                 registry = json.load(f)
-            
+
             updated_tools = []
             for tool_name, score in tool_metrics.items():
                 if tool_name in registry:
                     registry[tool_name]["metrics"] = score
                     registry[tool_name]["updated_at"] = time.time()
                     updated_tools.append(tool_name)
-            
+
             if updated_tools:
                 with open(self.registry_path, "w") as f:
                     json.dump(registry, f, indent=2)
                 print(f"[Toolsmith] Metrics updated for {len(updated_tools)} tools")
-            
+
             return tool_metrics
-            
+
         except Exception as e:
             print(f"[Toolsmith] Failed to update metrics: {e}")
             return tool_metrics
