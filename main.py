@@ -219,7 +219,7 @@ def main():
         
         # Display profiling information
         print(f"\n{'=' * 50}")
-        print("📊 PROFILING SUMMARY")
+        print("PROFILING SUMMARY")
         print('=' * 50)
         
         perf_summary = system.get_tool_performance_summary()

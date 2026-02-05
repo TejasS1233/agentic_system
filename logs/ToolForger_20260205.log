@@ -1,0 +1,115 @@
+2026-02-05 09:35:28 | INFO | __main__:main:210 | Starting IASCIS with Sandbox and Profiling
+2026-02-05 09:35:28 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-05 09:35:28 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-05 09:35:28 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-05 09:35:28 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=/Users/rishitsharma/Documents/GitHub/agentic_system/workspace, profiling=True)
+2026-02-05 09:35:28 | INFO | architecture.sandbox:__init__:132 | Sandbox initialized with tools_dir=/Users/rishitsharma/Documents/GitHub/agentic_system/workspace/tools
+2026-02-05 09:35:29 | ERROR | architecture.sandbox:start:139 | Failed to connect to Docker: Error while fetching server API version: ('Connection aborted.', FileNotFoundError(2, 'No such file or directory'))
+2026-02-05 09:36:36 | INFO | __main__:main:210 | Starting IASCIS with Sandbox and Profiling
+2026-02-05 09:36:36 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-05 09:36:36 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-05 09:36:36 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-05 09:36:36 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=/Users/rishitsharma/Documents/GitHub/agentic_system/workspace, profiling=True)
+2026-02-05 09:36:36 | INFO | architecture.sandbox:__init__:132 | Sandbox initialized with tools_dir=/Users/rishitsharma/Documents/GitHub/agentic_system/workspace/tools
+2026-02-05 09:36:36 | INFO | architecture.sandbox:start:156 | Sandbox container started: 75cbfb74a29c
+2026-02-05 09:36:36 | INFO | architecture.profiler:__init__:713 | Profiler initialized (mode=standard, psutil=True, torch=False, pynvml=False)
+2026-02-05 09:36:36 | INFO | architecture.executor:__init__:61 | ExecutorAgent profiling enabled (mode=standard)
+2026-02-05 09:36:36 | INFO | architecture.executor:load_registry:76 | Loaded 6 tool definitions
+2026-02-05 09:36:36 | INFO | architecture.llm_manager:__init__:78 | Loaded 1 GROQ API key(s)
+2026-02-05 09:36:36 | INFO | architecture.executor:__init__:69 | ExecutorAgent initialized with Sandbox
+2026-02-05 09:36:47 | INFO | architecture.orchestrator:__init__:52 | Orchestrator initialized with ToolRetriever
+2026-02-05 09:36:47 | INFO | __main__:_initialize_runtime:89 | Runtime initialized with Sandbox
+2026-02-05 09:36:47 | INFO | __main__:run:118 | Task received: Calculate the square root of 144, then multiply by 2...
+2026-02-05 09:36:47 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-05 09:36:47 | INFO | __main__:run:122 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-05 09:36:47 | INFO | architecture.orchestrator:run:56 | Processing,Calculate the square root of 144, then multiply by 2...
+2026-02-05 09:36:48 | INFO | architecture.orchestrator:run:59 | Decomposed into 2 subtasks
+2026-02-05 09:36:48 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_1 → SquareRootTool (dist: 0.938, matched: True)
+2026-02-05 09:36:48 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_2 → MultiplyByTwoTool (dist: 0.992, matched: True)
+2026-02-05 09:36:48 | INFO | architecture.executor:execute:82 | Executing plan: Calculate the square root of 144, then multiply by 2
+2026-02-05 09:36:48 | INFO | architecture.executor:execute:83 | Total steps: 2
+2026-02-05 09:36:48 | INFO | architecture.executor:_execute_step:112 | Step 1: Calculate the square root of 144 using SquareRootTool
+2026-02-05 09:36:48 | INFO | architecture.executor:load_registry:76 | Loaded 6 tool definitions
+2026-02-05 09:36:48 | INFO | architecture.executor:_infer_args:318 | LLM extracted args: {'number': 144}
+2026-02-05 09:36:48 | INFO | architecture.executor:_execute_step:146 | DEBUG: Executor inferred args = {'number': 144}
+2026-02-05 09:36:48 | INFO | architecture.executor:_execute_step:147 | DEBUG: Args type = <class 'dict'>
+2026-02-05 09:36:48 | INFO | architecture.sandbox:_install_deps:176 | Installing dependencies: pydantic pydantic
+2026-02-05 09:37:05 | INFO | architecture.sandbox:execute_with_args:363 | DEBUG: sandbox received args = {'number': 144}
+2026-02-05 09:37:05 | INFO | architecture.sandbox:execute_with_args:364 | DEBUG: args_json = {"number": 144}
+2026-02-05 09:37:05 | INFO | architecture.sandbox:execute_with_args:365 | DEBUG: Runner script line: args = json.loads('{"number": 144}')
+2026-02-05 09:37:05 | INFO | architecture.sandbox:execute_with_args:370 | Executing tool with args: SquareRootTool
+2026-02-05 09:37:05 | INFO | architecture.sandbox:execute_with_args:371 | Args JSON being passed: {"number": 144}
+2026-02-05 09:37:05 | INFO | architecture.executor:_execute_step:164 | 📊 Step 1 SANDBOX Profile: time=0.018ms, memory=0.0015MB, grade=fast
+2026-02-05 09:37:05 | INFO | architecture.executor:_execute_step:172 |    (Total round-trip: 17257.27ms)
+2026-02-05 09:37:05 | INFO | architecture.executor:_execute_step:179 | Step 1: Completed in 17.26s
+2026-02-05 09:37:05 | INFO | architecture.executor:_execute_step:112 | Step 2: Multiply the result by 2 using MultiplyByTwoTool
+2026-02-05 09:37:05 | INFO | architecture.executor:load_registry:76 | Loaded 6 tool definitions
+2026-02-05 09:37:06 | INFO | architecture.executor:_infer_args:318 | LLM extracted args: {'number': 24.0}
+2026-02-05 09:37:06 | INFO | architecture.executor:_execute_step:146 | DEBUG: Executor inferred args = {'number': 24.0}
+2026-02-05 09:37:06 | INFO | architecture.executor:_execute_step:147 | DEBUG: Args type = <class 'dict'>
+2026-02-05 09:37:06 | INFO | architecture.sandbox:execute_with_args:363 | DEBUG: sandbox received args = {'number': 24.0}
+2026-02-05 09:37:06 | INFO | architecture.sandbox:execute_with_args:364 | DEBUG: args_json = {"number": 24.0}
+2026-02-05 09:37:06 | INFO | architecture.sandbox:execute_with_args:365 | DEBUG: Runner script line: args = json.loads('{"number": 24.0}')
+2026-02-05 09:37:06 | INFO | architecture.sandbox:execute_with_args:370 | Executing tool with args: MultiplyByTwoTool
+2026-02-05 09:37:06 | INFO | architecture.sandbox:execute_with_args:371 | Args JSON being passed: {"number": 24.0}
+2026-02-05 09:37:06 | INFO | architecture.executor:_execute_step:164 | 📊 Step 2 SANDBOX Profile: time=0.035ms, memory=0.0023MB, grade=fast
+2026-02-05 09:37:06 | INFO | architecture.executor:_execute_step:172 |    (Total round-trip: 134.75ms)
+2026-02-05 09:37:06 | INFO | architecture.executor:_execute_step:179 | Step 2: Completed in 0.13s
+2026-02-05 09:37:06 | INFO | __main__:main:215 | Completed in 19320.73ms
+2026-02-05 09:37:06 | INFO | __main__:main:216 | Zone: public
+2026-02-05 09:37:11 | INFO | architecture.sandbox:stop:163 | Sandbox container stopped: 75cbfb74a29c
+2026-02-05 09:37:11 | INFO | __main__:_shutdown_runtime:98 | Runtime shutdown complete
+2026-02-05 09:43:08 | INFO | __main__:main:210 | Starting IASCIS with Sandbox and Profiling
+2026-02-05 09:43:08 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-05 09:43:08 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-05 09:43:08 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-05 09:43:08 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=/Users/rishitsharma/Documents/GitHub/agentic_system/workspace, profiling=True)
+2026-02-05 09:43:08 | INFO | architecture.sandbox:__init__:132 | Sandbox initialized with tools_dir=/Users/rishitsharma/Documents/GitHub/agentic_system/workspace/tools
+2026-02-05 09:43:09 | INFO | architecture.sandbox:start:156 | Sandbox container started: 306b617afe37
+2026-02-05 09:43:09 | INFO | architecture.profiler:__init__:713 | Profiler initialized (mode=standard, psutil=True, torch=False, pynvml=False)
+2026-02-05 09:43:09 | INFO | architecture.executor:__init__:61 | ExecutorAgent profiling enabled (mode=standard)
+2026-02-05 09:43:09 | INFO | architecture.executor:load_registry:76 | Loaded 6 tool definitions
+2026-02-05 09:43:09 | INFO | architecture.llm_manager:__init__:78 | Loaded 1 GROQ API key(s)
+2026-02-05 09:43:09 | INFO | architecture.executor:__init__:69 | ExecutorAgent initialized with Sandbox
+2026-02-05 09:43:14 | INFO | architecture.orchestrator:__init__:52 | Orchestrator initialized with ToolRetriever
+2026-02-05 09:43:14 | INFO | __main__:_initialize_runtime:89 | Runtime initialized with Sandbox
+2026-02-05 09:43:14 | INFO | __main__:run:118 | Task received: Calculate the square root of 144, then multiply by 2...
+2026-02-05 09:43:14 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-05 09:43:14 | INFO | __main__:run:122 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-05 09:43:14 | INFO | architecture.orchestrator:run:56 | Processing,Calculate the square root of 144, then multiply by 2...
+2026-02-05 09:43:15 | INFO | architecture.orchestrator:run:59 | Decomposed into 2 subtasks
+2026-02-05 09:43:15 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_1 → SquareRootTool (dist: 0.938, matched: True)
+2026-02-05 09:43:15 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_2 → MultiplyByTwoTool (dist: 0.992, matched: True)
+2026-02-05 09:43:15 | INFO | architecture.executor:execute:82 | Executing plan: Calculate the square root of 144, then multiply by 2
+2026-02-05 09:43:15 | INFO | architecture.executor:execute:83 | Total steps: 2
+2026-02-05 09:43:15 | INFO | architecture.executor:_execute_step:112 | Step 1: Calculate the square root of 144 using SquareRootTool
+2026-02-05 09:43:15 | INFO | architecture.executor:load_registry:76 | Loaded 6 tool definitions
+2026-02-05 09:43:15 | INFO | architecture.executor:_infer_args:318 | LLM extracted args: {'number': 144}
+2026-02-05 09:43:15 | INFO | architecture.executor:_execute_step:146 | DEBUG: Executor inferred args = {'number': 144}
+2026-02-05 09:43:15 | INFO | architecture.executor:_execute_step:147 | DEBUG: Args type = <class 'dict'>
+2026-02-05 09:43:15 | INFO | architecture.sandbox:_install_deps:176 | Installing dependencies: pydantic pydantic
+2026-02-05 09:43:21 | INFO | architecture.sandbox:execute_with_args:363 | DEBUG: sandbox received args = {'number': 144}
+2026-02-05 09:43:21 | INFO | architecture.sandbox:execute_with_args:364 | DEBUG: args_json = {"number": 144}
+2026-02-05 09:43:21 | INFO | architecture.sandbox:execute_with_args:365 | DEBUG: Runner script line: args = json.loads('{"number": 144}')
+2026-02-05 09:43:21 | INFO | architecture.sandbox:execute_with_args:370 | Executing tool with args: SquareRootTool
+2026-02-05 09:43:21 | INFO | architecture.sandbox:execute_with_args:371 | Args JSON being passed: {"number": 144}
+2026-02-05 09:43:21 | INFO | architecture.executor:_execute_step:164 | Step 1 SANDBOX Profile: time=0.033ms, memory=0.0015MB, grade=fast
+2026-02-05 09:43:21 | INFO | architecture.executor:_execute_step:172 |    (Total round-trip: 5480.53ms)
+2026-02-05 09:43:21 | INFO | architecture.executor:_execute_step:179 | Step 1: Completed in 5.48s
+2026-02-05 09:43:21 | INFO | architecture.executor:_execute_step:112 | Step 2: Multiply the result by 2 using MultiplyByTwoTool
+2026-02-05 09:43:21 | INFO | architecture.executor:load_registry:76 | Loaded 6 tool definitions
+2026-02-05 09:43:21 | INFO | architecture.executor:_infer_args:318 | LLM extracted args: {'number': 24.0}
+2026-02-05 09:43:21 | INFO | architecture.executor:_execute_step:146 | DEBUG: Executor inferred args = {'number': 24.0}
+2026-02-05 09:43:21 | INFO | architecture.executor:_execute_step:147 | DEBUG: Args type = <class 'dict'>
+2026-02-05 09:43:21 | INFO | architecture.sandbox:execute_with_args:363 | DEBUG: sandbox received args = {'number': 24.0}
+2026-02-05 09:43:21 | INFO | architecture.sandbox:execute_with_args:364 | DEBUG: args_json = {"number": 24.0}
+2026-02-05 09:43:21 | INFO | architecture.sandbox:execute_with_args:365 | DEBUG: Runner script line: args = json.loads('{"number": 24.0}')
+2026-02-05 09:43:21 | INFO | architecture.sandbox:execute_with_args:370 | Executing tool with args: MultiplyByTwoTool
+2026-02-05 09:43:21 | INFO | architecture.sandbox:execute_with_args:371 | Args JSON being passed: {"number": 24.0}
+2026-02-05 09:43:21 | INFO | architecture.executor:_execute_step:164 | Step 2 SANDBOX Profile: time=0.028ms, memory=0.0023MB, grade=fast
+2026-02-05 09:43:21 | INFO | architecture.executor:_execute_step:172 |    (Total round-trip: 140.42ms)
+2026-02-05 09:43:21 | INFO | architecture.executor:_execute_step:179 | Step 2: Completed in 0.14s
+2026-02-05 09:43:21 | INFO | __main__:main:215 | Completed in 6843.23ms
+2026-02-05 09:43:21 | INFO | __main__:main:216 | Zone: public
+2026-02-05 09:43:26 | INFO | architecture.sandbox:stop:163 | Sandbox container stopped: 306b617afe37
+2026-02-05 09:43:26 | INFO | __main__:_shutdown_runtime:98 | Runtime shutdown complete

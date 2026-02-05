@@ -162,7 +162,7 @@ class ExecutorAgent:
             
             # Log profile from INSIDE the container
             logger.info(
-                f"📊 Step {step.step_number} SANDBOX Profile: "
+                f"Step {step.step_number} SANDBOX Profile: "
                 f"time={sandbox_profile['execution_time_ms']:.3f}ms, "
                 f"memory={sandbox_profile['peak_memory_mb']:.4f}MB, "
                 f"grade={sandbox_profile['latency_grade']}"
