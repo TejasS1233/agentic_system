@@ -1,0 +1,4 @@
+2026-02-05 22:26:19 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-05 22:26:19 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-05 22:26:19 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-05_22-26-19
+2026-02-05 22:26:20 | INFO | architecture.llm_manager:generate:132 | Generation success in 1256.82ms

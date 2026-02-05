@@ -2,6 +2,8 @@
 
 import os
 import sys
+from datetime import datetime
+
 
 from loguru import logger
 
@@ -20,9 +22,11 @@ logger.add(
     level=LOG_LEVEL,
 )
 
+SESSION_ID = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+
 if LOG_TO_FILE:
     logger.add(
-        "logs/ToolForger_{time:YYYYMMDD}.log",
+        f"logs/IASCIS_{SESSION_ID}.log",
         format=LOG_FORMAT,
         level="DEBUG",
         rotation="10 MB",

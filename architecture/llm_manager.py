@@ -1,28 +1,29 @@
-"""Centralized LiteLLM client manager with multi-key rotation and retry logic.
-
-Supports multiple providers: Groq, Gemini, OpenAI, etc.
-"""
-
 import os
 import time
 from itertools import cycle
 from typing import Optional, Dict, Any, List
 from litellm import completion
-from utils.logger import get_logger
+import litellm
+from utils.logger import get_logger, SESSION_ID
+import nest_asyncio
+
+nest_asyncio.apply()
+
 
 logger = get_logger(__name__)
 
 
-class LLMManager:
-    """
-    Manages LLM API calls with:
-    - Multiple API key rotation (e.g., GROQ_API_KEY_1, GEMINI_API_KEY_1, ...)
-    - Automatic retry with exponential backoff
-    - Rate limit handling
-    - Multiple provider support
-    """
+if os.getenv("OPIK_API_KEY"):
+    os.environ["OPIK_PROJECT_NAME"] = os.getenv("OPIK_PROJECT_NAME", "IASCIS")
+    litellm.callbacks = ["opik"]
+    logger.info(
+        f"Opik callback registered for project: {os.environ['OPIK_PROJECT_NAME']}"
+    )
+else:
+    logger.warning("OPIK_API_KEY not found in environment. Opik tracing disabled.")
 
-    # Provider configurations
+
+class LLMManager:
     PROVIDER_CONFIG = {
         "groq": {
             "env_prefix": "GROQ_API_KEY",
@@ -31,7 +32,7 @@ class LLMManager:
         },
         "gemini": {
             "env_prefix": "GEMINI_API_KEY",
-            "default_model": "gemini-3-flash-preview",
+            "default_model": "gemini-2.5-flash",
             "litellm_prefix": "gemini",
         },
         "openai": {
@@ -48,39 +49,30 @@ class LLMManager:
 
     def __init__(self, provider: str = "groq", model: Optional[str] = None):
         if provider not in self.PROVIDER_CONFIG:
-            raise ValueError(
-                f"Unknown provider: {provider}. Supported: {list(self.PROVIDER_CONFIG.keys())}"
-            )
+            raise ValueError(f"Unknown provider: {provider}")
 
         self.provider = provider
         config = self.PROVIDER_CONFIG[provider]
         env_prefix = config["env_prefix"]
-
-        # Set model with provider prefix
         model_name = model or config["default_model"]
         self.model = f"{config['litellm_prefix']}/{model_name}"
 
-        # Try numbered keys first (e.g., GROQ_API_KEY_1, GROQ_API_KEY_2, ...)
         self.api_keys = [os.getenv(f"{env_prefix}_{i}") for i in range(1, 16)]
-        self.api_keys = [key for key in self.api_keys if key]
+        self.api_keys = [k for k in self.api_keys if k]
 
-        # Fallback to single key (e.g., GROQ_API_KEY)
         if not self.api_keys:
-            single_key = os.getenv(env_prefix)
-            if single_key:
+            if single_key := os.getenv(env_prefix):
                 self.api_keys = [single_key]
 
         if not self.api_keys:
-            logger.warning(f"No {provider.upper()} API keys found!")
+            logger.warning(f"No {provider.upper()} API keys found")
             self.key_pool = None
         else:
             self.key_pool = cycle(self.api_keys)
-            logger.info(f"Loaded {len(self.api_keys)} {provider.upper()} API key(s)")
+            logger.info(f"Loaded {len(self.api_keys)} {provider.upper()} keys")
 
     def get_next_key(self) -> Optional[str]:
-        if not self.key_pool:
-            return None
-        return next(self.key_pool)
+        return next(self.key_pool) if self.key_pool else None
 
     def generate(
         self,
@@ -90,154 +82,115 @@ class LLMManager:
         temperature: float = 0.7,
         max_retries: int = 3,
         initial_delay: float = 1.0,
+        **kwargs,
     ) -> Dict[str, Any]:
-        """
-        Generate completion with automatic retry and key rotation.
-
-        Args:
-            messages: List of message dicts with 'role' and 'content'
-            response_format: Optional format spec (e.g., {"type": "json_object"})
-            max_tokens: Maximum tokens in response
-            temperature: Sampling temperature
-            max_retries: Retries per key before switching
-            initial_delay: Initial backoff delay in seconds
-
-        Returns:
-            Dict with 'content' (str) and optional 'error' or 'rate_limit_warning'
-        """
         if not self.api_keys:
-            return {
-                "content": None,
-                "error": f"No {self.provider.upper()} API keys configured",
-            }
+            return {"content": None, "error": f"No {self.provider} keys"}
 
         last_error = None
+        start_time = time.perf_counter()
 
-        for key_attempt in range(len(self.api_keys)):
+        metadata = kwargs.get("metadata", {})
+        if "opik" not in metadata:
+            metadata["opik"] = {}
+
+        tags = metadata["opik"].get("tags", [])
+        if isinstance(tags, str):
+            tags = [tags]
+
+        session_tag = f"session:{SESSION_ID}"
+        if session_tag not in tags:
+            tags.append(session_tag)
+
+        metadata["opik"]["tags"] = tags
+        kwargs["metadata"] = metadata
+
+        logger.info(
+            f"Generating with {self.model} | Tokens: {max_tokens} | Temp: {temperature} | Session: {SESSION_ID}"
+        )
+
+        for key_idx in range(len(self.api_keys)):
             api_key = self.get_next_key()
 
-            for retry_attempt in range(max_retries):
+            for attempt in range(max_retries):
                 try:
-                    kwargs = {
+                    params = {
                         "model": self.model,
                         "messages": messages,
                         "max_tokens": max_tokens,
                         "temperature": temperature,
                         "api_key": api_key,
+                        **kwargs,
                     }
-
                     if response_format:
-                        kwargs["response_format"] = response_format
+                        params["response_format"] = response_format
 
-                    response = completion(**kwargs)
+                    response = completion(**params)
                     content = response.choices[0].message.content
+
+                    duration = (time.perf_counter() - start_time) * 1000
+                    logger.info(f"Generation success in {duration:.2f}ms")
 
                     return {"content": content}
 
                 except Exception as e:
-                    error_str = str(e)
+                    last_error = e
+                    error_msg = str(e)
+                    logger.warning(
+                        f"Attempt {attempt + 1}/{max_retries} failed using key {key_idx + 1}: {error_msg}"
+                    )
 
-                    # Rate limit errors
-                    if any(
-                        x in error_str
-                        for x in ["429", "rate_limit", "ResourceExhausted", "quota"]
-                    ):
-                        last_error = e
-                        logger.warning(
-                            f"Rate limit hit on key {key_attempt + 1}, attempt {retry_attempt + 1}/{max_retries}"
-                        )
-
-                        if retry_attempt < max_retries - 1:
-                            delay = initial_delay * (2**retry_attempt)
-                            logger.info(f"Retrying in {delay}s...")
-                            time.sleep(delay)
+                    if any(x in error_msg for x in ["429", "rate_limit", "quota"]):
+                        if attempt < max_retries - 1:
+                            time.sleep(initial_delay * (2**attempt))
                         else:
-                            logger.warning(
-                                f"Max retries reached for key {key_attempt + 1}, trying next key..."
-                            )
                             break
-
-                    # JSON generation failure - retry with same key
-                    elif "json_validate_failed" in error_str:
-                        last_error = e
-                        logger.warning(
-                            f"JSON generation failed, retrying... ({retry_attempt + 1}/{max_retries})"
-                        )
-                        if retry_attempt < max_retries - 1:
+                    elif "json_validate_failed" in error_msg:
+                        if attempt < max_retries - 1:
                             time.sleep(0.5)
                         else:
                             break
-
-                    # Other errors - don't retry
                     else:
-                        last_error = e
-                        logger.error(f"LLM API error: {e}")
+                        logger.error(f"Non-retryable error: {e}")
                         return {"content": None, "error": str(e)}
 
-        logger.error("All API keys exhausted or rate-limited.")
-        return {
-            "content": None,
-            "error": str(last_error),
-            "rate_limit_warning": "All API keys exhausted. Please try again later.",
-        }
+        logger.error(f"All keys failed. Last error: {last_error}")
+        return {"content": None, "error": str(last_error)}
 
-    def generate_json(
-        self, messages: List[Dict[str, str]], max_tokens: int = 4096, **kwargs
-    ) -> Dict[str, Any]:
-        """Convenience method for JSON mode generation."""
+    def generate_json(self, messages: List[Dict[str, str]], **kwargs) -> Dict[str, Any]:
         return self.generate(
-            messages=messages,
-            response_format={"type": "json_object"},
-            max_tokens=max_tokens,
-            **kwargs,
+            messages, response_format={"type": "json_object"}, **kwargs
         )
 
     def generate_text(
         self, prompt: str, system_prompt: Optional[str] = None, **kwargs
     ) -> Dict[str, Any]:
-        """Convenience method for simple text generation."""
-        messages = []
+        msgs = []
         if system_prompt:
-            messages.append({"role": "system", "content": system_prompt})
-        messages.append({"role": "user", "content": prompt})
+            msgs.append({"role": "system", "content": system_prompt})
+        msgs.append({"role": "user", "content": prompt})
+        return self.generate(messages=msgs, **kwargs)
 
-        return self.generate(messages=messages, **kwargs)
 
-
-# Singleton instances per provider
 _llm_managers: Dict[str, LLMManager] = {}
 
 
 def get_llm_manager(provider: str = "groq", model: Optional[str] = None) -> LLMManager:
-    """
-    Get or create the LLM manager instance for a provider.
-
-    Args:
-        provider: "groq", "gemini", "openai", or "anthropic"
-        model: Optional model override (uses provider default if not specified)
-    """
     global _llm_managers
-
-    # Create unique key based on provider and model
-    cache_key = f"{provider}:{model or 'default'}"
-
-    if cache_key not in _llm_managers:
-        _llm_managers[cache_key] = LLMManager(provider=provider, model=model)
-
-    return _llm_managers[cache_key]
+    key = f"{provider}:{model or 'default'}"
+    if key not in _llm_managers:
+        _llm_managers[key] = LLMManager(provider, model)
+    return _llm_managers[key]
 
 
 def get_groq_manager(model: str = "llama-3.3-70b-versatile") -> LLMManager:
-    """Convenience function for Groq."""
-    return get_llm_manager(provider="groq", model=model)
+    return get_llm_manager("groq", model)
 
 
 def get_gemini_manager(model: str = "gemini-2.5-flash") -> LLMManager:
-    """Convenience function for Gemini."""
-    return get_llm_manager(provider="gemini", model=model)
+    return get_llm_manager("gemini", model)
 
 
 def reset_llm_managers():
-    """Reset all singleton instances (useful for testing)."""
     global _llm_managers
     _llm_managers = {}
