@@ -74,7 +74,16 @@ class ToolMetrics:
     # Dynamic TTL
     base_ttl: float = 300.0  # Base TTL in seconds
     current_ttl: float = 300.0  # Adaptive TTL
+<<<<<<< Updated upstream
     
+=======
+
+    # LRU-style inactive tracking
+    # When decay_score <= 0.1, tool becomes inactive and has 1 day to live
+    inactive_since: Optional[float] = None  # Timestamp when tool became inactive
+    is_active: bool = True  # Active status for LRU priority
+
+>>>>>>> Stashed changes
     @property
     def avg_execution_time_ms(self) -> float:
         """Average execution time per call."""
@@ -180,7 +189,35 @@ class ToolMetrics:
     def is_expired(self) -> bool:
         """Check if tool has exceeded its dynamic TTL."""
         return self.time_since_use > self.current_ttl
+<<<<<<< Updated upstream
     
+=======
+
+    def mark_inactive(self):
+        """Mark tool as inactive with timestamp for LRU tracking."""
+        if self.is_active:
+            self.is_active = False
+            self.inactive_since = time.time()
+
+    def mark_active(self):
+        """Mark tool as active (resets inactive tracking)."""
+        self.is_active = True
+        self.inactive_since = None
+
+    def get_inactive_ttl_remaining(self, inactive_ttl: float = 86400.0) -> float:
+        """
+        Get remaining TTL for inactive tool.
+        
+        Inactive tools have a fixed TTL (default 1 day = 86400 seconds).
+        Returns remaining seconds, or infinity if tool is active.
+        """
+        if self.is_active or self.inactive_since is None:
+            return float('inf')  # Active tools never expire via this mechanism
+        
+        time_inactive = time.time() - self.inactive_since
+        return max(0, inactive_ttl - time_inactive)
+
+>>>>>>> Stashed changes
     def to_dict(self) -> dict:
         """Export metrics to dictionary (for JSON serialization)."""
         return {
@@ -192,12 +229,27 @@ class ToolMetrics:
             "tier": self.tier.value,
             "semantic_group": self.semantic_group,
             "decay_score": round(self.calculate_decay_score(), 4),
+<<<<<<< Updated upstream
             "age_seconds": round(self.age, 2)
+=======
+            "age_seconds": round(self.age, 2),
+            "is_active": self.is_active,
+            "inactive_since": self.inactive_since,
+            "inactive_ttl_remaining": round(self.get_inactive_ttl_remaining(), 2) if not self.is_active else None,
+>>>>>>> Stashed changes
         }
     
     def __repr__(self):
+<<<<<<< Updated upstream
         return (f"ToolMetrics({self.name}, calls={self.total_calls}, "
                 f"tier={self.tier.value})")
+=======
+        status = "active" if self.is_active else "inactive"
+        return (
+            f"ToolMetrics({self.name}, calls={self.total_calls}, "
+            f"tier={self.tier.value}, status={status})"
+        )
+>>>>>>> Stashed changes
 
 
 class AdaptiveToolCache:
@@ -233,7 +285,13 @@ class AdaptiveToolCache:
         protected_tools: Optional[List[str]] = None,
         semantic_groups: Optional[Dict[str, List[str]]] = None,
         archive_ttl: float = 3600.0,  # 1 hour before permanent deletion
+<<<<<<< Updated upstream
         max_archive_size: int = 100   # Max tools in archive
+=======
+        max_archive_size: int = 100,  # Max tools in archive
+        inactive_decay_threshold: float = 0.1,  # Decay score threshold for inactive
+        inactive_ttl: float = 86400.0,  # 1 day TTL for inactive tools
+>>>>>>> Stashed changes
     ):
         """
         Initialize the Adaptive Tool Cache.
@@ -256,6 +314,13 @@ class AdaptiveToolCache:
         self.archive_ttl = archive_ttl  # Time before archived tools are permanently deleted
         self.max_archive_size = max_archive_size
         
+<<<<<<< Updated upstream
+=======
+        # LRU-style inactive tool management
+        self.inactive_decay_threshold = inactive_decay_threshold  # Score <= this = inactive
+        self.inactive_ttl = inactive_ttl  # 1 day default TTL for inactive tools
+
+>>>>>>> Stashed changes
         # Semantic group mappings (tool_name_pattern -> group_name)
         self.semantic_groups = semantic_groups or {
             "file_ops": ["write_file", "read_file", "delete_file", "list_dir"],
@@ -471,6 +536,12 @@ class AdaptiveToolCache:
         
         This should be called after the tool is executed.
         
+<<<<<<< Updated upstream
+=======
+        LRU BEHAVIOR: Using an inactive tool makes it active again!
+        This "rescues" the tool from the inactive pool.
+
+>>>>>>> Stashed changes
         Args:
             name: Tool name
             execution_time_ms: Time taken to execute
@@ -485,6 +556,12 @@ class AdaptiveToolCache:
                 return None
             
             metrics = self._metrics[name]
+            
+            # LRU: Using a tool makes it active again (rescue from inactive)
+            if not metrics.is_active:
+                metrics.mark_active()
+                print(f"[ATC] LRU Rescue: '{name}' used, now active again")
+            
             metrics.record_call(execution_time_ms)
             
             # Update LRU
@@ -557,6 +634,7 @@ class AdaptiveToolCache:
     
     def _evict_one(self):
         """
+<<<<<<< Updated upstream
         Evict a single tool using adaptive ARC strategy.
         
         Strategy:
@@ -568,11 +646,34 @@ class AdaptiveToolCache:
         # Find eviction candidates (not protected)
         candidates = []
         
+=======
+        Evict a single tool using LRU-style priority eviction.
+
+        Strategy (Priority Order):
+        1. NEVER evict protected tools
+        2. FIRST: Evict inactive tools (decay_score <= 0.1)
+           - Among inactive: evict the one CLOSEST to deletion (lowest TTL remaining)
+           - This is the "LRU for inactive" behavior
+        3. ONLY IF no inactive tools: Evict active tools
+           - Use original tier-based + decay score strategy
+        4. Track in ghost lists for ARC learning
+        
+        Example with 50 tools (28 active, 22 inactive):
+        - New tool arrives, need to evict 1
+        - Check inactive tools, find the one with least time remaining
+        - Evict that one, NOT any active tool
+        """
+        # Separate candidates into inactive and active
+        inactive_candidates = []
+        active_candidates = []
+
+>>>>>>> Stashed changes
         for tier in [ToolTier.COLD, ToolTier.PROBATION, ToolTier.WARM, ToolTier.HOT]:
             for name in self._tiers[tier]:
                 if name not in self.protected_tools:
                     metrics = self._metrics[name]
                     score = self._get_decay_score_with_registry(metrics)
+<<<<<<< Updated upstream
                     candidates.append((name, score, tier, metrics))
         
         if not candidates:
@@ -600,6 +701,52 @@ class AdaptiveToolCache:
         
         self._remove_tool(victim_name, reason="eviction")
     
+=======
+                    
+                    if not metrics.is_active:
+                        # Inactive tool - calculate remaining TTL
+                        ttl_remaining = metrics.get_inactive_ttl_remaining(self.inactive_ttl)
+                        inactive_candidates.append((name, ttl_remaining, score, tier, metrics))
+                    else:
+                        # Active tool
+                        active_candidates.append((name, score, tier, metrics))
+
+        # Priority 1: Evict from inactive tools first (LRU-style)
+        if inactive_candidates:
+            # Sort by TTL remaining (lowest first = closest to deletion = evict first)
+            inactive_candidates.sort(key=lambda x: x[1])
+            
+            victim_name, ttl_remaining, score, tier, metrics = inactive_candidates[0]
+            print(f"[ATC] LRU Eviction: '{victim_name}' (inactive, TTL remaining: {ttl_remaining:.1f}s)")
+            
+            # Track in ghost list
+            self._add_to_ghost(victim_name, self._ghost_lru)
+            self._remove_tool(victim_name, reason="lru_inactive_eviction")
+            return
+
+        # Priority 2: Only evict active tools if NO inactive tools exist
+        if active_candidates:
+            # Sort by decay score (lowest first = evict first)
+            active_candidates.sort(key=lambda x: x[1])
+            
+            victim_name, score, tier, metrics = active_candidates[0]
+            print(f"[ATC] Active Eviction: '{victim_name}' (score={score:.4f}, no inactive tools)")
+
+            # Decide which ghost list based on ARC parameter
+            recency_factor = metrics.time_since_use
+            frequency_factor = max(1, metrics.total_calls)
+
+            if recency_factor / (frequency_factor + 1) > self._arc_p:
+                self._add_to_ghost(victim_name, self._ghost_lru)
+            else:
+                self._add_to_ghost(victim_name, self._ghost_lfu)
+
+            self._remove_tool(victim_name, reason="active_eviction")
+            return
+
+        print("[ATC] Warning: No eviction candidates (all protected)")
+
+>>>>>>> Stashed changes
     def _add_to_ghost(self, name: str, ghost_list: OrderedDict):
         """Add to ghost list (for ARC learning)."""
         if len(ghost_list) >= self._ghost_max_size:
@@ -796,7 +943,104 @@ class AdaptiveToolCache:
                 return self.restore_from_archive(name)
             
             return None
+<<<<<<< Updated upstream
     
+=======
+
+    # ========== LRU-Style Inactive Tool Management ==========
+
+    def _update_inactive_status(self) -> List[str]:
+        """
+        Update the active/inactive status of all tools based on decay score.
+        
+        Tools with decay_score <= inactive_decay_threshold (default 0.1) 
+        are marked as inactive. They now have 1 day to live.
+        
+        Returns:
+            List of tool names that became inactive in this cycle
+        """
+        newly_inactive = []
+        
+        for name in list(self._tools.keys()):
+            if name in self.protected_tools:
+                continue
+            
+            metrics = self._metrics.get(name)
+            if not metrics:
+                continue
+            
+            score = self._get_decay_score_with_registry(metrics)
+            
+            # Check if tool should become inactive
+            if score <= self.inactive_decay_threshold and metrics.is_active:
+                metrics.mark_inactive()
+                newly_inactive.append(name)
+                print(f"[ATC] Tool '{name}' became inactive (score={score:.4f} <= {self.inactive_decay_threshold})")
+        
+        return newly_inactive
+
+    def _cleanup_expired_inactive(self) -> List[str]:
+        """
+        Evict inactive tools that have exceeded their 1-day TTL.
+        
+        This is DIFFERENT from regular eviction:
+        - Regular eviction happens when cache is full (LRU-style, picks closest to deletion)
+        - This is automatic cleanup of inactive tools that have lived past their TTL
+        
+        Returns:
+            List of evicted tool names
+        """
+        evicted = []
+        
+        for name in list(self._tools.keys()):
+            if name in self.protected_tools:
+                continue
+            
+            metrics = self._metrics.get(name)
+            if not metrics:
+                continue
+            
+            # Only check inactive tools
+            if not metrics.is_active:
+                ttl_remaining = metrics.get_inactive_ttl_remaining(self.inactive_ttl)
+                
+                if ttl_remaining <= 0:
+                    # Inactive tool has exceeded its 1-day TTL - evict it
+                    print(f"[ATC] Inactive tool '{name}' exceeded TTL, evicting")
+                    self._remove_tool(name, reason="inactive_ttl_expired")
+                    evicted.append(name)
+        
+        return evicted
+
+    def get_inactive_tools(self) -> List[Tuple[str, float]]:
+        """
+        Get all inactive tools with their remaining TTL.
+        
+        Returns:
+            List of (name, ttl_remaining_seconds) tuples, sorted by TTL (lowest first)
+        """
+        with self._lock:
+            inactive = []
+            for name, metrics in self._metrics.items():
+                if not metrics.is_active:
+                    ttl_remaining = metrics.get_inactive_ttl_remaining(self.inactive_ttl)
+                    inactive.append((name, ttl_remaining))
+            
+            # Sort by TTL remaining (closest to deletion first)
+            inactive.sort(key=lambda x: x[1])
+            return inactive
+
+    def get_active_tool_count(self) -> int:
+        """Get count of active tools."""
+        with self._lock:
+            return sum(1 for m in self._metrics.values() if m.is_active)
+
+    def get_inactive_tool_count(self) -> int:
+        """Get count of inactive tools."""
+        with self._lock:
+            return sum(1 for m in self._metrics.values() if not m.is_active)
+
+>>>>>>> Stashed changes
     # ========== Cleanup & Maintenance ==========
     
     def cleanup_expired(self) -> List[Tuple[str, ToolMetrics]]:
@@ -868,7 +1112,18 @@ class AdaptiveToolCache:
                     # Log current decay scores (verbose mode)
                     if self._verbose_cleanup:
                         self._log_decay_status(cycle_count)
+<<<<<<< Updated upstream
                     
+=======
+
+                    # UPDATE INACTIVE STATUS based on decay score
+                    # Tools with decay_score <= 0.1 become inactive
+                    newly_inactive = self._update_inactive_status()
+                    
+                    # EVICT inactive tools that have exceeded their 1-day TTL
+                    expired_inactive = self._cleanup_expired_inactive()
+
+>>>>>>> Stashed changes
                     # Cleanup expired active tools (move to archive)
                     expired = self.cleanup_expired()
                     
@@ -878,7 +1133,19 @@ class AdaptiveToolCache:
                     # Re-tier all tools based on current metrics
                     for name in list(self._metrics.keys()):
                         self._update_tier(name)
+<<<<<<< Updated upstream
                     
+=======
+
+                    if newly_inactive:
+                        print(
+                            f"[ATC] LRU Status: {len(newly_inactive)} tools became inactive"
+                        )
+                    if expired_inactive:
+                        print(
+                            f"[ATC] LRU Cleanup: {len(expired_inactive)} inactive tools evicted (TTL exceeded)"
+                        )
+>>>>>>> Stashed changes
                     if expired:
                         print(f"[ATC] Background cleanup: {len(expired)} tools archived due to TTL")
                     if deleted:
@@ -899,8 +1166,15 @@ class AdaptiveToolCache:
             if name not in self.protected_tools:
                 score = self._get_decay_score_with_registry(metrics)
                 time_since_use = metrics.time_since_use
+<<<<<<< Updated upstream
                 scores.append((name, score, time_since_use, metrics.current_ttl))
         
+=======
+                is_active = metrics.is_active
+                inactive_ttl = metrics.get_inactive_ttl_remaining(self.inactive_ttl) if not is_active else None
+                scores.append((name, score, time_since_use, metrics.current_ttl, is_active, inactive_ttl))
+
+>>>>>>> Stashed changes
         if not scores:
             return
         
@@ -915,6 +1189,7 @@ class AdaptiveToolCache:
             elif secs >= 60:
                 return f"{secs/60:.1f}m"
             return f"{secs:.0f}s"
+<<<<<<< Updated upstream
         
         print(f"\n[ATC] === Decay Status (cycle #{cycle}) ===")
         for name, score, tsu, ttl in scores[:5]:  # Show top 5 lowest scores
@@ -922,6 +1197,27 @@ class AdaptiveToolCache:
             status = "⚠️ EXPIRED" if ttl_remaining <= 0 else f"TTL: {fmt_time(ttl_remaining)}"
             print(f"  {name}: score={score:.4f}, idle={fmt_time(tsu)}, {status}")
         
+=======
+
+        # Count active vs inactive
+        active_count = sum(1 for s in scores if s[4])
+        inactive_count = len(scores) - active_count
+
+        print(f"\n[ATC] === Decay Status (cycle #{cycle}) ===")
+        print(f"[ATC] Tools: {active_count} active, {inactive_count} inactive")
+        
+        for name, score, tsu, ttl, is_active, inactive_ttl in scores[:5]:  # Show top 5 lowest scores
+            if is_active:
+                ttl_remaining = ttl - tsu
+                status = (
+                    "⚠️ EXPIRED" if ttl_remaining <= 0 else f"TTL: {fmt_time(ttl_remaining)}"
+                )
+                print(f"  {name}: score={score:.4f}, idle={fmt_time(tsu)}, {status} [ACTIVE]")
+            else:
+                status = f"inactive TTL: {fmt_time(inactive_ttl)}" if inactive_ttl > 0 else "⚠️ EXPIRED"
+                print(f"  {name}: score={score:.4f}, idle={fmt_time(tsu)}, {status} [INACTIVE]")
+
+>>>>>>> Stashed changes
         if len(scores) > 5:
             print(f"  ... and {len(scores) - 5} more tools")
     

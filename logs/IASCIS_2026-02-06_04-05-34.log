@@ -1,0 +1,73 @@
+2026-02-06 04:05:38 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-06 04:06:01 | INFO | __main__:main:212 | Starting IASCIS with Sandbox and Profiling
+2026-02-06 04:06:01 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-06 04:06:01 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-06 04:06:01 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-06 04:06:01 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\ML LAB\agentic_system\workspace, profiling=True)
+2026-02-06 04:06:01 | INFO | architecture.sandbox:__init__:132 | Sandbox initialized with tools_dir=C:\ML LAB\agentic_system\workspace\tools
+2026-02-06 04:06:01 | INFO | architecture.sandbox:start:145 | Pulling image python:3.11-slim...
+2026-02-06 04:06:13 | INFO | architecture.sandbox:start:156 | Sandbox container started: 0f05ab15c437
+2026-02-06 04:06:13 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-06 04:06:13 | INFO | architecture.executor:__init__:62 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-06 04:06:13 | INFO | architecture.executor:load_registry:77 | Loaded 0 tool definitions
+2026-02-06 04:06:13 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-06 04:06:13 | INFO | architecture.executor:__init__:70 | ExecutorAgent initialized with Sandbox
+2026-02-06 04:06:18 | INFO | architecture.orchestrator:__init__:52 | Orchestrator initialized with ToolRetriever
+2026-02-06 04:06:18 | INFO | __main__:_initialize_runtime:91 | Runtime initialized with Sandbox
+2026-02-06 04:06:18 | INFO | __main__:run:120 | Task received: create me a tool for web serarching...
+2026-02-06 04:06:18 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-06 04:06:18 | INFO | __main__:run:124 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-06 04:06:18 | INFO | architecture.orchestrator:run:56 | Processing,create me a tool for web serarching...
+2026-02-06 04:06:18 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-06_04-05-34
+2026-02-06 04:06:20 | INFO | architecture.llm_manager:generate:132 | Generation success in 1329.00ms
+2026-02-06 04:06:20 | ERROR | architecture.orchestrator:_decompose:90 | Parse error: 1 validation error for DecompositionResult
+subtasks.5.input_from
+  Input should be a valid string [type=string_type, input_value=['st_2', 'st_5'], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.12/v/string_type
+2026-02-06 04:06:20 | INFO | architecture.orchestrator:run:59 | Decomposed into 1 subtasks
+2026-02-06 04:06:20 | INFO | architecture.orchestrator:_retrieve_tools:136 | st_1 → NO MATCH
+2026-02-06 04:06:20 | INFO | architecture.orchestrator:_ensure_tools:156 | Toolsmith creating: create me a tool for web serarching
+2026-02-06 04:06:26 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_04-05-34
+2026-02-06 04:06:26 | INFO | architecture.llm_manager:generate:132 | Generation success in 761.89ms
+2026-02-06 04:06:27 | INFO | architecture.orchestrator:_ensure_tools:159 | Toolsmith: Successfully created WebSearchTool with tags ['web']....
+2026-02-06 04:06:27 | INFO | architecture.orchestrator:_ensure_tools:183 | Tool assigned: WebSearchTool
+2026-02-06 04:06:27 | INFO | architecture.executor:execute:83 | Executing plan: create me a tool for web serarching
+2026-02-06 04:06:27 | INFO | architecture.executor:execute:84 | Total steps: 1
+2026-02-06 04:06:27 | INFO | architecture.executor:_execute_step:113 | Step 1: create me a tool for web serarching using WebSearchTool
+2026-02-06 04:06:27 | INFO | architecture.executor:load_registry:77 | Loaded 1 tool definitions
+2026-02-06 04:06:27 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_04-05-34
+2026-02-06 04:06:27 | INFO | architecture.llm_manager:generate:132 | Generation success in 106.11ms
+2026-02-06 04:06:27 | INFO | architecture.executor:_infer_args:360 | LLM extracted args: {'query': 'create me a tool for web searching'}
+2026-02-06 04:06:27 | INFO | architecture.executor:_execute_step:147 | DEBUG: Executor inferred args = {'query': 'create me a tool for web searching'}
+2026-02-06 04:06:27 | INFO | architecture.executor:_execute_step:148 | DEBUG: Args type = <class 'dict'>
+2026-02-06 04:06:27 | INFO | architecture.sandbox:_install_deps:176 | Installing dependencies: pydantic googlesearch pydantic
+2026-02-06 04:06:29 | WARNING | architecture.sandbox:_install_deps:181 | pip install failed: ERROR: Could not find a version that satisfies the requirement googlesearch (from versions: none)
+ERROR: No matching distribution found for googlesearch
+
+[notice] A new release of pip is available: 24.0 -> 26.0.1
+[notice] To update, run: pip install --upgrade pip
+
+2026-02-06 04:06:29 | INFO | architecture.sandbox:execute_with_args:377 | DEBUG: sandbox received args = {'query': 'create me a tool for web searching'}
+2026-02-06 04:06:29 | INFO | architecture.sandbox:execute_with_args:378 | DEBUG: args_json = {"query": "create me a tool for web searching"}
+2026-02-06 04:06:29 | INFO | architecture.sandbox:execute_with_args:379 | DEBUG: Runner script line: args = json.loads('{"query": "create me a tool for web searching"}')
+2026-02-06 04:06:29 | INFO | architecture.sandbox:execute_with_args:384 | Executing tool with args: WebSearchTool
+2026-02-06 04:06:29 | INFO | architecture.sandbox:execute_with_args:385 | Args JSON being passed: {"query": "create me a tool for web searching"}
+2026-02-06 04:06:29 | WARNING | architecture.sandbox:execute_with_args:441 | Failed to parse sandbox output: No valid JSON output found, Raw output: Traceback (most recent call last):
+  File "/tools/_runner_WebSearchTool.py", line 10, in <module>
+    from web_search_tool import *
+  File "/tools/web_search_tool.py", line 3, in <module>
+    from pydantic import BaseModel, Field
+ModuleNotFoundError: No module named 'pydantic'
+
+2026-02-06 04:06:29 | ERROR | architecture.executor:_execute_step:184 | Step 1: Failed after 2.03s - Traceback (most recent call last):
+  File "/tools/_runner_WebSearchTool.py", line 10, in <module>
+    from web_search_tool import *
+  File "/tools/web_search_tool.py", line 3, in <module>
+    from pydantic import BaseModel, Field
+ModuleNotFoundError: No module named 'pydantic'
+
+2026-02-06 04:06:29 | INFO | __main__:main:217 | Completed in 11077.83ms
+2026-02-06 04:06:29 | INFO | __main__:main:218 | Zone: public
+2026-02-06 04:06:29 | INFO | architecture.executor:export_profiles:321 | Profiles exported to: C:\ML LAB\agentic_system\logs\profiles_20260206_040629.json
+2026-02-06 04:06:35 | INFO | architecture.sandbox:stop:163 | Sandbox container stopped: 0f05ab15c437
+2026-02-06 04:06:35 | INFO | __main__:_shutdown_runtime:100 | Runtime shutdown complete

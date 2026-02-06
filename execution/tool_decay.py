@@ -154,7 +154,12 @@ class ToolDecayManager:
         max_capacity: int = 100,
         decay_constant: float = 60.0,
         semantic_groups: Optional[Dict[str, List[str]]] = None,
+<<<<<<< Updated upstream
         registry_path: Optional[str] = None  # Path to registry.json for status sync
+=======
+        registry_path: Optional[str] = None,  # Path to registry.json for status sync
+        inactive_ttl: float = 86400.0,  # 1 day TTL for inactive tools
+>>>>>>> Stashed changes
     ):
         """
         Initialize the decay manager.
@@ -167,12 +172,18 @@ class ToolDecayManager:
             decay_constant: K constant in decay formula (default: 60.0)
             semantic_groups: Dict mapping group names to tool name patterns
             registry_path: Path to registry.json for status sync (optional)
+            inactive_ttl: TTL in seconds for inactive tools before deletion (default: 1 day)
         """
         self.decay_period = decay_period
         self.on_tool_removed = on_tool_removed
         self.protected_tools = set(protected_tools or [])
         self.decay_constant = decay_constant
+<<<<<<< Updated upstream
         
+=======
+        self.inactive_ttl = inactive_ttl
+
+>>>>>>> Stashed changes
         # Registry path for status sync
         self.registry_path = registry_path
         if registry_path is None:
@@ -187,20 +198,35 @@ class ToolDecayManager:
             decay_constant=decay_constant,
             on_tool_evicted=self._handle_eviction,
             protected_tools=list(self.protected_tools),
+<<<<<<< Updated upstream
             semantic_groups=semantic_groups
+=======
+            semantic_groups=semantic_groups,
+            inactive_ttl=inactive_ttl,
+>>>>>>> Stashed changes
         )
         
         # Set registry path for enhanced decay score calculation
         self._cache.set_registry_path(self.registry_path)
+<<<<<<< Updated upstream
     
     def _update_registry_status(self, tool_name: str, status: str) -> bool:
+=======
+
+    def _update_registry_status(self, tool_name: str, status: str, inactive_since: float = None) -> bool:
+>>>>>>> Stashed changes
         """
         Update the status of a tool in the registry.json file.
         
         Args:
             tool_name: Name of the tool to update
             status: New status - one of: active, inactive, deprecated, failed
+<<<<<<< Updated upstream
             
+=======
+            inactive_since: Timestamp when tool became inactive (only for inactive status)
+
+>>>>>>> Stashed changes
         Returns:
             True if successful, False otherwise
         """
@@ -215,6 +241,17 @@ class ToolDecayManager:
                 registry[tool_name]["status"] = status
                 registry[tool_name]["updated_at"] = time.time()
                 
+<<<<<<< Updated upstream
+=======
+                # Track when tool became inactive for TTL calculation
+                if status == "inactive":
+                    # Use provided timestamp or current time
+                    registry[tool_name]["inactive_since"] = inactive_since or time.time()
+                elif status == "active":
+                    # Clear inactive_since when tool becomes active again
+                    registry[tool_name].pop("inactive_since", None)
+
+>>>>>>> Stashed changes
                 with open(self.registry_path, "w") as f:
                     json.dump(registry, f, indent=2)
                 
@@ -318,6 +355,32 @@ class ToolDecayManager:
         except Exception:
             return (0, None)
 
+    def _get_registry_inactive_since(self, tool_name: str) -> Optional[float]:
+        """
+        Get the inactive_since timestamp from the registry.
+        
+        This is used to restore the inactive status and TTL countdown
+        after a system restart.
+
+        Args:
+            tool_name: Name of the tool
+
+        Returns:
+            Timestamp when tool became inactive, or None if not found/not inactive
+        """
+        if not self.registry_path or not os.path.exists(self.registry_path):
+            return None
+
+        try:
+            with open(self.registry_path, "r") as f:
+                registry = json.load(f)
+
+            if tool_name in registry:
+                return registry[tool_name].get("inactive_since")
+            return None
+        except Exception:
+            return None
+
     def register_tool(
         self, 
         name: str, 
@@ -349,6 +412,12 @@ class ToolDecayManager:
         # Load historical usage data from registry
         registry_use_count, registry_last_used = self._get_registry_usage(name)
         
+<<<<<<< Updated upstream
+=======
+        # Load inactive_since from registry (if tool was inactive)
+        registry_inactive_since = self._get_registry_inactive_since(name)
+
+>>>>>>> Stashed changes
         # Use registry last_used if not explicitly provided
         if last_used is None and registry_last_used is not None:
             last_used = registry_last_used
@@ -367,8 +436,29 @@ class ToolDecayManager:
             metrics = self._cache.get_metrics(name)
             if metrics:
                 metrics.total_calls = registry_use_count
+<<<<<<< Updated upstream
                 print(f"[ToolDecayManager] Loaded {name} with use_count={registry_use_count} from registry")
         
+=======
+                print(
+                    f"[ToolDecayManager] Loaded {name} with use_count={registry_use_count} from registry"
+                )
+        
+        # Restore inactive status if tool was previously inactive
+        if registry_status == "inactive" and registry_inactive_since:
+            metrics = self._cache.get_metrics(name)
+            if metrics:
+                metrics.is_active = False
+                metrics.inactive_since = registry_inactive_since
+                print(
+                    f"[ToolDecayManager] Restored {name} as inactive (since {registry_inactive_since})"
+                )
+            # Don't update registry status - it's already inactive
+            if protected:
+                self.protected_tools.add(name)
+            return
+
+>>>>>>> Stashed changes
         if protected:
             self.protected_tools.add(name)
         
@@ -399,6 +489,11 @@ class ToolDecayManager:
         This is the preferred method for tracking tool usage as it
         enables accurate decay score calculation.
         
+<<<<<<< Updated upstream
+=======
+        LRU BEHAVIOR: Using an inactive tool rescues it back to active!
+
+>>>>>>> Stashed changes
         Args:
             name: Tool name
             execution_time_ms: Execution time in milliseconds
@@ -408,12 +503,26 @@ class ToolDecayManager:
         
         Note: success parameter is removed because tools always succeed.
         """
+        # Check if tool was inactive before usage (for registry sync)
+        was_inactive = False
+        old_metrics = self._cache.get_metrics(name)
+        if old_metrics and not old_metrics.is_active:
+            was_inactive = True
+        
         metrics = self._cache.record_usage(name, execution_time_ms)
         
         # Update registry with usage stats
         if metrics is not None:
             self._update_registry_usage(name)
+<<<<<<< Updated upstream
         
+=======
+            
+            # If tool was rescued from inactive, update registry status to active
+            if was_inactive:
+                self._update_registry_status(name, "active")
+
+>>>>>>> Stashed changes
         return metrics
     
     def get_tool(self, name: str) -> Optional[Any]:
@@ -564,7 +673,162 @@ class ToolDecayManager:
     def get_group_tools(self, group: str) -> List[str]:
         """Get all tools in a semantic group."""
         return self._cache.get_group_tools(group)
+<<<<<<< Updated upstream
     
+=======
+
+    # ========== LRU-Style Inactive Tool Management ==========
+
+    def get_inactive_tools(self) -> List[tuple]:
+        """
+        Get all inactive tools with their remaining TTL.
+        
+        Inactive tools are those with decay_score <= 0.1.
+        They have 1 day to live unless used again (which rescues them).
+        
+        Returns:
+            List of (name, ttl_remaining_seconds) tuples, sorted by TTL (lowest first)
+        """
+        return self._cache.get_inactive_tools()
+
+    def get_active_tool_count(self) -> int:
+        """Get count of active tools (decay_score > 0.1)."""
+        return self._cache.get_active_tool_count()
+
+    def get_inactive_tool_count(self) -> int:
+        """Get count of inactive tools (decay_score <= 0.1, have 1 day TTL)."""
+        return self._cache.get_inactive_tool_count()
+
+    def get_lru_status(self) -> Dict[str, Any]:
+        """
+        Get a summary of the LRU-style eviction status.
+        
+        Returns:
+            Dict with active_count, inactive_count, and list of inactive tools
+        """
+        inactive_tools = self._cache.get_inactive_tools()
+        return {
+            "active_count": self._cache.get_active_tool_count(),
+            "inactive_count": self._cache.get_inactive_tool_count(),
+            "inactive_tools": [
+                {"name": name, "ttl_remaining_seconds": ttl}
+                for name, ttl in inactive_tools
+            ],
+            "next_to_evict": inactive_tools[0][0] if inactive_tools else None,
+        }
+
+    def update_inactive_status(self) -> List[str]:
+        """
+        Update inactive status of all tools based on decay score.
+        
+        Tools with decay_score <= 0.1 become inactive with a 1-day TTL.
+        This also syncs the status AND inactive_since timestamp to registry.json.
+        
+        Returns:
+            List of tool names that became inactive
+        """
+        # Update in-memory status
+        newly_inactive = self._cache._update_inactive_status()
+        
+        # Sync to registry.json with inactive_since timestamp
+        for name in newly_inactive:
+            metrics = self._cache.get_metrics(name)
+            inactive_since = metrics.inactive_since if metrics else None
+            self._update_registry_status(name, "inactive", inactive_since)
+        
+        return newly_inactive
+
+    def cleanup_expired_tools(self) -> List[str]:
+        """
+        Remove expired inactive tools COMPLETELY from the system.
+        
+        When an inactive tool's 1-day TTL expires:
+        1. Remove from registry.json
+        2. Delete the .py file from tools folder
+        3. Knowledge graph auto-rebuilds on next access (reads from registry)
+        
+        Returns:
+            List of tool names that were permanently deleted
+        """
+        deleted_tools = []
+        
+        # Get tools that the cache considers expired
+        expired = self._cache._cleanup_expired_inactive()
+        
+        for name in expired:
+            # 1. Get file path from registry before deleting
+            tool_file = self._get_tool_file_from_registry(name)
+            
+            # 2. Remove from registry.json completely
+            self._delete_from_registry(name)
+            
+            # 3. Delete the .py file
+            if tool_file:
+                self._delete_tool_file(tool_file)
+            
+            deleted_tools.append(name)
+            print(f"[ToolDecayManager] PERMANENTLY DELETED: {name}")
+        
+        return deleted_tools
+
+    def _get_tool_file_from_registry(self, tool_name: str) -> Optional[str]:
+        """Get the file path for a tool from registry."""
+        if not self.registry_path or not os.path.exists(self.registry_path):
+            return None
+        
+        try:
+            with open(self.registry_path, "r") as f:
+                registry = json.load(f)
+            
+            if tool_name in registry:
+                return registry[tool_name].get("file")
+            return None
+        except Exception:
+            return None
+
+    def _delete_from_registry(self, tool_name: str) -> bool:
+        """Permanently remove a tool from registry.json."""
+        if not self.registry_path or not os.path.exists(self.registry_path):
+            return False
+        
+        try:
+            with open(self.registry_path, "r") as f:
+                registry = json.load(f)
+            
+            if tool_name in registry:
+                del registry[tool_name]
+                
+                with open(self.registry_path, "w") as f:
+                    json.dump(registry, f, indent=2)
+                
+                print(f"[ToolDecayManager] Removed '{tool_name}' from registry")
+                return True
+            return False
+        except Exception as e:
+            print(f"[ToolDecayManager] Failed to delete from registry: {e}")
+            return False
+
+    def _delete_tool_file(self, filename: str) -> bool:
+        """Delete the tool's .py file from the tools directory."""
+        if not self.registry_path:
+            return False
+        
+        try:
+            tools_dir = os.path.dirname(self.registry_path)
+            file_path = os.path.join(tools_dir, filename)
+            
+            if os.path.exists(file_path):
+                os.remove(file_path)
+                print(f"[ToolDecayManager] Deleted file: {file_path}")
+                return True
+            else:
+                print(f"[ToolDecayManager] File not found: {file_path}")
+                return False
+        except Exception as e:
+            print(f"[ToolDecayManager] Failed to delete file: {e}")
+            return False
+
+>>>>>>> Stashed changes
     # ========== Archive Management ==========
     
     def restore_from_archive(self, name: str) -> Optional[Any]:

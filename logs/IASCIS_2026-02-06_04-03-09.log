@@ -1,0 +1,1 @@
+2026-02-06 04:03:35 | WARNING | architecture.llm_manager:<module>:23 | OPIK_API_KEY not found in environment. Opik tracing disabled.
