@@ -113,16 +113,61 @@ class ExecutorAgent:
                 results[step.step_number] = result
 
         final_step = max(plan.steps, key=lambda s: s.step_number)
+        
+        # Synthesize human-readable response from raw results
+        synthesized = self._synthesize_response(plan.original_query, final_step.result)
 
         return json.dumps(
             {
                 "query": plan.original_query,
                 "success": plan.is_complete(),
-                "result": final_step.result,
+                "result": synthesized,
+                "raw_data": final_step.result,
                 "step_results": results,
             },
             indent=2,
         )
+
+    def _synthesize_response(self, query: str, raw_result: str) -> str:
+        """Use LLM to convert raw tool output into a human-readable response."""
+        try:
+            # Try to parse as JSON for structured data
+            try:
+                data = json.loads(raw_result) if isinstance(raw_result, str) else raw_result
+            except json.JSONDecodeError:
+                data = raw_result
+            
+            # If it's an error, just return it
+            if isinstance(data, dict) and "error" in data:
+                return f"Error: {data['error']}"
+            
+            prompt = f"""You are a helpful assistant. The user asked: "{query}"
+
+Here is the raw data retrieved:
+{json.dumps(data, indent=2) if isinstance(data, dict) else data}
+
+Based on this data, write a clear, concise, and helpful response that directly answers the user's question.
+- Use natural language, not JSON
+- Highlight the most relevant information first
+- Format nicely with bullet points if listing multiple items
+- Keep it concise (2-4 paragraphs max)
+- Don't mention "the data shows" or "according to the results" - just answer naturally"""
+
+            response = self.llm.generate(
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=500,
+                temperature=0.3,
+            )
+            
+            if response.get("error"):
+                logger.warning(f"Synthesis failed: {response['error']}")
+                return raw_result
+            
+            return response.get("content", raw_result)
+            
+        except Exception as e:
+            logger.warning(f"Response synthesis error: {e}")
+            return raw_result
 
     def _execute_step(self, step: ExecutionStep, previous_results: dict) -> str:
         """Execute a single step using the Sandbox with profiling."""
@@ -509,6 +554,17 @@ class ExecutorAgent:
 
         if not arg_names:
             return {"input": input_data}
+        
+        # If 'data' arg is needed and input_data looks like structured JSON, pass it directly
+        if "data" in arg_names and input_data and input_data != step.description:
+            try:
+                parsed = json.loads(input_data) if isinstance(input_data, str) else input_data
+                if isinstance(parsed, dict) and any(k in parsed for k in ["repos", "results", "items", "data", "labels"]):
+                    logger.info(f"Direct pass-through: Using structured JSON for 'data' arg")
+                    # Build args with direct data pass-through
+                    return self._infer_args_with_direct_data(step, parsed, arg_names, definition)
+            except (json.JSONDecodeError, TypeError):
+                pass  # Fall through to LLM extraction
 
         # Check if URL arguments are needed - if so, search for relevant URLs
         available_urls = ""
@@ -544,6 +600,40 @@ class ExecutorAgent:
         except Exception as e:
             logger.error(f"Failed to parse LLM args response: {e}")
             return {arg_names[0]: input_data}
+
+    def _infer_args_with_direct_data(
+        self, step: ExecutionStep, parsed_data: dict, arg_names: list, definition: dict
+    ) -> dict:
+        """Build args with direct data pass-through, using LLM only for other args."""
+        # Start with direct data
+        args = {"data": parsed_data}
+        
+        # Get other args from LLM (title, xlabel, ylabel, etc.) but with much simpler prompt
+        other_args = [a for a in arg_names if a != "data"]
+        if other_args:
+            prompt = f"""For a chart visualization, provide values for these arguments:
+{other_args}
+
+Task: {step.description}
+
+Return ONLY a JSON object. Example: {{"chart_type": "bar", "title": "My Chart", "xlabel": "X", "ylabel": "Y"}}
+Use sensible defaults for any optional args (empty string is fine)."""
+            
+            response = self.llm.generate_json(
+                messages=[{"role": "user", "content": prompt}], max_tokens=256
+            )
+            
+            if not response.get("error"):
+                try:
+                    other_values = json.loads(response["content"])
+                    for k, v in other_values.items():
+                        if k in other_args:
+                            args[k] = v
+                except Exception:
+                    pass
+        
+        logger.info(f"Direct data pass-through args: {list(args.keys())}")
+        return args
 
     def _get_arg_names_from_file(self, tool_file: Path) -> list:
         """Extract argument names from the tool's Args class using AST."""

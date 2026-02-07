@@ -1,0 +1,71 @@
+{
+  "exported_at": "2026-02-07T14:48:05.962593",
+  "summary": {
+    "DevToTopPostsTool": {
+      "call_count": 1,
+      "avg_time_ms": 2002.878,
+      "max_time_ms": 2002.878,
+      "min_time_ms": 2002.878,
+      "avg_memory_mb": 4.3885,
+      "max_memory_mb": 4.3885,
+      "avg_memory_delta_mb": 3.1139,
+      "avg_efficiency": 0.4824,
+      "last_grade": "critical"
+    },
+    "StoryDataExtractor": {
+      "call_count": 1,
+      "avg_time_ms": 1781.182,
+      "max_time_ms": 1781.182,
+      "min_time_ms": 1781.182,
+      "avg_memory_mb": 8.8576,
+      "max_memory_mb": 8.8576,
+      "avg_memory_delta_mb": 4.7377,
+      "avg_efficiency": 0.4646,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 2,
+    "tools_profiled": [
+      "DevToTopPostsTool",
+      "StoryDataExtractor"
+    ],
+    "execution_time_ms": {
+      "min": 1781.182,
+      "max": 2002.878,
+      "mean": 1892.03
+    },
+    "peak_memory_mb": {
+      "min": 4.3885,
+      "max": 8.8576,
+      "mean": 6.623049999999999
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "DevToTopPostsTool": [
+      {
+        "tool_name": "DevToTopPostsTool",
+        "execution_time_ms": 2002.878,
+        "peak_memory_mb": 4.3885,
+        "memory_delta_mb": 3.1139,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4824,
+        "success": true
+      }
+    ],
+    "StoryDataExtractor": [
+      {
+        "tool_name": "StoryDataExtractor",
+        "execution_time_ms": 1781.182,
+        "peak_memory_mb": 8.8576,
+        "memory_delta_mb": 4.7377,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4646,
+        "success": true
+      }
+    ]
+  }
+}

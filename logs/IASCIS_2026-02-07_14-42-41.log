@@ -1,0 +1,88 @@
+2026-02-07 14:42:44 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-07 14:43:06 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-07 14:43:06 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-07 14:43:06 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-07 14:43:06 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-07 14:43:06 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-07 14:43:06 | INFO | architecture.sandbox:__init__:152 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs
+2026-02-07 14:43:06 | INFO | architecture.sandbox:start:190 | Sandbox container started: a8809657f09d
+2026-02-07 14:43:06 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-07 14:43:06 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-07 14:43:06 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-07 14:43:06 | INFO | architecture.executor:load_registry:93 | Loaded 11 tool definitions
+2026-02-07 14:43:06 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-07 14:43:06 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-07 14:43:07 | INFO | architecture.sandbox:_install_deps:218 | Installing dependencies: pandas pydantic beautifulsoup4 requests numpy
+2026-02-07 14:43:10 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-07 14:43:10 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-07 14:43:10 | INFO | __main__:run:121 | Task received: get me a cat image...
+2026-02-07 14:43:10 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-07 14:43:10 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-07 14:43:10 | INFO | architecture.orchestrator:run:42 | Processing: get me a cat image...
+2026-02-07 14:43:10 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-07_14-42-41
+2026-02-07 14:43:11 | INFO | architecture.llm_manager:generate:132 | Generation success in 595.64ms
+2026-02-07 14:43:11 | INFO | architecture.orchestrator:run:46 | Task Classification: COMPLEX_TASK
+2026-02-07 14:43:11 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-07_14-42-41
+2026-02-07 14:43:11 | INFO | architecture.llm_manager:generate:132 | Generation success in 344.37ms
+2026-02-07 14:43:11 | INFO | architecture.orchestrator:run:53 | Decomposed into 2 subtasks
+2026-02-07 14:43:11 | INFO | architecture.orchestrator:_retrieve_tools:148 | st_1 → DuckDuckGoDogImageSearchTool (similarity: 0.481, in-domain, matched: False)
+2026-02-07 14:43:11 | INFO | architecture.orchestrator:_retrieve_tools:148 | st_2 → RandomDogImageTool (similarity: 0.593, in-domain, matched: True)
+2026-02-07 14:43:11 | INFO | architecture.orchestrator:_ensure_tools:208 | Toolsmith creating: Search for cat images
+2026-02-07 14:43:11 | INFO | architecture.toolsmith:create_tool:114 | Request: 'Search for cat images'
+2026-02-07 14:43:11 | INFO | architecture.toolsmith:create_tool:126 | Generating tool with LLM (attempt 1/3)...
+2026-02-07 14:43:11 | INFO | architecture.toolsmith:create_tool:129 | Available APIs context length: 550
+2026-02-07 14:43:11 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-07_14-42-41
+2026-02-07 14:43:12 | INFO | architecture.llm_manager:generate:132 | Generation success in 876.76ms
+2026-02-07 14:43:12 | INFO | architecture.toolsmith:create_tool:181 | Tool saved: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\cat_image_search.py
+2026-02-07 14:43:12 | INFO | architecture.toolsmith:_update_registry:266 | Registry updated: CatImageSearchTool
+2026-02-07 14:43:12 | INFO | architecture.orchestrator:_ensure_tools:210 | Toolsmith: Created CatImageSearchTool with tags ['cat', 'image', 'search']...
+2026-02-07 14:43:12 | INFO | architecture.orchestrator:_ensure_tools:231 | Tool assigned: CatImageSearchTool
+2026-02-07 14:43:12 | INFO | architecture.orchestrator:_create_plan:288 | ============================================================
+2026-02-07 14:43:12 | INFO | architecture.orchestrator:_create_plan:289 | EXECUTION PLAN: 2 steps
+2026-02-07 14:43:12 | INFO | architecture.orchestrator:_create_plan:290 | ============================================================
+2026-02-07 14:43:12 | INFO | architecture.orchestrator:_create_plan:294 |   Step 1: Search for cat images...
+2026-02-07 14:43:12 | INFO | architecture.orchestrator:_create_plan:295 |     Tool: CatImageSearchTool
+2026-02-07 14:43:12 | INFO | architecture.orchestrator:_create_plan:296 |     no dependencies, uses description
+2026-02-07 14:43:12 | INFO | architecture.orchestrator:_create_plan:294 |   Step 2: Fetch and return a cat image...
+2026-02-07 14:43:12 | INFO | architecture.orchestrator:_create_plan:295 |     Tool: RandomDogImageTool
+2026-02-07 14:43:12 | INFO | architecture.orchestrator:_create_plan:296 |     depends_on=[1], input_from=step_1
+2026-02-07 14:43:12 | INFO | architecture.orchestrator:_create_plan:297 | ============================================================
+2026-02-07 14:43:12 | INFO | architecture.executor:execute:99 | Executing plan: get me a cat image
+2026-02-07 14:43:12 | INFO | architecture.executor:execute:100 | Total steps: 2
+2026-02-07 14:43:12 | INFO | architecture.executor:_execute_step:129 | Step 1: Search for cat images using CatImageSearchTool
+2026-02-07 14:43:12 | INFO | architecture.executor:load_registry:93 | Loaded 12 tool definitions
+2026-02-07 14:43:12 | INFO | architecture.executor:_execute_step:171 | Step 1: Using description as input
+2026-02-07 14:43:12 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_14-42-41
+2026-02-07 14:43:12 | INFO | architecture.llm_manager:generate:132 | Generation success in 151.76ms
+2026-02-07 14:43:12 | INFO | architecture.executor:_infer_args:542 | LLM extracted args: {'query': 'cat images'}
+2026-02-07 14:43:12 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'query': 'cat images'}
+2026-02-07 14:43:12 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-07 14:43:12 | INFO | architecture.sandbox:_install_deps:218 | Installing dependencies: pydantic requests
+2026-02-07 14:43:16 | INFO | architecture.sandbox:execute_with_args:515 | DEBUG: sandbox received args = {'query': 'cat images'}
+2026-02-07 14:43:16 | INFO | architecture.sandbox:execute_with_args:516 | DEBUG: args_json = {"query": "cat images"}
+2026-02-07 14:43:16 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: Runner script line: args = json.loads('{"query": "cat images"}')
+2026-02-07 14:43:16 | INFO | architecture.sandbox:execute_with_args:522 | Executing tool with args: CatImageSearchTool
+2026-02-07 14:43:16 | INFO | architecture.sandbox:execute_with_args:523 | Args JSON being passed: {"query": "cat images"}
+2026-02-07 14:43:18 | INFO | architecture.executor:_execute_step:192 | Step 1 SANDBOX Profile: time=902.130ms, peak_mem=0.1049MB, delta_mem=0.0680MB, efficiency=54.85%, grade=slow
+2026-02-07 14:43:18 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 5806.33ms)
+2026-02-07 14:43:18 | INFO | architecture.executor:_execute_step:207 | Step 1: Completed in 5.81s
+2026-02-07 14:43:18 | INFO | architecture.executor:_execute_step:129 | Step 2: Fetch and return a cat image using RandomDogImageTool
+2026-02-07 14:43:18 | INFO | architecture.executor:load_registry:93 | Loaded 12 tool definitions
+2026-02-07 14:43:18 | INFO | architecture.executor:_execute_step:161 | Step 2: Using input from step 1
+2026-02-07 14:43:18 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'input': 'Error: Unable to retrieve cat image'}
+2026-02-07 14:43:18 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-07 14:43:18 | INFO | architecture.sandbox:execute_with_args:515 | DEBUG: sandbox received args = {'input': 'Error: Unable to retrieve cat image'}
+2026-02-07 14:43:18 | INFO | architecture.sandbox:execute_with_args:516 | DEBUG: args_json = {"input": "Error: Unable to retrieve cat image"}
+2026-02-07 14:43:18 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: Runner script line: args = json.loads('{"input": "Error: Unable to retrieve cat image"}')
+2026-02-07 14:43:18 | INFO | architecture.sandbox:execute_with_args:522 | Executing tool with args: RandomDogImageTool
+2026-02-07 14:43:18 | INFO | architecture.sandbox:execute_with_args:523 | Args JSON being passed: {"input": "Error: Unable to retrieve cat image"}
+2026-02-07 14:43:20 | INFO | architecture.executor:_execute_step:192 | Step 2 SANDBOX Profile: time=1086.461ms, peak_mem=0.5650MB, delta_mem=0.0786MB, efficiency=49.77%, grade=critical
+2026-02-07 14:43:20 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 1628.71ms)
+2026-02-07 14:43:20 | INFO | architecture.executor:_execute_step:207 | Step 2: Completed in 1.63s
+2026-02-07 14:43:20 | INFO | __main__:main:218 | Completed in 9486.39ms
+2026-02-07 14:43:20 | INFO | __main__:main:219 | Zone: public
+2026-02-07 14:43:20 | INFO | architecture.executor:export_profiles:500 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260207_144320.json
+2026-02-07 14:43:25 | WARNING | architecture.sandbox:_install_deps:223 | pip install failed: 
+2026-02-07 14:43:25 | INFO | architecture.sandbox:_pre_install_essentials:161 | Essential packages pre-installed
+2026-02-07 14:43:25 | INFO | architecture.sandbox:stop:205 | Sandbox container stopped: a8809657f09d
+2026-02-07 14:43:25 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

@@ -1,0 +1,62 @@
+2026-02-07 20:28:30 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-07 20:28:44 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-07 20:28:44 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-07 20:28:44 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-07 20:28:44 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-07 20:28:44 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-07 20:28:44 | INFO | architecture.sandbox:__init__:152 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs
+2026-02-07 20:28:45 | INFO | architecture.sandbox:start:190 | Sandbox container started: c9dbea79fd30
+2026-02-07 20:28:45 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-07 20:28:45 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-07 20:28:45 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-07 20:28:45 | INFO | architecture.executor:load_registry:93 | Loaded 9 tool definitions
+2026-02-07 20:28:45 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-07 20:28:45 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-07 20:28:46 | INFO | architecture.sandbox:_install_deps:218 | Installing dependencies: pandas requests beautifulsoup4 numpy pydantic
+2026-02-07 20:28:49 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-07 20:28:49 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-07 20:28:49 | INFO | __main__:run:121 | Task received: Search Google for the best cuisines to eat in 2026...
+2026-02-07 20:28:49 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-07 20:28:49 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-07 20:28:49 | INFO | architecture.orchestrator:run:42 | Processing: Search Google for the best cuisines to eat in 2026...
+2026-02-07 20:28:49 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-07_20-28-25
+2026-02-07 20:28:50 | INFO | architecture.llm_manager:generate:132 | Generation success in 713.70ms
+2026-02-07 20:28:50 | INFO | architecture.orchestrator:run:46 | Task Classification: COMPLEX_TASK
+2026-02-07 20:28:50 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-07_20-28-25
+2026-02-07 20:28:50 | INFO | architecture.llm_manager:generate:132 | Generation success in 312.99ms
+2026-02-07 20:28:50 | INFO | architecture.orchestrator:run:53 | Decomposed into 1 subtasks
+2026-02-07 20:28:50 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-07_20-28-25
+2026-02-07 20:28:50 | INFO | architecture.llm_manager:generate:132 | Generation success in 141.00ms
+2026-02-07 20:28:50 | INFO | architecture.orchestrator:_retrieve_tools:141 | st_1 → SerpSearchTool (LLM selected, semantic: 0.263, tags: +2, in-domain)
+2026-02-07 20:28:50 | INFO | architecture.orchestrator:_create_plan:270 | ============================================================
+2026-02-07 20:28:50 | INFO | architecture.orchestrator:_create_plan:271 | EXECUTION PLAN: 1 steps
+2026-02-07 20:28:50 | INFO | architecture.orchestrator:_create_plan:272 | ============================================================
+2026-02-07 20:28:50 | INFO | architecture.orchestrator:_create_plan:276 |   Step 1: Search Google for best cuisines in 2026...
+2026-02-07 20:28:50 | INFO | architecture.orchestrator:_create_plan:277 |     Tool: SerpSearchTool
+2026-02-07 20:28:50 | INFO | architecture.orchestrator:_create_plan:278 |     no dependencies, uses description
+2026-02-07 20:28:50 | INFO | architecture.orchestrator:_create_plan:279 | ============================================================
+2026-02-07 20:28:50 | INFO | architecture.executor:execute:99 | Executing plan: Search Google for the best cuisines to eat in 2026
+2026-02-07 20:28:50 | INFO | architecture.executor:execute:100 | Total steps: 1
+2026-02-07 20:28:50 | INFO | architecture.executor:_execute_step:129 | Step 1: Search Google for best cuisines in 2026 using SerpSearchTool
+2026-02-07 20:28:50 | INFO | architecture.executor:load_registry:93 | Loaded 9 tool definitions
+2026-02-07 20:28:50 | INFO | architecture.executor:_execute_step:171 | Step 1: Using description as input
+2026-02-07 20:28:50 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_20-28-25
+2026-02-07 20:28:51 | INFO | architecture.llm_manager:generate:132 | Generation success in 248.21ms
+2026-02-07 20:28:51 | INFO | architecture.executor:_infer_args:542 | LLM extracted args: {'query': 'best cuisines in 2026', 'search_type': 'Google', 'num_results': 10, 'location': '', 'language': 'en', 'safe_search': 'on'}
+2026-02-07 20:28:51 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'query': 'best cuisines in 2026', 'search_type': 'Google', 'num_results': 10, 'location': '', 'language': 'en', 'safe_search': 'on'}
+2026-02-07 20:28:51 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-07 20:28:51 | INFO | architecture.sandbox:_install_deps:218 | Installing dependencies: requests pydantic
+2026-02-07 20:28:55 | INFO | architecture.sandbox:execute_with_args:515 | DEBUG: sandbox received args = {'query': 'best cuisines in 2026', 'search_type': 'Google', 'num_results': 10, 'location': '', 'language': 'en', 'safe_search': 'on'}
+2026-02-07 20:28:55 | INFO | architecture.sandbox:execute_with_args:516 | DEBUG: args_json = {"query": "best cuisines in 2026", "search_type": "Google", "num_results": 10, "location": "", "language": "en", "safe_search": "on"}
+2026-02-07 20:28:55 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: Runner script line: args = json.loads('{"query": "best cuisines in 2026", "search_type": "Google", "num_results": 10, "location": "", "language": "en", "safe_search": "on"}')
+2026-02-07 20:28:55 | INFO | architecture.sandbox:execute_with_args:522 | Executing tool with args: SerpSearchTool
+2026-02-07 20:28:55 | INFO | architecture.sandbox:execute_with_args:523 | Args JSON being passed: {"query": "best cuisines in 2026", "search_type": "Google", "num_results": 10, "location": "", "language": "en", "safe_search": "on"}
+2026-02-07 20:28:58 | INFO | architecture.executor:_execute_step:192 | Step 1 SANDBOX Profile: time=2776.281ms, peak_mem=0.6471MB, delta_mem=0.0889MB, efficiency=49.74%, grade=critical
+2026-02-07 20:28:58 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 7576.78ms)
+2026-02-07 20:28:58 | INFO | architecture.executor:_execute_step:207 | Step 1: Completed in 7.58s
+2026-02-07 20:28:58 | INFO | __main__:main:218 | Completed in 9132.52ms
+2026-02-07 20:28:58 | INFO | __main__:main:219 | Zone: public
+2026-02-07 20:28:58 | INFO | architecture.executor:export_profiles:500 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260207_202858.json
+2026-02-07 20:29:02 | INFO | architecture.sandbox:_pre_install_essentials:161 | Essential packages pre-installed
+2026-02-07 20:29:04 | INFO | architecture.sandbox:stop:205 | Sandbox container stopped: c9dbea79fd30
+2026-02-07 20:29:04 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

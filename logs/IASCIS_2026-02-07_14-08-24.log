@@ -1,0 +1,88 @@
+2026-02-07 14:08:29 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-07 14:08:49 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-07 14:08:49 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-07 14:08:49 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-07 14:08:49 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-07 14:08:49 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-07 14:08:49 | INFO | architecture.sandbox:__init__:152 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs
+2026-02-07 14:08:49 | INFO | architecture.sandbox:start:190 | Sandbox container started: 94959f821edb
+2026-02-07 14:08:49 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-07 14:08:49 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-07 14:08:49 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-07 14:08:49 | INFO | architecture.executor:load_registry:93 | Loaded 7 tool definitions
+2026-02-07 14:08:49 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-07 14:08:49 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-07 14:08:50 | INFO | architecture.sandbox:_install_deps:218 | Installing dependencies: numpy beautifulsoup4 requests pydantic pandas
+2026-02-07 14:08:54 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-07 14:08:54 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-07 14:08:54 | INFO | __main__:run:121 | Task received: fetch all the top dev.to posts of the week...
+2026-02-07 14:08:54 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-07 14:08:54 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-07 14:08:54 | INFO | architecture.orchestrator:run:42 | Processing: fetch all the top dev.to posts of the week...
+2026-02-07 14:08:54 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-07_14-08-24
+2026-02-07 14:08:54 | INFO | architecture.llm_manager:generate:132 | Generation success in 695.01ms
+2026-02-07 14:08:54 | INFO | architecture.orchestrator:run:46 | Task Classification: COMPLEX_TASK
+2026-02-07 14:08:54 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-07_14-08-24
+2026-02-07 14:08:55 | INFO | architecture.llm_manager:generate:132 | Generation success in 766.04ms
+2026-02-07 14:08:55 | INFO | architecture.orchestrator:run:53 | Decomposed into 2 subtasks
+2026-02-07 14:08:55 | INFO | architecture.orchestrator:_retrieve_tools:138 | st_1 → PopulationCensusSearchTool (similarity: 0.220, in-domain, matched: False)
+2026-02-07 14:08:55 | INFO | architecture.orchestrator:_retrieve_tools:138 | st_2 → DevToTopPostsTool (similarity: 0.736, in-domain, matched: True)
+2026-02-07 14:08:55 | INFO | architecture.orchestrator:_ensure_tools:172 | Toolsmith creating: Search for top dev.to posts of the week
+2026-02-07 14:08:55 | INFO | architecture.toolsmith:create_tool:114 | Request: 'Search for top dev.to posts of the week'
+2026-02-07 14:08:55 | INFO | architecture.toolsmith:create_tool:126 | Generating tool with LLM (attempt 1/3)...
+2026-02-07 14:08:55 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-07_14-08-24
+2026-02-07 14:08:56 | INFO | architecture.llm_manager:generate:132 | Generation success in 909.12ms
+2026-02-07 14:08:56 | INFO | architecture.toolsmith:create_tool:168 | Tool saved: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\dev_to_top_posts.py
+2026-02-07 14:08:56 | INFO | architecture.toolsmith:_update_registry:250 | Registry updated: DevToTopPostsTool
+2026-02-07 14:08:56 | INFO | architecture.orchestrator:_ensure_tools:175 | Toolsmith: Created DevToTopPostsTool with tags ['devto', 'top posts', 'web scraping']...
+2026-02-07 14:09:00 | INFO | architecture.orchestrator:_create_plan:237 | ============================================================
+2026-02-07 14:09:00 | INFO | architecture.orchestrator:_create_plan:238 | EXECUTION PLAN: 2 steps
+2026-02-07 14:09:00 | INFO | architecture.orchestrator:_create_plan:239 | ============================================================
+2026-02-07 14:09:00 | INFO | architecture.orchestrator:_create_plan:243 |   Step 1: Search for top dev.to posts of the week...
+2026-02-07 14:09:00 | INFO | architecture.orchestrator:_create_plan:244 |     Tool: DevToTopPostsTool
+2026-02-07 14:09:00 | INFO | architecture.orchestrator:_create_plan:245 |     no dependencies, uses description
+2026-02-07 14:09:00 | INFO | architecture.orchestrator:_create_plan:243 |   Step 2: Web scrape dev.to to get top posts of the week...
+2026-02-07 14:09:00 | INFO | architecture.orchestrator:_create_plan:244 |     Tool: DevToTopPostsTool
+2026-02-07 14:09:00 | INFO | architecture.orchestrator:_create_plan:245 |     depends_on=[1], input_from=step_1
+2026-02-07 14:09:00 | INFO | architecture.orchestrator:_create_plan:246 | ============================================================
+2026-02-07 14:09:00 | INFO | architecture.executor:execute:99 | Executing plan: fetch all the top dev.to posts of the week
+2026-02-07 14:09:00 | INFO | architecture.executor:execute:100 | Total steps: 2
+2026-02-07 14:09:00 | INFO | architecture.executor:_execute_step:129 | Step 1: Search for top dev.to posts of the week using DevToTopPostsTool
+2026-02-07 14:09:00 | INFO | architecture.executor:load_registry:93 | Loaded 7 tool definitions
+2026-02-07 14:09:00 | INFO | architecture.executor:_execute_step:171 | Step 1: Using description as input
+2026-02-07 14:09:00 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_14-08-24
+2026-02-07 14:09:00 | INFO | architecture.llm_manager:generate:132 | Generation success in 128.36ms
+2026-02-07 14:09:00 | INFO | architecture.executor:_infer_args:542 | LLM extracted args: {'period': 'week'}
+2026-02-07 14:09:00 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'period': 'week'}
+2026-02-07 14:09:00 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-07 14:09:00 | INFO | architecture.sandbox:_install_deps:218 | Installing dependencies: pydantic beautifulsoup4 requests
+2026-02-07 14:09:04 | INFO | architecture.sandbox:execute_with_args:515 | DEBUG: sandbox received args = {'period': 'week'}
+2026-02-07 14:09:04 | INFO | architecture.sandbox:execute_with_args:516 | DEBUG: args_json = {"period": "week"}
+2026-02-07 14:09:04 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: Runner script line: args = json.loads('{"period": "week"}')
+2026-02-07 14:09:04 | INFO | architecture.sandbox:execute_with_args:522 | Executing tool with args: DevToTopPostsTool
+2026-02-07 14:09:04 | INFO | architecture.sandbox:execute_with_args:523 | Args JSON being passed: {"period": "week"}
+2026-02-07 14:09:06 | INFO | architecture.executor:_execute_step:192 | Step 1 SANDBOX Profile: time=852.646ms, peak_mem=4.5782MB, delta_mem=3.2542MB, efficiency=55.54%, grade=slow
+2026-02-07 14:09:06 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 5925.18ms)
+2026-02-07 14:09:06 | INFO | architecture.executor:_execute_step:207 | Step 1: Completed in 5.93s
+2026-02-07 14:09:06 | INFO | architecture.executor:_execute_step:129 | Step 2: Web scrape dev.to to get top posts of the week using DevToTopPostsTool
+2026-02-07 14:09:06 | INFO | architecture.executor:load_registry:93 | Loaded 7 tool definitions
+2026-02-07 14:09:06 | INFO | architecture.executor:_execute_step:161 | Step 2: Using input from step 1
+2026-02-07 14:09:06 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_14-08-24
+2026-02-07 14:09:06 | INFO | architecture.llm_manager:generate:132 | Generation success in 213.07ms
+2026-02-07 14:09:06 | INFO | architecture.executor:_infer_args:542 | LLM extracted args: {'period': 'week'}
+2026-02-07 14:09:06 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'period': 'week'}
+2026-02-07 14:09:06 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-07 14:09:06 | INFO | architecture.sandbox:execute_with_args:515 | DEBUG: sandbox received args = {'period': 'week'}
+2026-02-07 14:09:06 | INFO | architecture.sandbox:execute_with_args:516 | DEBUG: args_json = {"period": "week"}
+2026-02-07 14:09:06 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: Runner script line: args = json.loads('{"period": "week"}')
+2026-02-07 14:09:06 | INFO | architecture.sandbox:execute_with_args:522 | Executing tool with args: DevToTopPostsTool
+2026-02-07 14:09:06 | INFO | architecture.sandbox:execute_with_args:523 | Args JSON being passed: {"period": "week"}
+2026-02-07 14:09:07 | INFO | architecture.executor:_execute_step:192 | Step 2 SANDBOX Profile: time=395.866ms, peak_mem=4.5780MB, delta_mem=3.2540MB, efficiency=78.38%, grade=slow
+2026-02-07 14:09:07 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 956.99ms)
+2026-02-07 14:09:07 | INFO | architecture.executor:_execute_step:207 | Step 2: Completed in 0.96s
+2026-02-07 14:09:07 | INFO | __main__:main:218 | Completed in 13664.19ms
+2026-02-07 14:09:07 | INFO | __main__:main:219 | Zone: public
+2026-02-07 14:09:07 | INFO | architecture.executor:export_profiles:500 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260207_140907.json
+2026-02-07 14:09:10 | INFO | architecture.sandbox:_pre_install_essentials:161 | Essential packages pre-installed
+2026-02-07 14:09:13 | INFO | architecture.sandbox:stop:205 | Sandbox container stopped: 94959f821edb
+2026-02-07 14:09:13 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

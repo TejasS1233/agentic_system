@@ -1,0 +1,15 @@
+2026-02-07 22:11:31 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-07 22:11:59 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-07 22:11:59 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-07 22:11:59 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-07 22:11:59 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-07 22:11:59 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-07 22:11:59 | INFO | architecture.sandbox:__init__:152 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs
+2026-02-07 22:12:00 | INFO | architecture.sandbox:start:192 | Sandbox container started: ce73a83c4a47
+2026-02-07 22:12:00 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-07 22:12:00 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-07 22:12:00 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-07 22:12:00 | INFO | architecture.executor:load_registry:93 | Loaded 10 tool definitions
+2026-02-07 22:12:00 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-07 22:12:00 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-07 22:12:01 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: requests pydantic numpy pandas beautifulsoup4

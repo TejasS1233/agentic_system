@@ -1,0 +1,95 @@
+2026-02-07 22:52:30 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-07 22:53:04 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-07 22:53:04 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-07 22:53:04 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-07 22:53:04 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-07 22:53:04 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-07 22:53:04 | INFO | architecture.sandbox:__init__:152 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs
+2026-02-07 22:53:05 | INFO | architecture.sandbox:start:192 | Sandbox container started: 4aff33a393e9
+2026-02-07 22:53:05 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-07 22:53:05 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-07 22:53:05 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-07 22:53:05 | INFO | architecture.executor:load_registry:93 | Loaded 11 tool definitions
+2026-02-07 22:53:05 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-07 22:53:05 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-07 22:53:06 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: pandas numpy pydantic requests beautifulsoup4
+2026-02-07 22:53:10 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-07 22:53:10 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-07 22:53:10 | INFO | __main__:run:121 | Task received: get the top played brawlers in brawl stars and make a pie chart...
+2026-02-07 22:53:10 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-07 22:53:10 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-07 22:53:10 | INFO | architecture.orchestrator:run:42 | Processing: get the top played brawlers in brawl stars and make a pie chart...
+2026-02-07 22:53:10 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-07_22-52-19
+2026-02-07 22:53:12 | INFO | architecture.llm_manager:generate:132 | Generation success in 1312.91ms
+2026-02-07 22:53:12 | INFO | architecture.orchestrator:run:46 | Task Classification: COMPLEX_TASK
+2026-02-07 22:53:12 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-07_22-52-19
+2026-02-07 22:53:12 | INFO | architecture.llm_manager:generate:132 | Generation success in 465.22ms
+2026-02-07 22:53:12 | INFO | architecture.orchestrator:run:53 | Decomposed into 2 subtasks
+2026-02-07 22:53:12 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-07_22-52-19
+2026-02-07 22:53:12 | INFO | architecture.llm_manager:generate:132 | Generation success in 141.54ms
+2026-02-07 22:53:12 | INFO | architecture.orchestrator:_retrieve_tools:165 | st_1 → RedditTool (LLM selected, semantic: 0.220, tags: +1, in-domain)
+2026-02-07 22:53:12 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-07_22-52-19
+2026-02-07 22:53:12 | INFO | architecture.llm_manager:generate:132 | Generation success in 142.38ms
+2026-02-07 22:53:12 | INFO | architecture.orchestrator:_retrieve_tools:165 | st_2 → AdvancedGraphTool (LLM selected, semantic: 0.383, tags: +1, in-domain)
+2026-02-07 22:53:12 | INFO | architecture.orchestrator:_ensure_tools:214 | Toolsmith creating: Get the top played brawlers in Brawl Stars
+2026-02-07 22:53:12 | INFO | architecture.toolsmith:create_tool:114 | Request: 'Get the top played brawlers in Brawl Stars'
+2026-02-07 22:53:12 | INFO | architecture.toolsmith:create_tool:126 | Generating tool with LLM (attempt 1/3)...
+2026-02-07 22:53:12 | INFO | architecture.toolsmith:create_tool:129 | Available APIs context length: 677
+2026-02-07 22:53:12 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-07_22-52-19
+2026-02-07 22:53:14 | INFO | architecture.llm_manager:generate:132 | Generation success in 1257.62ms
+2026-02-07 22:53:14 | INFO | architecture.toolsmith:create_tool:181 | Tool saved: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\brawl_stars_top_brawlers.py
+2026-02-07 22:53:14 | INFO | architecture.toolsmith:_update_registry:266 | Registry updated: BrawlStarsTopBrawlersTool
+2026-02-07 22:53:14 | INFO | architecture.orchestrator:_ensure_tools:216 | Toolsmith: Created BrawlStarsTopBrawlersTool with tags ['brawl stars', 'top brawlers', 'gaming']...
+2026-02-07 22:53:14 | INFO | architecture.orchestrator:_ensure_tools:237 | Tool assigned: BrawlStarsTopBrawlersTool
+2026-02-07 22:53:14 | INFO | architecture.orchestrator:_create_plan:294 | ============================================================
+2026-02-07 22:53:14 | INFO | architecture.orchestrator:_create_plan:295 | EXECUTION PLAN: 2 steps
+2026-02-07 22:53:14 | INFO | architecture.orchestrator:_create_plan:296 | ============================================================
+2026-02-07 22:53:14 | INFO | architecture.orchestrator:_create_plan:300 |   Step 1: Get the top played brawlers in Brawl Stars...
+2026-02-07 22:53:14 | INFO | architecture.orchestrator:_create_plan:301 |     Tool: BrawlStarsTopBrawlersTool
+2026-02-07 22:53:14 | INFO | architecture.orchestrator:_create_plan:302 |     no dependencies, uses description
+2026-02-07 22:53:14 | INFO | architecture.orchestrator:_create_plan:300 |   Step 2: Create a pie chart of the top played brawlers...
+2026-02-07 22:53:14 | INFO | architecture.orchestrator:_create_plan:301 |     Tool: AdvancedGraphTool
+2026-02-07 22:53:14 | INFO | architecture.orchestrator:_create_plan:302 |     depends_on=[1], input_from=step_1
+2026-02-07 22:53:14 | INFO | architecture.orchestrator:_create_plan:303 | ============================================================
+2026-02-07 22:53:14 | INFO | architecture.executor:execute:99 | Executing plan: get the top played brawlers in brawl stars and make a pie chart
+2026-02-07 22:53:14 | INFO | architecture.executor:execute:100 | Total steps: 2
+2026-02-07 22:53:14 | INFO | architecture.executor:_execute_step:174 | Step 1: Get the top played brawlers in Brawl Stars using BrawlStarsTopBrawlersTool
+2026-02-07 22:53:14 | INFO | architecture.executor:load_registry:93 | Loaded 12 tool definitions
+2026-02-07 22:53:14 | INFO | architecture.executor:_execute_step:216 | Step 1: Using description as input
+2026-02-07 22:53:14 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_22-52-19
+2026-02-07 22:53:14 | INFO | architecture.llm_manager:generate:132 | Generation success in 168.13ms
+2026-02-07 22:53:14 | INFO | architecture.executor:_infer_args:598 | LLM extracted args: {'region': None}
+2026-02-07 22:53:14 | INFO | architecture.executor:_execute_step:219 | DEBUG: Executor inferred args = {'region': None}
+2026-02-07 22:53:14 | INFO | architecture.executor:_execute_step:220 | DEBUG: Args type = <class 'dict'>
+2026-02-07 22:53:14 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: pydantic requests beautifulsoup4
+2026-02-07 22:53:21 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: sandbox received args = {'region': None}
+2026-02-07 22:53:21 | INFO | architecture.sandbox:execute_with_args:518 | DEBUG: args_json = {"region": null}
+2026-02-07 22:53:21 | INFO | architecture.sandbox:execute_with_args:519 | DEBUG: Runner script line: args = json.loads('{"region": null}')
+2026-02-07 22:53:21 | INFO | architecture.sandbox:execute_with_args:524 | Executing tool with args: BrawlStarsTopBrawlersTool
+2026-02-07 22:53:21 | INFO | architecture.sandbox:execute_with_args:525 | Args JSON being passed: {"region": null}
+2026-02-07 22:53:23 | INFO | architecture.executor:_execute_step:237 | Step 1 SANDBOX Profile: time=210.502ms, peak_mem=0.1510MB, delta_mem=0.0964MB, efficiency=89.41%, grade=slow
+2026-02-07 22:53:23 | INFO | architecture.executor:_execute_step:247 |    (Total round-trip: 8723.29ms)
+2026-02-07 22:53:23 | INFO | architecture.executor:_execute_step:252 | Step 1: Completed in 8.72s
+2026-02-07 22:53:23 | INFO | architecture.executor:_execute_step:174 | Step 2: Create a pie chart of the top played brawlers using AdvancedGraphTool
+2026-02-07 22:53:23 | INFO | architecture.executor:load_registry:93 | Loaded 12 tool definitions
+2026-02-07 22:53:23 | INFO | architecture.executor:_execute_step:206 | Step 2: Using input from step 1
+2026-02-07 22:53:23 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_22-52-19
+2026-02-07 22:53:23 | INFO | architecture.llm_manager:generate:132 | Generation success in 333.17ms
+2026-02-07 22:53:23 | INFO | architecture.executor:_infer_args:598 | LLM extracted args: {'chart_type': 'pie', 'data': [], 'title': 'Top Played Brawlers', 'xlabel': '', 'ylabel': '', 'output_path': '', 'theme': '', 'figsize': '', 'colors': '', 'legend_labels': '', 'show_values': '', 'grid': ''}
+2026-02-07 22:53:23 | INFO | architecture.executor:_execute_step:219 | DEBUG: Executor inferred args = {'chart_type': 'pie', 'data': [], 'title': 'Top Played Brawlers', 'xlabel': '', 'ylabel': '', 'output_path': '', 'theme': '', 'figsize': '', 'colors': '', 'legend_labels': '', 'show_values': '', 'grid': ''}
+2026-02-07 22:53:23 | INFO | architecture.executor:_execute_step:220 | DEBUG: Args type = <class 'dict'>
+2026-02-07 22:53:23 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: matplotlib numpy
+2026-02-07 22:53:36 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: sandbox received args = {'chart_type': 'pie', 'data': [], 'title': 'Top Played Brawlers', 'xlabel': '', 'ylabel': '', 'output_path': '', 'theme': '', 'figsize': '', 'colors': '', 'legend_labels': '', 'show_values': '', 'grid': ''}
+2026-02-07 22:53:36 | INFO | architecture.sandbox:execute_with_args:518 | DEBUG: args_json = {"chart_type": "pie", "data": [], "title": "Top Played Brawlers", "xlabel": "", "ylabel": "", "output_path": "", "theme": "", "figsize": "", "colors": "", "legend_labels": "", "show_values": "", "grid": ""}
+2026-02-07 22:53:36 | INFO | architecture.sandbox:execute_with_args:519 | DEBUG: Runner script line: args = json.loads('{"chart_type": "pie", "data": [], "title": "Top Played Brawlers", "xlabel": "", "ylabel": "", "output_path": "", "theme": "", "figsize": "", "colors": "", "legend_labels": "", "show_values": "", "grid": ""}')
+2026-02-07 22:53:36 | INFO | architecture.sandbox:execute_with_args:524 | Executing tool with args: AdvancedGraphTool
+2026-02-07 22:53:36 | INFO | architecture.sandbox:execute_with_args:525 | Args JSON being passed: {"chart_type": "pie", "data": [], "title": "Top Played Brawlers", "xlabel": "", "ylabel": "", "output_path": "", "theme": "", "figsize": "", "colors": "", "legend_labels": "", "show_values": "", "grid": ""}
+2026-02-07 22:53:36 | INFO | architecture.sandbox:_pre_install_essentials:161 | Essential packages pre-installed
+2026-02-07 22:53:38 | INFO | architecture.executor:_execute_step:237 | Step 2 SANDBOX Profile: time=62.720ms, peak_mem=0.3718MB, delta_mem=0.3677MB, efficiency=96.72%, grade=moderate
+2026-02-07 22:53:38 | INFO | architecture.executor:_execute_step:247 |    (Total round-trip: 15334.41ms)
+2026-02-07 22:53:38 | INFO | architecture.executor:_execute_step:252 | Step 2: Completed in 15.33s
+2026-02-07 22:53:38 | INFO | __main__:main:218 | Completed in 28115.88ms
+2026-02-07 22:53:38 | INFO | __main__:main:219 | Zone: public
+2026-02-07 22:53:38 | INFO | architecture.executor:export_profiles:545 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260207_225338.json
+2026-02-07 22:53:44 | INFO | architecture.sandbox:stop:207 | Sandbox container stopped: 4aff33a393e9
+2026-02-07 22:53:44 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

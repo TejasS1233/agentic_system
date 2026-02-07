@@ -1,0 +1,71 @@
+{
+  "exported_at": "2026-02-07T14:43:20.041933",
+  "summary": {
+    "CatImageSearchTool": {
+      "call_count": 1,
+      "avg_time_ms": 902.13,
+      "max_time_ms": 902.13,
+      "min_time_ms": 902.13,
+      "avg_memory_mb": 0.1049,
+      "max_memory_mb": 0.1049,
+      "avg_memory_delta_mb": 0.068,
+      "avg_efficiency": 0.5485,
+      "last_grade": "slow"
+    },
+    "RandomDogImageTool": {
+      "call_count": 1,
+      "avg_time_ms": 1086.461,
+      "max_time_ms": 1086.461,
+      "min_time_ms": 1086.461,
+      "avg_memory_mb": 0.565,
+      "max_memory_mb": 0.565,
+      "avg_memory_delta_mb": 0.0786,
+      "avg_efficiency": 0.4977,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 2,
+    "tools_profiled": [
+      "CatImageSearchTool",
+      "RandomDogImageTool"
+    ],
+    "execution_time_ms": {
+      "min": 902.13,
+      "max": 1086.461,
+      "mean": 994.2955
+    },
+    "peak_memory_mb": {
+      "min": 0.1049,
+      "max": 0.565,
+      "mean": 0.33494999999999997
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "CatImageSearchTool": [
+      {
+        "tool_name": "CatImageSearchTool",
+        "execution_time_ms": 902.13,
+        "peak_memory_mb": 0.1049,
+        "memory_delta_mb": 0.068,
+        "latency_grade": "slow",
+        "efficiency_score": 0.5485,
+        "success": true
+      }
+    ],
+    "RandomDogImageTool": [
+      {
+        "tool_name": "RandomDogImageTool",
+        "execution_time_ms": 1086.461,
+        "peak_memory_mb": 0.565,
+        "memory_delta_mb": 0.0786,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4977,
+        "success": true
+      }
+    ]
+  }
+}

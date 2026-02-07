@@ -1,0 +1,71 @@
+{
+  "exported_at": "2026-02-07T15:01:50.416777",
+  "summary": {
+    "BrawlStarsBrawlerStatsTool": {
+      "call_count": 1,
+      "avg_time_ms": 256.962,
+      "max_time_ms": 256.962,
+      "min_time_ms": 256.962,
+      "avg_memory_mb": 0.1511,
+      "max_memory_mb": 0.1511,
+      "avg_memory_delta_mb": 0.0695,
+      "avg_efficiency": 0.8709,
+      "last_grade": "slow"
+    },
+    "RoyalRumble2026Scraper": {
+      "call_count": 1,
+      "avg_time_ms": 852.83,
+      "max_time_ms": 852.83,
+      "min_time_ms": 852.83,
+      "avg_memory_mb": 0.395,
+      "max_memory_mb": 0.395,
+      "avg_memory_delta_mb": 0.1797,
+      "avg_efficiency": 0.572,
+      "last_grade": "slow"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 2,
+    "tools_profiled": [
+      "BrawlStarsBrawlerStatsTool",
+      "RoyalRumble2026Scraper"
+    ],
+    "execution_time_ms": {
+      "min": 256.962,
+      "max": 852.83,
+      "mean": 554.896
+    },
+    "peak_memory_mb": {
+      "min": 0.1511,
+      "max": 0.395,
+      "mean": 0.27305
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "BrawlStarsBrawlerStatsTool": [
+      {
+        "tool_name": "BrawlStarsBrawlerStatsTool",
+        "execution_time_ms": 256.962,
+        "peak_memory_mb": 0.1511,
+        "memory_delta_mb": 0.0695,
+        "latency_grade": "slow",
+        "efficiency_score": 0.8709,
+        "success": true
+      }
+    ],
+    "RoyalRumble2026Scraper": [
+      {
+        "tool_name": "RoyalRumble2026Scraper",
+        "execution_time_ms": 852.83,
+        "peak_memory_mb": 0.395,
+        "memory_delta_mb": 0.1797,
+        "latency_grade": "slow",
+        "efficiency_score": 0.572,
+        "success": true
+      }
+    ]
+  }
+}

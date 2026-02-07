@@ -1,0 +1,48 @@
+{
+  "exported_at": "2026-02-07T14:58:19.739866",
+  "summary": {
+    "CricketPlayingCountriesTool": {
+      "call_count": 1,
+      "avg_time_ms": 633.566,
+      "max_time_ms": 633.566,
+      "min_time_ms": 633.566,
+      "avg_memory_mb": 0.0998,
+      "max_memory_mb": 0.0998,
+      "avg_memory_delta_mb": 0.0,
+      "avg_efficiency": 0.0,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 1,
+    "tools_profiled": [
+      "CricketPlayingCountriesTool"
+    ],
+    "execution_time_ms": {
+      "min": 633.566,
+      "max": 633.566,
+      "mean": 633.566
+    },
+    "peak_memory_mb": {
+      "min": 0.0998,
+      "max": 0.0998,
+      "mean": 0.0998
+    },
+    "success_rate": 0.0
+  },
+  "raw_profiles": {
+    "CricketPlayingCountriesTool": [
+      {
+        "tool_name": "CricketPlayingCountriesTool",
+        "execution_time_ms": 633.566,
+        "peak_memory_mb": 0.0998,
+        "memory_delta_mb": 0,
+        "latency_grade": "critical",
+        "success": false,
+        "error_message": "'str' object has no attribute 'get'"
+      }
+    ]
+  }
+}

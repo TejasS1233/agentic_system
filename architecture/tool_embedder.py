@@ -40,10 +40,10 @@ class ToolEmbedder:
         self.tool_names = list(registry.keys())
         texts = [build_embedding_text(name, registry[name]) for name in self.tool_names]
 
-        embeddings = self.model.encode(texts, convert_to_numpy=True)
+        embeddings = self.model.encode(texts, convert_to_numpy=True, normalize_embeddings=True)
 
         dimension = embeddings.shape[1]
-        self.index = faiss.IndexFlatL2(dimension)
+        self.index = faiss.IndexFlatIP(dimension)  # Inner product for cosine similarity
         self.index.add(embeddings.astype("float32"))
         print(f"Built index with {len(self.tool_names)} tools, dimension {dimension}")
 
@@ -52,14 +52,14 @@ class ToolEmbedder:
         if self.index is None:
             return []  # No tools available yet
 
-        query_embedding = self.model.encode([query], convert_to_numpy=True)
-        distances, indices = self.index.search(query_embedding.astype("float32"), top_k)
+        query_embedding = self.model.encode([query], convert_to_numpy=True, normalize_embeddings=True)
+        similarities, indices = self.index.search(query_embedding.astype("float32"), top_k)
 
         results = []
         for i, idx in enumerate(indices[0]):
             if idx < len(self.tool_names):
                 results.append(
-                    {"tool": self.tool_names[idx], "distance": float(distances[0][i])}
+                    {"tool": self.tool_names[idx], "similarity": float(similarities[0][i])}
                 )
         return results
 
@@ -97,4 +97,4 @@ if __name__ == "__main__":
         print(f"\nQuery: '{query}'")
         results = embedder.search(query, top_k=2)
         for r in results:
-            print(f"  -> {r['tool']} (distance: {r['distance']:.3f})")
+            print(f"  -> {r['tool']} (similarity: {r['similarity']:.3f})")

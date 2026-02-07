@@ -1,0 +1,65 @@
+2026-02-07 22:20:22 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-07 22:20:59 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-07 22:20:59 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-07 22:20:59 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-07 22:20:59 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-07 22:20:59 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-07 22:20:59 | INFO | architecture.sandbox:__init__:152 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs
+2026-02-07 22:20:59 | INFO | architecture.sandbox:start:192 | Sandbox container started: fe7fd64850ed
+2026-02-07 22:20:59 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-07 22:20:59 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-07 22:20:59 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-07 22:20:59 | INFO | architecture.executor:load_registry:93 | Loaded 11 tool definitions
+2026-02-07 22:20:59 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-07 22:20:59 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-07 22:21:00 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: requests beautifulsoup4 pydantic numpy pandas
+2026-02-07 22:21:04 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-07 22:21:04 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-07 22:21:04 | INFO | __main__:run:121 | Task received: google search for top 5 jojo stands...
+2026-02-07 22:21:04 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-07 22:21:04 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-07 22:21:04 | INFO | architecture.orchestrator:run:42 | Processing: google search for top 5 jojo stands...
+2026-02-07 22:21:04 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-07_22-20-12
+2026-02-07 22:21:05 | INFO | architecture.llm_manager:generate:132 | Generation success in 1174.39ms
+2026-02-07 22:21:05 | INFO | architecture.orchestrator:run:46 | Task Classification: COMPLEX_TASK
+2026-02-07 22:21:05 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-07_22-20-12
+2026-02-07 22:21:05 | INFO | architecture.llm_manager:generate:132 | Generation success in 301.56ms
+2026-02-07 22:21:05 | INFO | architecture.orchestrator:run:53 | Decomposed into 1 subtasks
+2026-02-07 22:21:06 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-07_22-20-12
+2026-02-07 22:21:06 | INFO | architecture.llm_manager:generate:132 | Generation success in 154.57ms
+2026-02-07 22:21:06 | INFO | architecture.orchestrator:_retrieve_tools:141 | st_1 → SerpSearchTool (LLM selected, semantic: 0.313, tags: +2, in-domain)
+2026-02-07 22:21:06 | INFO | architecture.orchestrator:_create_plan:270 | ============================================================
+2026-02-07 22:21:06 | INFO | architecture.orchestrator:_create_plan:271 | EXECUTION PLAN: 1 steps
+2026-02-07 22:21:06 | INFO | architecture.orchestrator:_create_plan:272 | ============================================================
+2026-02-07 22:21:06 | INFO | architecture.orchestrator:_create_plan:276 |   Step 1: Perform Google search for top 5 Jojo stands...
+2026-02-07 22:21:06 | INFO | architecture.orchestrator:_create_plan:277 |     Tool: SerpSearchTool
+2026-02-07 22:21:06 | INFO | architecture.orchestrator:_create_plan:278 |     no dependencies, uses description
+2026-02-07 22:21:06 | INFO | architecture.orchestrator:_create_plan:279 | ============================================================
+2026-02-07 22:21:06 | INFO | architecture.executor:execute:99 | Executing plan: google search for top 5 jojo stands
+2026-02-07 22:21:06 | INFO | architecture.executor:execute:100 | Total steps: 1
+2026-02-07 22:21:06 | INFO | architecture.executor:_execute_step:174 | Step 1: Perform Google search for top 5 Jojo stands using SerpSearchTool
+2026-02-07 22:21:06 | INFO | architecture.executor:load_registry:93 | Loaded 11 tool definitions
+2026-02-07 22:21:06 | INFO | architecture.executor:_execute_step:216 | Step 1: Using description as input
+2026-02-07 22:21:06 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_22-20-12
+2026-02-07 22:21:06 | INFO | architecture.llm_manager:generate:132 | Generation success in 220.40ms
+2026-02-07 22:21:06 | INFO | architecture.executor:_infer_args:598 | LLM extracted args: {'query': 'top 5 Jojo stands', 'search_type': 'Google', 'num_results': 5, 'location': None, 'language': None, 'safe_search': None}
+2026-02-07 22:21:06 | INFO | architecture.executor:_execute_step:219 | DEBUG: Executor inferred args = {'query': 'top 5 Jojo stands', 'search_type': 'Google', 'num_results': 5, 'location': None, 'language': None, 'safe_search': None}
+2026-02-07 22:21:06 | INFO | architecture.executor:_execute_step:220 | DEBUG: Args type = <class 'dict'>
+2026-02-07 22:21:06 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: requests pydantic
+2026-02-07 22:21:13 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: sandbox received args = {'query': 'top 5 Jojo stands', 'search_type': 'Google', 'num_results': 5, 'location': None, 'language': None, 'safe_search': None}
+2026-02-07 22:21:13 | INFO | architecture.sandbox:execute_with_args:518 | DEBUG: args_json = {"query": "top 5 Jojo stands", "search_type": "Google", "num_results": 5, "location": null, "language": null, "safe_search": null}
+2026-02-07 22:21:13 | INFO | architecture.sandbox:execute_with_args:519 | DEBUG: Runner script line: args = json.loads('{"query": "top 5 Jojo stands", "search_type": "Google", "num_results": 5, "location": null, "language": null, "safe_search": null}')
+2026-02-07 22:21:13 | INFO | architecture.sandbox:execute_with_args:524 | Executing tool with args: SerpSearchTool
+2026-02-07 22:21:13 | INFO | architecture.sandbox:execute_with_args:525 | Args JSON being passed: {"query": "top 5 Jojo stands", "search_type": "Google", "num_results": 5, "location": null, "language": null, "safe_search": null}
+2026-02-07 22:21:18 | INFO | architecture.executor:_execute_step:237 | Step 1 SANDBOX Profile: time=4388.089ms, peak_mem=0.2510MB, delta_mem=0.0716MB, efficiency=49.90%, grade=critical
+2026-02-07 22:21:18 | INFO | architecture.executor:_execute_step:247 |    (Total round-trip: 12072.95ms)
+2026-02-07 22:21:18 | INFO | architecture.executor:_execute_step:252 | Step 1: Completed in 12.07s
+2026-02-07 22:21:18 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 500 | Temp: 0.3 | Session: 2026-02-07_22-20-12
+2026-02-07 22:21:19 | INFO | architecture.llm_manager:generate:132 | Generation success in 1056.33ms
+2026-02-07 22:21:19 | INFO | __main__:main:218 | Completed in 15066.06ms
+2026-02-07 22:21:19 | INFO | __main__:main:219 | Zone: public
+2026-02-07 22:21:19 | INFO | architecture.executor:export_profiles:545 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260207_222119.json
+2026-02-07 22:21:24 | WARNING | architecture.sandbox:_install_deps:225 | pip install failed: 
+2026-02-07 22:21:24 | INFO | architecture.sandbox:_pre_install_essentials:161 | Essential packages pre-installed
+2026-02-07 22:21:25 | INFO | architecture.sandbox:stop:207 | Sandbox container stopped: fe7fd64850ed
+2026-02-07 22:21:25 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

@@ -1,0 +1,75 @@
+2026-02-07 22:26:31 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-07 22:27:09 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-07 22:27:09 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-07 22:27:09 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-07 22:27:09 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-07 22:27:09 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-07 22:27:09 | INFO | architecture.sandbox:__init__:152 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs
+2026-02-07 22:27:10 | INFO | architecture.sandbox:start:192 | Sandbox container started: b73afab6c1bd
+2026-02-07 22:27:10 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-07 22:27:10 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-07 22:27:10 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-07 22:27:10 | INFO | architecture.executor:load_registry:93 | Loaded 11 tool definitions
+2026-02-07 22:27:10 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-07 22:27:10 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-07 22:27:11 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: pandas numpy beautifulsoup4 pydantic requests
+2026-02-07 22:27:14 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-07 22:27:14 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-07 22:27:14 | INFO | __main__:run:121 | Task received: search for placement stats of thadomal shahani engineering clg...
+2026-02-07 22:27:14 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-07 22:27:14 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-07 22:27:14 | INFO | architecture.orchestrator:run:42 | Processing: search for placement stats of thadomal shahani engineering clg...
+2026-02-07 22:27:14 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-07_22-26-21
+2026-02-07 22:27:16 | INFO | architecture.llm_manager:generate:132 | Generation success in 1179.23ms
+2026-02-07 22:27:16 | INFO | architecture.orchestrator:run:46 | Task Classification: COMPLEX_TASK
+2026-02-07 22:27:16 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-07_22-26-21
+2026-02-07 22:27:16 | INFO | architecture.llm_manager:generate:132 | Generation success in 372.94ms
+2026-02-07 22:27:16 | INFO | architecture.orchestrator:run:53 | Decomposed into 1 subtasks
+2026-02-07 22:27:16 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-07_22-26-21
+2026-02-07 22:27:16 | INFO | architecture.llm_manager:generate:132 | Generation success in 137.16ms
+2026-02-07 22:27:16 | INFO | architecture.orchestrator:_retrieve_tools:141 | st_1 → SerpSearchTool (LLM selected, semantic: 0.148, tags: +1, in-domain)
+2026-02-07 22:27:16 | INFO | architecture.orchestrator:_ensure_tools:190 | Toolsmith creating: Search for placement statistics of Thadomal Shahani Engineering College
+2026-02-07 22:27:16 | INFO | architecture.toolsmith:create_tool:114 | Request: 'Search for placement statistics of Thadomal Shahani Engineering College'
+2026-02-07 22:27:16 | INFO | architecture.toolsmith:create_tool:126 | Generating tool with LLM (attempt 1/3)...
+2026-02-07 22:27:16 | INFO | architecture.toolsmith:create_tool:129 | Available APIs context length: 642
+2026-02-07 22:27:16 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-07_22-26-21
+2026-02-07 22:27:17 | INFO | architecture.llm_manager:generate:132 | Generation success in 1127.10ms
+2026-02-07 22:27:17 | INFO | architecture.toolsmith:create_tool:181 | Tool saved: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\thadomal_shahani_placement_stats.py
+2026-02-07 22:27:17 | INFO | architecture.toolsmith:_update_registry:266 | Registry updated: ThadomalShahaniPlacementStats
+2026-02-07 22:27:17 | INFO | architecture.orchestrator:_ensure_tools:192 | Toolsmith: Created ThadomalShahaniPlacementStats with tags ['placement', 'statistics', 'Thadomal Shahani']...
+2026-02-07 22:27:17 | INFO | architecture.orchestrator:_ensure_tools:213 | Tool assigned: ThadomalShahaniPlacementStats
+2026-02-07 22:27:17 | INFO | architecture.orchestrator:_create_plan:270 | ============================================================
+2026-02-07 22:27:17 | INFO | architecture.orchestrator:_create_plan:271 | EXECUTION PLAN: 1 steps
+2026-02-07 22:27:17 | INFO | architecture.orchestrator:_create_plan:272 | ============================================================
+2026-02-07 22:27:17 | INFO | architecture.orchestrator:_create_plan:276 |   Step 1: Search for placement statistics of Thadomal Shahan...
+2026-02-07 22:27:17 | INFO | architecture.orchestrator:_create_plan:277 |     Tool: ThadomalShahaniPlacementStats
+2026-02-07 22:27:17 | INFO | architecture.orchestrator:_create_plan:278 |     no dependencies, uses description
+2026-02-07 22:27:17 | INFO | architecture.orchestrator:_create_plan:279 | ============================================================
+2026-02-07 22:27:17 | INFO | architecture.executor:execute:99 | Executing plan: search for placement stats of thadomal shahani engineering clg
+2026-02-07 22:27:17 | INFO | architecture.executor:execute:100 | Total steps: 1
+2026-02-07 22:27:17 | INFO | architecture.executor:_execute_step:174 | Step 1: Search for placement statistics of Thadomal Shahani Engineering College using ThadomalShahaniPlacementStats
+2026-02-07 22:27:17 | INFO | architecture.executor:load_registry:93 | Loaded 12 tool definitions
+2026-02-07 22:27:17 | INFO | architecture.executor:_execute_step:216 | Step 1: Using description as input
+2026-02-07 22:27:17 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_22-26-21
+2026-02-07 22:27:18 | INFO | architecture.llm_manager:generate:132 | Generation success in 160.23ms
+2026-02-07 22:27:18 | INFO | architecture.executor:_infer_args:598 | LLM extracted args: {'query': 'Thadomal Shahani Engineering College'}
+2026-02-07 22:27:18 | INFO | architecture.executor:_execute_step:219 | DEBUG: Executor inferred args = {'query': 'Thadomal Shahani Engineering College'}
+2026-02-07 22:27:18 | INFO | architecture.executor:_execute_step:220 | DEBUG: Args type = <class 'dict'>
+2026-02-07 22:27:18 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: beautifulsoup4 pydantic requests
+2026-02-07 22:27:24 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: sandbox received args = {'query': 'Thadomal Shahani Engineering College'}
+2026-02-07 22:27:24 | INFO | architecture.sandbox:execute_with_args:518 | DEBUG: args_json = {"query": "Thadomal Shahani Engineering College"}
+2026-02-07 22:27:24 | INFO | architecture.sandbox:execute_with_args:519 | DEBUG: Runner script line: args = json.loads('{"query": "Thadomal Shahani Engineering College"}')
+2026-02-07 22:27:24 | INFO | architecture.sandbox:execute_with_args:524 | Executing tool with args: ThadomalShahaniPlacementStats
+2026-02-07 22:27:24 | INFO | architecture.sandbox:execute_with_args:525 | Args JSON being passed: {"query": "Thadomal Shahani Engineering College"}
+2026-02-07 22:27:26 | INFO | architecture.executor:_execute_step:237 | Step 1 SANDBOX Profile: time=295.383ms, peak_mem=0.3926MB, delta_mem=0.1788MB, efficiency=85.07%, grade=slow
+2026-02-07 22:27:26 | INFO | architecture.executor:_execute_step:247 |    (Total round-trip: 8318.07ms)
+2026-02-07 22:27:26 | INFO | architecture.executor:_execute_step:252 | Step 1: Completed in 8.32s
+2026-02-07 22:27:26 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 500 | Temp: 0.3 | Session: 2026-02-07_22-26-21
+2026-02-07 22:27:27 | INFO | architecture.llm_manager:generate:132 | Generation success in 932.67ms
+2026-02-07 22:27:27 | INFO | __main__:main:218 | Completed in 12468.67ms
+2026-02-07 22:27:27 | INFO | __main__:main:219 | Zone: public
+2026-02-07 22:27:27 | INFO | architecture.executor:export_profiles:545 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260207_222727.json
+2026-02-07 22:27:32 | WARNING | architecture.sandbox:_install_deps:225 | pip install failed: 
+2026-02-07 22:27:32 | INFO | architecture.sandbox:_pre_install_essentials:161 | Essential packages pre-installed
+2026-02-07 22:27:33 | INFO | architecture.sandbox:stop:207 | Sandbox container stopped: b73afab6c1bd
+2026-02-07 22:27:33 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

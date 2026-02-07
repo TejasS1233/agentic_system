@@ -1,0 +1,90 @@
+2026-02-07 14:54:04 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-07 14:54:20 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-07 14:54:20 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-07 14:54:20 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-07 14:54:20 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-07 14:54:20 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-07 14:54:20 | INFO | architecture.sandbox:__init__:152 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs
+2026-02-07 14:54:21 | INFO | architecture.sandbox:start:190 | Sandbox container started: 76d1a13b86db
+2026-02-07 14:54:21 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-07 14:54:21 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-07 14:54:21 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-07 14:54:21 | INFO | architecture.executor:load_registry:93 | Loaded 20 tool definitions
+2026-02-07 14:54:21 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-07 14:54:21 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-07 14:54:22 | INFO | architecture.sandbox:_install_deps:218 | Installing dependencies: pydantic requests pandas numpy beautifulsoup4
+2026-02-07 14:54:25 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-07 14:54:25 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-07 14:54:25 | INFO | __main__:run:121 | Task received: who is the winner of royal rumble 2026...
+2026-02-07 14:54:25 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-07 14:54:25 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-07 14:54:25 | INFO | architecture.orchestrator:run:42 | Processing: who is the winner of royal rumble 2026...
+2026-02-07 14:54:25 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-07_14-54-00
+2026-02-07 14:54:26 | INFO | architecture.llm_manager:generate:132 | Generation success in 611.20ms
+2026-02-07 14:54:26 | INFO | architecture.orchestrator:run:46 | Task Classification: COMPLEX_TASK
+2026-02-07 14:54:26 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-07_14-54-00
+2026-02-07 14:54:26 | INFO | architecture.llm_manager:generate:132 | Generation success in 374.47ms
+2026-02-07 14:54:26 | INFO | architecture.orchestrator:run:53 | Decomposed into 2 subtasks
+2026-02-07 14:54:26 | INFO | architecture.orchestrator:_retrieve_tools:148 | st_1 → RoyalRumble2026ParticipantsTool (similarity: 0.673, in-domain, matched: True)
+2026-02-07 14:54:26 | INFO | architecture.orchestrator:_retrieve_tools:148 | st_2 → RoyalRumble2026Scraper (similarity: 0.443, in-domain, matched: False)
+2026-02-07 14:54:26 | INFO | architecture.orchestrator:_ensure_tools:208 | Toolsmith creating: Extract and clean the winner's name from search results
+2026-02-07 14:54:26 | INFO | architecture.toolsmith:create_tool:114 | Request: 'Extract and clean the winner's name from search results'
+2026-02-07 14:54:26 | INFO | architecture.toolsmith:create_tool:126 | Generating tool with LLM (attempt 1/3)...
+2026-02-07 14:54:26 | INFO | architecture.toolsmith:create_tool:129 | Available APIs context length: 605
+2026-02-07 14:54:26 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-07_14-54-00
+2026-02-07 14:54:28 | INFO | architecture.llm_manager:generate:132 | Generation success in 1294.26ms
+2026-02-07 14:54:28 | INFO | architecture.toolsmith:create_tool:181 | Tool saved: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\search_winner_extractor.py
+2026-02-07 14:54:28 | INFO | architecture.toolsmith:_update_registry:266 | Registry updated: SearchWinnerExtractor
+2026-02-07 14:54:28 | INFO | architecture.orchestrator:_ensure_tools:210 | Toolsmith: Created SearchWinnerExtractor with tags ['web', 'search', 'winner', 'extractor']...
+2026-02-07 14:54:28 | INFO | architecture.orchestrator:_ensure_tools:231 | Tool assigned: SearchWinnerExtractor
+2026-02-07 14:54:28 | INFO | architecture.orchestrator:_create_plan:288 | ============================================================
+2026-02-07 14:54:28 | INFO | architecture.orchestrator:_create_plan:289 | EXECUTION PLAN: 2 steps
+2026-02-07 14:54:28 | INFO | architecture.orchestrator:_create_plan:290 | ============================================================
+2026-02-07 14:54:28 | INFO | architecture.orchestrator:_create_plan:294 |   Step 1: Search for the winner of Royal Rumble 2026...
+2026-02-07 14:54:28 | INFO | architecture.orchestrator:_create_plan:295 |     Tool: RoyalRumble2026ParticipantsTool
+2026-02-07 14:54:28 | INFO | architecture.orchestrator:_create_plan:296 |     no dependencies, uses description
+2026-02-07 14:54:28 | INFO | architecture.orchestrator:_create_plan:294 |   Step 2: Extract and clean the winner's name from search re...
+2026-02-07 14:54:28 | INFO | architecture.orchestrator:_create_plan:295 |     Tool: SearchWinnerExtractor
+2026-02-07 14:54:28 | INFO | architecture.orchestrator:_create_plan:296 |     depends_on=[1], input_from=step_1
+2026-02-07 14:54:28 | INFO | architecture.orchestrator:_create_plan:297 | ============================================================
+2026-02-07 14:54:28 | INFO | architecture.executor:execute:99 | Executing plan: who is the winner of royal rumble 2026
+2026-02-07 14:54:28 | INFO | architecture.executor:execute:100 | Total steps: 2
+2026-02-07 14:54:28 | INFO | architecture.executor:_execute_step:129 | Step 1: Search for the winner of Royal Rumble 2026 using RoyalRumble2026ParticipantsTool
+2026-02-07 14:54:28 | INFO | architecture.executor:load_registry:93 | Loaded 21 tool definitions
+2026-02-07 14:54:28 | INFO | architecture.executor:_execute_step:171 | Step 1: Using description as input
+2026-02-07 14:54:28 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_14-54-00
+2026-02-07 14:54:28 | INFO | architecture.llm_manager:generate:132 | Generation success in 123.55ms
+2026-02-07 14:54:28 | INFO | architecture.executor:_infer_args:542 | LLM extracted args: {'year': 2026}
+2026-02-07 14:54:28 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'year': 2026}
+2026-02-07 14:54:28 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-07 14:54:28 | INFO | architecture.sandbox:_install_deps:218 | Installing dependencies: pydantic beautifulsoup4 requests
+2026-02-07 14:54:34 | INFO | architecture.sandbox:execute_with_args:515 | DEBUG: sandbox received args = {'year': 2026}
+2026-02-07 14:54:34 | INFO | architecture.sandbox:execute_with_args:516 | DEBUG: args_json = {"year": 2026}
+2026-02-07 14:54:34 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: Runner script line: args = json.loads('{"year": 2026}')
+2026-02-07 14:54:34 | INFO | architecture.sandbox:execute_with_args:522 | Executing tool with args: RoyalRumble2026ParticipantsTool
+2026-02-07 14:54:34 | INFO | architecture.sandbox:execute_with_args:523 | Args JSON being passed: {"year": 2026}
+2026-02-07 14:54:35 | INFO | architecture.executor:_execute_step:192 | Step 1 SANDBOX Profile: time=1002.892ms, peak_mem=5.0791MB, delta_mem=4.3843MB, efficiency=47.97%, grade=critical
+2026-02-07 14:54:35 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 7588.65ms)
+2026-02-07 14:54:35 | INFO | architecture.executor:_execute_step:207 | Step 1: Completed in 7.59s
+2026-02-07 14:54:35 | INFO | architecture.executor:_execute_step:129 | Step 2: Extract and clean the winner's name from search results using SearchWinnerExtractor
+2026-02-07 14:54:35 | INFO | architecture.executor:load_registry:93 | Loaded 21 tool definitions
+2026-02-07 14:54:35 | INFO | architecture.executor:_execute_step:161 | Step 2: Using input from step 1
+2026-02-07 14:54:35 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_14-54-00
+2026-02-07 14:54:36 | INFO | architecture.llm_manager:generate:132 | Generation success in 361.85ms
+2026-02-07 14:54:36 | INFO | architecture.executor:_infer_args:542 | LLM extracted args: {'query': 'The Wyatt Sicks'}
+2026-02-07 14:54:36 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'query': 'The Wyatt Sicks'}
+2026-02-07 14:54:36 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-07 14:54:36 | INFO | architecture.sandbox:execute_with_args:515 | DEBUG: sandbox received args = {'query': 'The Wyatt Sicks'}
+2026-02-07 14:54:36 | INFO | architecture.sandbox:execute_with_args:516 | DEBUG: args_json = {"query": "The Wyatt Sicks"}
+2026-02-07 14:54:36 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: Runner script line: args = json.loads('{"query": "The Wyatt Sicks"}')
+2026-02-07 14:54:36 | INFO | architecture.sandbox:execute_with_args:522 | Executing tool with args: SearchWinnerExtractor
+2026-02-07 14:54:36 | INFO | architecture.sandbox:execute_with_args:523 | Args JSON being passed: {"query": "The Wyatt Sicks"}
+2026-02-07 14:54:38 | INFO | architecture.executor:_execute_step:192 | Step 2 SANDBOX Profile: time=1510.650ms, peak_mem=0.7466MB, delta_mem=0.6138MB, efficiency=49.70%, grade=critical
+2026-02-07 14:54:38 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 2102.26ms)
+2026-02-07 14:54:38 | INFO | architecture.executor:_execute_step:207 | Step 2: Completed in 2.10s
+2026-02-07 14:54:38 | INFO | __main__:main:218 | Completed in 12536.16ms
+2026-02-07 14:54:38 | INFO | __main__:main:219 | Zone: public
+2026-02-07 14:54:38 | INFO | architecture.executor:export_profiles:500 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260207_145438.json
+2026-02-07 14:54:42 | INFO | architecture.sandbox:_pre_install_essentials:161 | Essential packages pre-installed
+2026-02-07 14:54:43 | INFO | architecture.sandbox:stop:205 | Sandbox container stopped: 76d1a13b86db
+2026-02-07 14:54:43 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

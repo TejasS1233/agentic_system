@@ -1,0 +1,71 @@
+{
+  "exported_at": "2026-02-07T22:04:03.317702",
+  "summary": {
+    "GitHubTrendingTool": {
+      "call_count": 1,
+      "avg_time_ms": 1992.15,
+      "max_time_ms": 1992.15,
+      "min_time_ms": 1992.15,
+      "avg_memory_mb": 8.7983,
+      "max_memory_mb": 8.7983,
+      "avg_memory_delta_mb": 6.0416,
+      "avg_efficiency": 0.4648,
+      "last_grade": "critical"
+    },
+    "AdvancedGraphTool": {
+      "call_count": 1,
+      "avg_time_ms": 9.609,
+      "max_time_ms": 9.609,
+      "min_time_ms": 9.609,
+      "avg_memory_mb": 0.1134,
+      "max_memory_mb": 0.1134,
+      "avg_memory_delta_mb": 0.1098,
+      "avg_efficiency": 0.9947,
+      "last_grade": "fast"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 2,
+    "tools_profiled": [
+      "GitHubTrendingTool",
+      "AdvancedGraphTool"
+    ],
+    "execution_time_ms": {
+      "min": 9.609,
+      "max": 1992.15,
+      "mean": 1000.8795
+    },
+    "peak_memory_mb": {
+      "min": 0.1134,
+      "max": 8.7983,
+      "mean": 4.45585
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "GitHubTrendingTool": [
+      {
+        "tool_name": "GitHubTrendingTool",
+        "execution_time_ms": 1992.15,
+        "peak_memory_mb": 8.7983,
+        "memory_delta_mb": 6.0416,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4648,
+        "success": true
+      }
+    ],
+    "AdvancedGraphTool": [
+      {
+        "tool_name": "AdvancedGraphTool",
+        "execution_time_ms": 9.609,
+        "peak_memory_mb": 0.1134,
+        "memory_delta_mb": 0.1098,
+        "latency_grade": "fast",
+        "efficiency_score": 0.9947,
+        "success": true
+      }
+    ]
+  }
+}

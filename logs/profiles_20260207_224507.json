@@ -1,0 +1,48 @@
+{
+  "exported_at": "2026-02-07T22:45:07.264763",
+  "summary": {
+    "SerpSearchTool": {
+      "call_count": 1,
+      "avg_time_ms": 4091.951,
+      "max_time_ms": 4091.951,
+      "min_time_ms": 4091.951,
+      "avg_memory_mb": 0.2829,
+      "max_memory_mb": 0.2829,
+      "avg_memory_delta_mb": 0.0783,
+      "avg_efficiency": 0.4989,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 1,
+    "tools_profiled": [
+      "SerpSearchTool"
+    ],
+    "execution_time_ms": {
+      "min": 4091.951,
+      "max": 4091.951,
+      "mean": 4091.951
+    },
+    "peak_memory_mb": {
+      "min": 0.2829,
+      "max": 0.2829,
+      "mean": 0.2829
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "SerpSearchTool": [
+      {
+        "tool_name": "SerpSearchTool",
+        "execution_time_ms": 4091.951,
+        "peak_memory_mb": 0.2829,
+        "memory_delta_mb": 0.0783,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4989,
+        "success": true
+      }
+    ]
+  }
+}

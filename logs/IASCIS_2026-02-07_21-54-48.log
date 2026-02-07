@@ -1,0 +1,88 @@
+2026-02-07 21:54:54 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-07 21:55:30 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-07 21:55:30 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-07 21:55:30 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-07 21:55:30 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-07 21:55:30 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-07 21:55:30 | INFO | architecture.sandbox:__init__:152 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs
+2026-02-07 21:55:31 | INFO | architecture.sandbox:start:192 | Sandbox container started: 363a50b5dc01
+2026-02-07 21:55:31 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-07 21:55:31 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-07 21:55:31 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-07 21:55:31 | INFO | architecture.executor:load_registry:93 | Loaded 10 tool definitions
+2026-02-07 21:55:31 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-07 21:55:31 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-07 21:55:32 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: requests numpy pandas pydantic beautifulsoup4
+2026-02-07 21:55:36 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-07 21:55:36 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-07 21:55:36 | INFO | __main__:run:121 | Task received: Get the top 5 trending GitHub repositories and create a bar chart of their star counts...
+2026-02-07 21:55:36 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-07 21:55:36 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-07 21:55:36 | INFO | architecture.orchestrator:run:42 | Processing: Get the top 5 trending GitHub repositories and create a bar chart of their star ...
+2026-02-07 21:55:36 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-07_21-54-48
+2026-02-07 21:55:36 | INFO | architecture.llm_manager:generate:132 | Generation success in 785.58ms
+2026-02-07 21:55:36 | INFO | architecture.orchestrator:run:46 | Task Classification: COMPLEX_TASK
+2026-02-07 21:55:36 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-07_21-54-48
+2026-02-07 21:55:37 | INFO | architecture.llm_manager:generate:132 | Generation success in 446.63ms
+2026-02-07 21:55:37 | INFO | architecture.orchestrator:run:53 | Decomposed into 2 subtasks
+2026-02-07 21:55:37 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-07_21-54-48
+2026-02-07 21:55:37 | INFO | architecture.llm_manager:generate:132 | Generation success in 172.76ms
+2026-02-07 21:55:37 | INFO | architecture.orchestrator:_retrieve_tools:141 | st_1 → GitHubTrendingTool (LLM selected, semantic: 0.686, tags: +3, in-domain)
+2026-02-07 21:55:37 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-07_21-54-48
+2026-02-07 21:55:37 | INFO | architecture.llm_manager:generate:132 | Generation success in 173.24ms
+2026-02-07 21:55:37 | INFO | architecture.orchestrator:_retrieve_tools:141 | st_2 → AdvancedGraphTool (LLM selected, semantic: 0.400, tags: +1, in-domain)
+2026-02-07 21:55:37 | INFO | architecture.orchestrator:_create_plan:270 | ============================================================
+2026-02-07 21:55:37 | INFO | architecture.orchestrator:_create_plan:271 | EXECUTION PLAN: 2 steps
+2026-02-07 21:55:37 | INFO | architecture.orchestrator:_create_plan:272 | ============================================================
+2026-02-07 21:55:37 | INFO | architecture.orchestrator:_create_plan:276 |   Step 1: Get the top 5 trending GitHub repositories...
+2026-02-07 21:55:37 | INFO | architecture.orchestrator:_create_plan:277 |     Tool: GitHubTrendingTool
+2026-02-07 21:55:37 | INFO | architecture.orchestrator:_create_plan:278 |     no dependencies, uses description
+2026-02-07 21:55:37 | INFO | architecture.orchestrator:_create_plan:276 |   Step 2: Create a bar chart of the star counts of the top 5...
+2026-02-07 21:55:37 | INFO | architecture.orchestrator:_create_plan:277 |     Tool: AdvancedGraphTool
+2026-02-07 21:55:37 | INFO | architecture.orchestrator:_create_plan:278 |     depends_on=[1], input_from=step_1
+2026-02-07 21:55:37 | INFO | architecture.orchestrator:_create_plan:279 | ============================================================
+2026-02-07 21:55:37 | INFO | architecture.executor:execute:99 | Executing plan: Get the top 5 trending GitHub repositories and create a bar chart of their star counts
+2026-02-07 21:55:37 | INFO | architecture.executor:execute:100 | Total steps: 2
+2026-02-07 21:55:37 | INFO | architecture.executor:_execute_step:174 | Step 1: Get the top 5 trending GitHub repositories using GitHubTrendingTool
+2026-02-07 21:55:37 | INFO | architecture.executor:load_registry:93 | Loaded 10 tool definitions
+2026-02-07 21:55:37 | INFO | architecture.executor:_execute_step:216 | Step 1: Using description as input
+2026-02-07 21:55:37 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_21-54-48
+2026-02-07 21:55:38 | INFO | architecture.llm_manager:generate:132 | Generation success in 217.90ms
+2026-02-07 21:55:38 | INFO | architecture.executor:_infer_args:598 | LLM extracted args: {'trending_type': 'repositories', 'language': 'all', 'since': 'daily', 'spoken_language': 'en'}
+2026-02-07 21:55:38 | INFO | architecture.executor:_execute_step:219 | DEBUG: Executor inferred args = {'trending_type': 'repositories', 'language': 'all', 'since': 'daily', 'spoken_language': 'en'}
+2026-02-07 21:55:38 | INFO | architecture.executor:_execute_step:220 | DEBUG: Args type = <class 'dict'>
+2026-02-07 21:55:38 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: requests pydantic beautifulsoup4
+2026-02-07 21:55:41 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: sandbox received args = {'trending_type': 'repositories', 'language': 'all', 'since': 'daily', 'spoken_language': 'en'}
+2026-02-07 21:55:41 | INFO | architecture.sandbox:execute_with_args:518 | DEBUG: args_json = {"trending_type": "repositories", "language": "all", "since": "daily", "spoken_language": "en"}
+2026-02-07 21:55:41 | INFO | architecture.sandbox:execute_with_args:519 | DEBUG: Runner script line: args = json.loads('{"trending_type": "repositories", "language": "all", "since": "daily", "spoken_language": "en"}')
+2026-02-07 21:55:41 | INFO | architecture.sandbox:execute_with_args:524 | Executing tool with args: GitHubTrendingTool
+2026-02-07 21:55:41 | INFO | architecture.sandbox:execute_with_args:525 | Args JSON being passed: {"trending_type": "repositories", "language": "all", "since": "daily", "spoken_language": "en"}
+2026-02-07 21:55:43 | INFO | architecture.executor:_execute_step:237 | Step 1 SANDBOX Profile: time=1278.082ms, peak_mem=6.4829MB, delta_mem=5.1002MB, efficiency=47.41%, grade=critical
+2026-02-07 21:55:43 | INFO | architecture.executor:_execute_step:247 |    (Total round-trip: 5574.95ms)
+2026-02-07 21:55:43 | INFO | architecture.executor:_execute_step:252 | Step 1: Completed in 5.57s
+2026-02-07 21:55:43 | INFO | architecture.executor:_execute_step:174 | Step 2: Create a bar chart of the star counts of the top 5 trending GitHub repositories using AdvancedGraphTool
+2026-02-07 21:55:43 | INFO | architecture.executor:load_registry:93 | Loaded 10 tool definitions
+2026-02-07 21:55:43 | INFO | architecture.executor:_execute_step:206 | Step 2: Using input from step 1
+2026-02-07 21:55:43 | INFO | architecture.executor:_infer_args:563 | Direct pass-through: Using structured JSON for 'data' arg
+2026-02-07 21:55:43 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_21-54-48
+2026-02-07 21:55:44 | INFO | architecture.llm_manager:generate:132 | Generation success in 464.95ms
+2026-02-07 21:55:44 | INFO | architecture.executor:_infer_args_with_direct_data:635 | Direct data pass-through args: ['data', 'chart_type', 'title', 'xlabel', 'ylabel', 'output_path', 'theme', 'figsize', 'colors', 'legend_labels', 'show_values', 'grid']
+2026-02-07 21:55:44 | INFO | architecture.executor:_execute_step:219 | DEBUG: Executor inferred args = {'data': {'type': 'repos', 'language': 'all', 'since': 'daily', 'count': 0, 'repos': []}, 'chart_type': 'bar', 'title': 'Star Counts of Top 5 Trending GitHub Repositories', 'xlabel': 'Repository', 'ylabel': 'Star Count', 'output_path': '', 'theme': 'seaborn', 'figsize': [10, 6], 'colors': ['#4CAF50', '#FF9800', '#2196F3', '#FF69B4', '#8BC34A'], 'legend_labels': ['Repository 1', 'Repository 2', 'Repository 3', 'Repository 4', 'Repository 5'], 'show_values': True, 'grid': True}
+2026-02-07 21:55:44 | INFO | architecture.executor:_execute_step:220 | DEBUG: Args type = <class 'dict'>
+2026-02-07 21:55:44 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: matplotlib numpy
+2026-02-07 21:55:48 | INFO | architecture.sandbox:_pre_install_essentials:161 | Essential packages pre-installed
+2026-02-07 21:55:51 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: sandbox received args = {'data': {'type': 'repos', 'language': 'all', 'since': 'daily', 'count': 0, 'repos': []}, 'chart_type': 'bar', 'title': 'Star Counts of Top 5 Trending GitHub Repositories', 'xlabel': 'Repository', 'ylabel': 'Star Count', 'output_path': '', 'theme': 'seaborn', 'figsize': [10, 6], 'colors': ['#4CAF50', '#FF9800', '#2196F3', '#FF69B4', '#8BC34A'], 'legend_labels': ['Repository 1', 'Repository 2', 'Repository 3', 'Repository 4', 'Repository 5'], 'show_values': True, 'grid': True}
+2026-02-07 21:55:51 | INFO | architecture.sandbox:execute_with_args:518 | DEBUG: args_json = {"data": {"type": "repos", "language": "all", "since": "daily", "count": 0, "repos": []}, "chart_type": "bar", "title": "Star Counts of Top 5 Trending GitHub Repositories", "xlabel": "Repository", "ylabel": "Star Count", "output_path": "", "theme": "seaborn", "figsize": [10, 6], "colors": ["#4CAF50", "#FF9800", "#2196F3", "#FF69B4", "#8BC34A"], "legend_labels": ["Repository 1", "Repository 2", "Repository 3", "Repository 4", "Repository 5"], "show_values": true, "grid": true}
+2026-02-07 21:55:51 | INFO | architecture.sandbox:execute_with_args:519 | DEBUG: Runner script line: args = json.loads('{"data": {"type": "repos", "language": "all", "since": "daily", "count": 0, "repos": []}, "chart_type": "bar", "title": "Star Counts of Top 5 Trending GitHub Repositories", "xlabel": "Repository", "ylabel": "Star Count", "output_path": "", "theme": "seaborn", "figsize": [10, 6], "colors": ["#4CAF50", "#FF9800", "#2196F3", "#FF69B4", "#8BC34A"], "legend_labels": ["Repository 1", "Repository 2", "Repository 3", "Repository 4", "Repository 5"], "show_values": true, "grid": true}')
+2026-02-07 21:55:51 | INFO | architecture.sandbox:execute_with_args:524 | Executing tool with args: AdvancedGraphTool
+2026-02-07 21:55:51 | INFO | architecture.sandbox:execute_with_args:525 | Args JSON being passed: {"data": {"type": "repos", "language": "all", "since": "daily", "count": 0, "repos": []}, "chart_type": "bar", "title": "Star Counts of Top 5 Trending GitHub Repositories", "xlabel": "Repository", "ylabel": "Star Count", "output_path": "", "theme": "seaborn", "figsize": [10, 6], "colors": ["#4CAF50", "#FF9800", "#2196F3", "#FF69B4", "#8BC34A"], "legend_labels": ["Repository 1", "Repository 2", "Repository 3", "Repository 4", "Repository 5"], "show_values": true, "grid": true}
+2026-02-07 21:55:53 | INFO | architecture.executor:_execute_step:237 | Step 2 SANDBOX Profile: time=384.985ms, peak_mem=1.0324MB, delta_mem=0.9606MB, efficiency=80.34%, grade=slow
+2026-02-07 21:55:53 | INFO | architecture.executor:_execute_step:247 |    (Total round-trip: 8911.70ms)
+2026-02-07 21:55:53 | INFO | architecture.executor:_execute_step:252 | Step 2: Completed in 8.91s
+2026-02-07 21:55:53 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 500 | Temp: 0.3 | Session: 2026-02-07_21-54-48
+2026-02-07 21:55:53 | INFO | architecture.llm_manager:generate:132 | Generation success in 669.23ms
+2026-02-07 21:55:53 | INFO | __main__:main:218 | Completed in 17591.53ms
+2026-02-07 21:55:53 | INFO | __main__:main:219 | Zone: public
+2026-02-07 21:55:53 | INFO | architecture.executor:export_profiles:545 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260207_215553.json
+2026-02-07 21:55:59 | INFO | architecture.sandbox:stop:207 | Sandbox container stopped: 363a50b5dc01
+2026-02-07 21:55:59 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

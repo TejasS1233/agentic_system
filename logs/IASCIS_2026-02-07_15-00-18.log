@@ -1,0 +1,35 @@
+2026-02-07 15:00:22 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-07 15:00:38 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-07 15:00:38 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-07 15:00:38 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-07 15:00:38 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-07 15:00:38 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-07 15:00:38 | INFO | architecture.sandbox:__init__:152 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs
+2026-02-07 15:00:38 | INFO | architecture.sandbox:start:190 | Sandbox container started: 63cc3c8351c7
+2026-02-07 15:00:38 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-07 15:00:38 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-07 15:00:38 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-07 15:00:38 | INFO | architecture.executor:load_registry:93 | Loaded 23 tool definitions
+2026-02-07 15:00:38 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-07 15:00:38 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-07 15:00:39 | INFO | architecture.sandbox:_install_deps:218 | Installing dependencies: numpy pandas requests beautifulsoup4 pydantic
+2026-02-07 15:00:43 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-07 15:00:43 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-07 15:00:43 | INFO | __main__:run:121 | Task received: make a pie chart of ocean to land...
+2026-02-07 15:00:43 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-07 15:00:43 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-07 15:00:43 | INFO | architecture.orchestrator:run:42 | Processing: make a pie chart of ocean to land...
+2026-02-07 15:00:43 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-07_15-00-18
+2026-02-07 15:00:44 | INFO | architecture.llm_manager:generate:132 | Generation success in 643.33ms
+2026-02-07 15:00:44 | INFO | architecture.orchestrator:run:46 | Task Classification: DIRECT_RESPONSE
+2026-02-07 15:00:44 | INFO | architecture.orchestrator:_handle_direct_generation:322 | Handling as direct response
+2026-02-07 15:00:44 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-07_15-00-18
+2026-02-07 15:00:44 | INFO | architecture.llm_manager:generate:132 | Generation success in 480.60ms
+2026-02-07 15:00:44 | INFO | architecture.orchestrator:_handle_direct_generation:374 | Saved generated content to ['C:\\Users\\tejas\\Desktop\\Tests\\repo_to_tool\\agentic_system\\workspace\\outputs\\generated_content_1.py']
+2026-02-07 15:00:44 | INFO | __main__:main:218 | Completed in 1129.95ms
+2026-02-07 15:00:44 | INFO | __main__:main:219 | Zone: public
+2026-02-07 15:00:44 | INFO | architecture.executor:export_profiles:500 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260207_150044.json
+2026-02-07 15:00:49 | WARNING | architecture.sandbox:_install_deps:223 | pip install failed: 
+2026-02-07 15:00:49 | INFO | architecture.sandbox:_pre_install_essentials:161 | Essential packages pre-installed
+2026-02-07 15:00:49 | INFO | architecture.sandbox:stop:205 | Sandbox container stopped: 63cc3c8351c7
+2026-02-07 15:00:49 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

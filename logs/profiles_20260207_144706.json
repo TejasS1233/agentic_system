@@ -1,0 +1,71 @@
+{
+  "exported_at": "2026-02-07T14:47:06.401511",
+  "summary": {
+    "GithubProfileSearchTool": {
+      "call_count": 1,
+      "avg_time_ms": 341.256,
+      "max_time_ms": 341.256,
+      "min_time_ms": 341.256,
+      "avg_memory_mb": 0.1188,
+      "max_memory_mb": 0.1188,
+      "avg_memory_delta_mb": 0.071,
+      "avg_efficiency": 0.8289,
+      "last_grade": "slow"
+    },
+    "RakheOmarGithubStatsTool": {
+      "call_count": 1,
+      "avg_time_ms": 1665.792,
+      "max_time_ms": 1665.792,
+      "min_time_ms": 1665.792,
+      "avg_memory_mb": 3.2082,
+      "max_memory_mb": 3.2082,
+      "avg_memory_delta_mb": 0.0,
+      "avg_efficiency": 0.0,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 2,
+    "tools_profiled": [
+      "GithubProfileSearchTool",
+      "RakheOmarGithubStatsTool"
+    ],
+    "execution_time_ms": {
+      "min": 341.256,
+      "max": 1665.792,
+      "mean": 1003.5239999999999
+    },
+    "peak_memory_mb": {
+      "min": 0.1188,
+      "max": 3.2082,
+      "mean": 1.6635
+    },
+    "success_rate": 0.5
+  },
+  "raw_profiles": {
+    "GithubProfileSearchTool": [
+      {
+        "tool_name": "GithubProfileSearchTool",
+        "execution_time_ms": 341.256,
+        "peak_memory_mb": 0.1188,
+        "memory_delta_mb": 0.071,
+        "latency_grade": "slow",
+        "efficiency_score": 0.8289,
+        "success": true
+      }
+    ],
+    "RakheOmarGithubStatsTool": [
+      {
+        "tool_name": "RakheOmarGithubStatsTool",
+        "execution_time_ms": 1665.792,
+        "peak_memory_mb": 3.2082,
+        "memory_delta_mb": 0,
+        "latency_grade": "critical",
+        "success": false,
+        "error_message": "'NoneType' object has no attribute 'text'"
+      }
+    ]
+  }
+}

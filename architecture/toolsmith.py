@@ -124,6 +124,10 @@ class Toolsmith:
         
         for attempt in range(self.max_retries + 1):
             logger.info(f"Generating tool with LLM (attempt {attempt + 1}/{self.max_retries + 1})...")
+            # Log APIs for debug
+            if attempt == 0:
+                 logger.info(f"Available APIs context length: {len(available_apis)}")
+
             try:
                 # Build user message with error feedback if retrying
                 if attempt == 0:
@@ -145,7 +149,16 @@ Fix the code to resolve this error."""
                 )
 
                 if response.get("error"):
-                    return f"Tool creation failed: {response['error']}"
+                    err_msg = response['error']
+                    logger.warning(f"LLM generation error: {err_msg}")
+                    
+                    # Rate limit backoff
+                    if "429" in str(err_msg) or "Rate limit" in str(err_msg):
+                        logger.warning("Rate limit hit. Sleeping for 5 seconds...")
+                        time.sleep(5)
+                        
+                    last_error = err_msg
+                    continue
 
                 tool_data = json.loads(response["content"])
                 class_name = tool_data["class_name"]
@@ -209,6 +222,9 @@ Fix the code to resolve this error."""
             except Exception as e:
                 logger.error(f"Tool creation failed: {e}", exc_info=True)
                 last_error = str(e)
+                if "429" in str(e) or "Rate limit" in str(e):
+                     logger.warning("Rate limit exception. Sleeping for 5 seconds...")
+                     time.sleep(5)
                 continue
 
         # All retries exhausted

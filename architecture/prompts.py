@@ -17,31 +17,36 @@ OS_INFO = f"OS: {platform.system()} ({platform.release()})"
 DECOMPOSITION_PROMPT = """You are the orchestration engine of the system with limited resources. Use them wisely when splitting tasks into subtasks.
 
 DECISION PROTOCOL:
-1. SIMPLE TASKS: If the task is straightforward, create a SINGLE subtask for the entire query. DO NOT over-complicate simple requests.
-2. COMPLEX TASKS: If the task requires multiple steps, dependencies, or tools, break it down into granular subtasks.
+1. SIMPLE TASKS (1 STEP): Most single-action requests should be ONE subtask. Examples:
+   - "Search Google for X" → 1 subtask (domain: search)
+   - "Get trending repos on GitHub" → 1 subtask (domain: web)
+   - "Create a bar chart of X" → 1 subtask (domain: visualization)
+   - "Scrape headlines from Y" → 1 subtask (domain: web)
+   - "Get info about repo X" → 1 subtask (domain: web)
+   
+2. COMPLEX TASKS (2-3 STEPS): Only split when there are CLEAR dependencies:
+   - "Search for X, then create a chart" → 2 subtasks (search depends, visualization uses result)
+   - "Get repo stats and visualize them" → 2 subtasks (fetch first, then graph)
 
 OUTPUT FORMAT (JSON only):
 {
   "original_query": "<the user query>",
   "subtasks": [
     {"id": "st_1", "description": "...", "domain": "<domain>", "depends_on": [], "input_from": null, "output_format": "<what this step produces>"},
-    ...add more as necessary
+    ...add more ONLY IF TRULY NECESSARY
   ]
 }
 
 DOMAINS: math, text, file, web, visualization, data, system, conversion, search
 
 CRITICAL RULES:
-1. MINIMIZE STEPS - combine related operations. Prefer 2-3 steps over 5-6.
-2. DATA FLOW - each step's output_format MUST match the next step's expected_input.
-3. DATA from tools goes through a LLM before the next tool execution, so there is no need for creating tools for simple parsing/extraction/cleaning data etc.
-4. Be SPECIFIC about data formats: "dict with language:percentage pairs", "list of repo URLs", etc.
-5. The tool that fetches data should return the FULL data needed by subsequent steps.
-6. NO HALLUCINATED APIS: Do NOT create subtasks that assume a specific API tool exists for general domains (e.g. "Chess API", "Stock API", "Weather API") unless you see it in the context.
-7. DEFAULT TO SEARCH: For ANY information gathering task ("who is", "what is", "get list of", "fetch stats for"), ALWAYS decompose into:
-   a. "st_1": Search using DuckDuckGo (domain: search)
-   b. "st_2": Web Scrape/Process the search results and compute and clean the data (domain: web)   
-   (Only exception is if the user efficiently provides a direct URL or asks for proper code generation).
+1. PREFER 1 STEP - If the task can be done by a single tool, use 1 subtask. DO NOT over-decompose.
+2. COMBINE related operations. "Search and get results" is 1 step, not 2.
+3. DATA FLOW - each step's output_format MUST match the next step's expected_input.
+4. DATA from tools goes through a LLM before the next tool execution.
+5. Be SPECIFIC about data formats: "dict with language:percentage pairs", "list of repo URLs", etc.
+6. NO HALLUCINATED APIS: Do NOT assume specific APIs exist unless you see them.
+7. For SEARCH tasks (Google, web lookup, find info), use domain: search with ONE subtask.
 """
 
 
@@ -85,23 +90,16 @@ If a URL argument is needed, PREFER one from the above list that matches the tas
 
 Arguments needed: {arg_names}
 Task description: {description}
-Previous step result (if any): {str(input_data)[:500] if input_data else "None"}
+Previous step result (if any): {str(input_data)[:2000] if input_data else "None"}
 {url_section}
 CRITICAL RULES:
 1. Extract ONLY the actual data values - NOT descriptions or sentences.
 2. For arguments like 'query', 'username', 'user', 'name', 'id': Extract the IDENTIFIER only.
-   - If task says "TejasS1233's GitHub profile", extract just "TejasS1233"
-   - If task says "search for user JohnDoe", extract just "JohnDoe"
-   - If task says "fetch data for ID 12345", extract just "12345"
 3. For numeric arguments: Return the number (e.g., 144, not "calculate 144")
-4. For file/path arguments: Return only the path string
-5. For URL arguments: Use one from the AVAILABLE URLS if provided, or construct a proper URL.
-6. NEVER include phrases like "Search for", "Fetch", "Get", "'s profile", etc.
+4. For 'data' arguments with previous step JSON: Parse the JSON and extract relevant fields.
+5. NEVER include phrases like "Search for", "Fetch", "Get", etc.
 
 Return ONLY a valid JSON object with the extracted values.
-Example for ['username']: {{"username": "TejasS1233"}}
-Example for ['query']: {{"query": "TejasS1233"}}
-Example for ['number', 'text']: {{"number": 144, "text": "hello"}}
 """
 
 
@@ -138,6 +136,12 @@ def get_tool_generator_prompt(
         api_section = f"""
 
 AVAILABLE FREE APIs (USE THESE - NO AUTH REQUIRED):
+
+CRITICAL REQUIREMENTS:
+1. If using `requests` to scrape a website, YOU MUST INCLUDE A User-Agent HEADER.
+   Example: headers = {{"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) ..."}}
+   Many sites (like dev.to, github) block requests without this header.
+2. Handle potential errors (403, 429) gracefully.
 These are curated, working API endpoints that require NO authentication. PREFER these over searching/scraping when applicable:
 
 {available_apis}

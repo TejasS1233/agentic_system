@@ -1,0 +1,108 @@
+2026-02-07 14:39:55 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-07 14:40:17 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-07 14:40:17 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-07 14:40:17 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-07 14:40:17 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-07 14:40:17 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-07 14:40:17 | INFO | architecture.sandbox:__init__:152 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs
+2026-02-07 14:40:18 | INFO | architecture.sandbox:start:190 | Sandbox container started: 5e2a09db9387
+2026-02-07 14:40:18 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-07 14:40:18 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-07 14:40:18 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-07 14:40:18 | INFO | architecture.executor:load_registry:93 | Loaded 8 tool definitions
+2026-02-07 14:40:18 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-07 14:40:18 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-07 14:40:19 | INFO | architecture.sandbox:_install_deps:218 | Installing dependencies: requests pandas numpy pydantic beautifulsoup4
+2026-02-07 14:40:22 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-07 14:40:22 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-07 14:40:22 | INFO | __main__:run:121 | Task received: get an image of a dog...
+2026-02-07 14:40:22 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-07 14:40:22 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-07 14:40:22 | INFO | architecture.orchestrator:run:42 | Processing: get an image of a dog...
+2026-02-07 14:40:22 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-07_14-39-51
+2026-02-07 14:40:22 | INFO | architecture.llm_manager:generate:132 | Generation success in 721.52ms
+2026-02-07 14:40:22 | INFO | architecture.orchestrator:run:46 | Task Classification: COMPLEX_TASK
+2026-02-07 14:40:22 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-07_14-39-51
+2026-02-07 14:40:23 | INFO | architecture.llm_manager:generate:132 | Generation success in 399.17ms
+2026-02-07 14:40:23 | INFO | architecture.orchestrator:run:53 | Decomposed into 2 subtasks
+2026-02-07 14:40:23 | INFO | architecture.orchestrator:_retrieve_tools:148 | st_1 → PopulationCensusSearchTool (similarity: 0.253, in-domain, matched: False)
+2026-02-07 14:40:23 | INFO | architecture.orchestrator:_retrieve_tools:148 | st_2 → DevToScraperTool (similarity: 0.178, in-domain, matched: False)
+2026-02-07 14:40:23 | INFO | architecture.orchestrator:_ensure_tools:208 | Toolsmith creating: Search for dog images
+2026-02-07 14:40:23 | INFO | architecture.toolsmith:create_tool:114 | Request: 'Search for dog images'
+2026-02-07 14:40:23 | INFO | architecture.toolsmith:create_tool:126 | Generating tool with LLM (attempt 1/3)...
+2026-02-07 14:40:23 | INFO | architecture.toolsmith:create_tool:129 | Available APIs context length: 550
+2026-02-07 14:40:23 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-07_14-39-51
+2026-02-07 14:40:24 | INFO | architecture.llm_manager:generate:132 | Generation success in 881.45ms
+2026-02-07 14:40:24 | INFO | architecture.toolsmith:create_tool:181 | Tool saved: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\dog_image_search.py
+2026-02-07 14:40:24 | INFO | architecture.toolsmith:_update_registry:266 | Registry updated: DogImageSearchTool
+2026-02-07 14:40:24 | INFO | architecture.orchestrator:_ensure_tools:210 | Toolsmith: Created DogImageSearchTool with tags ['dog', 'image', 'search']...
+2026-02-07 14:40:24 | INFO | architecture.orchestrator:_ensure_tools:231 | Tool assigned: DogImageSearchTool
+2026-02-07 14:40:24 | INFO | architecture.orchestrator:_ensure_tools:208 | Toolsmith creating: Fetch and return a dog image
+2026-02-07 14:40:24 | INFO | architecture.toolsmith:create_tool:114 | Request: 'Fetch and return a dog image'
+2026-02-07 14:40:24 | INFO | architecture.toolsmith:create_tool:126 | Generating tool with LLM (attempt 1/3)...
+2026-02-07 14:40:24 | INFO | architecture.toolsmith:create_tool:129 | Available APIs context length: 640
+2026-02-07 14:40:24 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-07_14-39-51
+2026-02-07 14:40:25 | INFO | architecture.llm_manager:generate:132 | Generation success in 1147.00ms
+2026-02-07 14:40:25 | INFO | architecture.toolsmith:create_tool:181 | Tool saved: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\random_dog_image_tool.py
+2026-02-07 14:40:25 | INFO | architecture.toolsmith:_update_registry:266 | Registry updated: RandomDogImageTool
+2026-02-07 14:40:25 | INFO | architecture.orchestrator:_ensure_tools:210 | Toolsmith: Created RandomDogImageTool with tags ['dog', 'image', 'random']...
+2026-02-07 14:40:25 | INFO | architecture.orchestrator:_ensure_tools:231 | Tool assigned: RandomDogImageTool
+2026-02-07 14:40:25 | INFO | architecture.orchestrator:_create_plan:288 | ============================================================
+2026-02-07 14:40:25 | INFO | architecture.orchestrator:_create_plan:289 | EXECUTION PLAN: 2 steps
+2026-02-07 14:40:25 | INFO | architecture.orchestrator:_create_plan:290 | ============================================================
+2026-02-07 14:40:25 | INFO | architecture.orchestrator:_create_plan:294 |   Step 1: Search for dog images...
+2026-02-07 14:40:25 | INFO | architecture.orchestrator:_create_plan:295 |     Tool: DogImageSearchTool
+2026-02-07 14:40:25 | INFO | architecture.orchestrator:_create_plan:296 |     no dependencies, uses description
+2026-02-07 14:40:25 | INFO | architecture.orchestrator:_create_plan:294 |   Step 2: Fetch and return a dog image...
+2026-02-07 14:40:25 | INFO | architecture.orchestrator:_create_plan:295 |     Tool: RandomDogImageTool
+2026-02-07 14:40:25 | INFO | architecture.orchestrator:_create_plan:296 |     depends_on=[1], input_from=step_1
+2026-02-07 14:40:25 | INFO | architecture.orchestrator:_create_plan:297 | ============================================================
+2026-02-07 14:40:25 | INFO | architecture.executor:execute:99 | Executing plan: get an image of a dog
+2026-02-07 14:40:25 | INFO | architecture.executor:execute:100 | Total steps: 2
+2026-02-07 14:40:25 | INFO | architecture.executor:_execute_step:129 | Step 1: Search for dog images using DogImageSearchTool
+2026-02-07 14:40:25 | INFO | architecture.executor:load_registry:93 | Loaded 10 tool definitions
+2026-02-07 14:40:25 | INFO | architecture.executor:_execute_step:171 | Step 1: Using description as input
+2026-02-07 14:40:25 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_14-39-51
+2026-02-07 14:40:25 | INFO | architecture.llm_manager:generate:132 | Generation success in 125.96ms
+2026-02-07 14:40:25 | INFO | architecture.executor:_infer_args:542 | LLM extracted args: {'breed': 'dog'}
+2026-02-07 14:40:25 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'breed': 'dog'}
+2026-02-07 14:40:25 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-07 14:40:25 | INFO | architecture.sandbox:_install_deps:218 | Installing dependencies: requests pydantic
+2026-02-07 14:40:30 | INFO | architecture.sandbox:execute_with_args:515 | DEBUG: sandbox received args = {'breed': 'dog'}
+2026-02-07 14:40:30 | INFO | architecture.sandbox:execute_with_args:516 | DEBUG: args_json = {"breed": "dog"}
+2026-02-07 14:40:30 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: Runner script line: args = json.loads('{"breed": "dog"}')
+2026-02-07 14:40:30 | INFO | architecture.sandbox:execute_with_args:522 | Executing tool with args: DogImageSearchTool
+2026-02-07 14:40:30 | INFO | architecture.sandbox:execute_with_args:523 | Args JSON being passed: {"breed": "dog"}
+2026-02-07 14:40:31 | INFO | architecture.executor:_execute_step:192 | Step 1 SANDBOX Profile: time=661.162ms, peak_mem=0.1285MB, delta_mem=0.0668MB, efficiency=66.89%, grade=slow
+2026-02-07 14:40:31 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 5839.54ms)
+2026-02-07 14:40:31 | INFO | architecture.executor:_execute_step:207 | Step 1: Completed in 5.84s
+2026-02-07 14:40:31 | INFO | architecture.executor:_execute_step:129 | Step 2: Fetch and return a dog image using RandomDogImageTool
+2026-02-07 14:40:31 | INFO | architecture.executor:load_registry:93 | Loaded 10 tool definitions
+2026-02-07 14:40:31 | INFO | architecture.executor:_execute_step:161 | Step 2: Using input from step 1
+2026-02-07 14:40:31 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'input': 'Error: Failed to retrieve dog image'}
+2026-02-07 14:40:31 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-07 14:40:31 | INFO | architecture.sandbox:execute_with_args:515 | DEBUG: sandbox received args = {'input': 'Error: Failed to retrieve dog image'}
+2026-02-07 14:40:31 | INFO | architecture.sandbox:execute_with_args:516 | DEBUG: args_json = {"input": "Error: Failed to retrieve dog image"}
+2026-02-07 14:40:31 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: Runner script line: args = json.loads('{"input": "Error: Failed to retrieve dog image"}')
+2026-02-07 14:40:31 | INFO | architecture.sandbox:execute_with_args:522 | Executing tool with args: RandomDogImageTool
+2026-02-07 14:40:31 | INFO | architecture.sandbox:execute_with_args:523 | Args JSON being passed: {"input": "Error: Failed to retrieve dog image"}
+2026-02-07 14:40:31 | INFO | architecture.executor:_execute_step:192 | Step 2 SANDBOX Profile: time=0.065ms, peak_mem=0.0014MB, delta_mem=0.0000MB, efficiency=0.00%, grade=critical
+2026-02-07 14:40:31 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 474.73ms)
+2026-02-07 14:40:31 | ERROR | architecture.executor:_execute_step:211 | Step 2: Failed - RandomDogImageTool.run() got an unexpected keyword argument 'input'
+2026-02-07 14:40:31 | INFO | architecture.reflector:reflect:295 | Reflected: unknown, retry=True, remaining=2
+2026-02-07 14:40:31 | INFO | architecture.executor:_handle_failure:248 | Step 2: Failure type=arg_extraction, retrying...
+2026-02-07 14:40:31 | INFO | architecture.executor:_retry_with_new_args:276 | Step 2: Re-extracting args with error context
+2026-02-07 14:40:31 | INFO | architecture.executor:_retry_with_new_args:280 | Step 2: New args = {'input': "Error: Failed to retrieve dog image\n\nPrevious error: RandomDogImageTool.run() got an unexpected keyword argument 'input'\nThe previous code failed with a unknown error.\nRoot cause: Unclassified error\nSuggestion: Review the full error output. Check documentation for the failing operation.\n\nError output:\n```\nRandomDogImageTool.run() got an unexpected keyword argument 'input'\n```\n\nPlease fix the code and try again."}
+2026-02-07 14:40:31 | INFO | architecture.sandbox:execute_with_args:515 | DEBUG: sandbox received args = {'input': "Error: Failed to retrieve dog image\n\nPrevious error: RandomDogImageTool.run() got an unexpected keyword argument 'input'\nThe previous code failed with a unknown error.\nRoot cause: Unclassified error\nSuggestion: Review the full error output. Check documentation for the failing operation.\n\nError output:\n```\nRandomDogImageTool.run() got an unexpected keyword argument 'input'\n```\n\nPlease fix the code and try again."}
+2026-02-07 14:40:31 | INFO | architecture.sandbox:execute_with_args:516 | DEBUG: args_json = {"input": "Error: Failed to retrieve dog image\n\nPrevious error: RandomDogImageTool.run() got an unexpected keyword argument 'input'\nThe previous code failed with a unknown error.\nRoot cause: Unclassified error\nSuggestion: Review the full error output. Check documentation for the failing operation.\n\nError output:\n```\nRandomDogImageTool.run() got an unexpected keyword argument 'input'\n```\n\nPlease fix the code and try again."}
+2026-02-07 14:40:31 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: Runner script line: args = json.loads('{"input": "Error: Failed to retrieve dog image\n\nPrevious error: RandomDogImageTool.run() got an unexpected keyword argument 'input'\nThe previous code failed with a unknown error.\nRoot cause: Unclassified error\nSuggestion: Review the full error output. Check documentation for the failing operation.\n\nError output:\n```\nRandomDogImageTool.run() got an unexpected keyword argument 'input'\n```\n\nPlease fix the code and try again."}')
+2026-02-07 14:40:31 | INFO | architecture.sandbox:execute_with_args:522 | Executing tool with args: RandomDogImageTool
+2026-02-07 14:40:31 | INFO | architecture.sandbox:execute_with_args:523 | Args JSON being passed: {"input": "Error: Failed to retrieve dog image\n\nPrevious error: RandomDogImageTool.run() got an unexpected keyword argument 'input'\nThe previous code failed with a unknown error.\nRoot cause: Unclassified error\nSuggestion: Review the full error output. Check documentation for the failing operation.\n\nError output:\n```\nRandomDogImageTool.run() got an unexpected keyword argument 'input'\n```\n\nPlease fix the code and try again."}
+2026-02-07 14:40:32 | WARNING | architecture.executor:_retry_with_new_args:293 | Step 2: Retry with new args failed
+2026-02-07 14:40:32 | INFO | __main__:main:218 | Completed in 10195.11ms
+2026-02-07 14:40:32 | INFO | __main__:main:219 | Zone: public
+2026-02-07 14:40:32 | INFO | architecture.executor:export_profiles:500 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260207_144032.json
+2026-02-07 14:40:37 | WARNING | architecture.sandbox:_install_deps:223 | pip install failed: 
+2026-02-07 14:40:37 | INFO | architecture.sandbox:_pre_install_essentials:161 | Essential packages pre-installed
+2026-02-07 14:40:37 | INFO | architecture.sandbox:stop:205 | Sandbox container stopped: 5e2a09db9387
+2026-02-07 14:40:37 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

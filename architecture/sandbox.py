@@ -186,6 +186,8 @@ class Sandbox:
             working_dir="/tools",
             detach=True,
             remove=True,
+            network_mode="bridge",  # Ensure network connectivity
+            dns=["8.8.8.8", "8.8.4.4"],  # Google DNS for reliable resolution
         )
         logger.info(f"Sandbox container started: {self.container.short_id}")
 
@@ -521,9 +523,18 @@ except Exception as e:
 
         logger.info(f"Executing tool with args: {tool_name}")
         logger.info(f"Args JSON being passed: {args_json}")
+        
+        # Pass API keys from host environment to container
+        import os as host_os
+        container_env = {}
+        for key in ["SERP_API_KEY", "HF_TOKEN", "GROQ_API_KEY", "GEMINI_API_KEY", "OPENAI_API_KEY"]:
+            if val := host_os.environ.get(key):
+                container_env[key] = val
+        
         try:
             exit_code, output = self.container.exec_run(
                 f"python /tools/{runner_name}",
+                environment=container_env,
                 stderr=True,
             )
             output_str = output.decode() if output else ""

@@ -1,0 +1,194 @@
+2026-02-07 20:36:10 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-07 20:36:51 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-07 20:36:51 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-07 20:36:51 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-07 20:36:51 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-07 20:36:51 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-07 20:36:51 | INFO | architecture.sandbox:__init__:152 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs
+2026-02-07 20:36:52 | INFO | architecture.sandbox:start:190 | Sandbox container started: 27ce74a75d8f
+2026-02-07 20:36:52 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-07 20:36:52 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-07 20:36:52 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-07 20:36:52 | INFO | architecture.executor:load_registry:93 | Loaded 9 tool definitions
+2026-02-07 20:36:52 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-07 20:36:52 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-07 20:36:53 | INFO | architecture.sandbox:_install_deps:218 | Installing dependencies: numpy pandas beautifulsoup4 requests pydantic
+2026-02-07 20:36:56 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-07 20:36:56 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-07 20:36:56 | INFO | __main__:run:121 | Task received: Create a bar chart showing the popularity of programming languages...
+2026-02-07 20:36:56 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-07 20:36:56 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-07 20:36:56 | INFO | architecture.orchestrator:run:42 | Processing: Create a bar chart showing the popularity of programming languages...
+2026-02-07 20:36:56 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-07_20-36-05
+2026-02-07 20:36:57 | INFO | architecture.llm_manager:generate:132 | Generation success in 823.00ms
+2026-02-07 20:36:57 | INFO | architecture.orchestrator:run:46 | Task Classification: COMPLEX_TASK
+2026-02-07 20:36:57 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-07_20-36-05
+2026-02-07 20:36:58 | INFO | architecture.llm_manager:generate:132 | Generation success in 406.35ms
+2026-02-07 20:36:58 | INFO | architecture.orchestrator:run:53 | Decomposed into 2 subtasks
+2026-02-07 20:36:58 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-07_20-36-05
+2026-02-07 20:36:58 | INFO | architecture.llm_manager:generate:132 | Generation success in 158.61ms
+2026-02-07 20:36:58 | INFO | architecture.orchestrator:_retrieve_tools:141 | st_1 → GitHubTrendingTool (LLM selected, semantic: 0.468, tags: +0, in-domain)
+2026-02-07 20:36:58 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-07_20-36-05
+2026-02-07 20:36:58 | INFO | architecture.llm_manager:generate:132 | Generation success in 268.61ms
+2026-02-07 20:36:58 | INFO | architecture.orchestrator:_retrieve_tools:141 | st_2 → AdvancedGraphTool (LLM selected, semantic: 0.458, tags: +1, in-domain)
+2026-02-07 20:36:58 | INFO | architecture.orchestrator:_ensure_tools:190 | Toolsmith creating: Get the popularity of programming languages
+2026-02-07 20:36:58 | INFO | architecture.toolsmith:create_tool:114 | Request: 'Get the popularity of programming languages'
+2026-02-07 20:36:58 | INFO | architecture.toolsmith:create_tool:126 | Generating tool with LLM (attempt 1/3)...
+2026-02-07 20:36:58 | INFO | architecture.toolsmith:create_tool:129 | Available APIs context length: 683
+2026-02-07 20:36:58 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-07_20-36-05
+2026-02-07 20:37:00 | INFO | architecture.llm_manager:generate:132 | Generation success in 1454.15ms
+2026-02-07 20:37:00 | INFO | architecture.toolsmith:create_tool:181 | Tool saved: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\programming_language_popularity.py
+2026-02-07 20:37:00 | INFO | architecture.toolsmith:_update_registry:266 | Registry updated: ProgrammingLanguagePopularityTool
+2026-02-07 20:37:00 | INFO | architecture.orchestrator:_ensure_tools:192 | Toolsmith: Created ProgrammingLanguagePopularityTool with tags ['programming languages', 'popularity', 'trends'...
+2026-02-07 20:37:00 | INFO | architecture.orchestrator:_ensure_tools:213 | Tool assigned: ProgrammingLanguagePopularityTool
+2026-02-07 20:37:00 | INFO | architecture.orchestrator:_create_plan:270 | ============================================================
+2026-02-07 20:37:00 | INFO | architecture.orchestrator:_create_plan:271 | EXECUTION PLAN: 2 steps
+2026-02-07 20:37:00 | INFO | architecture.orchestrator:_create_plan:272 | ============================================================
+2026-02-07 20:37:00 | INFO | architecture.orchestrator:_create_plan:276 |   Step 1: Get the popularity of programming languages...
+2026-02-07 20:37:00 | INFO | architecture.orchestrator:_create_plan:277 |     Tool: ProgrammingLanguagePopularityTool
+2026-02-07 20:37:00 | INFO | architecture.orchestrator:_create_plan:278 |     no dependencies, uses description
+2026-02-07 20:37:00 | INFO | architecture.orchestrator:_create_plan:276 |   Step 2: Create a bar chart from language popularity data...
+2026-02-07 20:37:00 | INFO | architecture.orchestrator:_create_plan:277 |     Tool: AdvancedGraphTool
+2026-02-07 20:37:00 | INFO | architecture.orchestrator:_create_plan:278 |     depends_on=[1], input_from=step_1
+2026-02-07 20:37:00 | INFO | architecture.orchestrator:_create_plan:279 | ============================================================
+2026-02-07 20:37:00 | INFO | architecture.executor:execute:99 | Executing plan: Create a bar chart showing the popularity of programming languages
+2026-02-07 20:37:00 | INFO | architecture.executor:execute:100 | Total steps: 2
+2026-02-07 20:37:00 | INFO | architecture.executor:_execute_step:174 | Step 1: Get the popularity of programming languages using ProgrammingLanguagePopularityTool
+2026-02-07 20:37:00 | INFO | architecture.executor:load_registry:93 | Loaded 10 tool definitions
+2026-02-07 20:37:00 | INFO | architecture.executor:_execute_step:216 | Step 1: Using description as input
+2026-02-07 20:37:00 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_20-36-05
+2026-02-07 20:37:00 | INFO | architecture.llm_manager:generate:132 | Generation success in 161.99ms
+2026-02-07 20:37:00 | INFO | architecture.executor:_infer_args:587 | LLM extracted args: {'language': 'programming languages'}
+2026-02-07 20:37:00 | INFO | architecture.executor:_execute_step:219 | DEBUG: Executor inferred args = {'language': 'programming languages'}
+2026-02-07 20:37:00 | INFO | architecture.executor:_execute_step:220 | DEBUG: Args type = <class 'dict'>
+2026-02-07 20:37:00 | INFO | architecture.sandbox:_install_deps:218 | Installing dependencies: beautifulsoup4 requests pydantic
+2026-02-07 20:37:03 | INFO | architecture.sandbox:execute_with_args:515 | DEBUG: sandbox received args = {'language': 'programming languages'}
+2026-02-07 20:37:03 | INFO | architecture.sandbox:execute_with_args:516 | DEBUG: args_json = {"language": "programming languages"}
+2026-02-07 20:37:03 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: Runner script line: args = json.loads('{"language": "programming languages"}')
+2026-02-07 20:37:03 | INFO | architecture.sandbox:execute_with_args:522 | Executing tool with args: ProgrammingLanguagePopularityTool
+2026-02-07 20:37:03 | INFO | architecture.sandbox:execute_with_args:523 | Args JSON being passed: {"language": "programming languages"}
+2026-02-07 20:37:06 | INFO | architecture.executor:_execute_step:237 | Step 1 SANDBOX Profile: time=2043.816ms, peak_mem=1.7091MB, delta_mem=0.0000MB, efficiency=0.00%, grade=critical
+2026-02-07 20:37:06 | INFO | architecture.executor:_execute_step:247 |    (Total round-trip: 5905.58ms)
+2026-02-07 20:37:06 | ERROR | architecture.executor:_execute_step:256 | Step 1: Failed - unhashable type: 'dict'
+2026-02-07 20:37:06 | INFO | architecture.reflector:reflect:295 | Reflected: unknown, retry=True, remaining=2
+2026-02-07 20:37:06 | INFO | architecture.executor:_handle_failure:293 | Step 1: Failure type=tool_code, retrying...
+2026-02-07 20:37:06 | INFO | architecture.executor:_retry_with_regenerated_tool:353 | Step 1: Regenerating tool with error context
+2026-02-07 20:37:06 | INFO | architecture.toolsmith:create_tool:114 | Request: 'Task: Get the popularity of programming languages
+
+Input data sample:
+Get the popularity of programming languages
+
+Previous implementation failed with error:
+unhashable type: 'dict'
+
+Create a tool that correctly handles this input format and fixes the error.'
+2026-02-07 20:37:06 | INFO | architecture.toolsmith:create_tool:126 | Generating tool with LLM (attempt 1/3)...
+2026-02-07 20:37:06 | INFO | architecture.toolsmith:create_tool:129 | Available APIs context length: 605
+2026-02-07 20:37:06 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-07_20-36-05
+2026-02-07 20:37:07 | INFO | architecture.llm_manager:generate:132 | Generation success in 1632.08ms
+2026-02-07 20:37:07 | INFO | architecture.toolsmith:create_tool:181 | Tool saved: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\get_programming_language_popularity.py
+2026-02-07 20:37:07 | INFO | architecture.toolsmith:_update_registry:266 | Registry updated: GetProgrammingLanguagePopularity
+2026-02-07 20:37:07 | INFO | architecture.executor:_retry_with_regenerated_tool:364 | Step 1: Toolsmith result = Created GetProgrammingLanguagePopularity with tags ['programming', 'language', 'popularity']
+2026-02-07 20:37:07 | INFO | architecture.executor:load_registry:93 | Loaded 11 tool definitions
+2026-02-07 20:37:07 | INFO | architecture.executor:_retry_with_regenerated_tool:385 | Step 1: Using regenerated tool GetProgrammingLanguagePopularity
+2026-02-07 20:37:07 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_20-36-05
+2026-02-07 20:37:08 | INFO | architecture.llm_manager:generate:132 | Generation success in 265.57ms
+2026-02-07 20:37:08 | INFO | architecture.executor:_infer_args:587 | LLM extracted args: {'query': 'programming languages'}
+2026-02-07 20:37:08 | INFO | architecture.sandbox:execute_with_args:515 | DEBUG: sandbox received args = {'query': 'programming languages'}
+2026-02-07 20:37:08 | INFO | architecture.sandbox:execute_with_args:516 | DEBUG: args_json = {"query": "programming languages"}
+2026-02-07 20:37:08 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: Runner script line: args = json.loads('{"query": "programming languages"}')
+2026-02-07 20:37:08 | INFO | architecture.sandbox:execute_with_args:522 | Executing tool with args: GetProgrammingLanguagePopularity
+2026-02-07 20:37:08 | INFO | architecture.sandbox:execute_with_args:523 | Args JSON being passed: {"query": "programming languages"}
+2026-02-07 20:37:08 | INFO | architecture.sandbox:_pre_install_essentials:161 | Essential packages pre-installed
+2026-02-07 20:37:10 | INFO | architecture.executor:_retry_with_regenerated_tool:397 | Step 1: Retry succeeded with GetProgrammingLanguagePopularity
+2026-02-07 20:37:10 | INFO | architecture.executor:_execute_step:174 | Step 2: Create a bar chart from language popularity data using AdvancedGraphTool
+2026-02-07 20:37:10 | INFO | architecture.executor:load_registry:93 | Loaded 11 tool definitions
+2026-02-07 20:37:10 | INFO | architecture.executor:_execute_step:206 | Step 2: Using input from step 1
+2026-02-07 20:37:10 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_20-36-05
+2026-02-07 20:37:10 | WARNING | architecture.llm_manager:generate:139 | Attempt 1/3 failed using key 1: litellm.BadRequestError: GroqException - {"error":{"message":"Failed to generate JSON. Please adjust your prompt. See 'failed_generation' for more details.","type":"invalid_request_error","code":"json_validate_failed","failed_generation":"max completion tokens reached before generating a valid document"}}
+
+2026-02-07 20:37:11 | INFO | architecture.llm_manager:generate:132 | Generation success in 1838.09ms
+2026-02-07 20:37:11 | INFO | architecture.executor:_infer_args:587 | LLM extracted args: {'chart_type': 'bar', 'data': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 'title': 'Language Popularity', 'xlabel': 'Language', 'ylabel': 'Popularity', 'output_path': './chart.png', 'theme': 'default', 'figsize': [10, 6], 'colors': ['blue'], 'legend_labels': ['Language'], 'show_values': True, 'grid': True}
+2026-02-07 20:37:11 | INFO | architecture.executor:_execute_step:219 | DEBUG: Executor inferred args = {'chart_type': 'bar', 'data': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 'title': 'Language Popularity', 'xlabel': 'Language', 'ylabel': 'Popularity', 'output_path': './chart.png', 'theme': 'default', 'figsize': [10, 6], 'colors': ['blue'], 'legend_labels': ['Language'], 'show_values': True, 'grid': True}
+2026-02-07 20:37:11 | INFO | architecture.executor:_execute_step:220 | DEBUG: Args type = <class 'dict'>
+2026-02-07 20:37:11 | INFO | architecture.sandbox:_install_deps:218 | Installing dependencies: matplotlib
+2026-02-07 20:37:18 | INFO | architecture.sandbox:execute_with_args:515 | DEBUG: sandbox received args = {'chart_type': 'bar', 'data': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 'title': 'Language Popularity', 'xlabel': 'Language', 'ylabel': 'Popularity', 'output_path': './chart.png', 'theme': 'default', 'figsize': [10, 6], 'colors': ['blue'], 'legend_labels': ['Language'], 'show_values': True, 'grid': True}
+2026-02-07 20:37:18 | INFO | architecture.sandbox:execute_with_args:516 | DEBUG: args_json = {"chart_type": "bar", "data": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], "title": "Language Popularity", "xlabel": "Language", "ylabel": "Popularity", "output_path": "./chart.png", "theme": "default", "figsize": [10, 6], "colors": ["blue"], "legend_labels": ["Language"], "show_values": true, "grid": true}
+2026-02-07 20:37:18 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: Runner script line: args = json.loads('{"chart_type": "bar", "data": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], "title": "Language Popularity", "xlabel": "Language", "ylabel": "Popularity", "output_path": "./chart.png", "theme": "default", "figsize": [10, 6], "colors": ["blue"], "legend_labels": ["Language"], "show_values": true, "grid": true}')
+2026-02-07 20:37:18 | INFO | architecture.sandbox:execute_with_args:522 | Executing tool with args: AdvancedGraphTool
+2026-02-07 20:37:18 | INFO | architecture.sandbox:execute_with_args:523 | Args JSON being passed: {"chart_type": "bar", "data": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], "title": "Language Popularity", "xlabel": "Language", "ylabel": "Popularity", "output_path": "./chart.png", "theme": "default", "figsize": [10, 6], "colors": ["blue"], "legend_labels": ["Language"], "show_values": true, "grid": true}
+2026-02-07 20:37:19 | INFO | architecture.executor:_execute_step:237 | Step 2 SANDBOX Profile: time=0.797ms, peak_mem=0.0045MB, delta_mem=0.0000MB, efficiency=0.00%, grade=critical
+2026-02-07 20:37:19 | INFO | architecture.executor:_execute_step:247 |    (Total round-trip: 7868.67ms)
+2026-02-07 20:37:19 | ERROR | architecture.executor:_execute_step:256 | Step 2: Failed - [Errno 30] Read-only file system: 'workspace'
+2026-02-07 20:37:19 | INFO | architecture.reflector:reflect:295 | Reflected: unknown, retry=True, remaining=2
+2026-02-07 20:37:19 | INFO | architecture.executor:_handle_failure:293 | Step 2: Failure type=tool_code, retrying...
+2026-02-07 20:37:19 | INFO | architecture.executor:_retry_with_regenerated_tool:353 | Step 2: Regenerating tool with error context
+2026-02-07 20:37:19 | INFO | architecture.toolsmith:create_tool:114 | Request: 'Task: Create a bar chart from language popularity data
+
+Input data sample:
+ - 1
+ - 2
+ - 3
+ - 4
+ - 5
+ - 6
+ - 7
+ - 8
+ - 9
+ - 10
+ - 11
+ - 12
+ - 13
+ - 14
+ - 15
+ - 16
+ - 17
+ - 18
+ - 19
+ - 20
+
+
+Previous implementation failed with error:
+[Errno 30] Read-only file system: 'workspace'
+
+Create a tool that correctly handles this input format and fixes the error.'
+2026-02-07 20:37:19 | INFO | architecture.toolsmith:create_tool:126 | Generating tool with LLM (attempt 1/3)...
+2026-02-07 20:37:19 | INFO | architecture.toolsmith:create_tool:129 | Available APIs context length: 667
+2026-02-07 20:37:19 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-07_20-36-05
+2026-02-07 20:37:21 | INFO | architecture.llm_manager:generate:132 | Generation success in 1410.80ms
+2026-02-07 20:37:21 | INFO | architecture.toolsmith:create_tool:181 | Tool saved: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\language_popularity_chart_tool.py
+2026-02-07 20:37:21 | INFO | architecture.toolsmith:_update_registry:266 | Registry updated: LanguagePopularityChartTool
+2026-02-07 20:37:21 | INFO | architecture.executor:_retry_with_regenerated_tool:364 | Step 2: Toolsmith result = Created LanguagePopularityChartTool with tags ['chart', 'data', 'visualization']
+2026-02-07 20:37:21 | INFO | architecture.executor:load_registry:93 | Loaded 12 tool definitions
+2026-02-07 20:37:21 | INFO | architecture.executor:_retry_with_regenerated_tool:385 | Step 2: Using regenerated tool LanguagePopularityChartTool
+2026-02-07 20:37:21 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_20-36-05
+2026-02-07 20:37:21 | INFO | architecture.llm_manager:generate:132 | Generation success in 275.20ms
+2026-02-07 20:37:21 | INFO | architecture.executor:_infer_args:587 | LLM extracted args: {'data': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]}
+2026-02-07 20:37:21 | INFO | architecture.sandbox:execute_with_args:515 | DEBUG: sandbox received args = {'data': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]}
+2026-02-07 20:37:21 | INFO | architecture.sandbox:execute_with_args:516 | DEBUG: args_json = {"data": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]}
+2026-02-07 20:37:21 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: Runner script line: args = json.loads('{"data": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]}')
+2026-02-07 20:37:21 | INFO | architecture.sandbox:execute_with_args:522 | Executing tool with args: LanguagePopularityChartTool
+2026-02-07 20:37:21 | INFO | architecture.sandbox:execute_with_args:523 | Args JSON being passed: {"data": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]}
+2026-02-07 20:37:22 | WARNING | architecture.sandbox:execute_with_args:595 | Failed to parse sandbox output: No valid JSON output found, Raw output: Traceback (most recent call last):
+  File "/tools/_runner_LanguagePopularityChartTool.py", line 21, in <module>
+    from language_popularity_chart_tool import *
+  File "/tools/language_popularity_chart_tool.py", line 4, in <module>
+    class LanguagePopularityChartArgs(BaseModel):
+                                      ^^^^^^^^^
+NameError: name 'BaseModel' is not defined
+
+2026-02-07 20:37:22 | WARNING | architecture.executor:_retry_with_regenerated_tool:402 | Step 2: Retry with LanguagePopularityChartTool failed - Traceback (most recent call last):
+  File "/tools/_runner_LanguagePopularityChartTool.py", line 21, in <module>
+    from language_popularity_chart_tool import *
+  File "/tools/language_popularity_chart_tool.py", line 4, in <module>
+    class LanguagePopularityChartArgs(BaseModel):
+                                      ^^^^^^^^^
+NameError: name 'BaseModel' is not defined
+
+2026-02-07 20:37:22 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 500 | Temp: 0.3 | Session: 2026-02-07_20-36-05
+2026-02-07 20:37:23 | INFO | architecture.llm_manager:generate:132 | Generation success in 922.14ms
+2026-02-07 20:37:23 | INFO | __main__:main:218 | Completed in 26456.55ms
+2026-02-07 20:37:23 | INFO | __main__:main:219 | Zone: public
+2026-02-07 20:37:23 | INFO | architecture.executor:export_profiles:545 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260207_203723.json
+2026-02-07 20:37:28 | INFO | architecture.sandbox:stop:205 | Sandbox container stopped: 27ce74a75d8f
+2026-02-07 20:37:28 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

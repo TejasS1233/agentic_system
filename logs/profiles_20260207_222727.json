@@ -1,0 +1,48 @@
+{
+  "exported_at": "2026-02-07T22:27:27.375190",
+  "summary": {
+    "ThadomalShahaniPlacementStats": {
+      "call_count": 1,
+      "avg_time_ms": 295.383,
+      "max_time_ms": 295.383,
+      "min_time_ms": 295.383,
+      "avg_memory_mb": 0.3926,
+      "max_memory_mb": 0.3926,
+      "avg_memory_delta_mb": 0.1788,
+      "avg_efficiency": 0.8507,
+      "last_grade": "slow"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 1,
+    "tools_profiled": [
+      "ThadomalShahaniPlacementStats"
+    ],
+    "execution_time_ms": {
+      "min": 295.383,
+      "max": 295.383,
+      "mean": 295.383
+    },
+    "peak_memory_mb": {
+      "min": 0.3926,
+      "max": 0.3926,
+      "mean": 0.3926
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "ThadomalShahaniPlacementStats": [
+      {
+        "tool_name": "ThadomalShahaniPlacementStats",
+        "execution_time_ms": 295.383,
+        "peak_memory_mb": 0.3926,
+        "memory_delta_mb": 0.1788,
+        "latency_grade": "slow",
+        "efficiency_score": 0.8507,
+        "success": true
+      }
+    ]
+  }
+}

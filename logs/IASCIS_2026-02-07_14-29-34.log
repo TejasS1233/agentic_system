@@ -1,0 +1,136 @@
+2026-02-07 14:29:38 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-07 14:30:45 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-07 14:30:45 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-07 14:30:45 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-07 14:30:45 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-07 14:30:45 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-07 14:30:45 | INFO | architecture.sandbox:__init__:152 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs
+2026-02-07 14:30:46 | INFO | architecture.sandbox:start:190 | Sandbox container started: abe7c0e2af22
+2026-02-07 14:30:46 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-07 14:30:46 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-07 14:30:46 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-07 14:30:46 | INFO | architecture.executor:load_registry:93 | Loaded 8 tool definitions
+2026-02-07 14:30:46 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-07 14:30:46 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-07 14:30:47 | INFO | architecture.sandbox:_install_deps:218 | Installing dependencies: pydantic numpy pandas beautifulsoup4 requests
+2026-02-07 14:30:50 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-07 14:30:50 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-07 14:30:50 | INFO | __main__:run:121 | Task received: get me a random dog image...
+2026-02-07 14:30:50 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-07 14:30:50 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-07 14:30:50 | INFO | architecture.orchestrator:run:42 | Processing: get me a random dog image...
+2026-02-07 14:30:50 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-07_14-29-34
+2026-02-07 14:30:50 | INFO | architecture.llm_manager:generate:132 | Generation success in 610.34ms
+2026-02-07 14:30:50 | INFO | architecture.orchestrator:run:46 | Task Classification: COMPLEX_TASK
+2026-02-07 14:30:50 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-07_14-29-34
+2026-02-07 14:30:51 | INFO | architecture.llm_manager:generate:132 | Generation success in 364.03ms
+2026-02-07 14:30:51 | INFO | architecture.orchestrator:run:53 | Decomposed into 2 subtasks
+2026-02-07 14:30:51 | INFO | architecture.orchestrator:_retrieve_tools:148 | st_1 → PopulationCensusSearchTool (similarity: 0.223, in-domain, matched: False)
+2026-02-07 14:30:51 | INFO | architecture.orchestrator:_retrieve_tools:148 | st_2 → GitHubProfileSearchTool (similarity: 0.190, in-domain, matched: False)
+2026-02-07 14:30:51 | INFO | architecture.orchestrator:_ensure_tools:208 | Toolsmith creating: Search for random dog image
+2026-02-07 14:30:51 | INFO | architecture.toolsmith:create_tool:114 | Request: 'Search for random dog image'
+2026-02-07 14:30:51 | INFO | architecture.toolsmith:create_tool:126 | Generating tool with LLM (attempt 1/3)...
+2026-02-07 14:30:51 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-07_14-29-34
+2026-02-07 14:30:51 | WARNING | architecture.llm_manager:generate:139 | Attempt 1/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k0kdqngdfbsbrcwqyqcz5s9z` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98168, Requested 3239. Please try again in 20m15.648s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-07 14:30:52 | WARNING | architecture.llm_manager:generate:139 | Attempt 2/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k0kdqngdfbsbrcwqyqcz5s9z` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98167, Requested 3239. Please try again in 20m14.784s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-07 14:30:54 | WARNING | architecture.llm_manager:generate:139 | Attempt 3/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k0kdqngdfbsbrcwqyqcz5s9z` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98165, Requested 3239. Please try again in 20m13.056s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-07 14:30:54 | ERROR | architecture.llm_manager:generate:157 | All keys failed. Last error: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k0kdqngdfbsbrcwqyqcz5s9z` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98165, Requested 3239. Please try again in 20m13.056s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-07 14:30:54 | INFO | architecture.orchestrator:_ensure_tools:210 | Toolsmith: Tool creation failed: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"R...
+2026-02-07 14:30:54 | INFO | architecture.orchestrator:_ensure_tools:203 | Retrying tool creation to avoid duplicates (attempt 2)...
+2026-02-07 14:30:54 | INFO | architecture.orchestrator:_ensure_tools:208 | Toolsmith creating: Search for random dog image (Create a NEW tool, do not use: )
+2026-02-07 14:30:54 | INFO | architecture.toolsmith:create_tool:114 | Request: 'Search for random dog image (Create a NEW tool, do not use: )'
+2026-02-07 14:30:54 | INFO | architecture.toolsmith:create_tool:126 | Generating tool with LLM (attempt 1/3)...
+2026-02-07 14:30:54 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-07_14-29-34
+2026-02-07 14:30:54 | WARNING | architecture.llm_manager:generate:139 | Attempt 1/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k0kdqngdfbsbrcwqyqcz5s9z` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98165, Requested 3272. Please try again in 20m41.568s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-07 14:30:55 | WARNING | architecture.llm_manager:generate:139 | Attempt 2/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k0kdqngdfbsbrcwqyqcz5s9z` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98163, Requested 3272. Please try again in 20m39.84s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-07 14:30:57 | WARNING | architecture.llm_manager:generate:139 | Attempt 3/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k0kdqngdfbsbrcwqyqcz5s9z` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98161, Requested 3272. Please try again in 20m38.112s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-07 14:30:57 | ERROR | architecture.llm_manager:generate:157 | All keys failed. Last error: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k0kdqngdfbsbrcwqyqcz5s9z` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98161, Requested 3272. Please try again in 20m38.112s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-07 14:30:57 | INFO | architecture.orchestrator:_ensure_tools:210 | Toolsmith: Tool creation failed: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"R...
+2026-02-07 14:31:01 | INFO | architecture.orchestrator:_ensure_tools:252 | Fallback assigned: PopulationCensusPlotter
+2026-02-07 14:31:01 | INFO | architecture.orchestrator:_ensure_tools:208 | Toolsmith creating: Fetch and return a random dog image from search results
+2026-02-07 14:31:01 | INFO | architecture.toolsmith:create_tool:114 | Request: 'Fetch and return a random dog image from search results'
+2026-02-07 14:31:01 | INFO | architecture.toolsmith:create_tool:126 | Generating tool with LLM (attempt 1/3)...
+2026-02-07 14:31:01 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-07_14-29-34
+2026-02-07 14:31:01 | WARNING | architecture.llm_manager:generate:139 | Attempt 1/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k0kdqngdfbsbrcwqyqcz5s9z` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98157, Requested 3250. Please try again in 20m15.648s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-07 14:31:02 | WARNING | architecture.llm_manager:generate:139 | Attempt 2/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k0kdqngdfbsbrcwqyqcz5s9z` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98156, Requested 3250. Please try again in 20m14.784s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-07 14:31:04 | WARNING | architecture.llm_manager:generate:139 | Attempt 3/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k0kdqngdfbsbrcwqyqcz5s9z` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98153, Requested 3250. Please try again in 20m12.192s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-07 14:31:04 | ERROR | architecture.llm_manager:generate:157 | All keys failed. Last error: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k0kdqngdfbsbrcwqyqcz5s9z` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98153, Requested 3250. Please try again in 20m12.192s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-07 14:31:04 | INFO | architecture.orchestrator:_ensure_tools:210 | Toolsmith: Tool creation failed: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"R...
+2026-02-07 14:31:04 | INFO | architecture.orchestrator:_ensure_tools:203 | Retrying tool creation to avoid duplicates (attempt 2)...
+2026-02-07 14:31:04 | INFO | architecture.orchestrator:_ensure_tools:208 | Toolsmith creating: Fetch and return a random dog image from search results (Create a NEW tool, do not use: PopulationCensusPlotter)
+2026-02-07 14:31:04 | INFO | architecture.toolsmith:create_tool:114 | Request: 'Fetch and return a random dog image from search results (Create a NEW tool, do not use: PopulationCensusPlotter)'
+2026-02-07 14:31:04 | INFO | architecture.toolsmith:create_tool:126 | Generating tool with LLM (attempt 1/3)...
+2026-02-07 14:31:04 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-07_14-29-34
+2026-02-07 14:31:04 | WARNING | architecture.llm_manager:generate:139 | Attempt 1/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k0kdqngdfbsbrcwqyqcz5s9z` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98153, Requested 3282. Please try again in 20m39.84s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-07 14:31:05 | INFO | architecture.sandbox:_pre_install_essentials:161 | Essential packages pre-installed
+2026-02-07 14:31:05 | WARNING | architecture.llm_manager:generate:139 | Attempt 2/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k0kdqngdfbsbrcwqyqcz5s9z` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98152, Requested 3282. Please try again in 20m38.976s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-07 14:31:07 | WARNING | architecture.llm_manager:generate:139 | Attempt 3/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k0kdqngdfbsbrcwqyqcz5s9z` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98150, Requested 3282. Please try again in 20m37.248s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-07 14:31:07 | ERROR | architecture.llm_manager:generate:157 | All keys failed. Last error: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k0kdqngdfbsbrcwqyqcz5s9z` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98150, Requested 3282. Please try again in 20m37.248s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-07 14:31:07 | INFO | architecture.orchestrator:_ensure_tools:210 | Toolsmith: Tool creation failed: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"R...
+2026-02-07 14:31:10 | INFO | architecture.orchestrator:_ensure_tools:252 | Fallback assigned: PopulationCensusTool
+2026-02-07 14:31:10 | INFO | architecture.orchestrator:_create_plan:282 | ============================================================
+2026-02-07 14:31:10 | INFO | architecture.orchestrator:_create_plan:283 | EXECUTION PLAN: 2 steps
+2026-02-07 14:31:10 | INFO | architecture.orchestrator:_create_plan:284 | ============================================================
+2026-02-07 14:31:10 | INFO | architecture.orchestrator:_create_plan:288 |   Step 1: Search for random dog image...
+2026-02-07 14:31:10 | INFO | architecture.orchestrator:_create_plan:289 |     Tool: PopulationCensusPlotter
+2026-02-07 14:31:10 | INFO | architecture.orchestrator:_create_plan:290 |     no dependencies, uses description
+2026-02-07 14:31:10 | INFO | architecture.orchestrator:_create_plan:288 |   Step 2: Fetch and return a random dog image from search re...
+2026-02-07 14:31:10 | INFO | architecture.orchestrator:_create_plan:289 |     Tool: PopulationCensusTool
+2026-02-07 14:31:10 | INFO | architecture.orchestrator:_create_plan:290 |     depends_on=[1], input_from=step_1
+2026-02-07 14:31:10 | INFO | architecture.orchestrator:_create_plan:291 | ============================================================
+2026-02-07 14:31:10 | INFO | architecture.executor:execute:99 | Executing plan: get me a random dog image
+2026-02-07 14:31:10 | INFO | architecture.executor:execute:100 | Total steps: 2
+2026-02-07 14:31:10 | INFO | architecture.executor:_execute_step:129 | Step 1: Search for random dog image using PopulationCensusPlotter
+2026-02-07 14:31:10 | INFO | architecture.executor:load_registry:93 | Loaded 8 tool definitions
+2026-02-07 14:31:10 | INFO | architecture.executor:_execute_step:171 | Step 1: Using description as input
+2026-02-07 14:31:10 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_14-29-34
+2026-02-07 14:31:10 | INFO | architecture.llm_manager:generate:132 | Generation success in 110.62ms
+2026-02-07 14:31:10 | INFO | architecture.executor:_infer_args:542 | LLM extracted args: {'data': 'random dog image'}
+2026-02-07 14:31:10 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'data': 'random dog image'}
+2026-02-07 14:31:10 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-07 14:31:10 | INFO | architecture.sandbox:_install_deps:218 | Installing dependencies: matplotlib
+2026-02-07 14:31:18 | INFO | architecture.sandbox:execute_with_args:515 | DEBUG: sandbox received args = {'data': 'random dog image'}
+2026-02-07 14:31:18 | INFO | architecture.sandbox:execute_with_args:516 | DEBUG: args_json = {"data": "random dog image"}
+2026-02-07 14:31:18 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: Runner script line: args = json.loads('{"data": "random dog image"}')
+2026-02-07 14:31:18 | INFO | architecture.sandbox:execute_with_args:522 | Executing tool with args: PopulationCensusPlotter
+2026-02-07 14:31:18 | INFO | architecture.sandbox:execute_with_args:523 | Args JSON being passed: {"data": "random dog image"}
+2026-02-07 14:31:19 | INFO | architecture.executor:_execute_step:192 | Step 1 SANDBOX Profile: time=0.096ms, peak_mem=0.0018MB, delta_mem=0.0006MB, efficiency=99.99%, grade=fast
+2026-02-07 14:31:19 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 8747.36ms)
+2026-02-07 14:31:19 | INFO | architecture.executor:_execute_step:207 | Step 1: Completed in 8.75s
+2026-02-07 14:31:19 | INFO | architecture.executor:_execute_step:129 | Step 2: Fetch and return a random dog image from search results using PopulationCensusTool
+2026-02-07 14:31:19 | INFO | architecture.executor:load_registry:93 | Loaded 8 tool definitions
+2026-02-07 14:31:19 | INFO | architecture.executor:_execute_step:161 | Step 2: Using input from step 1
+2026-02-07 14:31:19 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_14-29-34
+2026-02-07 14:31:19 | INFO | architecture.llm_manager:generate:132 | Generation success in 174.82ms
+2026-02-07 14:31:19 | INFO | architecture.executor:_infer_args:542 | LLM extracted args: {'country': None}
+2026-02-07 14:31:19 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'country': None}
+2026-02-07 14:31:19 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-07 14:31:19 | INFO | architecture.sandbox:execute_with_args:515 | DEBUG: sandbox received args = {'country': None}
+2026-02-07 14:31:19 | INFO | architecture.sandbox:execute_with_args:516 | DEBUG: args_json = {"country": null}
+2026-02-07 14:31:19 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: Runner script line: args = json.loads('{"country": null}')
+2026-02-07 14:31:19 | INFO | architecture.sandbox:execute_with_args:522 | Executing tool with args: PopulationCensusTool
+2026-02-07 14:31:19 | INFO | architecture.sandbox:execute_with_args:523 | Args JSON being passed: {"country": null}
+2026-02-07 14:31:22 | INFO | architecture.executor:_execute_step:192 | Step 2 SANDBOX Profile: time=1000.781ms, peak_mem=0.3980MB, delta_mem=0.1891MB, efficiency=49.84%, grade=critical
+2026-02-07 14:31:22 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 2184.68ms)
+2026-02-07 14:31:22 | INFO | architecture.executor:_execute_step:207 | Step 2: Completed in 2.18s
+2026-02-07 14:31:22 | INFO | __main__:main:218 | Completed in 31968.95ms
+2026-02-07 14:31:22 | INFO | __main__:main:219 | Zone: public
+2026-02-07 14:31:22 | INFO | architecture.executor:export_profiles:500 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260207_143122.json
+2026-02-07 14:31:27 | INFO | architecture.sandbox:stop:205 | Sandbox container stopped: abe7c0e2af22
+2026-02-07 14:31:27 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

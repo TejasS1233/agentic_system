@@ -1,0 +1,71 @@
+{
+  "exported_at": "2026-02-07T14:54:38.344472",
+  "summary": {
+    "RoyalRumble2026ParticipantsTool": {
+      "call_count": 1,
+      "avg_time_ms": 1002.892,
+      "max_time_ms": 1002.892,
+      "min_time_ms": 1002.892,
+      "avg_memory_mb": 5.0791,
+      "max_memory_mb": 5.0791,
+      "avg_memory_delta_mb": 4.3843,
+      "avg_efficiency": 0.4797,
+      "last_grade": "critical"
+    },
+    "SearchWinnerExtractor": {
+      "call_count": 1,
+      "avg_time_ms": 1510.65,
+      "max_time_ms": 1510.65,
+      "min_time_ms": 1510.65,
+      "avg_memory_mb": 0.7466,
+      "max_memory_mb": 0.7466,
+      "avg_memory_delta_mb": 0.6138,
+      "avg_efficiency": 0.497,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 2,
+    "tools_profiled": [
+      "RoyalRumble2026ParticipantsTool",
+      "SearchWinnerExtractor"
+    ],
+    "execution_time_ms": {
+      "min": 1002.892,
+      "max": 1510.65,
+      "mean": 1256.7710000000002
+    },
+    "peak_memory_mb": {
+      "min": 0.7466,
+      "max": 5.0791,
+      "mean": 2.91285
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "RoyalRumble2026ParticipantsTool": [
+      {
+        "tool_name": "RoyalRumble2026ParticipantsTool",
+        "execution_time_ms": 1002.892,
+        "peak_memory_mb": 5.0791,
+        "memory_delta_mb": 4.3843,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4797,
+        "success": true
+      }
+    ],
+    "SearchWinnerExtractor": [
+      {
+        "tool_name": "SearchWinnerExtractor",
+        "execution_time_ms": 1510.65,
+        "peak_memory_mb": 0.7466,
+        "memory_delta_mb": 0.6138,
+        "latency_grade": "critical",
+        "efficiency_score": 0.497,
+        "success": true
+      }
+    ]
+  }
+}

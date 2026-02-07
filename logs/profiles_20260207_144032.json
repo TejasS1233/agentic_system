@@ -1,0 +1,71 @@
+{
+  "exported_at": "2026-02-07T14:40:32.281616",
+  "summary": {
+    "DogImageSearchTool": {
+      "call_count": 1,
+      "avg_time_ms": 661.162,
+      "max_time_ms": 661.162,
+      "min_time_ms": 661.162,
+      "avg_memory_mb": 0.1285,
+      "max_memory_mb": 0.1285,
+      "avg_memory_delta_mb": 0.0668,
+      "avg_efficiency": 0.6689,
+      "last_grade": "slow"
+    },
+    "RandomDogImageTool": {
+      "call_count": 1,
+      "avg_time_ms": 0.065,
+      "max_time_ms": 0.065,
+      "min_time_ms": 0.065,
+      "avg_memory_mb": 0.0014,
+      "max_memory_mb": 0.0014,
+      "avg_memory_delta_mb": 0.0,
+      "avg_efficiency": 0.0,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 2,
+    "tools_profiled": [
+      "DogImageSearchTool",
+      "RandomDogImageTool"
+    ],
+    "execution_time_ms": {
+      "min": 0.065,
+      "max": 661.162,
+      "mean": 330.61350000000004
+    },
+    "peak_memory_mb": {
+      "min": 0.0014,
+      "max": 0.1285,
+      "mean": 0.06495000000000001
+    },
+    "success_rate": 0.5
+  },
+  "raw_profiles": {
+    "DogImageSearchTool": [
+      {
+        "tool_name": "DogImageSearchTool",
+        "execution_time_ms": 661.162,
+        "peak_memory_mb": 0.1285,
+        "memory_delta_mb": 0.0668,
+        "latency_grade": "slow",
+        "efficiency_score": 0.6689,
+        "success": true
+      }
+    ],
+    "RandomDogImageTool": [
+      {
+        "tool_name": "RandomDogImageTool",
+        "execution_time_ms": 0.065,
+        "peak_memory_mb": 0.0014,
+        "memory_delta_mb": 0,
+        "latency_grade": "critical",
+        "success": false,
+        "error_message": "RandomDogImageTool.run() got an unexpected keyword argument 'input'"
+      }
+    ]
+  }
+}

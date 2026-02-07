@@ -1,0 +1,96 @@
+2026-02-07 22:18:53 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-07 22:19:29 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-07 22:19:29 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-07 22:19:29 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-07 22:19:29 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-07 22:19:29 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-07 22:19:29 | INFO | architecture.sandbox:__init__:152 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs
+2026-02-07 22:19:29 | INFO | architecture.sandbox:start:192 | Sandbox container started: 5a5948da3487
+2026-02-07 22:19:29 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-07 22:19:29 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-07 22:19:29 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-07 22:19:29 | INFO | architecture.executor:load_registry:93 | Loaded 10 tool definitions
+2026-02-07 22:19:29 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-07 22:19:29 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-07 22:19:30 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: beautifulsoup4 numpy requests pydantic pandas
+2026-02-07 22:19:34 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-07 22:19:34 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-07 22:19:34 | INFO | __main__:run:121 | Task received: search for top 5 strongest jojo stands...
+2026-02-07 22:19:34 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-07 22:19:34 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-07 22:19:34 | INFO | architecture.orchestrator:run:42 | Processing: search for top 5 strongest jojo stands...
+2026-02-07 22:19:34 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-07_22-18-42
+2026-02-07 22:19:35 | INFO | architecture.llm_manager:generate:132 | Generation success in 1175.28ms
+2026-02-07 22:19:35 | INFO | architecture.orchestrator:run:46 | Task Classification: COMPLEX_TASK
+2026-02-07 22:19:35 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-07_22-18-42
+2026-02-07 22:19:35 | INFO | architecture.llm_manager:generate:132 | Generation success in 319.13ms
+2026-02-07 22:19:35 | INFO | architecture.orchestrator:run:53 | Decomposed into 1 subtasks
+2026-02-07 22:19:35 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-07_22-18-42
+2026-02-07 22:19:36 | INFO | architecture.llm_manager:generate:132 | Generation success in 124.03ms
+2026-02-07 22:19:36 | INFO | architecture.orchestrator:_retrieve_tools:141 | st_1 → SerpSearchTool (LLM selected, semantic: 0.209, tags: +1, in-domain)
+2026-02-07 22:19:36 | INFO | architecture.orchestrator:_create_plan:270 | ============================================================
+2026-02-07 22:19:36 | INFO | architecture.orchestrator:_create_plan:271 | EXECUTION PLAN: 1 steps
+2026-02-07 22:19:36 | INFO | architecture.orchestrator:_create_plan:272 | ============================================================
+2026-02-07 22:19:36 | INFO | architecture.orchestrator:_create_plan:276 |   Step 1: Search for top 5 strongest JoJo stands...
+2026-02-07 22:19:36 | INFO | architecture.orchestrator:_create_plan:277 |     Tool: SerpSearchTool
+2026-02-07 22:19:36 | INFO | architecture.orchestrator:_create_plan:278 |     no dependencies, uses description
+2026-02-07 22:19:36 | INFO | architecture.orchestrator:_create_plan:279 | ============================================================
+2026-02-07 22:19:36 | INFO | architecture.executor:execute:99 | Executing plan: search for top 5 strongest jojo stands
+2026-02-07 22:19:36 | INFO | architecture.executor:execute:100 | Total steps: 1
+2026-02-07 22:19:36 | INFO | architecture.executor:_execute_step:174 | Step 1: Search for top 5 strongest JoJo stands using SerpSearchTool
+2026-02-07 22:19:36 | INFO | architecture.executor:load_registry:93 | Loaded 10 tool definitions
+2026-02-07 22:19:36 | INFO | architecture.executor:_execute_step:216 | Step 1: Using description as input
+2026-02-07 22:19:36 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_22-18-42
+2026-02-07 22:19:36 | INFO | architecture.llm_manager:generate:132 | Generation success in 202.60ms
+2026-02-07 22:19:36 | INFO | architecture.executor:_infer_args:598 | LLM extracted args: {'query': 'top 5 strongest JoJo stands', 'search_type': None, 'num_results': 5, 'location': None, 'language': None, 'safe_search': None}
+2026-02-07 22:19:36 | INFO | architecture.executor:_execute_step:219 | DEBUG: Executor inferred args = {'query': 'top 5 strongest JoJo stands', 'search_type': None, 'num_results': 5, 'location': None, 'language': None, 'safe_search': None}
+2026-02-07 22:19:36 | INFO | architecture.executor:_execute_step:220 | DEBUG: Args type = <class 'dict'>
+2026-02-07 22:19:36 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: requests pydantic
+2026-02-07 22:19:43 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: sandbox received args = {'query': 'top 5 strongest JoJo stands', 'search_type': None, 'num_results': 5, 'location': None, 'language': None, 'safe_search': None}
+2026-02-07 22:19:43 | INFO | architecture.sandbox:execute_with_args:518 | DEBUG: args_json = {"query": "top 5 strongest JoJo stands", "search_type": null, "num_results": 5, "location": null, "language": null, "safe_search": null}
+2026-02-07 22:19:43 | INFO | architecture.sandbox:execute_with_args:519 | DEBUG: Runner script line: args = json.loads('{"query": "top 5 strongest JoJo stands", "search_type": null, "num_results": 5, "location": null, "language": null, "safe_search": null}')
+2026-02-07 22:19:43 | INFO | architecture.sandbox:execute_with_args:524 | Executing tool with args: SerpSearchTool
+2026-02-07 22:19:43 | INFO | architecture.sandbox:execute_with_args:525 | Args JSON being passed: {"query": "top 5 strongest JoJo stands", "search_type": null, "num_results": 5, "location": null, "language": null, "safe_search": null}
+2026-02-07 22:19:44 | INFO | architecture.executor:_execute_step:237 | Step 1 SANDBOX Profile: time=0.141ms, peak_mem=0.0021MB, delta_mem=0.0000MB, efficiency=0.00%, grade=critical
+2026-02-07 22:19:44 | INFO | architecture.executor:_execute_step:247 |    (Total round-trip: 8109.87ms)
+2026-02-07 22:19:44 | ERROR | architecture.executor:_execute_step:256 | Step 1: Failed - 'NoneType' object has no attribute 'lower'
+2026-02-07 22:19:44 | INFO | architecture.reflector:reflect:295 | Reflected: unknown, retry=True, remaining=2
+2026-02-07 22:19:44 | INFO | architecture.executor:_handle_failure:293 | Step 1: Failure type=tool_code, retrying...
+2026-02-07 22:19:44 | INFO | architecture.executor:_retry_with_regenerated_tool:353 | Step 1: Regenerating tool with error context
+2026-02-07 22:19:44 | INFO | architecture.toolsmith:create_tool:114 | Request: 'Task: Search for top 5 strongest JoJo stands
+
+Input data sample:
+Search for top 5 strongest JoJo stands
+
+Previous implementation failed with error:
+'NoneType' object has no attribute 'lower'
+
+Create a tool that correctly handles this input format and fixes the error.'
+2026-02-07 22:19:44 | INFO | architecture.toolsmith:create_tool:126 | Generating tool with LLM (attempt 1/3)...
+2026-02-07 22:19:44 | INFO | architecture.toolsmith:create_tool:129 | Available APIs context length: 707
+2026-02-07 22:19:44 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-07_22-18-42
+2026-02-07 22:19:45 | INFO | architecture.llm_manager:generate:132 | Generation success in 1235.44ms
+2026-02-07 22:19:45 | INFO | architecture.toolsmith:create_tool:181 | Tool saved: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\jojo_stand_search.py
+2026-02-07 22:19:45 | INFO | architecture.toolsmith:_update_registry:266 | Registry updated: JoJoStandSearchTool
+2026-02-07 22:19:45 | INFO | architecture.executor:_retry_with_regenerated_tool:364 | Step 1: Toolsmith result = Created JoJoStandSearchTool with tags ['anime', 'manga', 'JoJo', 'stand']
+2026-02-07 22:19:45 | INFO | architecture.executor:load_registry:93 | Loaded 11 tool definitions
+2026-02-07 22:19:45 | INFO | architecture.executor:_retry_with_regenerated_tool:385 | Step 1: Using regenerated tool JoJoStandSearchTool
+2026-02-07 22:19:45 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_22-18-42
+2026-02-07 22:19:45 | INFO | architecture.llm_manager:generate:132 | Generation success in 160.61ms
+2026-02-07 22:19:45 | INFO | architecture.executor:_infer_args:598 | LLM extracted args: {'query': 'top 5 strongest JoJo stands'}
+2026-02-07 22:19:45 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: beautifulsoup4
+2026-02-07 22:19:47 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: sandbox received args = {'query': 'top 5 strongest JoJo stands'}
+2026-02-07 22:19:47 | INFO | architecture.sandbox:execute_with_args:518 | DEBUG: args_json = {"query": "top 5 strongest JoJo stands"}
+2026-02-07 22:19:47 | INFO | architecture.sandbox:execute_with_args:519 | DEBUG: Runner script line: args = json.loads('{"query": "top 5 strongest JoJo stands"}')
+2026-02-07 22:19:47 | INFO | architecture.sandbox:execute_with_args:524 | Executing tool with args: JoJoStandSearchTool
+2026-02-07 22:19:47 | INFO | architecture.sandbox:execute_with_args:525 | Args JSON being passed: {"query": "top 5 strongest JoJo stands"}
+2026-02-07 22:19:48 | INFO | architecture.executor:_retry_with_regenerated_tool:397 | Step 1: Retry succeeded with JoJoStandSearchTool
+2026-02-07 22:19:48 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 500 | Temp: 0.3 | Session: 2026-02-07_22-18-42
+2026-02-07 22:19:49 | INFO | architecture.llm_manager:generate:132 | Generation success in 672.23ms
+2026-02-07 22:19:49 | INFO | __main__:main:218 | Completed in 14893.72ms
+2026-02-07 22:19:49 | INFO | __main__:main:219 | Zone: public
+2026-02-07 22:19:49 | INFO | architecture.executor:export_profiles:545 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260207_221949.json
+2026-02-07 22:19:54 | WARNING | architecture.sandbox:_install_deps:225 | pip install failed: 
+2026-02-07 22:19:54 | INFO | architecture.sandbox:_pre_install_essentials:161 | Essential packages pre-installed
+2026-02-07 22:19:54 | INFO | architecture.sandbox:stop:207 | Sandbox container stopped: 5a5948da3487
+2026-02-07 22:19:54 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

@@ -1,0 +1,71 @@
+{
+  "exported_at": "2026-02-07T20:05:52.585224",
+  "summary": {
+    "PythonFrameworksSearchTool": {
+      "call_count": 1,
+      "avg_time_ms": 1027.866,
+      "max_time_ms": 1027.866,
+      "min_time_ms": 1027.866,
+      "avg_memory_mb": 0.7089,
+      "max_memory_mb": 0.7089,
+      "avg_memory_delta_mb": 0.5752,
+      "avg_efficiency": 0.4972,
+      "last_grade": "critical"
+    },
+    "PythonFrameworkSearchTool": {
+      "call_count": 1,
+      "avg_time_ms": 715.033,
+      "max_time_ms": 715.033,
+      "min_time_ms": 715.033,
+      "avg_memory_mb": 0.3934,
+      "max_memory_mb": 0.3934,
+      "avg_memory_delta_mb": 0.1784,
+      "avg_efficiency": 0.6409,
+      "last_grade": "slow"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 2,
+    "tools_profiled": [
+      "PythonFrameworksSearchTool",
+      "PythonFrameworkSearchTool"
+    ],
+    "execution_time_ms": {
+      "min": 715.033,
+      "max": 1027.866,
+      "mean": 871.4495
+    },
+    "peak_memory_mb": {
+      "min": 0.3934,
+      "max": 0.7089,
+      "mean": 0.55115
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "PythonFrameworksSearchTool": [
+      {
+        "tool_name": "PythonFrameworksSearchTool",
+        "execution_time_ms": 1027.866,
+        "peak_memory_mb": 0.7089,
+        "memory_delta_mb": 0.5752,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4972,
+        "success": true
+      }
+    ],
+    "PythonFrameworkSearchTool": [
+      {
+        "tool_name": "PythonFrameworkSearchTool",
+        "execution_time_ms": 715.033,
+        "peak_memory_mb": 0.3934,
+        "memory_delta_mb": 0.1784,
+        "latency_grade": "slow",
+        "efficiency_score": 0.6409,
+        "success": true
+      }
+    ]
+  }
+}

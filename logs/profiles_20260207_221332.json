@@ -1,0 +1,71 @@
+{
+  "exported_at": "2026-02-07T22:13:32.404487",
+  "summary": {
+    "GitHubTrendingTool": {
+      "call_count": 1,
+      "avg_time_ms": 0.077,
+      "max_time_ms": 0.077,
+      "min_time_ms": 0.077,
+      "avg_memory_mb": 0.0022,
+      "max_memory_mb": 0.0022,
+      "avg_memory_delta_mb": 0.0022,
+      "avg_efficiency": 1.0,
+      "last_grade": "fast"
+    },
+    "AdvancedGraphTool": {
+      "call_count": 1,
+      "avg_time_ms": 2.537,
+      "max_time_ms": 2.537,
+      "min_time_ms": 2.537,
+      "avg_memory_mb": 0.0031,
+      "max_memory_mb": 0.0031,
+      "avg_memory_delta_mb": 0.0,
+      "avg_efficiency": 0.0,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 2,
+    "tools_profiled": [
+      "GitHubTrendingTool",
+      "AdvancedGraphTool"
+    ],
+    "execution_time_ms": {
+      "min": 0.077,
+      "max": 2.537,
+      "mean": 1.307
+    },
+    "peak_memory_mb": {
+      "min": 0.0022,
+      "max": 0.0031,
+      "mean": 0.00265
+    },
+    "success_rate": 0.5
+  },
+  "raw_profiles": {
+    "GitHubTrendingTool": [
+      {
+        "tool_name": "GitHubTrendingTool",
+        "execution_time_ms": 0.077,
+        "peak_memory_mb": 0.0022,
+        "memory_delta_mb": 0.0022,
+        "latency_grade": "fast",
+        "efficiency_score": 1.0,
+        "success": true
+      }
+    ],
+    "AdvancedGraphTool": [
+      {
+        "tool_name": "AdvancedGraphTool",
+        "execution_time_ms": 2.537,
+        "peak_memory_mb": 0.0031,
+        "memory_delta_mb": 0,
+        "latency_grade": "critical",
+        "success": false,
+        "error_message": "AdvancedGraphTool.run() missing 2 required positional arguments: 'data' and 'title'"
+      }
+    ]
+  }
+}

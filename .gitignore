@@ -11,7 +11,8 @@ wheels/
 .env
 
 # Workspace and benchmark outputs
-workspace/*
+workspace/backup_tools
+workspace/
 benchmark_results/
 
 

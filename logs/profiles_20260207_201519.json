@@ -1,0 +1,48 @@
+{
+  "exported_at": "2026-02-07T20:15:19.932427",
+  "summary": {
+    "PythonFrameworksSearchTool": {
+      "call_count": 1,
+      "avg_time_ms": 1087.849,
+      "max_time_ms": 1087.849,
+      "min_time_ms": 1087.849,
+      "avg_memory_mb": 0.6753,
+      "max_memory_mb": 0.6753,
+      "avg_memory_delta_mb": 0.5721,
+      "avg_efficiency": 0.4973,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 1,
+    "tools_profiled": [
+      "PythonFrameworksSearchTool"
+    ],
+    "execution_time_ms": {
+      "min": 1087.849,
+      "max": 1087.849,
+      "mean": 1087.849
+    },
+    "peak_memory_mb": {
+      "min": 0.6753,
+      "max": 0.6753,
+      "mean": 0.6753
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "PythonFrameworksSearchTool": [
+      {
+        "tool_name": "PythonFrameworksSearchTool",
+        "execution_time_ms": 1087.849,
+        "peak_memory_mb": 0.6753,
+        "memory_delta_mb": 0.5721,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4973,
+        "success": true
+      }
+    ]
+  }
+}

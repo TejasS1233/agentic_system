@@ -17,6 +17,9 @@ from utils.logger import get_logger
 
 logger = get_logger(__name__)
 
+# Configurable similarity threshold (tune based on retrieval logs)
+SIMILARITY_THRESHOLD = 0.5
+
 
 class Orchestrator:
     """decomposes queries into domain based subtasks and creates execution plans"""
@@ -85,46 +88,84 @@ class Orchestrator:
             )
 
     def _retrieve_tools(self, subtasks: list[SubTask]) -> list[ToolMatch]:
-        """use tool retriver to find relevant tools for each task"""
+        """Use hybrid retrieval (semantic + tags + LLM) for better tool matching."""
         matches = []
+        used_tools = set()
+        
         for st in subtasks:
-            result = self.retriever.retrieve(
+            domain = st.domain.value if hasattr(st.domain, 'value') else str(st.domain)
+
+            # --- FORCE SERP SEARCH FOR SEARCH DOMAIN ---
+            # If the domain is SEARCH or the description explicitly asks for a search, use SerpSearchTool.
+            if domain == "search" or "search" in st.description.lower():
+                # Check if SerpSearchTool exists in registry
+                serp_tool_name = "SerpSearchTool"
+                try:
+                    tool_file = self._get_tool_file(serp_tool_name)
+                    if tool_file:
+                        logger.info(f"{st.id} -> {serp_tool_name} (Forced by Domain.SEARCH)")
+                        matches.append(
+                            ToolMatch(
+                                subtask_id=st.id,
+                                tool_name=serp_tool_name,
+                                tool_file=tool_file,
+                                matched=True,
+                                confidence=1.0,  # Max confidence
+                            )
+                        )
+                        used_tools.add(serp_tool_name)
+                        continue
+                except Exception:
+                    pass  # Fall back to normal retrieval if tool not found
+            # -------------------------------------------
+            
+            # Get candidates with hybrid scoring
+            scored_results = self.retriever.retrieve_with_scoring(
                 query=st.description,
-                top_k=3,
-                expand=True,  # for the composable part
+                top_k=5,
             )
-            primary = result.get("primary_tools", [])
-            if primary:
-                # Best match
-                best = primary[0]
-                tool_name = best["tool"]
-                distance = best["distance"]
-                matched = distance < 1.0  # Stricter: trigger tool creation for poor matches
-                confidence = max(0, 1 - distance)  # Linear confidence
-                matches.append(
-                    ToolMatch(
-                        subtask_id=st.id,
-                        tool_name=tool_name,
-                        tool_file=self._get_tool_file(tool_name),
-                        matched=matched,
-                        confidence=confidence,
-                    )
+            
+            # Filter out used tools
+            available = [c for c in scored_results if c["tool"] not in used_tools]
+            
+            if not available:
+                matches.append(ToolMatch(subtask_id=st.id, tool_name="", tool_file="", matched=False, confidence=0.0))
+                logger.info(f"{st.id} → NO MATCH (all tools used)")
+                continue
+            
+            # Use LLM to select the best tool from candidates
+            selected_name = self.retriever.llm_select_tool(
+                query=st.description,
+                candidates=available,
+                llm_manager=self.llm,
+            )
+            
+            # Find the selected candidate's data
+            best_match = next((c for c in available if c["tool"] == selected_name), available[0])
+            
+            tool_name = best_match["tool"]
+            similarity = best_match.get("similarity", 0)
+            combined_score = best_match.get("combined_score", 0)
+            tag_matches = best_match.get("tag_matches", 0)
+            matched = combined_score >= SIMILARITY_THRESHOLD
+            used_tools.add(tool_name)
+            
+            matches.append(
+                ToolMatch(
+                    subtask_id=st.id,
+                    tool_name=tool_name,
+                    tool_file=self._get_tool_file(tool_name),
+                    matched=matched,
+                    confidence=max(0, combined_score),
                 )
-                logger.info(
-                    f"{st.id} → {tool_name} (dist: {distance:.3f}, matched: {matched})"
-                )
-            else:
-                # No match found
-                matches.append(
-                    ToolMatch(
-                        subtask_id=st.id,
-                        tool_name="",
-                        tool_file="",
-                        matched=False,
-                        confidence=0.0,
-                    )
-                )
-                logger.info(f"{st.id} → NO MATCH")
+            )
+            
+            domain_tools = set(self.retriever.get_tools_by_domain(domain))
+            in_domain = "in-domain" if tool_name in domain_tools else "cross-domain"
+            logger.info(
+                f"{st.id} → {tool_name} (LLM selected, semantic: {similarity:.3f}, tags: +{tag_matches}, {in_domain})"
+            )
+        
         return matches
 
     def _get_tool_file(self, tool_name: str) -> str:
@@ -141,47 +182,88 @@ class Orchestrator:
     ) -> list[ToolMatch]:
         """Route to Toolsmith for any unmatched subtasks."""
         subtask_map = {st.id: st for st in subtasks}
+        
+        # Build used_tools incrementally as we process
+        used_tools = set()
+        
         for match in matches:
+            # First, record already-matched tools from retrieval
+            if match.matched and match.tool_name:
+                if match.tool_name in used_tools:
+                     logger.info(f"Tool {match.tool_name} already used by previous step. Invalidating match.")
+                     match.matched = False
+                     match.tool_name = None
+                     match.confidence = 0.0
+                else:
+                    used_tools.add(match.tool_name)
+                    continue
+                
+            # Process unmatched subtask
             if not match.matched:
                 st = subtask_map[match.subtask_id]
-                logger.info(f"Toolsmith creating: {st.description}")
-                # generate new tool
-                result = self.toolsmith.create_tool(st.description)
-                logger.info(f"Toolsmith: {result[:100]}...")
+                description = st.description
+                
+                # Try up to 2 times to get a unique tool
+                for attempt in range(2):
+                    if attempt > 0:
+                        logger.info(f"Retrying tool creation to avoid duplicates (attempt {attempt+1})...")
+                        # Add constraint to avoid used tools
+                        avoid_str = ", ".join(list(used_tools))
+                        description = f"{st.description} (Create a NEW tool, do not use: {avoid_str})"
+                    
+                    logger.info(f"Toolsmith creating: {description}")
+                    result = self.toolsmith.create_tool(description)
+                    logger.info(f"Toolsmith: {result[:100]}...")
 
-                # Parse tool name from Toolsmith response
-                tool_name = None
-                if "EXISTING TOOL FOUND:" in result:
-                    # Extract from: "EXISTING TOOL FOUND: 'ToolName' seems to match..."
+                    # Parse tool name from Toolsmith response
+                    tool_name = None
                     import re
-
-                    m = re.search(r"EXISTING TOOL FOUND: '(\w+)'", result)
+                    # Match both "Created X" and "Successfully created X"
+                    m = re.search(r"(?:Successfully created|Created) (\w+)", result)
                     if m:
                         tool_name = m.group(1)
-                elif "Successfully created" in result:
-                    # Extract from: "Successfully created SaveFileAsJson..."
-                    import re
+                    elif "EXISTING TOOL FOUND:" in result:
+                        m = re.search(r"EXISTING TOOL FOUND: '(\w+)'", result)
+                        if m:
+                            tool_name = m.group(1)
 
-                    m = re.search(r"Successfully created (\w+)", result)
-                    if m:
-                        tool_name = m.group(1)
-
-                if tool_name:
-                    match.tool_name = tool_name
-                    match.tool_file = self._get_tool_file(tool_name)
-                    match.matched = True
-                    match.confidence = 1.0
-                    logger.info(f"Tool assigned: {tool_name}")
-                else:
-                    # Fallback: Rebuild retriever and search
-                    self.retriever = ToolRetriever(self.registry_path)
-                    new_result = self.retriever.retrieve(st.description, top_k=1)
-                    primary = new_result.get("primary_tools", [])
-                    if primary:
-                        match.tool_name = primary[0]["tool"]
-                        match.tool_file = self._get_tool_file(match.tool_name)
+                    # Check for duplicates
+                    if tool_name and tool_name not in used_tools:
+                        match.tool_name = tool_name
+                        match.tool_file = self._get_tool_file(tool_name)
                         match.matched = True
                         match.confidence = 1.0
+                        used_tools.add(tool_name)
+                        logger.info(f"Tool assigned: {tool_name}")
+                        break # Success, exit retry loop
+                    
+                    if tool_name in used_tools:
+                         logger.info(f"Tool {tool_name} is a duplicate.")
+                
+                # If still no match after retries, try fallback retrieval for UNUSED tools
+                if not match.matched:
+                    # Fallback: Rebuild retriever and search for unused tool
+                    self.retriever = ToolRetriever(self.registry_path)
+                    new_result = self.retriever.retrieve(st.description, top_k=5)
+                    primary = new_result.get("primary_tools", [])
+                    # Find first unused tool
+                    for candidate in primary:
+                        candidate_name = candidate["tool"]
+                        if candidate_name not in used_tools:
+                            # START FIX: Enforce similarity threshold for fallback
+                            similarity = candidate.get("similarity", 0)
+                            if similarity >= SIMILARITY_THRESHOLD:
+                                match.tool_name = candidate_name
+                                match.tool_file = self._get_tool_file(match.tool_name)
+                                match.matched = True
+                                match.confidence = max(0, similarity)
+                                used_tools.add(candidate_name)
+                                logger.info(f"Fallback assigned: {candidate_name} (similarity: {similarity:.3f})")
+                                break
+                            else:
+                                logger.info(f"Fallback candidate {candidate_name} rejected (similarity {similarity:.3f} < {SIMILARITY_THRESHOLD})")
+                            # END FIX
+                            
         return matches
 
     def _create_plan(

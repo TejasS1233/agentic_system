@@ -1,0 +1,71 @@
+{
+  "exported_at": "2026-02-07T14:31:22.092549",
+  "summary": {
+    "PopulationCensusPlotter": {
+      "call_count": 1,
+      "avg_time_ms": 0.096,
+      "max_time_ms": 0.096,
+      "min_time_ms": 0.096,
+      "avg_memory_mb": 0.0018,
+      "max_memory_mb": 0.0018,
+      "avg_memory_delta_mb": 0.0006,
+      "avg_efficiency": 0.9999,
+      "last_grade": "fast"
+    },
+    "PopulationCensusTool": {
+      "call_count": 1,
+      "avg_time_ms": 1000.781,
+      "max_time_ms": 1000.781,
+      "min_time_ms": 1000.781,
+      "avg_memory_mb": 0.398,
+      "max_memory_mb": 0.398,
+      "avg_memory_delta_mb": 0.1891,
+      "avg_efficiency": 0.4984,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 2,
+    "tools_profiled": [
+      "PopulationCensusPlotter",
+      "PopulationCensusTool"
+    ],
+    "execution_time_ms": {
+      "min": 0.096,
+      "max": 1000.781,
+      "mean": 500.4385
+    },
+    "peak_memory_mb": {
+      "min": 0.0018,
+      "max": 0.398,
+      "mean": 0.19990000000000002
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "PopulationCensusPlotter": [
+      {
+        "tool_name": "PopulationCensusPlotter",
+        "execution_time_ms": 0.096,
+        "peak_memory_mb": 0.0018,
+        "memory_delta_mb": 0.0006,
+        "latency_grade": "fast",
+        "efficiency_score": 0.9999,
+        "success": true
+      }
+    ],
+    "PopulationCensusTool": [
+      {
+        "tool_name": "PopulationCensusTool",
+        "execution_time_ms": 1000.781,
+        "peak_memory_mb": 0.398,
+        "memory_delta_mb": 0.1891,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4984,
+        "success": true
+      }
+    ]
+  }
+}

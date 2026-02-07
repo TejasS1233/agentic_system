@@ -1,0 +1,71 @@
+{
+  "exported_at": "2026-02-07T14:49:35.393312",
+  "summary": {
+    "ProductHuntSearchTool": {
+      "call_count": 1,
+      "avg_time_ms": 339.685,
+      "max_time_ms": 339.685,
+      "min_time_ms": 339.685,
+      "avg_memory_mb": 9.0007,
+      "max_memory_mb": 9.0007,
+      "avg_memory_delta_mb": 4.7362,
+      "avg_efficiency": 0.7942,
+      "last_grade": "slow"
+    },
+    "ProductLaunchScraper": {
+      "call_count": 1,
+      "avg_time_ms": 1123.21,
+      "max_time_ms": 1123.21,
+      "min_time_ms": 1123.21,
+      "avg_memory_mb": 0.3959,
+      "max_memory_mb": 0.3959,
+      "avg_memory_delta_mb": 0.1789,
+      "avg_efficiency": 0.4984,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 2,
+    "tools_profiled": [
+      "ProductHuntSearchTool",
+      "ProductLaunchScraper"
+    ],
+    "execution_time_ms": {
+      "min": 339.685,
+      "max": 1123.21,
+      "mean": 731.4475
+    },
+    "peak_memory_mb": {
+      "min": 0.3959,
+      "max": 9.0007,
+      "mean": 4.6983
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "ProductHuntSearchTool": [
+      {
+        "tool_name": "ProductHuntSearchTool",
+        "execution_time_ms": 339.685,
+        "peak_memory_mb": 9.0007,
+        "memory_delta_mb": 4.7362,
+        "latency_grade": "slow",
+        "efficiency_score": 0.7942,
+        "success": true
+      }
+    ],
+    "ProductLaunchScraper": [
+      {
+        "tool_name": "ProductLaunchScraper",
+        "execution_time_ms": 1123.21,
+        "peak_memory_mb": 0.3959,
+        "memory_delta_mb": 0.1789,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4984,
+        "success": true
+      }
+    ]
+  }
+}
