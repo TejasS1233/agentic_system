@@ -1,0 +1,96 @@
+2026-02-08 00:31:08 | INFO | architecture.llm_manager:<module>:21 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-08 00:31:34 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-08 00:31:34 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-08 00:31:34 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-08 00:31:34 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-08 00:31:34 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\Omar\Desktop\Code\Research\workspace, profiling=True)
+2026-02-08 00:31:34 | INFO | architecture.sandbox:__init__:152 | Sandbox initialized with tools_dir=C:\Users\Omar\Desktop\Code\Research\workspace\tools, output_dir=C:\Users\Omar\Desktop\Code\Research\workspace\outputs
+2026-02-08 00:31:35 | INFO | architecture.sandbox:start:192 | Sandbox container started: e8ac34d0e630
+2026-02-08 00:31:35 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-08 00:31:35 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-08 00:31:35 | INFO | architecture.executor:__init__:81 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-08 00:31:35 | INFO | architecture.executor:load_registry:96 | Loaded 12 tool definitions
+2026-02-08 00:31:35 | INFO | architecture.llm_manager:__init__:81 | Loaded 4 GROQ keys
+2026-02-08 00:31:35 | INFO | architecture.executor:__init__:89 | ExecutorAgent initialized with Sandbox
+2026-02-08 00:31:36 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: requests beautifulsoup4 numpy pandas pydantic
+2026-02-08 00:31:39 | INFO | architecture.orchestrator:__init__:44 | Orchestrator initialized with ToolRetriever
+2026-02-08 00:31:39 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-08 00:31:39 | INFO | __main__:run:121 | Task received: Search for recent AI research papers and summarize the top 3...
+2026-02-08 00:31:39 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-08 00:31:39 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-08 00:31:39 | INFO | architecture.orchestrator:run:48 | Processing: Search for recent AI research papers and summarize the top 3...
+2026-02-08 00:31:39 | INFO | architecture.llm_manager:generate:119 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-08_00-30-56
+2026-02-08 00:31:40 | INFO | architecture.llm_manager:generate:143 | Generation success in 580.07ms
+2026-02-08 00:31:40 | INFO | architecture.orchestrator:run:51 | Task Classification: COMPLEX_TASK
+2026-02-08 00:31:40 | INFO | architecture.llm_manager:generate:119 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-08_00-30-56
+2026-02-08 00:31:40 | INFO | architecture.llm_manager:generate:143 | Generation success in 462.88ms
+2026-02-08 00:31:40 | INFO | architecture.orchestrator:run:57 | Decomposed into 2 subtasks
+2026-02-08 00:31:40 | INFO | architecture.orchestrator:_retrieve_tools:105 | st_1 -> SerpSearchTool (Forced by Domain.SEARCH)
+2026-02-08 00:31:41 | INFO | architecture.llm_manager:generate:119 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-08_00-30-56
+2026-02-08 00:31:41 | INFO | architecture.llm_manager:generate:143 | Generation success in 95.20ms
+2026-02-08 00:31:41 | INFO | architecture.orchestrator:_retrieve_tools:171 | st_2 -> HackerNewsTool (LLM selected, semantic: 0.246, tags: +0, cross-domain)
+2026-02-08 00:31:41 | INFO | architecture.orchestrator:_ensure_tools:218 | Toolsmith creating: Retrieve and summarize the top 3 papers
+2026-02-08 00:31:41 | INFO | architecture.toolsmith:create_tool:112 | Request: 'Retrieve and summarize the top 3 papers'
+2026-02-08 00:31:41 | INFO | architecture.toolsmith:create_tool:128 | Generating tool with LLM (attempt 1/3)...
+2026-02-08 00:31:41 | INFO | architecture.toolsmith:create_tool:133 | Available APIs context length: 765
+2026-02-08 00:31:41 | INFO | architecture.llm_manager:generate:119 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-08_00-30-56
+2026-02-08 00:31:42 | INFO | architecture.llm_manager:generate:143 | Generation success in 1315.66ms
+2026-02-08 00:31:42 | INFO | architecture.toolsmith:create_tool:185 | Tool saved: C:\Users\Omar\Desktop\Code\Research\workspace\tools\top_papers_summary_tool.py
+2026-02-08 00:31:42 | INFO | architecture.toolsmith:_update_registry:277 | Registry updated: TopPapersSummaryTool
+2026-02-08 00:31:42 | INFO | architecture.orchestrator:_ensure_tools:220 | Toolsmith: Created TopPapersSummaryTool with tags ['research', 'papers', 'summary']...
+2026-02-08 00:31:42 | INFO | architecture.orchestrator:_ensure_tools:237 | Tool assigned: TopPapersSummaryTool
+2026-02-08 00:31:42 | INFO | architecture.orchestrator:_create_plan:294 | ============================================================
+2026-02-08 00:31:42 | INFO | architecture.orchestrator:_create_plan:295 | EXECUTION PLAN: 2 steps
+2026-02-08 00:31:42 | INFO | architecture.orchestrator:_create_plan:296 | ============================================================
+2026-02-08 00:31:42 | INFO | architecture.orchestrator:_create_plan:308 |   Step 1: Search for recent AI research papers...
+2026-02-08 00:31:42 | INFO | architecture.orchestrator:_create_plan:309 |     Tool: SerpSearchTool
+2026-02-08 00:31:42 | INFO | architecture.orchestrator:_create_plan:310 |     no dependencies, uses description
+2026-02-08 00:31:42 | INFO | architecture.orchestrator:_create_plan:308 |   Step 2: Retrieve and summarize the top 3 papers...
+2026-02-08 00:31:42 | INFO | architecture.orchestrator:_create_plan:309 |     Tool: TopPapersSummaryTool
+2026-02-08 00:31:42 | INFO | architecture.orchestrator:_create_plan:310 |     depends_on=[1], input_from=step_1
+2026-02-08 00:31:42 | INFO | architecture.orchestrator:_create_plan:311 | ============================================================
+2026-02-08 00:31:42 | INFO | architecture.executor:execute:102 | Executing plan: Search for recent AI research papers and summarize the top 3
+2026-02-08 00:31:42 | INFO | architecture.executor:execute:103 | Total steps: 2
+2026-02-08 00:31:42 | INFO | architecture.executor:_execute_step:170 | Step 1: Search for recent AI research papers using SerpSearchTool
+2026-02-08 00:31:42 | INFO | architecture.executor:load_registry:96 | Loaded 13 tool definitions
+2026-02-08 00:31:42 | INFO | architecture.executor:_execute_step:210 | Step 1: Using description as input
+2026-02-08 00:31:42 | INFO | architecture.llm_manager:generate:119 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-08_00-30-56
+2026-02-08 00:31:42 | INFO | architecture.llm_manager:generate:143 | Generation success in 159.58ms
+2026-02-08 00:31:42 | INFO | architecture.executor:_infer_args:570 | LLM extracted args: {'query': 'AI research papers', 'search_type': 'recent', 'num_results': 10, 'location': None, 'language': 'en', 'safe_search': True}
+2026-02-08 00:31:42 | DEBUG | architecture.executor:_execute_step:213 | Executor inferred args = {'query': 'AI research papers', 'search_type': 'recent', 'num_results': 10, 'location': None, 'language': 'en', 'safe_search': True}
+2026-02-08 00:31:42 | DEBUG | architecture.executor:_execute_step:214 | Args type = <class 'dict'>
+2026-02-08 00:31:42 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: requests pydantic
+2026-02-08 00:31:52 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: sandbox received args = {'query': 'AI research papers', 'search_type': 'recent', 'num_results': 10, 'location': None, 'language': 'en', 'safe_search': True}
+2026-02-08 00:31:52 | INFO | architecture.sandbox:execute_with_args:518 | DEBUG: args_json = {"query": "AI research papers", "search_type": "recent", "num_results": 10, "location": null, "language": "en", "safe_search": true}
+2026-02-08 00:31:52 | INFO | architecture.sandbox:execute_with_args:519 | DEBUG: Runner script line: args = json.loads('{"query": "AI research papers", "search_type": "recent", "num_results": 10, "location": null, "language": "en", "safe_search": true}')
+2026-02-08 00:31:52 | INFO | architecture.sandbox:execute_with_args:524 | Executing tool with args: SerpSearchTool
+2026-02-08 00:31:52 | INFO | architecture.sandbox:execute_with_args:525 | Args JSON being passed: {"query": "AI research papers", "search_type": "recent", "num_results": 10, "location": null, "language": "en", "safe_search": true}
+2026-02-08 00:31:56 | INFO | architecture.executor:_execute_step:227 | Step 1 SANDBOX Profile: time=2203.573ms, peak_mem=0.2830MB, delta_mem=0.0792MB, efficiency=49.89%, grade=critical
+2026-02-08 00:31:56 | INFO | architecture.executor:_execute_step:235 |    (Total round-trip: 13548.80ms)
+2026-02-08 00:31:56 | INFO | architecture.executor:_execute_step:240 | Step 1: Completed in 13.55s
+2026-02-08 00:31:56 | INFO | architecture.executor:_execute_step:170 | Step 2: Retrieve and summarize the top 3 papers using TopPapersSummaryTool
+2026-02-08 00:31:56 | INFO | architecture.executor:load_registry:96 | Loaded 13 tool definitions
+2026-02-08 00:31:56 | INFO | architecture.executor:_execute_step:200 | Step 2: Using input from step 1
+2026-02-08 00:31:56 | INFO | architecture.llm_manager:generate:119 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-08_00-30-56
+2026-02-08 00:31:56 | INFO | architecture.llm_manager:generate:143 | Generation success in 306.90ms
+2026-02-08 00:31:56 | INFO | architecture.executor:_infer_args:570 | LLM extracted args: {'url': 'https://paperswithcode.com/'}
+2026-02-08 00:31:56 | DEBUG | architecture.executor:_execute_step:213 | Executor inferred args = {'url': 'https://paperswithcode.com/'}
+2026-02-08 00:31:56 | DEBUG | architecture.executor:_execute_step:214 | Args type = <class 'dict'>
+2026-02-08 00:31:56 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: beautifulsoup4
+2026-02-08 00:31:59 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: sandbox received args = {'url': 'https://paperswithcode.com/'}
+2026-02-08 00:31:59 | INFO | architecture.sandbox:execute_with_args:518 | DEBUG: args_json = {"url": "https://paperswithcode.com/"}
+2026-02-08 00:31:59 | INFO | architecture.sandbox:execute_with_args:519 | DEBUG: Runner script line: args = json.loads('{"url": "https://paperswithcode.com/"}')
+2026-02-08 00:31:59 | INFO | architecture.sandbox:execute_with_args:524 | Executing tool with args: TopPapersSummaryTool
+2026-02-08 00:31:59 | INFO | architecture.sandbox:execute_with_args:525 | Args JSON being passed: {"url": "https://paperswithcode.com/"}
+2026-02-08 00:32:04 | INFO | architecture.executor:_execute_step:227 | Step 2 SANDBOX Profile: time=4291.030ms, peak_mem=11.2393MB, delta_mem=8.3954MB, efficiency=45.50%, grade=critical
+2026-02-08 00:32:04 | INFO | architecture.executor:_execute_step:235 |    (Total round-trip: 8139.09ms)
+2026-02-08 00:32:04 | INFO | architecture.executor:_execute_step:240 | Step 2: Completed in 8.14s
+2026-02-08 00:32:04 | INFO | architecture.llm_manager:generate:119 | Generating with groq/llama-3.3-70b-versatile | Tokens: 500 | Temp: 0.3 | Session: 2026-02-08_00-30-56
+2026-02-08 00:32:06 | INFO | architecture.llm_manager:generate:143 | Generation success in 1579.72ms
+2026-02-08 00:32:06 | INFO | __main__:main:218 | Completed in 26488.66ms
+2026-02-08 00:32:06 | INFO | __main__:main:219 | Zone: public
+2026-02-08 00:32:06 | INFO | architecture.executor:export_profiles:510 | Profiles exported to: C:\Users\Omar\Desktop\Code\Research\logs\profiles_20260208_003206.json
+2026-02-08 00:32:11 | WARNING | architecture.sandbox:_install_deps:225 | pip install failed: 
+2026-02-08 00:32:11 | INFO | architecture.sandbox:_pre_install_essentials:161 | Essential packages pre-installed
+2026-02-08 00:32:12 | INFO | architecture.sandbox:stop:207 | Sandbox container stopped: e8ac34d0e630
+2026-02-08 00:32:12 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

@@ -1,24 +1,28 @@
 """Executor Agent - Runs tools via persistent Docker container with profiling."""
 
+import ast
+import json
 import re
 import time
-import json
+from datetime import datetime
 from pathlib import Path
 from typing import Dict
 
-from architecture.schemas import ExecutionPlan, ExecutionStep
-from architecture.sandbox import Sandbox
 from architecture.llm_manager import get_llm_manager
-from architecture.reflector import Reflector, ExecutionResult
+from architecture.prompts import (
+    get_arg_extraction_prompt,
+    get_chart_args_prompt,
+    get_response_synthesis_prompt,
+)
+from architecture.reflector import ExecutionResult, Reflector
+from architecture.sandbox import Sandbox
+from architecture.schemas import ExecutionPlan, ExecutionStep
 from utils.logger import get_logger
 
-# Import profiler (optional)
 try:
     from architecture.profiler import (
         Profiler,
         ProfilingMode,
-        ProfileResult,
-        profile_to_registry_update,
     )
 
     HAS_PROFILER = True
@@ -60,9 +64,8 @@ class ExecutorAgent:
         self.reflector = Reflector(max_retries=max_retries)
         self.max_retries = max_retries
         self._definitions = {}
-        self._execution_profiles: Dict[str, list] = {}  # Store profiles per tool
+        self._execution_profiles: Dict[str, list] = {}
 
-        # Initialize profiler
         self._enable_profiling = enable_profiling and HAS_PROFILER
         if self._enable_profiling:
             mode_map = {
@@ -113,8 +116,6 @@ class ExecutorAgent:
                 results[step.step_number] = result
 
         final_step = max(plan.steps, key=lambda s: s.step_number)
-        
-        # Synthesize human-readable response from raw results
         synthesized = self._synthesize_response(plan.original_query, final_step.result)
 
         return json.dumps(
@@ -131,40 +132,35 @@ class ExecutorAgent:
     def _synthesize_response(self, query: str, raw_result: str) -> str:
         """Use LLM to convert raw tool output into a human-readable response."""
         try:
-            # Try to parse as JSON for structured data
             try:
-                data = json.loads(raw_result) if isinstance(raw_result, str) else raw_result
+                data = (
+                    json.loads(raw_result)
+                    if isinstance(raw_result, str)
+                    else raw_result
+                )
             except json.JSONDecodeError:
                 data = raw_result
-            
-            # If it's an error, just return it
+
             if isinstance(data, dict) and "error" in data:
                 return f"Error: {data['error']}"
-            
-            prompt = f"""You are a helpful assistant. The user asked: "{query}"
 
-Here is the raw data retrieved:
-{json.dumps(data, indent=2) if isinstance(data, dict) else data}
-
-Based on this data, write a clear, concise, and helpful response that directly answers the user's question.
-- Use natural language, not JSON
-- Highlight the most relevant information first
-- Format nicely with bullet points if listing multiple items
-- Keep it concise (2-4 paragraphs max)
-- Don't mention "the data shows" or "according to the results" - just answer naturally"""
+            data_str = (
+                json.dumps(data, indent=2) if isinstance(data, dict) else str(data)
+            )
+            prompt = get_response_synthesis_prompt(query, data_str)
 
             response = self.llm.generate(
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=500,
                 temperature=0.3,
             )
-            
+
             if response.get("error"):
                 logger.warning(f"Synthesis failed: {response['error']}")
                 return raw_result
-            
+
             return response.get("content", raw_result)
-            
+
         except Exception as e:
             logger.warning(f"Response synthesis error: {e}")
             return raw_result
@@ -199,8 +195,6 @@ Based on this data, write a clear, concise, and helpful response that directly a
             logger.error(f"Step {step.step_number}: Tool file missing")
             return step.result
 
-        # Determine input data for this step
-        # Priority: 1) input_from (explicit data source), 2) last dependency, 3) description
         if step.input_from and step.input_from in previous_results:
             input_data = previous_results[step.input_from]
             logger.info(
@@ -216,24 +210,20 @@ Based on this data, write a clear, concise, and helpful response that directly a
             logger.info(f"Step {step.step_number}: Using description as input")
 
         args = self._infer_args(step, input_data, definition)
-        logger.info(f"DEBUG: Executor inferred args = {args}")
-        logger.info(f"DEBUG: Args type = {type(args)}")
+        logger.debug(f"Executor inferred args = {args}")
+        logger.debug(f"Args type = {type(args)}")
 
-        # Execute tool in sandbox (profiling happens inside container)
         start_time = time.time()
         result = self.sandbox.execute_with_args(step.tool_name, tool_file, args)
         host_latency = time.time() - start_time
 
-        # Extract profile from sandbox result (profiling done inside container)
         sandbox_profile = result.get("profile")
 
         if sandbox_profile:
-            # Store the profile data
             if step.tool_name not in self._execution_profiles:
                 self._execution_profiles[step.tool_name] = []
             self._execution_profiles[step.tool_name].append(sandbox_profile)
 
-            # Log profile from INSIDE the container
             logger.info(
                 f"Step {step.step_number} SANDBOX Profile: "
                 f"time={sandbox_profile['execution_time_ms']:.3f}ms, "
@@ -242,8 +232,6 @@ Based on this data, write a clear, concise, and helpful response that directly a
                 f"efficiency={sandbox_profile.get('efficiency_score', 0):.2%}, "
                 f"grade={sandbox_profile['latency_grade']}"
             )
-
-            # Also log total round-trip time for comparison
             logger.info(f"   (Total round-trip: {host_latency * 1000:.2f}ms)")
 
         if result["success"]:
@@ -416,31 +404,19 @@ Based on this data, write a clear, concise, and helpful response that directly a
     ) -> tuple:
         """Execute a tool with profiling wrapper."""
 
-        # Create a wrapper function for the sandbox execution
         def sandbox_execution():
             return self.sandbox.execute_with_args(tool_name, tool_file, args)
 
-        # Profile the execution
         result, profile = self._profiler.profile(
             sandbox_execution, _profile_name=tool_name
         )
-
         return result, profile
 
     def get_execution_profiles(self, tool_name: str = None) -> list:
-        """
-        Get execution profiles for tools.
-
-        Args:
-            tool_name: Optional tool name to filter by. If None, returns all.
-
-        Returns:
-            List of profile dicts from sandbox execution
-        """
+        """Get execution profiles for tools, optionally filtered by name."""
         if tool_name:
             return self._execution_profiles.get(tool_name, [])
 
-        # Return all profiles flattened
         all_profiles = []
         for profiles in self._execution_profiles.values():
             all_profiles.extend(profiles)
@@ -488,7 +464,6 @@ Based on this data, write a clear, concise, and helpful response that directly a
             if not profiles:
                 continue
 
-            # Profiles are now dicts from sandbox, not ProfileResult objects
             times = [p["execution_time_ms"] for p in profiles if p]
             memories = [p["peak_memory_mb"] for p in profiles if p]
             memory_deltas = [p.get("memory_delta_mb", 0) for p in profiles if p]
@@ -515,17 +490,7 @@ Based on this data, write a clear, concise, and helpful response that directly a
         return summary
 
     def export_profiles(self, filepath: str = None) -> str:
-        """
-        Export all profiles to a JSON file.
-
-        Args:
-            filepath: Optional path. Defaults to logs/profiles_<timestamp>.json
-
-        Returns:
-            Path to the exported file
-        """
-        from datetime import datetime
-
+        """Export all profiles to a JSON file."""
         if filepath is None:
             logs_dir = self.workspace.parent / "logs"
             logs_dir.mkdir(exist_ok=True)
@@ -554,36 +519,43 @@ Based on this data, write a clear, concise, and helpful response that directly a
 
         if not arg_names:
             return {"input": input_data}
-        
-        # If 'data' arg is needed and input_data looks like structured JSON, pass it directly
+
         if "data" in arg_names and input_data and input_data != step.description:
             try:
-                parsed = json.loads(input_data) if isinstance(input_data, str) else input_data
-                if isinstance(parsed, dict) and any(k in parsed for k in ["repos", "results", "items", "data", "labels"]):
-                    logger.info(f"Direct pass-through: Using structured JSON for 'data' arg")
-                    # Build args with direct data pass-through
-                    return self._infer_args_with_direct_data(step, parsed, arg_names, definition)
+                parsed = (
+                    json.loads(input_data)
+                    if isinstance(input_data, str)
+                    else input_data
+                )
+                if isinstance(parsed, dict) and any(
+                    k in parsed for k in ["repos", "results", "items", "data", "labels"]
+                ):
+                    logger.info(
+                        "Direct pass-through: Using structured JSON for 'data' arg"
+                    )
+                    return self._infer_args_with_direct_data(
+                        step, parsed, arg_names, definition
+                    )
             except (json.JSONDecodeError, TypeError):
-                pass  # Fall through to LLM extraction
+                pass
 
-        # Check if URL arguments are needed - if so, search for relevant URLs
         available_urls = ""
         url_args = ["url", "target_url", "source_url", "webpage"]
         if any(arg in url_args for arg in arg_names):
             try:
                 from architecture.api_registry import search_urls
+
                 urls = search_urls(step.description, limit=3)
                 if urls:
-                    available_urls = "\n".join([
-                        f"- {u['name']}: {u['url']}" for u in urls
-                    ])
+                    available_urls = "\n".join(
+                        [f"- {u['name']}: {u['url']}" for u in urls]
+                    )
             except Exception as e:
                 logger.warning(f"Could not search for URLs: {e}")
 
-        # Always use LLM to extract actual values (not raw description)
-        from architecture.prompts import get_arg_extraction_prompt
-
-        prompt = get_arg_extraction_prompt(arg_names, step.description, input_data, available_urls)
+        prompt = get_arg_extraction_prompt(
+            arg_names, step.description, input_data, available_urls
+        )
 
         response = self.llm.generate_json(
             messages=[{"role": "user", "content": prompt}], max_tokens=256
@@ -605,24 +577,16 @@ Based on this data, write a clear, concise, and helpful response that directly a
         self, step: ExecutionStep, parsed_data: dict, arg_names: list, definition: dict
     ) -> dict:
         """Build args with direct data pass-through, using LLM only for other args."""
-        # Start with direct data
         args = {"data": parsed_data}
-        
-        # Get other args from LLM (title, xlabel, ylabel, etc.) but with much simpler prompt
+
         other_args = [a for a in arg_names if a != "data"]
         if other_args:
-            prompt = f"""For a chart visualization, provide values for these arguments:
-{other_args}
+            prompt = get_chart_args_prompt(other_args, step.description)
 
-Task: {step.description}
-
-Return ONLY a JSON object. Example: {{"chart_type": "bar", "title": "My Chart", "xlabel": "X", "ylabel": "Y"}}
-Use sensible defaults for any optional args (empty string is fine)."""
-            
             response = self.llm.generate_json(
                 messages=[{"role": "user", "content": prompt}], max_tokens=256
             )
-            
+
             if not response.get("error"):
                 try:
                     other_values = json.loads(response["content"])
@@ -631,21 +595,18 @@ Use sensible defaults for any optional args (empty string is fine)."""
                             args[k] = v
                 except Exception:
                     pass
-        
+
         logger.info(f"Direct data pass-through args: {list(args.keys())}")
         return args
 
     def _get_arg_names_from_file(self, tool_file: Path) -> list:
         """Extract argument names from the tool's Args class using AST."""
-        import ast
-
         try:
             with open(tool_file, "r", encoding="utf-8") as f:
                 content = f.read()
 
             tree = ast.parse(content)
 
-            # Find the Args class (ends with "Args" or "ToolArgs")
             for node in ast.walk(tree):
                 if isinstance(node, ast.ClassDef) and ("Args" in node.name):
                     args = []
@@ -657,7 +618,6 @@ Use sensible defaults for any optional args (empty string is fine)."""
                     if args:
                         return args
 
-            # Fallback: check run method signature
             for node in ast.walk(tree):
                 if isinstance(node, ast.FunctionDef) and node.name == "run":
                     args = []

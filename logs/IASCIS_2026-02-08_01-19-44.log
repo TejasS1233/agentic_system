@@ -1,0 +1,125 @@
+2026-02-08 01:19:56 | INFO | architecture.llm_manager:<module>:21 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-08 01:20:22 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-08 01:20:22 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-08 01:20:22 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-08 01:20:22 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-08 01:20:22 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\Omar\Desktop\Code\Research\workspace, profiling=True)
+2026-02-08 01:20:22 | INFO | architecture.sandbox:__init__:152 | Sandbox initialized with tools_dir=C:\Users\Omar\Desktop\Code\Research\workspace\tools, output_dir=C:\Users\Omar\Desktop\Code\Research\workspace\outputs
+2026-02-08 01:20:23 | INFO | architecture.sandbox:start:192 | Sandbox container started: 35fdd08558d0
+2026-02-08 01:20:23 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-08 01:20:23 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-08 01:20:23 | INFO | architecture.executor:__init__:81 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-08 01:20:23 | INFO | architecture.executor:load_registry:96 | Loaded 13 tool definitions
+2026-02-08 01:20:23 | INFO | architecture.llm_manager:__init__:81 | Loaded 4 GROQ keys
+2026-02-08 01:20:23 | INFO | architecture.executor:__init__:89 | ExecutorAgent initialized with Sandbox
+2026-02-08 01:20:24 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: numpy requests pandas beautifulsoup4 pydantic
+2026-02-08 01:20:27 | INFO | architecture.orchestrator:__init__:44 | Orchestrator initialized with ToolRetriever
+2026-02-08 01:20:27 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-08 01:20:27 | INFO | __main__:run:121 | Task received: Compare cryptocurrency prices over the last week and predict trend...
+2026-02-08 01:20:27 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-08 01:20:27 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-08 01:20:27 | INFO | architecture.orchestrator:run:48 | Processing: Compare cryptocurrency prices over the last week and predict trend...
+2026-02-08 01:20:27 | INFO | architecture.llm_manager:generate:119 | Generating with groq/meta-llama/llama-4-scout-17b | Tokens: 100 | Temp: 0.7 | Session: 2026-02-08_01-19-44
+2026-02-08 01:20:28 | WARNING | architecture.llm_manager:generate:150 | Attempt 1/3 failed using key 1: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:28 | ERROR | architecture.llm_manager:generate:165 | Non-retryable error: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:28 | INFO | architecture.orchestrator:run:51 | Task Classification: COMPLEX_TASK
+2026-02-08 01:20:28 | INFO | architecture.llm_manager:generate:119 | Generating with groq/meta-llama/llama-4-scout-17b | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-08_01-19-44
+2026-02-08 01:20:28 | WARNING | architecture.llm_manager:generate:150 | Attempt 1/3 failed using key 1: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:28 | ERROR | architecture.llm_manager:generate:165 | Non-retryable error: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:28 | ERROR | architecture.orchestrator:_decompose:77 | Decomposition failed: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:28 | INFO | architecture.orchestrator:run:57 | Decomposed into 1 subtasks
+2026-02-08 01:20:28 | INFO | architecture.llm_manager:generate:119 | Generating with groq/meta-llama/llama-4-scout-17b | Tokens: 50 | Temp: 0.0 | Session: 2026-02-08_01-19-44
+2026-02-08 01:20:28 | WARNING | architecture.llm_manager:generate:150 | Attempt 1/3 failed using key 1: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:28 | ERROR | architecture.llm_manager:generate:165 | Non-retryable error: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:28 | INFO | architecture.orchestrator:_retrieve_tools:171 | st_1 -> GitHubTrendingTool (LLM selected, semantic: 0.241, tags: +0, cross-domain)
+2026-02-08 01:20:28 | INFO | architecture.orchestrator:_ensure_tools:218 | Toolsmith creating: Compare cryptocurrency prices over the last week and predict trend
+2026-02-08 01:20:28 | INFO | architecture.toolsmith:create_tool:112 | Request: 'Compare cryptocurrency prices over the last week and predict trend'
+2026-02-08 01:20:28 | INFO | architecture.toolsmith:create_tool:128 | Generating tool with LLM (attempt 1/3)...
+2026-02-08 01:20:28 | INFO | architecture.toolsmith:create_tool:133 | Available APIs context length: 705
+2026-02-08 01:20:28 | INFO | architecture.llm_manager:generate:119 | Generating with groq/meta-llama/llama-4-scout-17b | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-08_01-19-44
+2026-02-08 01:20:28 | WARNING | architecture.llm_manager:generate:150 | Attempt 1/3 failed using key 1: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:28 | ERROR | architecture.llm_manager:generate:165 | Non-retryable error: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:28 | WARNING | architecture.toolsmith:create_tool:157 | LLM generation error: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:28 | INFO | architecture.toolsmith:create_tool:128 | Generating tool with LLM (attempt 2/3)...
+2026-02-08 01:20:28 | INFO | architecture.llm_manager:generate:119 | Generating with groq/meta-llama/llama-4-scout-17b | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-08_01-19-44
+2026-02-08 01:20:28 | WARNING | architecture.llm_manager:generate:150 | Attempt 1/3 failed using key 1: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:28 | ERROR | architecture.llm_manager:generate:165 | Non-retryable error: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:28 | WARNING | architecture.toolsmith:create_tool:157 | LLM generation error: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:28 | INFO | architecture.toolsmith:create_tool:128 | Generating tool with LLM (attempt 3/3)...
+2026-02-08 01:20:28 | INFO | architecture.llm_manager:generate:119 | Generating with groq/meta-llama/llama-4-scout-17b | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-08_01-19-44
+2026-02-08 01:20:28 | WARNING | architecture.llm_manager:generate:150 | Attempt 1/3 failed using key 1: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:28 | ERROR | architecture.llm_manager:generate:165 | Non-retryable error: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:28 | WARNING | architecture.toolsmith:create_tool:157 | LLM generation error: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:28 | INFO | architecture.orchestrator:_ensure_tools:220 | Toolsmith: Tool creation failed after 3 attempts: litellm.NotFoundError: GroqException - {"error":{"message":"T...
+2026-02-08 01:20:28 | INFO | architecture.orchestrator:_ensure_tools:212 | Retrying tool creation (attempt 2)...
+2026-02-08 01:20:28 | INFO | architecture.orchestrator:_ensure_tools:218 | Toolsmith creating: Compare cryptocurrency prices over the last week and predict trend (Create a NEW tool, do not use: )
+2026-02-08 01:20:28 | INFO | architecture.toolsmith:create_tool:112 | Request: 'Compare cryptocurrency prices over the last week and predict trend (Create a NEW tool, do not use: )'
+2026-02-08 01:20:28 | INFO | architecture.toolsmith:create_tool:128 | Generating tool with LLM (attempt 1/3)...
+2026-02-08 01:20:28 | INFO | architecture.toolsmith:create_tool:133 | Available APIs context length: 698
+2026-02-08 01:20:28 | INFO | architecture.llm_manager:generate:119 | Generating with groq/meta-llama/llama-4-scout-17b | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-08_01-19-44
+2026-02-08 01:20:28 | WARNING | architecture.llm_manager:generate:150 | Attempt 1/3 failed using key 1: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:28 | ERROR | architecture.llm_manager:generate:165 | Non-retryable error: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:28 | WARNING | architecture.toolsmith:create_tool:157 | LLM generation error: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:28 | INFO | architecture.toolsmith:create_tool:128 | Generating tool with LLM (attempt 2/3)...
+2026-02-08 01:20:28 | INFO | architecture.llm_manager:generate:119 | Generating with groq/meta-llama/llama-4-scout-17b | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-08_01-19-44
+2026-02-08 01:20:29 | WARNING | architecture.llm_manager:generate:150 | Attempt 1/3 failed using key 1: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:29 | ERROR | architecture.llm_manager:generate:165 | Non-retryable error: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:29 | WARNING | architecture.toolsmith:create_tool:157 | LLM generation error: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:29 | INFO | architecture.toolsmith:create_tool:128 | Generating tool with LLM (attempt 3/3)...
+2026-02-08 01:20:29 | INFO | architecture.llm_manager:generate:119 | Generating with groq/meta-llama/llama-4-scout-17b | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-08_01-19-44
+2026-02-08 01:20:29 | WARNING | architecture.llm_manager:generate:150 | Attempt 1/3 failed using key 1: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:29 | ERROR | architecture.llm_manager:generate:165 | Non-retryable error: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:29 | WARNING | architecture.toolsmith:create_tool:157 | LLM generation error: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:29 | INFO | architecture.orchestrator:_ensure_tools:220 | Toolsmith: Tool creation failed after 3 attempts: litellm.NotFoundError: GroqException - {"error":{"message":"T...
+2026-02-08 01:20:32 | INFO | architecture.orchestrator:_ensure_tools:263 | Fallback candidate ProductHuntTool rejected (similarity 0.286 < 0.5)
+2026-02-08 01:20:32 | INFO | architecture.orchestrator:_ensure_tools:263 | Fallback candidate GitHubTrendingTool rejected (similarity 0.241 < 0.5)
+2026-02-08 01:20:32 | INFO | architecture.orchestrator:_ensure_tools:263 | Fallback candidate HackerNewsTool rejected (similarity 0.188 < 0.5)
+2026-02-08 01:20:32 | INFO | architecture.orchestrator:_ensure_tools:263 | Fallback candidate RedditTool rejected (similarity 0.144 < 0.5)
+2026-02-08 01:20:32 | INFO | architecture.orchestrator:_ensure_tools:263 | Fallback candidate BrawlStarsTopBrawlersTool rejected (similarity 0.123 < 0.5)
+2026-02-08 01:20:32 | INFO | architecture.orchestrator:_create_plan:294 | ============================================================
+2026-02-08 01:20:32 | INFO | architecture.orchestrator:_create_plan:295 | EXECUTION PLAN: 1 steps
+2026-02-08 01:20:32 | INFO | architecture.orchestrator:_create_plan:296 | ============================================================
+2026-02-08 01:20:32 | INFO | architecture.orchestrator:_create_plan:308 |   Step 1: Compare cryptocurrency prices over the last week a...
+2026-02-08 01:20:32 | INFO | architecture.orchestrator:_create_plan:309 |     Tool: GitHubTrendingTool
+2026-02-08 01:20:32 | INFO | architecture.orchestrator:_create_plan:310 |     no dependencies, uses description
+2026-02-08 01:20:32 | INFO | architecture.orchestrator:_create_plan:311 | ============================================================
+2026-02-08 01:20:32 | INFO | architecture.executor:execute:102 | Executing plan: Compare cryptocurrency prices over the last week and predict trend
+2026-02-08 01:20:32 | INFO | architecture.executor:execute:103 | Total steps: 1
+2026-02-08 01:20:32 | INFO | architecture.executor:_execute_step:170 | Step 1: Compare cryptocurrency prices over the last week and predict trend using GitHubTrendingTool
+2026-02-08 01:20:32 | INFO | architecture.executor:load_registry:96 | Loaded 13 tool definitions
+2026-02-08 01:20:32 | INFO | architecture.executor:_execute_step:210 | Step 1: Using description as input
+2026-02-08 01:20:32 | INFO | architecture.llm_manager:generate:119 | Generating with groq/meta-llama/llama-4-scout-17b | Tokens: 256 | Temp: 0.7 | Session: 2026-02-08_01-19-44
+2026-02-08 01:20:32 | WARNING | architecture.llm_manager:generate:150 | Attempt 1/3 failed using key 1: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:32 | ERROR | architecture.llm_manager:generate:165 | Non-retryable error: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:32 | ERROR | architecture.executor:_infer_args:565 | Arg inference failed: litellm.NotFoundError: GroqException - {"error":{"message":"The model `meta-llama/llama-4-scout-17b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-08 01:20:32 | DEBUG | architecture.executor:_execute_step:213 | Executor inferred args = {'trending_type': 'Compare cryptocurrency prices over the last week and predict trend'}
+2026-02-08 01:20:32 | DEBUG | architecture.executor:_execute_step:214 | Args type = <class 'dict'>
+2026-02-08 01:20:32 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: requests beautifulsoup4 pydantic

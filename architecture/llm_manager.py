@@ -1,17 +1,19 @@
+"""LLM Manager - unified interface for multiple LLM providers via LiteLLM."""
+
 import os
 import time
 from itertools import cycle
-from typing import Optional, Dict, Any, List
-from litellm import completion
+from typing import Any, Dict, List, Optional
+
 import litellm
-from utils.logger import get_logger, SESSION_ID
 import nest_asyncio
+from litellm import completion
+
+from utils.logger import SESSION_ID, get_logger
 
 nest_asyncio.apply()
 
-
 logger = get_logger(__name__)
-
 
 if os.getenv("OPIK_API_KEY"):
     os.environ["OPIK_PROJECT_NAME"] = os.getenv("OPIK_PROJECT_NAME", "IASCIS")
@@ -24,10 +26,12 @@ else:
 
 
 class LLMManager:
+    """Unified LLM interface with key rotation and retry logic."""
+
     PROVIDER_CONFIG = {
         "groq": {
             "env_prefix": "GROQ_API_KEY",
-            "default_model": "llama-3.3-70b-versatile",
+            "default_model": "meta-llama/llama-4-scout-17b-16e-instruct",
             "litellm_prefix": "groq",
         },
         "gemini": {
@@ -44,6 +48,11 @@ class LLMManager:
             "env_prefix": "ANTHROPIC_API_KEY",
             "default_model": "claude-3-sonnet-20240229",
             "litellm_prefix": "anthropic",
+        },
+        "cerebras": {
+            "env_prefix": "CEREBRAS_API_KEY",
+            "default_model": "llama3.1-70b",
+            "litellm_prefix": "cerebras",
         },
     }
 
@@ -72,6 +81,7 @@ class LLMManager:
             logger.info(f"Loaded {len(self.api_keys)} {provider.upper()} keys")
 
     def get_next_key(self) -> Optional[str]:
+        """Get next API key from rotation pool."""
         return next(self.key_pool) if self.key_pool else None
 
     def generate(
@@ -84,6 +94,7 @@ class LLMManager:
         initial_delay: float = 1.0,
         **kwargs,
     ) -> Dict[str, Any]:
+        """Generate completion with automatic key rotation and retries."""
         if not self.api_keys:
             return {"content": None, "error": f"No {self.provider} keys"}
 
@@ -158,6 +169,7 @@ class LLMManager:
         return {"content": None, "error": str(last_error)}
 
     def generate_json(self, messages: List[Dict[str, str]], **kwargs) -> Dict[str, Any]:
+        """Generate completion with JSON response format."""
         return self.generate(
             messages, response_format={"type": "json_object"}, **kwargs
         )
@@ -165,6 +177,7 @@ class LLMManager:
     def generate_text(
         self, prompt: str, system_prompt: Optional[str] = None, **kwargs
     ) -> Dict[str, Any]:
+        """Generate completion from simple text prompt."""
         msgs = []
         if system_prompt:
             msgs.append({"role": "system", "content": system_prompt})
@@ -176,6 +189,7 @@ _llm_managers: Dict[str, LLMManager] = {}
 
 
 def get_llm_manager(provider: str = "groq", model: Optional[str] = None) -> LLMManager:
+    """Get or create a cached LLMManager instance."""
     global _llm_managers
     key = f"{provider}:{model or 'default'}"
     if key not in _llm_managers:
@@ -184,13 +198,21 @@ def get_llm_manager(provider: str = "groq", model: Optional[str] = None) -> LLMM
 
 
 def get_groq_manager(model: str = "llama-3.3-70b-versatile") -> LLMManager:
+    """Get Groq LLMManager instance."""
     return get_llm_manager("groq", model)
 
 
 def get_gemini_manager(model: str = "gemini-2.5-flash") -> LLMManager:
+    """Get Gemini LLMManager instance."""
     return get_llm_manager("gemini", model)
 
 
+def get_cerebras_manager(model: str = "llama3.1-70b") -> LLMManager:
+    """Get Cerebras LLMManager instance."""
+    return get_llm_manager("cerebras", model)
+
+
 def reset_llm_managers():
+    """Clear all cached LLMManager instances."""
     global _llm_managers
     _llm_managers = {}

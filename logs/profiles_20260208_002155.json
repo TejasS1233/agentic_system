@@ -1,0 +1,94 @@
+{
+  "exported_at": "2026-02-08T00:21:55.733741",
+  "summary": {
+    "HistoricalCryptoPriceTool": {
+      "call_count": 1,
+      "avg_time_ms": 684.375,
+      "max_time_ms": 684.375,
+      "min_time_ms": 684.375,
+      "avg_memory_mb": 0.1321,
+      "max_memory_mb": 0.1321,
+      "avg_memory_delta_mb": 0.0672,
+      "avg_efficiency": 0.6573,
+      "last_grade": "slow"
+    },
+    "PriceAnalyzerTool": {
+      "call_count": 1,
+      "avg_time_ms": 11.637,
+      "max_time_ms": 11.637,
+      "min_time_ms": 11.637,
+      "avg_memory_mb": 0.0709,
+      "max_memory_mb": 0.0709,
+      "avg_memory_delta_mb": 0.0576,
+      "avg_efficiency": 0.9939,
+      "last_grade": "moderate"
+    },
+    "TrendPredictor": {
+      "call_count": 1,
+      "avg_time_ms": 2.794,
+      "max_time_ms": 2.794,
+      "min_time_ms": 2.794,
+      "avg_memory_mb": 0.0111,
+      "max_memory_mb": 0.0111,
+      "avg_memory_delta_mb": 0.0,
+      "avg_efficiency": 0.0,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 3,
+    "tools_profiled": [
+      "HistoricalCryptoPriceTool",
+      "PriceAnalyzerTool",
+      "TrendPredictor"
+    ],
+    "execution_time_ms": {
+      "min": 2.794,
+      "max": 684.375,
+      "mean": 232.93533333333335
+    },
+    "peak_memory_mb": {
+      "min": 0.0111,
+      "max": 0.1321,
+      "mean": 0.07136666666666668
+    },
+    "success_rate": 0.6666666666666666
+  },
+  "raw_profiles": {
+    "HistoricalCryptoPriceTool": [
+      {
+        "tool_name": "HistoricalCryptoPriceTool",
+        "execution_time_ms": 684.375,
+        "peak_memory_mb": 0.1321,
+        "memory_delta_mb": 0.0672,
+        "latency_grade": "slow",
+        "efficiency_score": 0.6573,
+        "success": true
+      }
+    ],
+    "PriceAnalyzerTool": [
+      {
+        "tool_name": "PriceAnalyzerTool",
+        "execution_time_ms": 11.637,
+        "peak_memory_mb": 0.0709,
+        "memory_delta_mb": 0.0576,
+        "latency_grade": "moderate",
+        "efficiency_score": 0.9939,
+        "success": true
+      }
+    ],
+    "TrendPredictor": [
+      {
+        "tool_name": "TrendPredictor",
+        "execution_time_ms": 2.794,
+        "peak_memory_mb": 0.0111,
+        "memory_delta_mb": 0,
+        "latency_grade": "critical",
+        "success": false,
+        "error_message": "object of type 'NoneType' has no len()"
+      }
+    ]
+  }
+}

@@ -1,0 +1,87 @@
+2026-02-08 00:27:40 | INFO | architecture.llm_manager:<module>:21 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-08 00:28:21 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-08 00:28:21 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-08 00:28:21 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-08 00:28:21 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-08 00:28:21 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\Omar\Desktop\Code\Research\workspace, profiling=True)
+2026-02-08 00:28:21 | INFO | architecture.sandbox:__init__:152 | Sandbox initialized with tools_dir=C:\Users\Omar\Desktop\Code\Research\workspace\tools, output_dir=C:\Users\Omar\Desktop\Code\Research\workspace\outputs
+2026-02-08 00:28:22 | INFO | architecture.sandbox:start:192 | Sandbox container started: f86e0f88c3b4
+2026-02-08 00:28:22 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-08 00:28:22 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-08 00:28:22 | INFO | architecture.executor:__init__:81 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-08 00:28:22 | INFO | architecture.executor:load_registry:96 | Loaded 16 tool definitions
+2026-02-08 00:28:22 | INFO | architecture.llm_manager:__init__:81 | Loaded 4 GROQ keys
+2026-02-08 00:28:22 | INFO | architecture.executor:__init__:89 | ExecutorAgent initialized with Sandbox
+2026-02-08 00:28:23 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: requests pandas numpy beautifulsoup4 pydantic
+2026-02-08 00:28:27 | INFO | architecture.orchestrator:__init__:44 | Orchestrator initialized with ToolRetriever
+2026-02-08 00:28:27 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-08 00:28:27 | INFO | __main__:run:121 | Task received: Compare cryptocurrency prices over the last week and predict trend...
+2026-02-08 00:28:27 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-08 00:28:27 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-08 00:28:27 | INFO | architecture.orchestrator:run:48 | Processing: Compare cryptocurrency prices over the last week and predict trend...
+2026-02-08 00:28:27 | INFO | architecture.llm_manager:generate:119 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-08_00-27-25
+2026-02-08 00:28:27 | INFO | architecture.llm_manager:generate:143 | Generation success in 637.82ms
+2026-02-08 00:28:27 | INFO | architecture.orchestrator:run:51 | Task Classification: COMPLEX_TASK
+2026-02-08 00:28:27 | INFO | architecture.llm_manager:generate:119 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-08_00-27-25
+2026-02-08 00:28:28 | INFO | architecture.llm_manager:generate:143 | Generation success in 445.14ms
+2026-02-08 00:28:28 | INFO | architecture.orchestrator:run:57 | Decomposed into 2 subtasks
+2026-02-08 00:28:28 | INFO | architecture.llm_manager:generate:119 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-08_00-27-25
+2026-02-08 00:28:28 | INFO | architecture.llm_manager:generate:143 | Generation success in 95.42ms
+2026-02-08 00:28:28 | INFO | architecture.orchestrator:_retrieve_tools:171 | st_1 -> HistoricalCryptoPriceTool (LLM selected, semantic: 0.658, tags: +1, in-domain)
+2026-02-08 00:28:28 | INFO | architecture.llm_manager:generate:119 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-08_00-27-25
+2026-02-08 00:28:28 | INFO | architecture.llm_manager:generate:143 | Generation success in 216.26ms
+2026-02-08 00:28:28 | INFO | architecture.orchestrator:_retrieve_tools:171 | st_2 -> TrendPredictorTool (LLM selected, semantic: 0.387, tags: +1, cross-domain)
+2026-02-08 00:28:28 | INFO | architecture.orchestrator:_create_plan:294 | ============================================================
+2026-02-08 00:28:28 | INFO | architecture.orchestrator:_create_plan:295 | EXECUTION PLAN: 2 steps
+2026-02-08 00:28:28 | INFO | architecture.orchestrator:_create_plan:296 | ============================================================
+2026-02-08 00:28:28 | INFO | architecture.orchestrator:_create_plan:308 |   Step 1: Get historical cryptocurrency prices for the last ...
+2026-02-08 00:28:28 | INFO | architecture.orchestrator:_create_plan:309 |     Tool: HistoricalCryptoPriceTool
+2026-02-08 00:28:28 | INFO | architecture.orchestrator:_create_plan:310 |     no dependencies, uses description
+2026-02-08 00:28:28 | INFO | architecture.orchestrator:_create_plan:308 |   Step 2: Analyze historical prices to predict trend...
+2026-02-08 00:28:28 | INFO | architecture.orchestrator:_create_plan:309 |     Tool: TrendPredictorTool
+2026-02-08 00:28:28 | INFO | architecture.orchestrator:_create_plan:310 |     depends_on=[1], input_from=step_1
+2026-02-08 00:28:28 | INFO | architecture.orchestrator:_create_plan:311 | ============================================================
+2026-02-08 00:28:28 | INFO | architecture.executor:execute:102 | Executing plan: Compare cryptocurrency prices over the last week and predict trend
+2026-02-08 00:28:28 | INFO | architecture.executor:execute:103 | Total steps: 2
+2026-02-08 00:28:28 | INFO | architecture.executor:_execute_step:170 | Step 1: Get historical cryptocurrency prices for the last week using HistoricalCryptoPriceTool
+2026-02-08 00:28:28 | INFO | architecture.executor:load_registry:96 | Loaded 16 tool definitions
+2026-02-08 00:28:28 | INFO | architecture.executor:_execute_step:210 | Step 1: Using description as input
+2026-02-08 00:28:28 | INFO | architecture.llm_manager:generate:119 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-08_00-27-25
+2026-02-08 00:28:28 | INFO | architecture.llm_manager:generate:143 | Generation success in 214.58ms
+2026-02-08 00:28:28 | INFO | architecture.executor:_infer_args:570 | LLM extracted args: {'cryptocurrency': 'Bitcoin'}
+2026-02-08 00:28:28 | DEBUG | architecture.executor:_execute_step:213 | Executor inferred args = {'cryptocurrency': 'Bitcoin'}
+2026-02-08 00:28:28 | DEBUG | architecture.executor:_execute_step:214 | Args type = <class 'dict'>
+2026-02-08 00:28:28 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: requests pydantic
+2026-02-08 00:28:37 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: sandbox received args = {'cryptocurrency': 'Bitcoin'}
+2026-02-08 00:28:37 | INFO | architecture.sandbox:execute_with_args:518 | DEBUG: args_json = {"cryptocurrency": "Bitcoin"}
+2026-02-08 00:28:37 | INFO | architecture.sandbox:execute_with_args:519 | DEBUG: Runner script line: args = json.loads('{"cryptocurrency": "Bitcoin"}')
+2026-02-08 00:28:37 | INFO | architecture.sandbox:execute_with_args:524 | Executing tool with args: HistoricalCryptoPriceTool
+2026-02-08 00:28:37 | INFO | architecture.sandbox:execute_with_args:525 | Args JSON being passed: {"cryptocurrency": "Bitcoin"}
+2026-02-08 00:28:39 | INFO | architecture.executor:_execute_step:227 | Step 1 SANDBOX Profile: time=428.668ms, peak_mem=0.1321MB, delta_mem=0.0672MB, efficiency=78.51%, grade=slow
+2026-02-08 00:28:39 | INFO | architecture.executor:_execute_step:235 |    (Total round-trip: 10162.90ms)
+2026-02-08 00:28:39 | INFO | architecture.executor:_execute_step:240 | Step 1: Completed in 10.16s
+2026-02-08 00:28:39 | INFO | architecture.executor:_execute_step:170 | Step 2: Analyze historical prices to predict trend using TrendPredictorTool
+2026-02-08 00:28:39 | INFO | architecture.executor:load_registry:96 | Loaded 16 tool definitions
+2026-02-08 00:28:39 | INFO | architecture.executor:_execute_step:200 | Step 2: Using input from step 1
+2026-02-08 00:28:39 | INFO | architecture.llm_manager:generate:119 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-08_00-27-25
+2026-02-08 00:28:40 | INFO | architecture.llm_manager:generate:143 | Generation success in 1155.19ms
+2026-02-08 00:28:40 | INFO | architecture.executor:_infer_args:570 | LLM extracted args: {'data': None}
+2026-02-08 00:28:40 | DEBUG | architecture.executor:_execute_step:213 | Executor inferred args = {'data': None}
+2026-02-08 00:28:40 | DEBUG | architecture.executor:_execute_step:214 | Args type = <class 'dict'>
+2026-02-08 00:28:40 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: matplotlib pandas numpy
+2026-02-08 00:28:57 | INFO | architecture.sandbox:_pre_install_essentials:161 | Essential packages pre-installed
+2026-02-08 00:29:06 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: sandbox received args = {'data': None}
+2026-02-08 00:29:06 | INFO | architecture.sandbox:execute_with_args:518 | DEBUG: args_json = {"data": null}
+2026-02-08 00:29:06 | INFO | architecture.sandbox:execute_with_args:519 | DEBUG: Runner script line: args = json.loads('{"data": null}')
+2026-02-08 00:29:06 | INFO | architecture.sandbox:execute_with_args:524 | Executing tool with args: TrendPredictorTool
+2026-02-08 00:29:06 | INFO | architecture.sandbox:execute_with_args:525 | Args JSON being passed: {"data": null}
+2026-02-08 00:29:09 | INFO | architecture.executor:_execute_step:227 | Step 2 SANDBOX Profile: time=0.114ms, peak_mem=0.0013MB, delta_mem=0.0005MB, efficiency=99.99%, grade=fast
+2026-02-08 00:29:09 | INFO | architecture.executor:_execute_step:235 |    (Total round-trip: 29556.61ms)
+2026-02-08 00:29:09 | INFO | architecture.executor:_execute_step:240 | Step 2: Completed in 29.56s
+2026-02-08 00:29:09 | INFO | architecture.llm_manager:generate:119 | Generating with groq/llama-3.3-70b-versatile | Tokens: 500 | Temp: 0.3 | Session: 2026-02-08_00-27-25
+2026-02-08 00:29:10 | INFO | architecture.llm_manager:generate:143 | Generation success in 1023.74ms
+2026-02-08 00:29:10 | INFO | __main__:main:218 | Completed in 43725.12ms
+2026-02-08 00:29:10 | INFO | __main__:main:219 | Zone: public
+2026-02-08 00:29:10 | INFO | architecture.executor:export_profiles:510 | Profiles exported to: C:\Users\Omar\Desktop\Code\Research\logs\profiles_20260208_002910.json
+2026-02-08 00:29:16 | INFO | architecture.sandbox:stop:207 | Sandbox container stopped: f86e0f88c3b4
+2026-02-08 00:29:16 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

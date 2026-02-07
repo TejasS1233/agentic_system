@@ -1,0 +1,71 @@
+{
+  "exported_at": "2026-02-08T00:29:10.851317",
+  "summary": {
+    "HistoricalCryptoPriceTool": {
+      "call_count": 1,
+      "avg_time_ms": 428.668,
+      "max_time_ms": 428.668,
+      "min_time_ms": 428.668,
+      "avg_memory_mb": 0.1321,
+      "max_memory_mb": 0.1321,
+      "avg_memory_delta_mb": 0.0672,
+      "avg_efficiency": 0.7851,
+      "last_grade": "slow"
+    },
+    "TrendPredictorTool": {
+      "call_count": 1,
+      "avg_time_ms": 0.114,
+      "max_time_ms": 0.114,
+      "min_time_ms": 0.114,
+      "avg_memory_mb": 0.0013,
+      "max_memory_mb": 0.0013,
+      "avg_memory_delta_mb": 0.0005,
+      "avg_efficiency": 0.9999,
+      "last_grade": "fast"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 2,
+    "tools_profiled": [
+      "HistoricalCryptoPriceTool",
+      "TrendPredictorTool"
+    ],
+    "execution_time_ms": {
+      "min": 0.114,
+      "max": 428.668,
+      "mean": 214.391
+    },
+    "peak_memory_mb": {
+      "min": 0.0013,
+      "max": 0.1321,
+      "mean": 0.0667
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "HistoricalCryptoPriceTool": [
+      {
+        "tool_name": "HistoricalCryptoPriceTool",
+        "execution_time_ms": 428.668,
+        "peak_memory_mb": 0.1321,
+        "memory_delta_mb": 0.0672,
+        "latency_grade": "slow",
+        "efficiency_score": 0.7851,
+        "success": true
+      }
+    ],
+    "TrendPredictorTool": [
+      {
+        "tool_name": "TrendPredictorTool",
+        "execution_time_ms": 0.114,
+        "peak_memory_mb": 0.0013,
+        "memory_delta_mb": 0.0005,
+        "latency_grade": "fast",
+        "efficiency_score": 0.9999,
+        "success": true
+      }
+    ]
+  }
+}

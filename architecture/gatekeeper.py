@@ -82,7 +82,7 @@ class VulnerabilityScanner:
         ),
         SecurityPattern(
             "SEC-004",
-            r'(OAuthHandler|OAuth1|OAuth2|APIKey|Bearer)\s*\(',
+            r"(OAuthHandler|OAuth1|OAuth2|APIKey|Bearer)\s*\(",
             "OAuth/API authentication - requires credentials",
             RiskLevel.CRITICAL,
         ),
@@ -212,15 +212,15 @@ class Gatekeeper:
     BANNED_IMPORTS: set[str] = {
         "shutil",
         # Auth-requiring libraries (no keys will be provided)
-        "tweepy",           # Twitter API
-        "twitter",          # Twitter API
-        "openai",           # OpenAI API
-        "anthropic",        # Anthropic API  
-        "google.cloud",     # Google Cloud (requires service account)
-        "boto3",            # AWS SDK (requires credentials)
-        "stripe",           # Stripe payments
-        "twilio",           # Twilio SMS
-        "sendgrid",         # SendGrid email
+        "tweepy",  # Twitter API
+        "twitter",  # Twitter API
+        "openai",  # OpenAI API
+        "anthropic",  # Anthropic API
+        "google.cloud",  # Google Cloud (requires service account)
+        "boto3",  # AWS SDK (requires credentials)
+        "stripe",  # Stripe payments
+        "twilio",  # Twilio SMS
+        "sendgrid",  # SendGrid email
     }
     RISKY_IMPORTS: set[str] = {"subprocess", "multiprocessing", "ctypes", "pickle"}
     BANNED_CALLS: set[str] = {"eval", "exec", "compile", "__import__"}

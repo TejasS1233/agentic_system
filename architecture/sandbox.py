@@ -272,11 +272,11 @@ class Sandbox:
 
     def run_tool_test(self, tool_file: str) -> dict:
         """Run the test_tool() function of a generated tool to verify it works.
-        
+
         This executes `python tool_file.py` which should trigger:
         if __name__ == "__main__":
             test_tool()
-        
+
         Returns:
             {"success": bool, "output": str, "error": str}
         """
@@ -523,14 +523,21 @@ except Exception as e:
 
         logger.info(f"Executing tool with args: {tool_name}")
         logger.info(f"Args JSON being passed: {args_json}")
-        
+
         # Pass API keys from host environment to container
         import os as host_os
+
         container_env = {}
-        for key in ["SERP_API_KEY", "HF_TOKEN", "GROQ_API_KEY", "GEMINI_API_KEY", "OPENAI_API_KEY"]:
+        for key in [
+            "SERP_API_KEY",
+            "HF_TOKEN",
+            "GROQ_API_KEY",
+            "GEMINI_API_KEY",
+            "OPENAI_API_KEY",
+        ]:
             if val := host_os.environ.get(key):
                 container_env[key] = val
-        
+
         try:
             exit_code, output = self.container.exec_run(
                 f"python /tools/{runner_name}",

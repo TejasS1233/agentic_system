@@ -1,12 +1,7 @@
-"""Centralized system prompts for IASCIS components.
-
-This module consolidates all LLM prompts used across the system.
-Import prompts from here instead of defining them inline.
-"""
+"""Centralized system prompts for IASCIS components."""
 
 import platform
 
-# System info for context
 OS_INFO = f"OS: {platform.system()} ({platform.release()})"
 
 
@@ -18,15 +13,15 @@ DECOMPOSITION_PROMPT = """You are the orchestration engine of the system with li
 
 DECISION PROTOCOL:
 1. SIMPLE TASKS (1 STEP): Most single-action requests should be ONE subtask. Examples:
-   - "Search Google for X" → 1 subtask (domain: search)
-   - "Get trending repos on GitHub" → 1 subtask (domain: web)
-   - "Create a bar chart of X" → 1 subtask (domain: visualization)
-   - "Scrape headlines from Y" → 1 subtask (domain: web)
-   - "Get info about repo X" → 1 subtask (domain: web)
+   - "Search Google for X" -> 1 subtask (domain: search)
+   - "Get trending repos on GitHub" -> 1 subtask (domain: web)
+   - "Create a bar chart of X" -> 1 subtask (domain: visualization)
+   - "Scrape headlines from Y" -> 1 subtask (domain: web)
+   - "Get info about repo X" -> 1 subtask (domain: web)
    
 2. COMPLEX TASKS (2-3 STEPS): Only split when there are CLEAR dependencies:
-   - "Search for X, then create a chart" → 2 subtasks (search depends, visualization uses result)
-   - "Get repo stats and visualize them" → 2 subtasks (fetch first, then graph)
+   - "Search for X, then create a chart" -> 2 subtasks (search depends, visualization uses result)
+   - "Get repo stats and visualize them" -> 2 subtasks (fetch first, then graph)
 
 OUTPUT FORMAT (JSON only):
 {
@@ -79,13 +74,15 @@ def get_arg_extraction_prompt(
 ) -> str:
     """Generate prompt for extracting argument values from task description."""
     url_section = ""
-    if available_urls and any(arg in ["url", "target_url", "source_url", "webpage"] for arg in arg_names):
+    if available_urls and any(
+        arg in ["url", "target_url", "source_url", "webpage"] for arg in arg_names
+    ):
         url_section = f"""
 AVAILABLE URLS (USE THESE INSTEAD OF GUESSING):
 {available_urls}
 If a URL argument is needed, PREFER one from the above list that matches the task.
 """
-    
+
     return f"""Extract the actual values for these arguments from the task context.
 
 Arguments needed: {arg_names}
@@ -101,6 +98,44 @@ CRITICAL RULES:
 
 Return ONLY a valid JSON object with the extracted values.
 """
+
+
+def get_response_synthesis_prompt(query: str, data: str) -> str:
+    """Generate prompt for synthesizing human-readable response from raw data."""
+    return f"""You are a helpful assistant. The user asked: "{query}"
+
+Here is the raw data retrieved:
+{data}
+
+Based on this data, write a clear, concise, and helpful response that directly answers the user's question.
+- Use natural language, not JSON
+- Highlight the most relevant information first
+- Format nicely with bullet points if listing multiple items
+- Keep it concise (2-4 paragraphs max)
+- Don't mention "the data shows" or "according to the results" - just answer naturally"""
+
+
+def get_chart_args_prompt(other_args: list, description: str) -> str:
+    """Generate prompt for extracting chart visualization arguments."""
+    return f"""For a chart visualization, provide values for these arguments:
+{other_args}
+
+Task: {description}
+
+Return ONLY a JSON object. Example: {{"chart_type": "bar", "title": "My Chart", "xlabel": "X", "ylabel": "Y"}}
+Use sensible defaults for any optional args (empty string is fine)."""
+
+
+def get_direct_generation_prompt(query: str) -> str:
+    """Generate prompt for direct response requests."""
+    return f"""Fulfill the following request directly.
+
+User Request: {query}
+
+Rules:
+1. If writing code, put it in a Markdown code block (```python, ```bash, etc).
+2. If writing text/creative content, just write it naturally.
+3. Be concise and helpful."""
 
 
 # =============================================================================
@@ -122,15 +157,11 @@ ALLOWED_DOMAINS_STR = ", ".join(ALLOWED_DOMAINS)
 
 
 def get_tool_generator_prompt(
-    existing_code: str, domain_options: str = ALLOWED_DOMAINS_STR, available_apis: str = ""
+    existing_code: str,
+    domain_options: str = ALLOWED_DOMAINS_STR,
+    available_apis: str = "",
 ) -> str:
-    """Generate prompt for creating new tools.
-    
-    Args:
-        existing_code: Reference code style from existing tools
-        domain_options: Allowed domain categories
-        available_apis: Pre-formatted string of relevant free APIs to use
-    """
+    """Generate prompt for creating new tools."""
     api_section = ""
     if available_apis:
         api_section = f"""
@@ -148,7 +179,7 @@ These are curated, working API endpoints that require NO authentication. PREFER 
 
 IMPORTANT: If one of these APIs matches your task requirements, USE IT directly in your code with `requests.get()`.
 """
-    
+
     return f"""You are an expert Python Tool Generator. 
 You MUST generate a JSON object containing the tool code and metadata.
 
