@@ -1,0 +1,99 @@
+2026-02-06 21:52:07 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-06 21:52:48 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-06 21:52:48 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-06 21:52:48 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-06 21:52:48 | INFO | main:__init__:68 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=False)
+2026-02-06 21:52:48 | INFO | architecture.sandbox:__init__:132 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools
+2026-02-06 21:52:49 | INFO | architecture.sandbox:start:156 | Sandbox container started: e647354c450b
+2026-02-06 21:52:49 | INFO | architecture.executor:load_registry:77 | Loaded 36 tool definitions
+2026-02-06 21:52:49 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-06 21:52:49 | INFO | architecture.executor:__init__:70 | ExecutorAgent initialized with Sandbox
+2026-02-06 21:52:55 | INFO | architecture.orchestrator:__init__:52 | Orchestrator initialized with ToolRetriever
+2026-02-06 21:52:55 | INFO | main:_initialize_runtime:91 | Runtime initialized with Sandbox
+2026-02-06 21:52:55 | INFO | main:run:120 | Task received: Write a Python function that calculates the fibonacci sequence up to n terms...
+2026-02-06 21:52:55 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-06 21:52:55 | INFO | main:run:124 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-06 21:52:55 | INFO | architecture.orchestrator:run:56 | Processing,Write a Python function that calculates the fibonacci sequence up to n terms...
+2026-02-06 21:52:55 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-06_21-52-07
+2026-02-06 21:52:57 | INFO | architecture.llm_manager:generate:132 | Generation success in 1661.00ms
+2026-02-06 21:52:57 | INFO | architecture.orchestrator:run:59 | Decomposed into 4 subtasks
+2026-02-06 21:52:57 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_1 → FormulaCodeGenerator (dist: 1.407, matched: False)
+2026-02-06 21:52:57 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_2 → SequenceCalculator (dist: 0.950, matched: True)
+2026-02-06 21:52:57 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_3 → SequenceCalculator (dist: 0.974, matched: True)
+2026-02-06 21:52:57 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_4 → IsFloatTool (dist: 1.470, matched: False)
+2026-02-06 21:52:57 | INFO | architecture.orchestrator:_ensure_tools:156 | Toolsmith creating: Define the problem and identify the input parameters
+2026-02-06 21:53:03 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_21-52-07
+2026-02-06 21:53:03 | INFO | architecture.llm_manager:generate:132 | Generation success in 909.54ms
+2026-02-06 21:53:04 | INFO | architecture.orchestrator:_ensure_tools:159 | Toolsmith: Successfully created ProblemDefinitionTool with tags ['palindrome', 'anagram', 'uppercase', 'lowerca...
+2026-02-06 21:53:04 | INFO | architecture.orchestrator:_ensure_tools:183 | Tool assigned: ProblemDefinitionTool
+2026-02-06 21:53:04 | INFO | architecture.orchestrator:_ensure_tools:156 | Toolsmith creating: Test the function with sample inputs to verify its correctness
+2026-02-06 21:53:04 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_21-52-07
+2026-02-06 21:53:05 | INFO | architecture.llm_manager:generate:132 | Generation success in 1336.25ms
+2026-02-06 21:53:05 | WARNING | architecture.gatekeeper:validate:272 | Validation failed: ["Banned call: 'eval()'"]
+2026-02-06 21:53:05 | INFO | architecture.orchestrator:_ensure_tools:159 | Toolsmith: Error: Generated tool code failed Safety Check (contains banned imports/calls). Request rejected for...
+2026-02-06 21:53:10 | INFO | architecture.executor:execute:83 | Executing plan: Write a Python function that calculates the fibonacci sequence up to n terms
+2026-02-06 21:53:10 | INFO | architecture.executor:execute:84 | Total steps: 4
+2026-02-06 21:53:10 | INFO | architecture.executor:_execute_step:113 | Step 1: Define the problem and identify the input parameters using ProblemDefinitionTool
+2026-02-06 21:53:10 | INFO | architecture.executor:load_registry:77 | Loaded 37 tool definitions
+2026-02-06 21:53:10 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_21-52-07
+2026-02-06 21:53:10 | INFO | architecture.llm_manager:generate:132 | Generation success in 155.29ms
+2026-02-06 21:53:10 | INFO | architecture.executor:_infer_args:360 | LLM extracted args: {'problem_statement': 'Define the problem and identify the input parameters'}
+2026-02-06 21:53:10 | INFO | architecture.executor:_execute_step:147 | DEBUG: Executor inferred args = {'problem_statement': 'Define the problem and identify the input parameters'}
+2026-02-06 21:53:10 | INFO | architecture.executor:_execute_step:148 | DEBUG: Args type = <class 'dict'>
+2026-02-06 21:53:10 | INFO | architecture.sandbox:_install_deps:176 | Installing dependencies: pydantic pydantic
+2026-02-06 21:53:18 | INFO | architecture.sandbox:execute_with_args:377 | DEBUG: sandbox received args = {'problem_statement': 'Define the problem and identify the input parameters'}
+2026-02-06 21:53:18 | INFO | architecture.sandbox:execute_with_args:378 | DEBUG: args_json = {"problem_statement": "Define the problem and identify the input parameters"}
+2026-02-06 21:53:18 | INFO | architecture.sandbox:execute_with_args:379 | DEBUG: Runner script line: args = json.loads('{"problem_statement": "Define the problem and identify the input parameters"}')
+2026-02-06 21:53:18 | INFO | architecture.sandbox:execute_with_args:384 | Executing tool with args: ProblemDefinitionTool
+2026-02-06 21:53:18 | INFO | architecture.sandbox:execute_with_args:385 | Args JSON being passed: {"problem_statement": "Define the problem and identify the input parameters"}
+2026-02-06 21:53:19 | INFO | architecture.executor:_execute_step:165 | Step 1 SANDBOX Profile: time=0.780ms, peak_mem=0.0026MB, delta_mem=0.0008MB, efficiency=99.96%, grade=fast
+2026-02-06 21:53:19 | INFO | architecture.executor:_execute_step:175 |    (Total round-trip: 8970.27ms)
+2026-02-06 21:53:19 | INFO | architecture.executor:_execute_step:180 | Step 1: Completed in 8.97s
+2026-02-06 21:53:19 | INFO | architecture.executor:_execute_step:113 | Step 2: Determine the mathematical formula for the Fibonacci sequence using SequenceCalculator
+2026-02-06 21:53:19 | INFO | architecture.executor:load_registry:77 | Loaded 37 tool definitions
+2026-02-06 21:53:19 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_21-52-07
+2026-02-06 21:53:19 | INFO | architecture.llm_manager:generate:132 | Generation success in 218.73ms
+2026-02-06 21:53:19 | INFO | architecture.executor:_infer_args:360 | LLM extracted args: {'n': 10, 'sequence_type': 'Fibonacci'}
+2026-02-06 21:53:19 | INFO | architecture.executor:_execute_step:147 | DEBUG: Executor inferred args = {'n': 10, 'sequence_type': 'Fibonacci'}
+2026-02-06 21:53:19 | INFO | architecture.executor:_execute_step:148 | DEBUG: Args type = <class 'dict'>
+2026-02-06 21:53:19 | INFO | architecture.sandbox:_install_deps:176 | Installing dependencies: numpy
+2026-02-06 21:53:26 | INFO | architecture.sandbox:execute_with_args:377 | DEBUG: sandbox received args = {'n': 10, 'sequence_type': 'Fibonacci'}
+2026-02-06 21:53:26 | INFO | architecture.sandbox:execute_with_args:378 | DEBUG: args_json = {"n": 10, "sequence_type": "Fibonacci"}
+2026-02-06 21:53:26 | INFO | architecture.sandbox:execute_with_args:379 | DEBUG: Runner script line: args = json.loads('{"n": 10, "sequence_type": "Fibonacci"}')
+2026-02-06 21:53:26 | INFO | architecture.sandbox:execute_with_args:384 | Executing tool with args: SequenceCalculator
+2026-02-06 21:53:26 | INFO | architecture.sandbox:execute_with_args:385 | Args JSON being passed: {"n": 10, "sequence_type": "Fibonacci"}
+2026-02-06 21:53:27 | INFO | architecture.executor:_execute_step:165 | Step 2 SANDBOX Profile: time=0.067ms, peak_mem=0.0016MB, delta_mem=0.0005MB, efficiency=100.00%, grade=fast
+2026-02-06 21:53:27 | INFO | architecture.executor:_execute_step:175 |    (Total round-trip: 8032.85ms)
+2026-02-06 21:53:27 | INFO | architecture.executor:_execute_step:180 | Step 2: Completed in 8.03s
+2026-02-06 21:53:27 | INFO | architecture.executor:_execute_step:113 | Step 3: Write a Python function to generate the Fibonacci sequence up to n terms using SequenceCalculator
+2026-02-06 21:53:27 | INFO | architecture.executor:load_registry:77 | Loaded 37 tool definitions
+2026-02-06 21:53:27 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_21-52-07
+2026-02-06 21:53:27 | INFO | architecture.llm_manager:generate:132 | Generation success in 377.07ms
+2026-02-06 21:53:27 | INFO | architecture.executor:_infer_args:360 | LLM extracted args: {'n': None, 'sequence_type': 'Fibonacci'}
+2026-02-06 21:53:27 | INFO | architecture.executor:_execute_step:147 | DEBUG: Executor inferred args = {'n': None, 'sequence_type': 'Fibonacci'}
+2026-02-06 21:53:27 | INFO | architecture.executor:_execute_step:148 | DEBUG: Args type = <class 'dict'>
+2026-02-06 21:53:27 | INFO | architecture.sandbox:execute_with_args:377 | DEBUG: sandbox received args = {'n': None, 'sequence_type': 'Fibonacci'}
+2026-02-06 21:53:27 | INFO | architecture.sandbox:execute_with_args:378 | DEBUG: args_json = {"n": null, "sequence_type": "Fibonacci"}
+2026-02-06 21:53:27 | INFO | architecture.sandbox:execute_with_args:379 | DEBUG: Runner script line: args = json.loads('{"n": null, "sequence_type": "Fibonacci"}')
+2026-02-06 21:53:27 | INFO | architecture.sandbox:execute_with_args:384 | Executing tool with args: SequenceCalculator
+2026-02-06 21:53:27 | INFO | architecture.sandbox:execute_with_args:385 | Args JSON being passed: {"n": null, "sequence_type": "Fibonacci"}
+2026-02-06 21:53:28 | INFO | architecture.executor:_execute_step:165 | Step 3 SANDBOX Profile: time=0.086ms, peak_mem=0.0016MB, delta_mem=0.0005MB, efficiency=100.00%, grade=fast
+2026-02-06 21:53:28 | INFO | architecture.executor:_execute_step:175 |    (Total round-trip: 1094.90ms)
+2026-02-06 21:53:28 | INFO | architecture.executor:_execute_step:180 | Step 3: Completed in 1.09s
+2026-02-06 21:53:28 | INFO | architecture.executor:_execute_step:113 | Step 4: Test the function with sample inputs to verify its correctness using IsFloatTool
+2026-02-06 21:53:28 | INFO | architecture.executor:load_registry:77 | Loaded 37 tool definitions
+2026-02-06 21:53:28 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_21-52-07
+2026-02-06 21:53:29 | INFO | architecture.llm_manager:generate:132 | Generation success in 169.19ms
+2026-02-06 21:53:29 | INFO | architecture.executor:_infer_args:360 | LLM extracted args: {'input_string': 'Invalid sequence type'}
+2026-02-06 21:53:29 | INFO | architecture.executor:_execute_step:147 | DEBUG: Executor inferred args = {'input_string': 'Invalid sequence type'}
+2026-02-06 21:53:29 | INFO | architecture.executor:_execute_step:148 | DEBUG: Args type = <class 'dict'>
+2026-02-06 21:53:29 | INFO | architecture.sandbox:execute_with_args:377 | DEBUG: sandbox received args = {'input_string': 'Invalid sequence type'}
+2026-02-06 21:53:29 | INFO | architecture.sandbox:execute_with_args:378 | DEBUG: args_json = {"input_string": "Invalid sequence type"}
+2026-02-06 21:53:29 | INFO | architecture.sandbox:execute_with_args:379 | DEBUG: Runner script line: args = json.loads('{"input_string": "Invalid sequence type"}')
+2026-02-06 21:53:29 | INFO | architecture.sandbox:execute_with_args:384 | Executing tool with args: IsFloatTool
+2026-02-06 21:53:29 | INFO | architecture.sandbox:execute_with_args:385 | Args JSON being passed: {"input_string": "Invalid sequence type"}
+2026-02-06 21:53:29 | INFO | architecture.executor:_execute_step:165 | Step 4 SANDBOX Profile: time=0.090ms, peak_mem=0.0016MB, delta_mem=0.0005MB, efficiency=99.99%, grade=fast
+2026-02-06 21:53:29 | INFO | architecture.executor:_execute_step:175 |    (Total round-trip: 802.44ms)
+2026-02-06 21:53:29 | INFO | architecture.executor:_execute_step:180 | Step 4: Completed in 0.80s
+2026-02-06 21:53:35 | INFO | architecture.sandbox:stop:163 | Sandbox container stopped: e647354c450b
+2026-02-06 21:53:35 | INFO | main:_shutdown_runtime:100 | Runtime shutdown complete

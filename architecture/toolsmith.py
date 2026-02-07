@@ -1,5 +1,3 @@
-"""Toolsmith - Generates and manages tools for the IASCIS system."""
-
 import os
 import re
 import json
@@ -8,109 +6,12 @@ import ast
 import subprocess
 import tempfile
 from pathlib import Path
-
-try:
-    import requests
-except ImportError:
-    requests = None
-
 from architecture.llm_manager import get_llm_manager
 from architecture.gatekeeper import Gatekeeper
 from architecture.prompts import get_tool_generator_prompt
-from architecture.intent_classifier import (
-    IntentClassifier,
-    validate_domain,
-    DOMAIN_KEYWORDS,
-)
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
-
-STDLIB_MODULES = {
-    "os",
-    "sys",
-    "re",
-    "json",
-    "ast",
-    "time",
-    "math",
-    "datetime",
-    "collections",
-    "itertools",
-    "functools",
-    "typing",
-    "abc",
-    "subprocess",
-    "tempfile",
-    "pathlib",
-    "io",
-    "csv",
-    "random",
-    "hashlib",
-    "base64",
-    "urllib",
-    "http",
-    "email",
-    "html",
-    "xml",
-    "logging",
-    "warnings",
-    "copy",
-    "pickle",
-    "sqlite3",
-    "threading",
-    "multiprocessing",
-    "asyncio",
-    "socket",
-    "ssl",
-    "uuid",
-    "platform",
-}
-
-IMPORT_TO_PACKAGE = {
-    "cv2": "opencv-python",
-    "PIL": "Pillow",
-    "sklearn": "scikit-learn",
-    "yaml": "pyyaml",
-    "bs4": "beautifulsoup4",
-}
-
-STOP_WORDS = {
-    "a",
-    "an",
-    "the",
-    "is",
-    "it",
-    "to",
-    "of",
-    "for",
-    "and",
-    "or",
-    "that",
-    "this",
-    "with",
-    "from",
-    "as",
-    "be",
-    "by",
-    "on",
-    "in",
-    "at",
-    "was",
-    "are",
-    "i",
-    "me",
-    "can",
-    "will",
-    "do",
-    "get",
-    "make",
-    "use",
-    "need",
-    "want",
-    "create",
-    "tool",
-}
 
 
 class Toolsmith:
@@ -122,22 +23,18 @@ class Toolsmith:
 
         self.workspace_root = Path.cwd() / "workspace"
         self.tools_dir = self.workspace_root / "tools"
-        self.packages_dir = self.workspace_root / "packages"
         self.registry_path = self.tools_dir / "registry.json"
         self.metrics_path = self.tools_dir / "metrics.json"
         self.tools_source_path = Path.cwd() / "execution" / "tools.py"
 
-        self._intent_classifier = None
-        self.pypi_username = os.environ.get("PYPI_USERNAME", "__token__")
-        self.pypi_token = os.environ.get("PYPI_TOKEN", "")
+
 
         self.tools_dir.mkdir(parents=True, exist_ok=True)
-        self.packages_dir.mkdir(parents=True, exist_ok=True)
 
         if not self.registry_path.exists():
             self._write_json(self.registry_path, {})
         if not self.metrics_path.exists():
-            self._log_metrics("init", {"message": "Metrics initialized"})
+            self._write_json(self.metrics_path, {})
 
         self._migrate_registry_status()
 
@@ -179,13 +76,9 @@ class Toolsmith:
 
         if modified:
             self._write_json(self.registry_path, data)
-            logger.debug("Registry migrated to include status fields")
+            # logger.debug("Registry migrated to include status fields")
 
-    def _get_intent_classifier(self) -> IntentClassifier:
-        """Lazy load intent classifier."""
-        if self._intent_classifier is None:
-            self._intent_classifier = IntentClassifier()
-        return self._intent_classifier
+
 
     def _log_metrics(self, event_type: str, details: dict):
         """Log usage metrics to JSONL file."""
@@ -198,7 +91,8 @@ class Toolsmith:
         result = self.gatekeeper.validate(code)
         if not result.is_safe:
             for violation in result.violations:
-                logger.warning(f"Safety violation: {violation}")
+                # logger.warning(f"Safety violation: {violation}")
+                pass
         return result.is_safe
 
     def _get_existing_tools_context(self) -> str:
@@ -208,107 +102,13 @@ class Toolsmith:
         except Exception as e:
             return f"# Could not read tools.py: {e}"
 
-    def _tokenize(self, text: str) -> set:
-        """Tokenize text for similarity matching."""
-        clean_text = re.sub(r"[^a-z0-9\s]", " ", text.lower())
-        tokens = set(clean_text.split())
-        return tokens - STOP_WORDS
-
-    def _filter_tags_for_domain(
-        self, tags: list, domain: str, max_tags: int = 4
-    ) -> list:
-        """Filter tags to valid domain keywords."""
-        if not domain or domain not in DOMAIN_KEYWORDS:
-            return tags[:max_tags] if tags else []
-
-        valid_keywords = set(DOMAIN_KEYWORDS[domain].keys())
-        filtered = [
-            t.lower().strip() for t in tags if t.lower().strip() in valid_keywords
-        ]
-
-        if not filtered:
-            domain_kw = DOMAIN_KEYWORDS[domain]
-            sorted_kw = sorted(domain_kw.items(), key=lambda x: x[1], reverse=True)
-            filtered = [kw for kw, weight in sorted_kw[:max_tags] if weight >= 0.7]
-
-        seen = set()
-        unique = []
-        for tag in filtered:
-            if tag not in seen:
-                seen.add(tag)
-                unique.append(tag)
-                if len(unique) >= max_tags:
-                    break
-        return unique
-
     def create_tool(self, requirement: str) -> str:
-        """Generate a new tool based on requirement with domain-aware deduplication."""
+        """Generate a new tool based on requirement."""
         start_time = time.time()
         logger.info(f"Request: '{requirement}'")
 
-        # Domain-aware deduplication
-        try:
-            registry = self._read_json(self.registry_path)
-            classifier = self._get_intent_classifier()
-            request_domain, method, confidence = classifier.classify(requirement)
-            logger.info(
-                f"Domain: '{request_domain}' (method={method}, conf={confidence:.2f})"
-            )
-
-            req_tokens = self._tokenize(requirement)
-            best_match, highest_score = None, 0.0
-
-            for name, meta in registry.items():
-                if meta.get("status") != "active":
-                    continue
-
-                tool_domain = meta.get("domain", "")
-                if tool_domain != request_domain:
-                    continue
-
-                tool_tokens = self._tokenize(meta.get("description", ""))
-                for tag in meta.get("tags", []):
-                    tool_tokens.update(self._tokenize(tag))
-
-                if not req_tokens or not tool_tokens:
-                    continue
-
-                intersection = len(req_tokens & tool_tokens)
-                union = len(req_tokens | tool_tokens)
-                score = intersection / union if union > 0 else 0
-
-                if score > highest_score:
-                    highest_score = score
-                    best_match = name
-
-            if best_match and highest_score > 0.5:
-                logger.info(f"Dedup match: {best_match} (score={highest_score:.2f})")
-                self._log_metrics(
-                    "deduplication_hit",
-                    {
-                        "request": requirement,
-                        "matched_tool": best_match,
-                        "score": highest_score,
-                        "domain": request_domain,
-                    },
-                )
-
-                # Update usage tracking
-                registry[best_match]["use_count"] = (
-                    registry[best_match].get("use_count", 0) + 1
-                )
-                registry[best_match]["last_used"] = time.time()
-                self._write_json(self.registry_path, registry)
-
-                return (
-                    f"Matched existing tool: {best_match} (score: {highest_score:.2f})"
-                )
-
-        except Exception as e:
-            logger.warning(f"Deduplication check failed: {e}")
-
         # Generate new tool
-        logger.info("No match found. Generating with LLM...")
+        logger.info("Generating tool with LLM...")
         try:
             llm = get_llm_manager()
             existing_code = self._get_existing_tools_context()
@@ -331,17 +131,8 @@ class Toolsmith:
             tags = tool_data.get("tags", [])
             input_types = tool_data.get("input_types", [])
             output_types = tool_data.get("output_types", [])
-            raw_domain = tool_data.get("domain", "")
+            domain = tool_data.get("domain", "")
             tool_code = tool_data["code"]
-
-            # Validate domain - validate_domain returns (domain, is_valid) tuple
-            validated = validate_domain(raw_domain)
-            domain = validated[0] if validated[0] else request_domain
-            logger.info(f"Domain validated: {domain}")
-
-            # Filter tags
-            tags = self._filter_tags_for_domain(tags, domain)
-            logger.info(f"Tags: {tags}")
 
             # Safety check
             if self.safe_mode and not self._is_safe_code(tool_code):
@@ -354,30 +145,6 @@ class Toolsmith:
                 f.write(tool_code)
             logger.info(f"Tool saved: {file_path}")
 
-            # Detect dependencies
-            dependencies = self._detect_dependencies(tool_code)
-            llm_deps = tool_data.get("dependencies", [])
-            dependencies = list(set(dependencies) | set(llm_deps))
-            logger.info(f"Dependencies: {dependencies}")
-
-            # PyPI publishing (optional)
-            pypi_package = ""
-            pypi_success, pkg_name, pypi_msg = self._publish_to_pypi(
-                class_name,
-                tool_code,
-                requirement,
-                dependencies,
-                tags,
-                input_types,
-                output_types,
-                domain,
-            )
-            if pypi_success:
-                pypi_package = pkg_name
-                logger.info(f"PyPI: {pypi_msg}")
-            else:
-                logger.debug(f"PyPI publishing skipped: {pypi_msg}")
-
             # Update registry
             self._update_registry(
                 class_name,
@@ -387,7 +154,6 @@ class Toolsmith:
                 input_types,
                 output_types,
                 domain,
-                pypi_package,
             )
 
             self._log_metrics(
@@ -395,14 +161,11 @@ class Toolsmith:
                 {
                     "request": requirement,
                     "tool_name": class_name,
-                    "pypi_package": pypi_package,
                     "latency": time.time() - start_time,
                 },
             )
 
             result_msg = f"Created {class_name} with tags {tags}"
-            if pypi_package:
-                result_msg += f". PyPI: pip install {pypi_package}"
             return result_msg
 
         except Exception as e:
@@ -421,7 +184,6 @@ class Toolsmith:
         input_types: list = None,
         output_types: list = None,
         domain: str = None,
-        pypi_package: str = None,
         status: str = "active",
     ):
         """Update or create registry entry for a tool."""
@@ -435,7 +197,6 @@ class Toolsmith:
             "input_types": input_types or [],
             "output_types": output_types or [],
             "domain": domain or "",
-            "pypi_package": pypi_package or "",
             "status": status,
             "created_at": existing.get("created_at", time.time()),
             "last_used": existing.get("last_used"),
@@ -483,210 +244,7 @@ class Toolsmith:
         data = self._read_json(self.registry_path)
         return [name for name, meta in data.items() if meta.get("status") == status]
 
-    def _detect_dependencies(self, code: str) -> list:
-        """Parse code to detect third-party imports."""
-        dependencies = set()
-        try:
-            tree = ast.parse(code)
-            for node in ast.walk(tree):
-                if isinstance(node, ast.Import):
-                    for alias in node.names:
-                        module = alias.name.split(".")[0]
-                        if module not in STDLIB_MODULES:
-                            pkg = IMPORT_TO_PACKAGE.get(module, module)
-                            dependencies.add(pkg)
-                elif isinstance(node, ast.ImportFrom) and node.module:
-                    module = node.module.split(".")[0]
-                    if module not in STDLIB_MODULES:
-                        pkg = IMPORT_TO_PACKAGE.get(module, module)
-                        dependencies.add(pkg)
-        except Exception:
-            pass
 
-        dependencies.add("pydantic")
-        return list(dependencies)
-
-    def _check_pypi_name(self, name: str) -> bool:
-        """Check if PyPI package name is available."""
-        if not requests:
-            return True
-        try:
-            response = requests.get(f"https://pypi.org/pypi/{name}/json", timeout=5)
-            return response.status_code == 404
-        except Exception:
-            return True
-
-    def _get_available_pypi_name(self, base_name: str) -> str:
-        """Find available PyPI package name."""
-        name = re.sub(r"[^a-z0-9]+", "-", base_name.lower()).strip("-")
-        if self._check_pypi_name(name):
-            return name
-
-        for suffix in ["tool", "ai", "llm", "auto"]:
-            candidate = f"{name}-{suffix}"
-            if self._check_pypi_name(candidate):
-                return candidate
-
-        return f"{name}-{int(time.time()) % 10000}"
-
-    def _publish_to_pypi(
-        self,
-        class_name: str,
-        code: str,
-        description: str,
-        dependencies: list,
-        tags: list,
-        input_types: list,
-        output_types: list,
-        domain: str,
-    ) -> tuple:
-        """Publish tool as PyPI package. Returns (success, package_name, message)."""
-        if not self.pypi_token:
-            return False, "", "No PyPI token configured"
-
-        package_name = self._get_available_pypi_name(class_name)
-        module_name = package_name.replace("-", "_")
-
-        pkg_dir = self.packages_dir / package_name
-        src_dir = pkg_dir / "src" / module_name
-
-        try:
-            src_dir.mkdir(parents=True, exist_ok=True)
-
-            (src_dir / "__init__.py").write_text(code)
-            (src_dir / f"{module_name}.py").write_text(code)
-
-            # pyproject.toml
-            pyproject = f'''[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[project]
-name = "{package_name}"
-version = "0.1.0"
-description = "{description[:100]}"
-readme = "README.md"
-requires-python = ">=3.8"
-dependencies = {json.dumps(dependencies)}
-keywords = {json.dumps(tags[:5])}
-
-[project.urls]
-Homepage = "https://github.com/iascis/tools"
-'''
-            (pkg_dir / "pyproject.toml").write_text(pyproject)
-            (pkg_dir / "README.md").write_text(f"# {class_name}\n\n{description}\n")
-
-            # Build and upload
-            result = subprocess.run(
-                ["python", "-m", "build"],
-                cwd=str(pkg_dir),
-                capture_output=True,
-                text=True,
-            )
-            if result.returncode != 0:
-                return False, "", f"Build failed: {result.stderr[:200]}"
-
-            result = subprocess.run(
-                [
-                    "python",
-                    "-m",
-                    "twine",
-                    "upload",
-                    "--skip-existing",
-                    "dist/*",
-                    "-u",
-                    self.pypi_username,
-                    "-p",
-                    self.pypi_token,
-                ],
-                cwd=str(pkg_dir),
-                capture_output=True,
-                text=True,
-            )
-            if result.returncode != 0:
-                return False, "", f"Upload failed: {result.stderr[:200]}"
-
-            return True, package_name, f"Published: {package_name}"
-
-        except Exception as e:
-            return False, "", str(e)
-
-    def install_from_pypi(self, package_name: str) -> str:
-        """Install a tool from PyPI into the tools directory."""
-        import zipfile
-        import tarfile
-
-        module_name = package_name.replace("-", "_")
-        tool_file = f"{module_name}_tool.py"
-        target_path = self.tools_dir / tool_file
-
-        if target_path.exists():
-            return f"Tool already exists: {tool_file}"
-
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            result = subprocess.run(
-                ["pip", "download", "--no-deps", "-d", tmp_dir, package_name],
-                capture_output=True,
-                text=True,
-            )
-            if result.returncode != 0:
-                return f"Download failed: {result.stderr[:200]}"
-
-            downloaded = os.listdir(tmp_dir)
-            if not downloaded:
-                return "No package found on PyPI"
-
-            pkg_file = os.path.join(tmp_dir, downloaded[0])
-            tool_code = None
-
-            if pkg_file.endswith(".whl"):
-                try:
-                    with zipfile.ZipFile(pkg_file, "r") as zf:
-                        for name in zf.namelist():
-                            if name.endswith(f"{module_name}.py"):
-                                tool_code = zf.read(name).decode("utf-8")
-                                break
-                except Exception as e:
-                    return f"Failed to extract wheel: {e}"
-
-            elif pkg_file.endswith(".tar.gz"):
-                try:
-                    with tarfile.open(pkg_file, "r:gz") as tf:
-                        for member in tf.getmembers():
-                            if member.name.endswith(f"{module_name}.py"):
-                                f = tf.extractfile(member)
-                                if f:
-                                    tool_code = f.read().decode("utf-8")
-                                break
-                except Exception as e:
-                    return f"Failed to extract tarball: {e}"
-
-            if not tool_code:
-                return f"Could not find {module_name}.py in package"
-
-            target_path.write_text(tool_code)
-            logger.info(f"Installed: {target_path}")
-
-            # Extract class name
-            class_name = module_name.replace("_", " ").title().replace(" ", "") + "Tool"
-            try:
-                tree = ast.parse(tool_code)
-                for node in ast.walk(tree):
-                    if isinstance(node, ast.ClassDef) and "Tool" in node.name:
-                        class_name = node.name
-                        break
-            except Exception:
-                pass
-
-            self._update_registry(
-                class_name=class_name,
-                file_name=tool_file,
-                description=f"Installed from PyPI: {package_name}",
-                tags=[module_name],
-                pypi_package=package_name,
-            )
-
-            return f"Installed {package_name} as {tool_file}"
 
     def list_available_tools(self) -> list:
         """List all tools in registry."""
@@ -698,7 +256,6 @@ Homepage = "https://github.com/iascis/tools"
                 "description": meta.get("description", ""),
                 "tags": meta.get("tags", []),
                 "status": meta.get("status", "active"),
-                "pypi_package": meta.get("pypi_package", ""),
             }
             for name, meta in data.items()
         ]

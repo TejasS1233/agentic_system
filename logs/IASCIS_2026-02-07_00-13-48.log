@@ -1,0 +1,56 @@
+2026-02-07 00:13:48 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-07 00:13:56 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-07 00:13:56 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-07 00:13:56 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-07 00:13:56 | INFO | main:__init__:68 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=False)
+2026-02-07 00:13:56 | INFO | architecture.sandbox:__init__:132 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools
+2026-02-07 00:13:56 | INFO | architecture.sandbox:start:156 | Sandbox container started: 784d5031612e
+2026-02-07 00:13:56 | INFO | architecture.executor:load_registry:77 | Loaded 48 tool definitions
+2026-02-07 00:13:56 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-07 00:13:56 | INFO | architecture.executor:__init__:70 | ExecutorAgent initialized with Sandbox
+2026-02-07 00:14:01 | INFO | architecture.orchestrator:__init__:58 | Orchestrator initialized with ToolRetriever
+2026-02-07 00:14:01 | INFO | main:_initialize_runtime:91 | Runtime initialized with Sandbox
+2026-02-07 00:14:01 | INFO | main:run:120 | Task received: Write a Python function that calculates the fibonacci sequence up to n terms...
+2026-02-07 00:14:01 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-07 00:14:01 | INFO | main:run:124 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-07 00:14:01 | INFO | architecture.orchestrator:run:62 | Processing,Write a Python function that calculates the fibonacci sequence up to n terms...
+2026-02-07 00:14:01 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-07_00-13-48
+2026-02-07 00:14:02 | INFO | architecture.llm_manager:generate:132 | Generation success in 1077.59ms
+2026-02-07 00:14:02 | INFO | architecture.orchestrator:run:65 | Decomposed into 5 subtasks
+2026-02-07 00:14:02 | INFO | architecture.orchestrator:_retrieve_tools:128 | st_1 → FunctionSignatureTool (dist: 0.843, matched: True)
+2026-02-07 00:14:02 | INFO | architecture.orchestrator:_retrieve_tools:128 | st_2 → FibonacciInitializer (dist: 0.729, matched: True)
+2026-02-07 00:14:02 | INFO | architecture.orchestrator:_retrieve_tools:128 | st_3 → FibonacciCalculator (dist: 0.808, matched: True)
+2026-02-07 00:14:02 | INFO | architecture.orchestrator:_retrieve_tools:128 | st_4 → FibonacciInitializer (dist: 0.850, matched: True)
+2026-02-07 00:14:02 | INFO | architecture.orchestrator:_retrieve_tools:128 | st_5 → TestFunctionTool (dist: 0.851, matched: True)
+2026-02-07 00:14:02 | INFO | architecture.executor:execute:83 | Executing plan: Write a Python function that calculates the fibonacci sequence up to n terms
+2026-02-07 00:14:02 | INFO | architecture.executor:execute:84 | Total steps: 5
+2026-02-07 00:14:02 | INFO | architecture.executor:_execute_step:113 | Step 1: Define the function signature with input parameter n using FunctionSignatureTool
+2026-02-07 00:14:02 | INFO | architecture.executor:load_registry:77 | Loaded 48 tool definitions
+2026-02-07 00:14:02 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_00-13-48
+2026-02-07 00:14:02 | INFO | architecture.llm_manager:generate:132 | Generation success in 107.55ms
+2026-02-07 00:14:02 | INFO | architecture.executor:_infer_args:360 | LLM extracted args: {'n': 1}
+2026-02-07 00:14:02 | INFO | architecture.executor:_execute_step:147 | DEBUG: Executor inferred args = {'n': 1}
+2026-02-07 00:14:02 | INFO | architecture.executor:_execute_step:148 | DEBUG: Args type = <class 'dict'>
+2026-02-07 00:14:02 | INFO | architecture.sandbox:_install_deps:176 | Installing dependencies: pydantic pydantic
+2026-02-07 00:14:06 | INFO | architecture.sandbox:execute_with_args:377 | DEBUG: sandbox received args = {'n': 1}
+2026-02-07 00:14:06 | INFO | architecture.sandbox:execute_with_args:378 | DEBUG: args_json = {"n": 1}
+2026-02-07 00:14:06 | INFO | architecture.sandbox:execute_with_args:379 | DEBUG: Runner script line: args = json.loads('{"n": 1}')
+2026-02-07 00:14:06 | INFO | architecture.sandbox:execute_with_args:384 | Executing tool with args: FunctionSignatureTool
+2026-02-07 00:14:06 | INFO | architecture.sandbox:execute_with_args:385 | Args JSON being passed: {"n": 1}
+2026-02-07 00:14:06 | INFO | architecture.executor:_execute_step:165 | Step 1 SANDBOX Profile: time=0.040ms, peak_mem=0.0022MB, delta_mem=0.0005MB, efficiency=100.00%, grade=fast
+2026-02-07 00:14:06 | INFO | architecture.executor:_execute_step:175 |    (Total round-trip: 4114.82ms)
+2026-02-07 00:14:06 | INFO | architecture.executor:_execute_step:180 | Step 1: Completed in 4.11s
+2026-02-07 00:14:06 | INFO | architecture.executor:_execute_step:113 | Step 2: Initialize the first two Fibonacci numbers using FibonacciInitializer
+2026-02-07 00:14:06 | INFO | architecture.executor:load_registry:77 | Loaded 48 tool definitions
+2026-02-07 00:14:06 | INFO | architecture.executor:_execute_step:147 | DEBUG: Executor inferred args = {'input': 'def function(1):\n    pass'}
+2026-02-07 00:14:06 | INFO | architecture.executor:_execute_step:148 | DEBUG: Args type = <class 'dict'>
+2026-02-07 00:14:06 | INFO | architecture.sandbox:execute_with_args:377 | DEBUG: sandbox received args = {'input': 'def function(1):\n    pass'}
+2026-02-07 00:14:06 | INFO | architecture.sandbox:execute_with_args:378 | DEBUG: args_json = {"input": "def function(1):\n    pass"}
+2026-02-07 00:14:06 | INFO | architecture.sandbox:execute_with_args:379 | DEBUG: Runner script line: args = json.loads('{"input": "def function(1):\n    pass"}')
+2026-02-07 00:14:06 | INFO | architecture.sandbox:execute_with_args:384 | Executing tool with args: FibonacciInitializer
+2026-02-07 00:14:06 | INFO | architecture.sandbox:execute_with_args:385 | Args JSON being passed: {"input": "def function(1):\n    pass"}
+2026-02-07 00:14:07 | INFO | architecture.executor:_execute_step:165 | Step 2 SANDBOX Profile: time=0.048ms, peak_mem=0.0026MB, delta_mem=0.0000MB, efficiency=0.00%, grade=critical
+2026-02-07 00:14:07 | INFO | architecture.executor:_execute_step:175 |    (Total round-trip: 653.11ms)
+2026-02-07 00:14:07 | ERROR | architecture.executor:_execute_step:184 | Step 2: Failed after 0.65s - Invalid control character at: line 1 column 28 (char 27)
+2026-02-07 00:14:12 | INFO | architecture.sandbox:stop:163 | Sandbox container stopped: 784d5031612e
+2026-02-07 00:14:12 | INFO | main:_shutdown_runtime:100 | Runtime shutdown complete

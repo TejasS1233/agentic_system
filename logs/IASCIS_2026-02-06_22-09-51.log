@@ -1,0 +1,62 @@
+2026-02-06 22:09:51 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-06 22:09:59 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-06 22:09:59 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-06 22:09:59 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-06 22:09:59 | INFO | main:__init__:68 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=False)
+2026-02-06 22:09:59 | INFO | architecture.sandbox:__init__:132 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools
+2026-02-06 22:09:59 | INFO | architecture.sandbox:start:156 | Sandbox container started: a4690d493553
+2026-02-06 22:09:59 | INFO | architecture.executor:load_registry:77 | Loaded 45 tool definitions
+2026-02-06 22:09:59 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-06 22:09:59 | INFO | architecture.executor:__init__:70 | ExecutorAgent initialized with Sandbox
+2026-02-06 22:10:03 | INFO | architecture.orchestrator:__init__:52 | Orchestrator initialized with ToolRetriever
+2026-02-06 22:10:03 | INFO | main:_initialize_runtime:91 | Runtime initialized with Sandbox
+2026-02-06 22:10:03 | INFO | main:run:120 | Task received: Create a synthetic dataset of 100 e-commerce transactions in 'sales.csv' with columns: date, categor...
+2026-02-06 22:10:03 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-06 22:10:03 | INFO | main:run:124 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-06 22:10:03 | INFO | architecture.orchestrator:run:56 | Processing,Create a synthetic dataset of 100 e-commerce transactions in 'sales.csv' with co...
+2026-02-06 22:10:03 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-06_22-09-51
+2026-02-06 22:10:05 | INFO | architecture.llm_manager:generate:132 | Generation success in 1357.73ms
+2026-02-06 22:10:05 | INFO | architecture.orchestrator:run:59 | Decomposed into 6 subtasks
+2026-02-06 22:10:05 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_1 → EcommerceTransactionGenerator (dist: 0.720, matched: True)
+2026-02-06 22:10:05 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_2 → CreateSalesCsvTool (dist: 0.525, matched: True)
+2026-02-06 22:10:05 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_3 → ReadSalesCsvTool (dist: 0.353, matched: True)
+2026-02-06 22:10:05 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_4 → CalculateRevenueTool (dist: 0.714, matched: True)
+2026-02-06 22:10:05 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_5 → BarChartRevenueTool (dist: 0.349, matched: True)
+2026-02-06 22:10:05 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_6 → BarChartRevenueTool (dist: 0.613, matched: True)
+2026-02-06 22:10:05 | INFO | architecture.executor:execute:83 | Executing plan: Create a synthetic dataset of 100 e-commerce transactions in 'sales.csv' with columns: date, category (Electronics, Clothing, Home), and amount. Then write a Python script to calculate total revenue per category and generate a bar chart saved as 'revenue_by_category.png'.
+2026-02-06 22:10:05 | INFO | architecture.executor:execute:84 | Total steps: 6
+2026-02-06 22:10:05 | INFO | architecture.executor:_execute_step:113 | Step 1: Generate synthetic data for 100 e-commerce transactions using EcommerceTransactionGenerator
+2026-02-06 22:10:05 | INFO | architecture.executor:load_registry:77 | Loaded 45 tool definitions
+2026-02-06 22:10:05 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_22-09-51
+2026-02-06 22:10:05 | INFO | architecture.llm_manager:generate:132 | Generation success in 134.74ms
+2026-02-06 22:10:05 | INFO | architecture.executor:_infer_args:360 | LLM extracted args: {'num_transactions': 100}
+2026-02-06 22:10:05 | INFO | architecture.executor:_execute_step:147 | DEBUG: Executor inferred args = {'num_transactions': 100}
+2026-02-06 22:10:05 | INFO | architecture.executor:_execute_step:148 | DEBUG: Args type = <class 'dict'>
+2026-02-06 22:10:05 | INFO | architecture.sandbox:_install_deps:176 | Installing dependencies: pandas pydantic faker numpy pydantic
+2026-02-06 22:10:17 | INFO | architecture.sandbox:execute_with_args:377 | DEBUG: sandbox received args = {'num_transactions': 100}
+2026-02-06 22:10:17 | INFO | architecture.sandbox:execute_with_args:378 | DEBUG: args_json = {"num_transactions": 100}
+2026-02-06 22:10:17 | INFO | architecture.sandbox:execute_with_args:379 | DEBUG: Runner script line: args = json.loads('{"num_transactions": 100}')
+2026-02-06 22:10:17 | INFO | architecture.sandbox:execute_with_args:384 | Executing tool with args: EcommerceTransactionGenerator
+2026-02-06 22:10:17 | INFO | architecture.sandbox:execute_with_args:385 | Args JSON being passed: {"num_transactions": 100}
+2026-02-06 22:10:18 | WARNING | architecture.sandbox:execute_with_args:441 | Failed to parse sandbox output: No valid JSON output found, Raw output: Traceback (most recent call last):
+  File "/tools/_runner_EcommerceTransactionGenerator.py", line 10, in <module>
+    from ecommerce_transaction_generator import *
+  File "/tools/ecommerce_transaction_generator.py", line 11, in <module>
+    class EcommerceTransactionGenerator:
+  File "/tools/ecommerce_transaction_generator.py", line 14, in EcommerceTransactionGenerator
+    args_schema = EcommerceTransactionGeneratorArgs
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'EcommerceTransactionGeneratorArgs' is not defined. Did you mean: 'EcommerceTransactionArgs'?
+
+2026-02-06 22:10:18 | ERROR | architecture.executor:_execute_step:184 | Step 1: Failed after 13.01s - Traceback (most recent call last):
+  File "/tools/_runner_EcommerceTransactionGenerator.py", line 10, in <module>
+    from ecommerce_transaction_generator import *
+  File "/tools/ecommerce_transaction_generator.py", line 11, in <module>
+    class EcommerceTransactionGenerator:
+  File "/tools/ecommerce_transaction_generator.py", line 14, in EcommerceTransactionGenerator
+    args_schema = EcommerceTransactionGeneratorArgs
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'EcommerceTransactionGeneratorArgs' is not defined. Did you mean: 'EcommerceTransactionArgs'?
+
+2026-02-06 22:10:23 | INFO | architecture.sandbox:stop:163 | Sandbox container stopped: a4690d493553
+2026-02-06 22:10:23 | INFO | main:_shutdown_runtime:100 | Runtime shutdown complete

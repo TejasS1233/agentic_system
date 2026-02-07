@@ -1,0 +1,102 @@
+2026-02-06 21:58:39 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-06 21:58:55 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-06 21:58:55 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-06 21:58:55 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-06 21:58:55 | INFO | main:__init__:68 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=False)
+2026-02-06 21:58:55 | INFO | architecture.sandbox:__init__:132 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools
+2026-02-06 21:58:56 | INFO | architecture.sandbox:start:156 | Sandbox container started: e134cc3d9c14
+2026-02-06 21:58:56 | INFO | architecture.executor:load_registry:77 | Loaded 40 tool definitions
+2026-02-06 21:58:56 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-06 21:58:56 | INFO | architecture.executor:__init__:70 | ExecutorAgent initialized with Sandbox
+2026-02-06 21:59:02 | INFO | architecture.orchestrator:__init__:52 | Orchestrator initialized with ToolRetriever
+2026-02-06 21:59:02 | INFO | main:_initialize_runtime:91 | Runtime initialized with Sandbox
+2026-02-06 21:59:02 | INFO | main:run:120 | Task received: Create a synthetic dataset of 100 e-commerce transactions in 'sales.csv' with columns: date, categor...
+2026-02-06 21:59:02 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-06 21:59:02 | INFO | main:run:124 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-06 21:59:02 | INFO | architecture.orchestrator:run:56 | Processing,Create a synthetic dataset of 100 e-commerce transactions in 'sales.csv' with co...
+2026-02-06 21:59:02 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-06_21-58-39
+2026-02-06 21:59:04 | INFO | architecture.llm_manager:generate:132 | Generation success in 1834.43ms
+2026-02-06 21:59:04 | INFO | architecture.orchestrator:run:59 | Decomposed into 6 subtasks
+2026-02-06 21:59:04 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_1 → HackerNewsDownloader (dist: 1.490, matched: False)
+2026-02-06 21:59:04 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_2 → LocationToZipCode (dist: 1.493, matched: False)
+2026-02-06 21:59:04 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_3 → USGSNonNativeSpeciesExtractor (dist: 1.285, matched: False)
+2026-02-06 21:59:04 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_4 → MultiplyByTwoTool (dist: 1.540, matched: False)
+2026-02-06 21:59:04 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_5 → BarGraphTool (dist: 1.013, matched: False)
+2026-02-06 21:59:04 | INFO | architecture.orchestrator:_retrieve_tools:122 | st_6 → BarGraphTool (dist: 1.034, matched: False)
+2026-02-06 21:59:04 | INFO | architecture.orchestrator:_ensure_tools:156 | Toolsmith creating: Generate a synthetic dataset of 100 e-commerce transactions
+2026-02-06 21:59:05 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_21-58-39
+2026-02-06 21:59:07 | INFO | architecture.llm_manager:generate:132 | Generation success in 1288.94ms
+2026-02-06 21:59:07 | INFO | architecture.orchestrator:_ensure_tools:159 | Toolsmith: Successfully created EcommerceTransactionGenerator with tags ['sql', 'dataframe', 'pandas', 'etl']....
+2026-02-06 21:59:07 | INFO | architecture.orchestrator:_ensure_tools:183 | Tool assigned: EcommerceTransactionGenerator
+2026-02-06 21:59:07 | INFO | architecture.orchestrator:_ensure_tools:156 | Toolsmith creating: Create 'sales.csv' file with columns: date, category, and amount
+2026-02-06 21:59:07 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_21-58-39
+2026-02-06 21:59:08 | INFO | architecture.llm_manager:generate:132 | Generation success in 1031.72ms
+2026-02-06 21:59:08 | INFO | architecture.orchestrator:_ensure_tools:159 | Toolsmith: Successfully created CreateSalesCsvTool with tags ['gzip', 'tar', 'chmod', 'directory']....
+2026-02-06 21:59:08 | INFO | architecture.orchestrator:_ensure_tools:183 | Tool assigned: CreateSalesCsvTool
+2026-02-06 21:59:08 | INFO | architecture.orchestrator:_ensure_tools:156 | Toolsmith creating: Read 'sales.csv' into a Python data structure
+2026-02-06 21:59:08 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_21-58-39
+2026-02-06 21:59:09 | INFO | architecture.llm_manager:generate:132 | Generation success in 1084.19ms
+2026-02-06 21:59:09 | INFO | architecture.orchestrator:_ensure_tools:159 | Toolsmith: Successfully created ReadSalesCsvTool with tags ['csv', 'pandas']....
+2026-02-06 21:59:09 | INFO | architecture.orchestrator:_ensure_tools:183 | Tool assigned: ReadSalesCsvTool
+2026-02-06 21:59:09 | INFO | architecture.orchestrator:_ensure_tools:156 | Toolsmith creating: Calculate total revenue per category
+2026-02-06 21:59:09 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_21-58-39
+2026-02-06 21:59:10 | INFO | architecture.llm_manager:generate:132 | Generation success in 821.60ms
+2026-02-06 21:59:10 | INFO | architecture.orchestrator:_ensure_tools:159 | Toolsmith: Successfully created CalculateRevenueTool with tags ['sql', 'dataframe', 'pandas', 'etl']....
+2026-02-06 21:59:10 | INFO | architecture.orchestrator:_ensure_tools:183 | Tool assigned: CalculateRevenueTool
+2026-02-06 21:59:10 | INFO | architecture.orchestrator:_ensure_tools:156 | Toolsmith creating: Generate a bar chart of total revenue per category
+2026-02-06 21:59:10 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_21-58-39
+2026-02-06 21:59:11 | WARNING | architecture.llm_manager:generate:139 | Attempt 1/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k0kdqngdfbsbrcwqyqcz5s9z` service tier `on_demand` on tokens per minute (TPM): Limit 12000, Used 9916, Requested 2363. Please try again in 1.395s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-06 21:59:12 | WARNING | architecture.llm_manager:generate:139 | Attempt 2/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k0kdqngdfbsbrcwqyqcz5s9z` service tier `on_demand` on tokens per minute (TPM): Limit 12000, Used 9642, Requested 2363. Please try again in 25ms. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-06 21:59:15 | INFO | architecture.llm_manager:generate:132 | Generation success in 4508.78ms
+2026-02-06 21:59:15 | INFO | architecture.orchestrator:_ensure_tools:159 | Toolsmith: Successfully created BarChartRevenueTool with tags ['sql', 'dataframe', 'pandas', 'etl']....
+2026-02-06 21:59:15 | INFO | architecture.orchestrator:_ensure_tools:183 | Tool assigned: BarChartRevenueTool
+2026-02-06 21:59:15 | INFO | architecture.orchestrator:_ensure_tools:156 | Toolsmith creating: Save the bar chart as 'revenue_by_category.png'
+2026-02-06 21:59:15 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_21-58-39
+2026-02-06 21:59:15 | WARNING | architecture.llm_manager:generate:139 | Attempt 1/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k0kdqngdfbsbrcwqyqcz5s9z` service tier `on_demand` on tokens per minute (TPM): Limit 12000, Used 11698, Requested 2366. Please try again in 10.319999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-06 21:59:16 | WARNING | architecture.llm_manager:generate:139 | Attempt 2/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k0kdqngdfbsbrcwqyqcz5s9z` service tier `on_demand` on tokens per minute (TPM): Limit 12000, Used 11478, Requested 2366. Please try again in 9.22s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-06 21:59:18 | WARNING | architecture.llm_manager:generate:139 | Attempt 3/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k0kdqngdfbsbrcwqyqcz5s9z` service tier `on_demand` on tokens per minute (TPM): Limit 12000, Used 11059, Requested 2366. Please try again in 7.125s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-06 21:59:18 | ERROR | architecture.llm_manager:generate:157 | All keys failed. Last error: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k0kdqngdfbsbrcwqyqcz5s9z` service tier `on_demand` on tokens per minute (TPM): Limit 12000, Used 11059, Requested 2366. Please try again in 7.125s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-06 21:59:18 | INFO | architecture.orchestrator:_ensure_tools:159 | Toolsmith: Tool creation failed: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"R...
+2026-02-06 21:59:23 | INFO | architecture.executor:execute:83 | Executing plan: Create a synthetic dataset of 100 e-commerce transactions in 'sales.csv' with columns: date, category (Electronics, Clothing, Home), and amount. Then write a Python script to calculate total revenue per category and generate a bar chart saved as 'revenue_by_category.png'.
+2026-02-06 21:59:23 | INFO | architecture.executor:execute:84 | Total steps: 6
+2026-02-06 21:59:23 | INFO | architecture.executor:_execute_step:113 | Step 1: Generate a synthetic dataset of 100 e-commerce transactions using EcommerceTransactionGenerator
+2026-02-06 21:59:23 | INFO | architecture.executor:load_registry:77 | Loaded 45 tool definitions
+2026-02-06 21:59:23 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_21-58-39
+2026-02-06 21:59:23 | INFO | architecture.llm_manager:generate:132 | Generation success in 167.12ms
+2026-02-06 21:59:23 | INFO | architecture.executor:_infer_args:360 | LLM extracted args: {'num_transactions': 100}
+2026-02-06 21:59:23 | INFO | architecture.executor:_execute_step:147 | DEBUG: Executor inferred args = {'num_transactions': 100}
+2026-02-06 21:59:23 | INFO | architecture.executor:_execute_step:148 | DEBUG: Args type = <class 'dict'>
+2026-02-06 21:59:23 | INFO | architecture.sandbox:_install_deps:176 | Installing dependencies: faker pydantic pandas numpy pydantic
+2026-02-06 21:59:52 | INFO | architecture.sandbox:execute_with_args:377 | DEBUG: sandbox received args = {'num_transactions': 100}
+2026-02-06 21:59:52 | INFO | architecture.sandbox:execute_with_args:378 | DEBUG: args_json = {"num_transactions": 100}
+2026-02-06 21:59:52 | INFO | architecture.sandbox:execute_with_args:379 | DEBUG: Runner script line: args = json.loads('{"num_transactions": 100}')
+2026-02-06 21:59:52 | INFO | architecture.sandbox:execute_with_args:384 | Executing tool with args: EcommerceTransactionGenerator
+2026-02-06 21:59:52 | INFO | architecture.sandbox:execute_with_args:385 | Args JSON being passed: {"num_transactions": 100}
+2026-02-06 21:59:54 | WARNING | architecture.sandbox:execute_with_args:441 | Failed to parse sandbox output: No valid JSON output found, Raw output: Traceback (most recent call last):
+  File "/tools/_runner_EcommerceTransactionGenerator.py", line 10, in <module>
+    from ecommerce_transaction_generator import *
+  File "/tools/ecommerce_transaction_generator.py", line 11, in <module>
+    class EcommerceTransactionGenerator:
+  File "/tools/ecommerce_transaction_generator.py", line 14, in EcommerceTransactionGenerator
+    args_schema = EcommerceTransactionGeneratorArgs
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'EcommerceTransactionGeneratorArgs' is not defined. Did you mean: 'EcommerceTransactionArgs'?
+
+2026-02-06 21:59:54 | ERROR | architecture.executor:_execute_step:184 | Step 1: Failed after 30.13s - Traceback (most recent call last):
+  File "/tools/_runner_EcommerceTransactionGenerator.py", line 10, in <module>
+    from ecommerce_transaction_generator import *
+  File "/tools/ecommerce_transaction_generator.py", line 11, in <module>
+    class EcommerceTransactionGenerator:
+  File "/tools/ecommerce_transaction_generator.py", line 14, in EcommerceTransactionGenerator
+    args_schema = EcommerceTransactionGeneratorArgs
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'EcommerceTransactionGeneratorArgs' is not defined. Did you mean: 'EcommerceTransactionArgs'?
+
+2026-02-06 21:59:59 | INFO | architecture.sandbox:stop:163 | Sandbox container stopped: e134cc3d9c14
+2026-02-06 21:59:59 | INFO | main:_shutdown_runtime:100 | Runtime shutdown complete

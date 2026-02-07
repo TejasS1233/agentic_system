@@ -1,0 +1,71 @@
+{
+  "exported_at": "2026-02-07T10:22:05.942666",
+  "summary": {
+    "MostCommonWordsTool": {
+      "call_count": 1,
+      "avg_time_ms": 0.504,
+      "max_time_ms": 0.504,
+      "min_time_ms": 0.504,
+      "avg_memory_mb": 0.0068,
+      "max_memory_mb": 0.0068,
+      "avg_memory_delta_mb": 0.0063,
+      "avg_efficiency": 0.9997,
+      "last_grade": "fast"
+    },
+    "WebpageProductScraper": {
+      "call_count": 1,
+      "avg_time_ms": 225.871,
+      "max_time_ms": 225.871,
+      "min_time_ms": 225.871,
+      "avg_memory_mb": 0.1276,
+      "max_memory_mb": 0.1276,
+      "avg_memory_delta_mb": 0.0825,
+      "avg_efficiency": 0.8866,
+      "last_grade": "slow"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 2,
+    "tools_profiled": [
+      "MostCommonWordsTool",
+      "WebpageProductScraper"
+    ],
+    "execution_time_ms": {
+      "min": 0.504,
+      "max": 225.871,
+      "mean": 113.1875
+    },
+    "peak_memory_mb": {
+      "min": 0.0068,
+      "max": 0.1276,
+      "mean": 0.0672
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "MostCommonWordsTool": [
+      {
+        "tool_name": "MostCommonWordsTool",
+        "execution_time_ms": 0.504,
+        "peak_memory_mb": 0.0068,
+        "memory_delta_mb": 0.0063,
+        "latency_grade": "fast",
+        "efficiency_score": 0.9997,
+        "success": true
+      }
+    ],
+    "WebpageProductScraper": [
+      {
+        "tool_name": "WebpageProductScraper",
+        "execution_time_ms": 225.871,
+        "peak_memory_mb": 0.1276,
+        "memory_delta_mb": 0.0825,
+        "latency_grade": "slow",
+        "efficiency_score": 0.8866,
+        "success": true
+      }
+    ]
+  }
+}

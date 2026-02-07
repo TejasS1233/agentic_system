@@ -173,6 +173,18 @@ RULES:
    - If generating files (graphs, images, PDFs, data files), write them to `/output/filename`.
    - Example: `plt.savefig('/output/chart.png')` or `with open('/output/report.csv', 'w') as f: ...`
    - Generated files will be automatically collected and returned to the user.
+11. TEST RUNNER (CRITICAL):
+   - Include a function `def test_tool():` at the end of the file.
+   - Inside `test_tool`:
+     1. Instantiate the tool class.
+     2. Run a simple, non-destructive test case.
+     3. Print the output.
+   - At the very end of the file, add:
+     ```python
+     if __name__ == "__main__":
+         test_tool()
+     ```
+   - This is REQUIRED for verification.
 """
 
 

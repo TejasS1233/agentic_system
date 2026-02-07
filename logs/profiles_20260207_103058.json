@@ -1,0 +1,94 @@
+{
+  "exported_at": "2026-02-07T10:30:58.534448",
+  "summary": {
+    "PopulationCensusSearchTool": {
+      "call_count": 1,
+      "avg_time_ms": 604.789,
+      "max_time_ms": 604.789,
+      "min_time_ms": 604.789,
+      "avg_memory_mb": 0.2505,
+      "max_memory_mb": 0.2505,
+      "avg_memory_delta_mb": 0.1801,
+      "avg_efficiency": 0.6966,
+      "last_grade": "slow"
+    },
+    "PopulationCensusTool": {
+      "call_count": 1,
+      "avg_time_ms": 1416.404,
+      "max_time_ms": 1416.404,
+      "min_time_ms": 1416.404,
+      "avg_memory_mb": 0.1845,
+      "max_memory_mb": 0.1845,
+      "avg_memory_delta_mb": 0.1355,
+      "avg_efficiency": 0.4993,
+      "last_grade": "critical"
+    },
+    "PopulationCensusPlotter": {
+      "call_count": 1,
+      "avg_time_ms": 0.092,
+      "max_time_ms": 0.092,
+      "min_time_ms": 0.092,
+      "avg_memory_mb": 0.0018,
+      "max_memory_mb": 0.0018,
+      "avg_memory_delta_mb": 0.0007,
+      "avg_efficiency": 0.9999,
+      "last_grade": "fast"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 3,
+    "tools_profiled": [
+      "PopulationCensusSearchTool",
+      "PopulationCensusTool",
+      "PopulationCensusPlotter"
+    ],
+    "execution_time_ms": {
+      "min": 0.092,
+      "max": 1416.404,
+      "mean": 673.7616666666667
+    },
+    "peak_memory_mb": {
+      "min": 0.0018,
+      "max": 0.2505,
+      "mean": 0.1456
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "PopulationCensusSearchTool": [
+      {
+        "tool_name": "PopulationCensusSearchTool",
+        "execution_time_ms": 604.789,
+        "peak_memory_mb": 0.2505,
+        "memory_delta_mb": 0.1801,
+        "latency_grade": "slow",
+        "efficiency_score": 0.6966,
+        "success": true
+      }
+    ],
+    "PopulationCensusTool": [
+      {
+        "tool_name": "PopulationCensusTool",
+        "execution_time_ms": 1416.404,
+        "peak_memory_mb": 0.1845,
+        "memory_delta_mb": 0.1355,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4993,
+        "success": true
+      }
+    ],
+    "PopulationCensusPlotter": [
+      {
+        "tool_name": "PopulationCensusPlotter",
+        "execution_time_ms": 0.092,
+        "peak_memory_mb": 0.0018,
+        "memory_delta_mb": 0.0007,
+        "latency_grade": "fast",
+        "efficiency_score": 0.9999,
+        "success": true
+      }
+    ]
+  }
+}

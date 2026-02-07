@@ -72,5 +72,5 @@ if __name__ == "__main__":
     registry = load_registry(registry_path)
     graph = build_tool_graph(registry)
 
-    output_path = Path(__file__).parent.parent / "docs" / "tool_graph.png"
+    output_path = Path(__file__).parent.parent / ".research" / "tool_graph.png"
     visualize_graph(graph, output_path=str(output_path))
