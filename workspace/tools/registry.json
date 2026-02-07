@@ -1,0 +1,320 @@
+{
+  "SerpSearchTool": {
+    "file": "serp_search_tool.py",
+    "description": "Search Google using SERP API for web results, images, news, and shopping. Supports location, language, and safe search filters.",
+    "tags": [
+      "search",
+      "google",
+      "serp",
+      "web-search",
+      "image-search",
+      "news-search",
+      "shopping",
+      "api",
+      "seo",
+      "results",
+      "query",
+      "internet"
+    ],
+    "domain": "search",
+    "pypi_package": "requests",
+    "status": "active",
+    "created_at": 1770321417.0,
+    "updated_at": 1770321417.0,
+    "use_count": 0,
+    "last_used": null,
+    "metrics": 0.0
+  },
+  "WebScraperTool": {
+    "file": "web_scraper_tool.py",
+    "description": "Universal web scraper using BeautifulSoup. Extract text, HTML, tables, links, images, or structured data using CSS selectors.",
+    "tags": [
+      "scrape",
+      "scraper",
+      "web-scraping",
+      "html",
+      "parse",
+      "extract",
+      "css-selector",
+      "beautifulsoup",
+      "content",
+      "text",
+      "links",
+      "tables",
+      "images",
+      "metadata",
+      "crawl"
+    ],
+    "domain": "web",
+    "pypi_package": "beautifulsoup4",
+    "status": "active",
+    "created_at": 1770321417.0,
+    "updated_at": 1770321417.0,
+    "use_count": 0,
+    "last_used": null,
+    "metrics": 0.0
+  },
+  "AdvancedGraphTool": {
+    "file": "advanced_graph_tool.py",
+    "description": "Create charts and graphs using Matplotlib. Supports bar, line, scatter, pie, histogram, heatmap, box, and area charts with themes and customization.",
+    "tags": [
+      "graph",
+      "chart",
+      "plot",
+      "visualization",
+      "matplotlib",
+      "bar-chart",
+      "line-chart",
+      "pie-chart",
+      "scatter-plot",
+      "histogram",
+      "heatmap",
+      "box-plot",
+      "area-chart",
+      "data-viz",
+      "statistics",
+      "analytics",
+      "image",
+      "png"
+    ],
+    "domain": "visualization",
+    "pypi_package": "matplotlib",
+    "status": "active",
+    "created_at": 1770321417.0,
+    "updated_at": 1770321417.0,
+    "use_count": 0,
+    "last_used": null,
+    "metrics": 0.0
+  },
+  "GitHubRepoTool": {
+    "file": "github_repo_tool.py",
+    "description": "Fetch GitHub repository info: overview, commits, issues, PRs, contributors, releases, and languages. Uses GitHub API.",
+    "tags": [
+      "github",
+      "repository",
+      "repo",
+      "git",
+      "commits",
+      "issues",
+      "pull-requests",
+      "contributors",
+      "releases",
+      "languages",
+      "stars",
+      "forks",
+      "open-source",
+      "api",
+      "code",
+      "version-control"
+    ],
+    "domain": "web",
+    "pypi_package": "requests",
+    "status": "active",
+    "created_at": 1770321417.0,
+    "updated_at": 1770321417.0,
+    "use_count": 0,
+    "last_used": null,
+    "metrics": 0.0
+  },
+  "GitHubUserTool": {
+    "file": "github_user_tool.py",
+    "description": "Fetch GitHub user profile: bio, repos, starred repos, gists, and activity events. Uses GitHub API.",
+    "tags": [
+      "github",
+      "user",
+      "profile",
+      "developer",
+      "repos",
+      "starred",
+      "gists",
+      "activity",
+      "events",
+      "followers",
+      "following",
+      "bio",
+      "api",
+      "programmer"
+    ],
+    "domain": "web",
+    "pypi_package": "requests",
+    "status": "active",
+    "created_at": 1770321417.0,
+    "updated_at": 1770321417.0,
+    "use_count": 0,
+    "last_used": null,
+    "metrics": 0.0
+  },
+  "GitHubTrendingTool": {
+    "file": "github_trending_tool.py",
+    "description": "Get trending GitHub repositories and developers. Filter by language, time range, and spoken language.",
+    "tags": [
+      "github",
+      "trending",
+      "popular",
+      "hot",
+      "repositories",
+      "developers",
+      "stars",
+      "daily",
+      "weekly",
+      "monthly",
+      "open-source",
+      "discover",
+      "programming-languages"
+    ],
+    "domain": "web",
+    "pypi_package": "beautifulsoup4",
+    "status": "active",
+    "created_at": 1770321417.0,
+    "updated_at": 1770321417.0,
+    "use_count": 0,
+    "last_used": null,
+    "metrics": 0.0
+  },
+  "HackerNewsTool": {
+    "file": "hacker_news_tool.py",
+    "description": "Fetch Hacker News stories: top, new, best, ask, show, jobs. Includes scores, authors, and optional comments.",
+    "tags": [
+      "hackernews",
+      "hacker-news",
+      "hn",
+      "news",
+      "tech-news",
+      "stories",
+      "top-stories",
+      "ask-hn",
+      "show-hn",
+      "jobs",
+      "startups",
+      "technology",
+      "api",
+      "ycombinator"
+    ],
+    "domain": "web",
+    "pypi_package": "requests",
+    "status": "active",
+    "created_at": 1770321417.0,
+    "updated_at": 1770321417.0,
+    "use_count": 0,
+    "last_used": null,
+    "metrics": 0.0
+  },
+  "RedditTool": {
+    "file": "reddit_tool.py",
+    "description": "Fetch posts from any subreddit. Get hot, new, top, or rising posts with scores, comments, and metadata.",
+    "tags": [
+      "reddit",
+      "subreddit",
+      "posts",
+      "social-media",
+      "hot",
+      "top",
+      "new",
+      "rising",
+      "upvotes",
+      "comments",
+      "community",
+      "forum",
+      "discussion"
+    ],
+    "domain": "web",
+    "pypi_package": "requests",
+    "status": "active",
+    "created_at": 1770321417.0,
+    "updated_at": 1770321417.0,
+    "use_count": 0,
+    "last_used": null,
+    "metrics": 0.0
+  },
+  "ProductHuntTool": {
+    "file": "product_hunt_tool.py",
+    "description": "Get trending products from Product Hunt. Fetch today's, weekly, or monthly top products with votes and taglines.",
+    "tags": [
+      "producthunt",
+      "product-hunt",
+      "products",
+      "startups",
+      "launches",
+      "tech-products",
+      "trending",
+      "tools",
+      "apps",
+      "saas",
+      "discover",
+      "new-products",
+      "upvotes"
+    ],
+    "domain": "web",
+    "pypi_package": "beautifulsoup4",
+    "status": "active",
+    "created_at": 1770321417.0,
+    "updated_at": 1770321417.0,
+    "use_count": 0,
+    "last_used": null,
+    "metrics": 0.0
+  },
+  "GetProgrammingLanguagePopularityTool": {
+    "file": "get_programming_language_popularity.py",
+    "description": "Get the popularity of programming languages",
+    "tags": [
+      "programming languages",
+      "popularity",
+      "tiober"
+    ],
+    "input_types": [
+      "string"
+    ],
+    "output_types": [
+      "string"
+    ],
+    "domain": "web",
+    "status": "active",
+    "created_at": 1770477080.2691917,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "JoJoStandSearchTool": {
+    "file": "jojo_stand_search.py",
+    "description": "Task: Search for top 5 strongest JoJo stands\n\nInput data sample:\nSearch for top 5 strongest JoJo stands\n\nPrevious implementation failed with error:\n'NoneType' object has no attribute 'lower'\n\nCreate a tool that correctly handles this input format and fixes the error.",
+    "tags": [
+      "anime",
+      "manga",
+      "JoJo",
+      "stand"
+    ],
+    "input_types": [
+      "string"
+    ],
+    "output_types": [
+      "string"
+    ],
+    "domain": "text",
+    "status": "active",
+    "created_at": 1770482985.761768,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "BrawlStarsTopBrawlersTool": {
+    "file": "brawl_stars_top_brawlers.py",
+    "description": "Get the top played brawlers in Brawl Stars",
+    "tags": [
+      "brawl stars",
+      "top brawlers",
+      "gaming"
+    ],
+    "input_types": [
+      "string"
+    ],
+    "output_types": [
+      "json"
+    ],
+    "domain": "web",
+    "status": "active",
+    "created_at": 1770484994.1837044,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  }
+}

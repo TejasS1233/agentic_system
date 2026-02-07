@@ -12,7 +12,7 @@ wheels/
 
 # Workspace and benchmark outputs
 workspace/backup_tools
-workspace/
+
 benchmark_results/
 
 
