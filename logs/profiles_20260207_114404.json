@@ -1,0 +1,71 @@
+{
+  "exported_at": "2026-02-07T11:44:04.055694",
+  "summary": {
+    "TwitterTrendingTagsIndia": {
+      "call_count": 1,
+      "avg_time_ms": 0.446,
+      "max_time_ms": 0.446,
+      "min_time_ms": 0.446,
+      "avg_memory_mb": 0.0153,
+      "max_memory_mb": 0.0153,
+      "avg_memory_delta_mb": 0.0,
+      "avg_efficiency": 0.0,
+      "last_grade": "critical"
+    },
+    "TwitterTrendingTagsExtractor": {
+      "call_count": 1,
+      "avg_time_ms": 304.457,
+      "max_time_ms": 304.457,
+      "min_time_ms": 304.457,
+      "avg_memory_mb": 0.1087,
+      "max_memory_mb": 0.1087,
+      "avg_memory_delta_mb": 0.0,
+      "avg_efficiency": 0.0,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 2,
+    "tools_profiled": [
+      "TwitterTrendingTagsIndia",
+      "TwitterTrendingTagsExtractor"
+    ],
+    "execution_time_ms": {
+      "min": 0.446,
+      "max": 304.457,
+      "mean": 152.4515
+    },
+    "peak_memory_mb": {
+      "min": 0.0153,
+      "max": 0.1087,
+      "mean": 0.062
+    },
+    "success_rate": 0.0
+  },
+  "raw_profiles": {
+    "TwitterTrendingTagsIndia": [
+      {
+        "tool_name": "TwitterTrendingTagsIndia",
+        "execution_time_ms": 0.446,
+        "peak_memory_mb": 0.0153,
+        "memory_delta_mb": 0,
+        "latency_grade": "critical",
+        "success": false,
+        "error_message": "'API' object has no attribute 'trends_place'"
+      }
+    ],
+    "TwitterTrendingTagsExtractor": [
+      {
+        "tool_name": "TwitterTrendingTagsExtractor",
+        "execution_time_ms": 304.457,
+        "peak_memory_mb": 0.1087,
+        "memory_delta_mb": 0,
+        "latency_grade": "critical",
+        "success": false,
+        "error_message": "401 Unauthorized\n89 - Invalid or expired token."
+      }
+    ]
+  }
+}

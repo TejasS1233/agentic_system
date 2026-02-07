@@ -1,0 +1,57 @@
+{
+  "exported_at": "2026-02-07T13:35:10.847433",
+  "summary": {
+    "DevToTopPostsTool": {
+      "call_count": 2,
+      "avg_time_ms": 624.581,
+      "max_time_ms": 926.302,
+      "min_time_ms": 322.86,
+      "avg_memory_mb": 4.5784,
+      "max_memory_mb": 4.5785,
+      "avg_memory_delta_mb": 3.2545,
+      "avg_efficiency": 0.6694,
+      "last_grade": "slow"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 2,
+    "tools_profiled": [
+      "DevToTopPostsTool"
+    ],
+    "execution_time_ms": {
+      "min": 322.86,
+      "max": 926.302,
+      "mean": 624.581
+    },
+    "peak_memory_mb": {
+      "min": 4.5783,
+      "max": 4.5785,
+      "mean": 4.5784
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "DevToTopPostsTool": [
+      {
+        "tool_name": "DevToTopPostsTool",
+        "execution_time_ms": 926.302,
+        "peak_memory_mb": 4.5785,
+        "memory_delta_mb": 3.2546,
+        "latency_grade": "slow",
+        "efficiency_score": 0.5185,
+        "success": true
+      },
+      {
+        "tool_name": "DevToTopPostsTool",
+        "execution_time_ms": 322.86,
+        "peak_memory_mb": 4.5783,
+        "memory_delta_mb": 3.2544,
+        "latency_grade": "slow",
+        "efficiency_score": 0.8203,
+        "success": true
+      }
+    ]
+  }
+}

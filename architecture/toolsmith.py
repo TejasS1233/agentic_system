@@ -9,6 +9,8 @@ from pathlib import Path
 from architecture.llm_manager import get_llm_manager
 from architecture.gatekeeper import Gatekeeper
 from architecture.prompts import get_tool_generator_prompt
+from architecture.api_registry import format_all_sources_for_prompt
+from architecture.sandbox import Sandbox
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
@@ -17,15 +19,19 @@ logger = get_logger(__name__)
 class Toolsmith:
     """Generates, validates, and manages tools with domain-aware deduplication."""
 
-    def __init__(self, safe_mode: bool = False, gatekeeper: Gatekeeper = None):
+    def __init__(self, safe_mode: bool = False, gatekeeper: Gatekeeper = None, sandbox: Sandbox = None, max_retries: int = 2):
         self.safe_mode = safe_mode
         self.gatekeeper = gatekeeper or Gatekeeper(strict_mode=safe_mode)
+        self.max_retries = max_retries
 
         self.workspace_root = Path.cwd() / "workspace"
         self.tools_dir = self.workspace_root / "tools"
         self.registry_path = self.tools_dir / "registry.json"
         self.metrics_path = self.tools_dir / "metrics.json"
         self.tools_source_path = Path.cwd() / "execution" / "tools.py"
+        
+        # Sandbox for verification
+        self.sandbox = sandbox
 
 
 
@@ -103,77 +109,113 @@ class Toolsmith:
             return f"# Could not read tools.py: {e}"
 
     def create_tool(self, requirement: str) -> str:
-        """Generate a new tool based on requirement."""
+        """Generate a new tool based on requirement with verification."""
         start_time = time.time()
         logger.info(f"Request: '{requirement}'")
 
-        # Generate new tool
-        logger.info("Generating tool with LLM...")
-        try:
-            llm = get_llm_manager()
-            existing_code = self._get_existing_tools_context()
-            system_prompt = get_tool_generator_prompt(existing_code)
+        llm = get_llm_manager()
+        existing_code = self._get_existing_tools_context()
+        
+        # Search for relevant free APIs and scrapable URLs based on the requirement
+        available_apis = format_all_sources_for_prompt(requirement, api_limit=4, url_limit=2)
+        system_prompt = get_tool_generator_prompt(existing_code, available_apis=available_apis)
+        
+        last_error = None
+        
+        for attempt in range(self.max_retries + 1):
+            logger.info(f"Generating tool with LLM (attempt {attempt + 1}/{self.max_retries + 1})...")
+            try:
+                # Build user message with error feedback if retrying
+                if attempt == 0:
+                    user_message = f"Create a tool for: {requirement}"
+                else:
+                    user_message = f"""Create a tool for: {requirement}
 
-            response = llm.generate_json(
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": f"Create a tool for: {requirement}"},
-                ],
-                max_tokens=4096,
-            )
+PREVIOUS ATTEMPT FAILED with error:
+{last_error}
 
-            if response.get("error"):
-                return f"Tool creation failed: {response['error']}"
+Fix the code to resolve this error."""
 
-            tool_data = json.loads(response["content"])
-            class_name = tool_data["class_name"]
-            file_name = tool_data["filename"]
-            tags = tool_data.get("tags", [])
-            input_types = tool_data.get("input_types", [])
-            output_types = tool_data.get("output_types", [])
-            domain = tool_data.get("domain", "")
-            tool_code = tool_data["code"]
+                response = llm.generate_json(
+                    messages=[
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": user_message},
+                    ],
+                    max_tokens=4096,
+                )
 
-            # Safety check
-            if self.safe_mode and not self._is_safe_code(tool_code):
-                self._log_metrics("safety_rejection", {"request": requirement})
-                return "Tool rejected: Safety violation detected"
+                if response.get("error"):
+                    return f"Tool creation failed: {response['error']}"
 
-            # Write tool file
-            file_path = self.tools_dir / file_name
-            with open(file_path, "w") as f:
-                f.write(tool_code)
-            logger.info(f"Tool saved: {file_path}")
+                tool_data = json.loads(response["content"])
+                class_name = tool_data["class_name"]
+                file_name = tool_data["filename"]
+                tags = tool_data.get("tags", [])
+                input_types = tool_data.get("input_types", [])
+                output_types = tool_data.get("output_types", [])
+                domain = tool_data.get("domain", "")
+                tool_code = tool_data["code"]
 
-            # Update registry
-            self._update_registry(
-                class_name,
-                file_name,
-                requirement,
-                tags,
-                input_types,
-                output_types,
-                domain,
-            )
+                # Safety check
+                if self.safe_mode and not self._is_safe_code(tool_code):
+                    self._log_metrics("safety_rejection", {"request": requirement})
+                    return "Tool rejected: Safety violation detected"
 
-            self._log_metrics(
-                "tool_created",
-                {
-                    "request": requirement,
-                    "tool_name": class_name,
-                    "latency": time.time() - start_time,
-                },
-            )
+                # Write tool file
+                file_path = self.tools_dir / file_name
+                with open(file_path, "w") as f:
+                    f.write(tool_code)
+                logger.info(f"Tool saved: {file_path}")
 
-            result_msg = f"Created {class_name} with tags {tags}"
-            return result_msg
+                # Verify tool with sandbox
+                if self.sandbox:
+                    test_result = self.sandbox.run_tool_test(file_name)
+                    if not test_result["success"]:
+                        last_error = test_result["error"]
+                        logger.warning(f"Tool test failed (attempt {attempt + 1}): {last_error}")
+                        self._log_metrics("tool_test_failed", {
+                            "request": requirement,
+                            "tool_name": class_name,
+                            "attempt": attempt + 1,
+                            "error": last_error[:500],
+                        })
+                        continue  # Retry
+                    logger.info(f"Tool test passed: {class_name}")
 
-        except Exception as e:
-            logger.error(f"Tool creation failed: {e}", exc_info=True)
-            self._log_metrics(
-                "generation_failed", {"request": requirement, "error": str(e)}
-            )
-            return f"Tool creation failed: {e}"
+                # Update registry
+                self._update_registry(
+                    class_name,
+                    file_name,
+                    requirement,
+                    tags,
+                    input_types,
+                    output_types,
+                    domain,
+                )
+
+                self._log_metrics(
+                    "tool_created",
+                    {
+                        "request": requirement,
+                        "tool_name": class_name,
+                        "latency": time.time() - start_time,
+                        "attempts": attempt + 1,
+                    },
+                )
+
+                result_msg = f"Created {class_name} with tags {tags}"
+                return result_msg
+
+            except Exception as e:
+                logger.error(f"Tool creation failed: {e}", exc_info=True)
+                last_error = str(e)
+                continue
+
+        # All retries exhausted
+        self._log_metrics(
+            "generation_failed", {"request": requirement, "error": str(last_error)}
+        )
+        return f"Tool creation failed after {self.max_retries + 1} attempts: {last_error}"
 
     def _update_registry(
         self,

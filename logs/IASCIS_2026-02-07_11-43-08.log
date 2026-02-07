@@ -1,0 +1,146 @@
+2026-02-07 11:43:13 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-07 11:43:38 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-07 11:43:38 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-07 11:43:38 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-07 11:43:38 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-07 11:43:38 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-07 11:43:38 | INFO | architecture.sandbox:__init__:152 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs
+2026-02-07 11:43:38 | INFO | architecture.sandbox:start:190 | Sandbox container started: 743f70599c95
+2026-02-07 11:43:38 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-07 11:43:38 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-07 11:43:38 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-07 11:43:38 | INFO | architecture.executor:load_registry:93 | Loaded 5 tool definitions
+2026-02-07 11:43:38 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-07 11:43:38 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-07 11:43:39 | INFO | architecture.sandbox:_install_deps:218 | Installing dependencies: pydantic requests pandas numpy beautifulsoup4
+2026-02-07 11:43:43 | INFO | architecture.orchestrator:__init__:35 | Orchestrator initialized with ToolRetriever
+2026-02-07 11:43:43 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-07 11:43:43 | INFO | __main__:run:121 | Task received: list down top 10 trending tags on twitter in india...
+2026-02-07 11:43:43 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-07 11:43:43 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-07 11:43:43 | INFO | architecture.orchestrator:run:39 | Processing: list down top 10 trending tags on twitter in india...
+2026-02-07 11:43:43 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-07_11-43-08
+2026-02-07 11:43:43 | INFO | architecture.llm_manager:generate:132 | Generation success in 567.64ms
+2026-02-07 11:43:43 | INFO | architecture.orchestrator:run:43 | Task Classification: COMPLEX_TASK
+2026-02-07 11:43:43 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-07_11-43-08
+2026-02-07 11:43:44 | INFO | architecture.llm_manager:generate:132 | Generation success in 680.79ms
+2026-02-07 11:43:44 | INFO | architecture.orchestrator:run:50 | Decomposed into 2 subtasks
+2026-02-07 11:43:44 | INFO | architecture.orchestrator:_retrieve_tools:113 | st_1 → PopulationCensusTool (dist: 1.384, matched: False)
+2026-02-07 11:43:44 | INFO | architecture.orchestrator:_retrieve_tools:113 | st_2 → PopulationCensusTool (dist: 1.343, matched: False)
+2026-02-07 11:43:44 | INFO | architecture.orchestrator:_ensure_tools:147 | Toolsmith creating: Search for top trending Twitter tags in India
+2026-02-07 11:43:44 | INFO | architecture.toolsmith:create_tool:113 | Request: 'Search for top trending Twitter tags in India'
+2026-02-07 11:43:44 | INFO | architecture.toolsmith:create_tool:122 | Generating tool with LLM (attempt 1/3)...
+2026-02-07 11:43:44 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-07_11-43-08
+2026-02-07 11:43:46 | INFO | architecture.llm_manager:generate:132 | Generation success in 1339.43ms
+2026-02-07 11:43:46 | INFO | architecture.toolsmith:create_tool:164 | Tool saved: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\twitter_trending_tags_india.py
+2026-02-07 11:43:46 | INFO | architecture.toolsmith:_update_registry:246 | Registry updated: TwitterTrendingTagsIndia
+2026-02-07 11:43:46 | INFO | architecture.orchestrator:_ensure_tools:150 | Toolsmith: Created TwitterTrendingTagsIndia with tags ['twitter', 'trending', 'india']...
+2026-02-07 11:43:50 | INFO | architecture.orchestrator:_ensure_tools:147 | Toolsmith creating: Extract trending tags from Twitter and rank them
+2026-02-07 11:43:50 | INFO | architecture.toolsmith:create_tool:113 | Request: 'Extract trending tags from Twitter and rank them'
+2026-02-07 11:43:50 | INFO | architecture.toolsmith:create_tool:122 | Generating tool with LLM (attempt 1/3)...
+2026-02-07 11:43:50 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-07_11-43-08
+2026-02-07 11:43:51 | INFO | architecture.llm_manager:generate:132 | Generation success in 1218.34ms
+2026-02-07 11:43:51 | INFO | architecture.toolsmith:create_tool:164 | Tool saved: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\twitter_trending_tags_extractor.py
+2026-02-07 11:43:51 | INFO | architecture.toolsmith:_update_registry:246 | Registry updated: TwitterTrendingTagsExtractor
+2026-02-07 11:43:51 | INFO | architecture.orchestrator:_ensure_tools:150 | Toolsmith: Created TwitterTrendingTagsExtractor with tags ['twitter', 'trending', 'tags', 'social media']...
+2026-02-07 11:43:55 | INFO | architecture.executor:execute:99 | Executing plan: list down top 10 trending tags on twitter in india
+2026-02-07 11:43:55 | INFO | architecture.executor:execute:100 | Total steps: 2
+2026-02-07 11:43:55 | INFO | architecture.executor:_execute_step:129 | Step 1: Search for top trending Twitter tags in India using TwitterTrendingTagsIndia
+2026-02-07 11:43:55 | INFO | architecture.executor:load_registry:93 | Loaded 7 tool definitions
+2026-02-07 11:43:55 | INFO | architecture.executor:_execute_step:171 | Step 1: Using description as input
+2026-02-07 11:43:55 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_11-43-08
+2026-02-07 11:43:56 | INFO | architecture.llm_manager:generate:132 | Generation success in 172.03ms
+2026-02-07 11:43:56 | INFO | architecture.executor:_infer_args:528 | LLM extracted args: {'count': 0}
+2026-02-07 11:43:56 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'count': 0}
+2026-02-07 11:43:56 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-07 11:43:56 | INFO | architecture.sandbox:_install_deps:218 | Installing dependencies: pydantic tweepy
+2026-02-07 11:43:56 | INFO | architecture.sandbox:_pre_install_essentials:161 | Essential packages pre-installed
+2026-02-07 11:43:57 | INFO | architecture.sandbox:execute_with_args:515 | DEBUG: sandbox received args = {'count': 0}
+2026-02-07 11:43:57 | INFO | architecture.sandbox:execute_with_args:516 | DEBUG: args_json = {"count": 0}
+2026-02-07 11:43:57 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: Runner script line: args = json.loads('{"count": 0}')
+2026-02-07 11:43:57 | INFO | architecture.sandbox:execute_with_args:522 | Executing tool with args: TwitterTrendingTagsIndia
+2026-02-07 11:43:57 | INFO | architecture.sandbox:execute_with_args:523 | Args JSON being passed: {"count": 0}
+2026-02-07 11:43:58 | INFO | architecture.executor:_execute_step:192 | Step 1 SANDBOX Profile: time=0.446ms, peak_mem=0.0153MB, delta_mem=0.0000MB, efficiency=0.00%, grade=critical
+2026-02-07 11:43:58 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 2413.82ms)
+2026-02-07 11:43:58 | ERROR | architecture.executor:_execute_step:211 | Step 1: Failed - 'API' object has no attribute 'trends_place'
+2026-02-07 11:43:58 | INFO | architecture.reflector:reflect:295 | Reflected: unknown, retry=True, remaining=2
+2026-02-07 11:43:58 | INFO | architecture.executor:_handle_failure:248 | Step 1: Failure type=tool_code, retrying...
+2026-02-07 11:43:58 | INFO | architecture.executor:_retry_with_regenerated_tool:308 | Step 1: Regenerating tool with error context
+2026-02-07 11:43:58 | INFO | architecture.toolsmith:create_tool:113 | Request: 'Task: Search for top trending Twitter tags in India
+
+Input data sample:
+Search for top trending Twitter tags in India
+
+Previous implementation failed with error:
+'API' object has no attribute 'trends_place'
+
+Create a tool that correctly handles this input format and fixes the error.'
+2026-02-07 11:43:58 | INFO | architecture.toolsmith:create_tool:122 | Generating tool with LLM (attempt 1/3)...
+2026-02-07 11:43:58 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-07_11-43-08
+2026-02-07 11:43:59 | INFO | architecture.llm_manager:generate:132 | Generation success in 1021.96ms
+2026-02-07 11:43:59 | INFO | architecture.toolsmith:create_tool:164 | Tool saved: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\twitter_trending_tags.py
+2026-02-07 11:43:59 | INFO | architecture.toolsmith:_update_registry:246 | Registry updated: TwitterTrendingTagsTool
+2026-02-07 11:43:59 | INFO | architecture.executor:_retry_with_regenerated_tool:319 | Step 1: Toolsmith result = Created TwitterTrendingTagsTool with tags ['twitter', 'trending', 'tags', 'india']
+2026-02-07 11:43:59 | INFO | architecture.executor:load_registry:93 | Loaded 8 tool definitions
+2026-02-07 11:43:59 | INFO | architecture.executor:_retry_with_regenerated_tool:340 | Step 1: Using regenerated tool TwitterTrendingTagsTool
+2026-02-07 11:43:59 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_11-43-08
+2026-02-07 11:43:59 | INFO | architecture.llm_manager:generate:132 | Generation success in 126.28ms
+2026-02-07 11:43:59 | INFO | architecture.executor:_infer_args:528 | LLM extracted args: {'location': 'India'}
+2026-02-07 11:43:59 | INFO | architecture.sandbox:execute_with_args:515 | DEBUG: sandbox received args = {'location': 'India'}
+2026-02-07 11:43:59 | INFO | architecture.sandbox:execute_with_args:516 | DEBUG: args_json = {"location": "India"}
+2026-02-07 11:43:59 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: Runner script line: args = json.loads('{"location": "India"}')
+2026-02-07 11:43:59 | INFO | architecture.sandbox:execute_with_args:522 | Executing tool with args: TwitterTrendingTagsTool
+2026-02-07 11:43:59 | INFO | architecture.sandbox:execute_with_args:523 | Args JSON being passed: {"location": "India"}
+2026-02-07 11:44:00 | INFO | architecture.executor:_retry_with_regenerated_tool:352 | Step 1: Retry succeeded with TwitterTrendingTagsTool
+2026-02-07 11:44:00 | INFO | architecture.executor:_execute_step:129 | Step 2: Extract trending tags from Twitter and rank them using TwitterTrendingTagsExtractor
+2026-02-07 11:44:00 | INFO | architecture.executor:load_registry:93 | Loaded 8 tool definitions
+2026-02-07 11:44:00 | INFO | architecture.executor:_execute_step:161 | Step 2: Using input from step 1
+2026-02-07 11:44:00 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_11-43-08
+2026-02-07 11:44:00 | INFO | architecture.llm_manager:generate:132 | Generation success in 210.48ms
+2026-02-07 11:44:00 | INFO | architecture.executor:_infer_args:528 | LLM extracted args: {'query': '', 'count': 0}
+2026-02-07 11:44:00 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'query': '', 'count': 0}
+2026-02-07 11:44:00 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-07 11:44:00 | INFO | architecture.sandbox:execute_with_args:515 | DEBUG: sandbox received args = {'query': '', 'count': 0}
+2026-02-07 11:44:00 | INFO | architecture.sandbox:execute_with_args:516 | DEBUG: args_json = {"query": "", "count": 0}
+2026-02-07 11:44:00 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: Runner script line: args = json.loads('{"query": "", "count": 0}')
+2026-02-07 11:44:00 | INFO | architecture.sandbox:execute_with_args:522 | Executing tool with args: TwitterTrendingTagsExtractor
+2026-02-07 11:44:00 | INFO | architecture.sandbox:execute_with_args:523 | Args JSON being passed: {"query": "", "count": 0}
+2026-02-07 11:44:01 | INFO | architecture.executor:_execute_step:192 | Step 2 SANDBOX Profile: time=304.457ms, peak_mem=0.1087MB, delta_mem=0.0000MB, efficiency=0.00%, grade=critical
+2026-02-07 11:44:01 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 1512.97ms)
+2026-02-07 11:44:02 | ERROR | architecture.executor:_execute_step:211 | Step 2: Failed - 401 Unauthorized
+89 - Invalid or expired token.
+2026-02-07 11:44:02 | INFO | architecture.reflector:reflect:295 | Reflected: unknown, retry=True, remaining=2
+2026-02-07 11:44:02 | INFO | architecture.executor:_handle_failure:248 | Step 2: Failure type=tool_code, retrying...
+2026-02-07 11:44:02 | INFO | architecture.executor:_retry_with_regenerated_tool:308 | Step 2: Regenerating tool with error context
+2026-02-07 11:44:02 | INFO | architecture.toolsmith:create_tool:113 | Request: 'Task: Extract trending tags from Twitter and rank them
+
+Input data sample:
+["'API' object has no attribute 'trends_place'"]
+
+Previous implementation failed with error:
+401 Unauthorized
+89 - Invalid or expired token.
+
+Create a tool that correctly handles this input format and fixes the error.'
+2026-02-07 11:44:02 | INFO | architecture.toolsmith:create_tool:122 | Generating tool with LLM (attempt 1/3)...
+2026-02-07 11:44:02 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-07_11-43-08
+2026-02-07 11:44:03 | INFO | architecture.llm_manager:generate:132 | Generation success in 1249.25ms
+2026-02-07 11:44:03 | INFO | architecture.toolsmith:create_tool:164 | Tool saved: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\twitter_trending_tags.py
+2026-02-07 11:44:03 | INFO | architecture.toolsmith:_update_registry:246 | Registry updated: TwitterTrendingTagsTool
+2026-02-07 11:44:03 | INFO | architecture.executor:_retry_with_regenerated_tool:319 | Step 2: Toolsmith result = Created TwitterTrendingTagsTool with tags ['twitter', 'trending', 'tags']
+2026-02-07 11:44:03 | INFO | architecture.executor:load_registry:93 | Loaded 8 tool definitions
+2026-02-07 11:44:03 | INFO | architecture.executor:_retry_with_regenerated_tool:340 | Step 2: Using regenerated tool TwitterTrendingTagsTool
+2026-02-07 11:44:03 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_11-43-08
+2026-02-07 11:44:03 | INFO | architecture.llm_manager:generate:132 | Generation success in 165.36ms
+2026-02-07 11:44:03 | INFO | architecture.executor:_infer_args:528 | LLM extracted args: {'api_key': None, 'api_secret': None, 'access_token': None, 'access_token_secret': None}
+2026-02-07 11:44:03 | INFO | architecture.sandbox:execute_with_args:515 | DEBUG: sandbox received args = {'api_key': None, 'api_secret': None, 'access_token': None, 'access_token_secret': None}
+2026-02-07 11:44:03 | INFO | architecture.sandbox:execute_with_args:516 | DEBUG: args_json = {"api_key": null, "api_secret": null, "access_token": null, "access_token_secret": null}
+2026-02-07 11:44:03 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: Runner script line: args = json.loads('{"api_key": null, "api_secret": null, "access_token": null, "access_token_secret": null}')
+2026-02-07 11:44:03 | INFO | architecture.sandbox:execute_with_args:522 | Executing tool with args: TwitterTrendingTagsTool
+2026-02-07 11:44:03 | INFO | architecture.sandbox:execute_with_args:523 | Args JSON being passed: {"api_key": null, "api_secret": null, "access_token": null, "access_token_secret": null}
+2026-02-07 11:44:04 | WARNING | architecture.executor:_retry_with_regenerated_tool:357 | Step 2: Retry with TwitterTrendingTagsTool failed - TwitterTrendingTagsTool.__init__() missing 4 required positional arguments: 'api_key', 'api_secret', 'access_token', and 'access_token_secret'
+2026-02-07 11:44:04 | INFO | __main__:main:218 | Completed in 20678.08ms
+2026-02-07 11:44:04 | INFO | __main__:main:219 | Zone: public
+2026-02-07 11:44:04 | INFO | architecture.executor:export_profiles:500 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260207_114404.json
+2026-02-07 11:44:09 | INFO | architecture.sandbox:stop:205 | Sandbox container stopped: 743f70599c95
+2026-02-07 11:44:09 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

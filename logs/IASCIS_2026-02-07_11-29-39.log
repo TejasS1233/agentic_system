@@ -1,0 +1,88 @@
+2026-02-07 11:29:45 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-07 11:30:13 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-07 11:30:13 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-07 11:30:13 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-07 11:30:13 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-07 11:30:13 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-07 11:30:13 | INFO | architecture.sandbox:__init__:152 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs
+2026-02-07 11:30:14 | INFO | architecture.sandbox:start:190 | Sandbox container started: eb8d37476c8d
+2026-02-07 11:30:14 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-07 11:30:14 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-07 11:30:14 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-07 11:30:14 | INFO | architecture.executor:load_registry:93 | Loaded 4 tool definitions
+2026-02-07 11:30:14 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-07 11:30:14 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-07 11:30:15 | INFO | architecture.sandbox:_install_deps:218 | Installing dependencies: requests numpy beautifulsoup4 pandas pydantic
+2026-02-07 11:30:20 | INFO | architecture.orchestrator:__init__:35 | Orchestrator initialized with ToolRetriever
+2026-02-07 11:30:20 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-07 11:30:20 | INFO | __main__:run:121 | Task received: plot my gihtub stats for user TejasS1233...
+2026-02-07 11:30:20 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-07 11:30:20 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-07 11:30:20 | INFO | architecture.orchestrator:run:39 | Processing: plot my gihtub stats for user TejasS1233...
+2026-02-07 11:30:20 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-07_11-29-39
+2026-02-07 11:30:21 | INFO | architecture.llm_manager:generate:132 | Generation success in 665.21ms
+2026-02-07 11:30:21 | INFO | architecture.orchestrator:run:43 | Task Classification: COMPLEX_TASK
+2026-02-07 11:30:21 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-07_11-29-39
+2026-02-07 11:30:22 | INFO | architecture.llm_manager:generate:132 | Generation success in 981.74ms
+2026-02-07 11:30:22 | INFO | architecture.orchestrator:run:50 | Decomposed into 3 subtasks
+2026-02-07 11:30:22 | INFO | architecture.orchestrator:_retrieve_tools:113 | st_1 → GitHubProfileSearchTool (dist: 0.858, matched: True)
+2026-02-07 11:30:22 | INFO | architecture.orchestrator:_retrieve_tools:113 | st_2 → GitHubProfileSearchTool (dist: 0.904, matched: True)
+2026-02-07 11:30:22 | INFO | architecture.orchestrator:_retrieve_tools:113 | st_3 → GitHubProfileSearchTool (dist: 1.310, matched: True)
+2026-02-07 11:30:22 | INFO | architecture.executor:execute:99 | Executing plan: plot my gihtub stats for user TejasS1233
+2026-02-07 11:30:22 | INFO | architecture.executor:execute:100 | Total steps: 3
+2026-02-07 11:30:22 | INFO | architecture.executor:_execute_step:129 | Step 1: Search for TejasS1233's GitHub profile using GitHubProfileSearchTool
+2026-02-07 11:30:22 | INFO | architecture.executor:load_registry:93 | Loaded 4 tool definitions
+2026-02-07 11:30:22 | INFO | architecture.executor:_execute_step:171 | Step 1: Using description as input
+2026-02-07 11:30:22 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_11-29-39
+2026-02-07 11:30:22 | INFO | architecture.llm_manager:generate:132 | Generation success in 107.91ms
+2026-02-07 11:30:22 | INFO | architecture.executor:_infer_args:528 | LLM extracted args: {'query': 'TejasS1233'}
+2026-02-07 11:30:22 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'query': 'TejasS1233'}
+2026-02-07 11:30:22 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-07 11:30:22 | INFO | architecture.sandbox:_install_deps:218 | Installing dependencies: requests pydantic
+2026-02-07 11:30:39 | INFO | architecture.sandbox:execute_with_args:515 | DEBUG: sandbox received args = {'query': 'TejasS1233'}
+2026-02-07 11:30:39 | INFO | architecture.sandbox:execute_with_args:516 | DEBUG: args_json = {"query": "TejasS1233"}
+2026-02-07 11:30:39 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: Runner script line: args = json.loads('{"query": "TejasS1233"}')
+2026-02-07 11:30:39 | INFO | architecture.sandbox:execute_with_args:522 | Executing tool with args: GitHubProfileSearchTool
+2026-02-07 11:30:39 | INFO | architecture.sandbox:execute_with_args:523 | Args JSON being passed: {"query": "TejasS1233"}
+2026-02-07 11:30:44 | INFO | architecture.executor:_execute_step:192 | Step 1 SANDBOX Profile: time=4229.428ms, peak_mem=0.1187MB, delta_mem=0.0668MB, efficiency=49.95%, grade=critical
+2026-02-07 11:30:44 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 22339.80ms)
+2026-02-07 11:30:44 | INFO | architecture.executor:_execute_step:207 | Step 1: Completed in 22.34s
+2026-02-07 11:30:44 | INFO | architecture.executor:_execute_step:129 | Step 2: Fetch and process GitHub stats for TejasS1233 using GitHubProfileSearchTool
+2026-02-07 11:30:44 | INFO | architecture.executor:load_registry:93 | Loaded 4 tool definitions
+2026-02-07 11:30:44 | INFO | architecture.executor:_execute_step:161 | Step 2: Using input from step 1
+2026-02-07 11:30:44 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_11-29-39
+2026-02-07 11:30:45 | INFO | architecture.llm_manager:generate:132 | Generation success in 1094.08ms
+2026-02-07 11:30:45 | INFO | architecture.executor:_infer_args:528 | LLM extracted args: {'query': 'TejasS1233'}
+2026-02-07 11:30:45 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'query': 'TejasS1233'}
+2026-02-07 11:30:45 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-07 11:30:45 | INFO | architecture.sandbox:execute_with_args:515 | DEBUG: sandbox received args = {'query': 'TejasS1233'}
+2026-02-07 11:30:45 | INFO | architecture.sandbox:execute_with_args:516 | DEBUG: args_json = {"query": "TejasS1233"}
+2026-02-07 11:30:45 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: Runner script line: args = json.loads('{"query": "TejasS1233"}')
+2026-02-07 11:30:45 | INFO | architecture.sandbox:execute_with_args:522 | Executing tool with args: GitHubProfileSearchTool
+2026-02-07 11:30:45 | INFO | architecture.sandbox:execute_with_args:523 | Args JSON being passed: {"query": "TejasS1233"}
+2026-02-07 11:30:46 | INFO | architecture.executor:_execute_step:192 | Step 2 SANDBOX Profile: time=518.867ms, peak_mem=0.1187MB, delta_mem=0.0668MB, efficiency=74.01%, grade=slow
+2026-02-07 11:30:46 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 1073.46ms)
+2026-02-07 11:30:46 | INFO | architecture.executor:_execute_step:207 | Step 2: Completed in 1.07s
+2026-02-07 11:30:46 | INFO | architecture.executor:_execute_step:129 | Step 3: Plot the GitHub stats using GitHubProfileSearchTool
+2026-02-07 11:30:46 | INFO | architecture.executor:load_registry:93 | Loaded 4 tool definitions
+2026-02-07 11:30:46 | INFO | architecture.executor:_execute_step:161 | Step 3: Using input from step 2
+2026-02-07 11:30:46 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_11-29-39
+2026-02-07 11:30:47 | INFO | architecture.llm_manager:generate:132 | Generation success in 910.98ms
+2026-02-07 11:30:47 | INFO | architecture.executor:_infer_args:528 | LLM extracted args: {'query': 'TejasS1233'}
+2026-02-07 11:30:47 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'query': 'TejasS1233'}
+2026-02-07 11:30:47 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-07 11:30:47 | INFO | architecture.sandbox:execute_with_args:515 | DEBUG: sandbox received args = {'query': 'TejasS1233'}
+2026-02-07 11:30:47 | INFO | architecture.sandbox:execute_with_args:516 | DEBUG: args_json = {"query": "TejasS1233"}
+2026-02-07 11:30:47 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: Runner script line: args = json.loads('{"query": "TejasS1233"}')
+2026-02-07 11:30:47 | INFO | architecture.sandbox:execute_with_args:522 | Executing tool with args: GitHubProfileSearchTool
+2026-02-07 11:30:47 | INFO | architecture.sandbox:execute_with_args:523 | Args JSON being passed: {"query": "TejasS1233"}
+2026-02-07 11:30:48 | INFO | architecture.executor:_execute_step:192 | Step 3 SANDBOX Profile: time=485.721ms, peak_mem=0.1184MB, delta_mem=0.0666MB, efficiency=75.67%, grade=slow
+2026-02-07 11:30:48 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 1009.45ms)
+2026-02-07 11:30:48 | INFO | architecture.executor:_execute_step:207 | Step 3: Completed in 1.01s
+2026-02-07 11:30:48 | INFO | __main__:main:218 | Completed in 28398.21ms
+2026-02-07 11:30:48 | INFO | __main__:main:219 | Zone: public
+2026-02-07 11:30:48 | INFO | architecture.executor:export_profiles:500 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260207_113048.json
+2026-02-07 11:30:53 | WARNING | architecture.sandbox:_install_deps:223 | pip install failed: 
+2026-02-07 11:30:53 | INFO | architecture.sandbox:_pre_install_essentials:161 | Essential packages pre-installed
+2026-02-07 11:30:54 | INFO | architecture.sandbox:stop:205 | Sandbox container stopped: eb8d37476c8d
+2026-02-07 11:30:54 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

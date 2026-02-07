@@ -510,10 +510,24 @@ class ExecutorAgent:
         if not arg_names:
             return {"input": input_data}
 
+        # Check if URL arguments are needed - if so, search for relevant URLs
+        available_urls = ""
+        url_args = ["url", "target_url", "source_url", "webpage"]
+        if any(arg in url_args for arg in arg_names):
+            try:
+                from architecture.api_registry import search_urls
+                urls = search_urls(step.description, limit=3)
+                if urls:
+                    available_urls = "\n".join([
+                        f"- {u['name']}: {u['url']}" for u in urls
+                    ])
+            except Exception as e:
+                logger.warning(f"Could not search for URLs: {e}")
+
         # Always use LLM to extract actual values (not raw description)
         from architecture.prompts import get_arg_extraction_prompt
 
-        prompt = get_arg_extraction_prompt(arg_names, step.description, input_data)
+        prompt = get_arg_extraction_prompt(arg_names, step.description, input_data, available_urls)
 
         response = self.llm.generate_json(
             messages=[{"role": "user", "content": prompt}], max_tokens=256

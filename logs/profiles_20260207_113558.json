@@ -1,0 +1,57 @@
+{
+  "exported_at": "2026-02-07T11:35:58.817100",
+  "summary": {
+    "GitHubProfileSearchTool": {
+      "call_count": 2,
+      "avg_time_ms": 251.85649999999998,
+      "max_time_ms": 383.746,
+      "min_time_ms": 119.967,
+      "avg_memory_mb": 0.1186,
+      "max_memory_mb": 0.1187,
+      "avg_memory_delta_mb": 0.06665,
+      "avg_efficiency": 0.8735999999999999,
+      "last_grade": "slow"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 2,
+    "tools_profiled": [
+      "GitHubProfileSearchTool"
+    ],
+    "execution_time_ms": {
+      "min": 119.967,
+      "max": 383.746,
+      "mean": 251.85649999999998
+    },
+    "peak_memory_mb": {
+      "min": 0.1185,
+      "max": 0.1187,
+      "mean": 0.1186
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "GitHubProfileSearchTool": [
+      {
+        "tool_name": "GitHubProfileSearchTool",
+        "execution_time_ms": 383.746,
+        "peak_memory_mb": 0.1185,
+        "memory_delta_mb": 0.0666,
+        "latency_grade": "slow",
+        "efficiency_score": 0.8077,
+        "success": true
+      },
+      {
+        "tool_name": "GitHubProfileSearchTool",
+        "execution_time_ms": 119.967,
+        "peak_memory_mb": 0.1187,
+        "memory_delta_mb": 0.0667,
+        "latency_grade": "slow",
+        "efficiency_score": 0.9395,
+        "success": true
+      }
+    ]
+  }
+}

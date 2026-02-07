@@ -1,6 +1,7 @@
 """Sandbox for isolated tool execution in Docker container."""
 
 import ast
+import time
 from pathlib import Path
 
 import docker
@@ -91,15 +92,23 @@ IMPORT_TO_PYPI = {
     "dotenv": "python-dotenv",
 }
 
+ESSENTIAL_PACKAGES = {
+    "pydantic",
+    "numpy",
+    "requests",
+    "pandas",
+    "beautifulsoup4",
+}
 
-def extract_dependencies(tool_path: Path) -> list[str]:
+
+def extract_dependencies(tool_path: Path) -> set[str]:
     """Parse tool file and extract pip packages from imports."""
     try:
         with open(tool_path) as f:
             tree = ast.parse(f.read())
     except SyntaxError as e:
         logger.error(f"Syntax error parsing {tool_path}: {e}")
-        return []
+        return set()  # Return empty set, not list
 
     imports = set()
     for node in ast.walk(tree):
@@ -110,12 +119,12 @@ def extract_dependencies(tool_path: Path) -> list[str]:
             if node.module:
                 imports.add(node.module.split(".")[0])
 
-    deps = []
+    deps = set()
     for pkg in imports:
         if pkg in STDLIB_MODULES:
             continue
         pypi_name = IMPORT_TO_PYPI.get(pkg, pkg)
-        deps.append(pypi_name)
+        deps.add(pypi_name)
 
     return deps
 
@@ -144,6 +153,15 @@ class Sandbox:
             f"Sandbox initialized with tools_dir={self.tools_dir}, output_dir={self.output_dir}"
         )
 
+    def _pre_install_essentials(self):
+        """Background task to install essential packages."""
+        try:
+            time.sleep(1)
+            self._install_deps(ESSENTIAL_PACKAGES)
+            logger.info("Essential packages pre-installed")
+        except Exception as e:
+            logger.warning(f"Failed to pre-install essentials: {e}")
+
     def start(self) -> None:
         """Start the sandbox container."""
         try:
@@ -171,6 +189,14 @@ class Sandbox:
         )
         logger.info(f"Sandbox container started: {self.container.short_id}")
 
+        # Async pre-install of essentials
+        import threading
+
+        self._pre_install_thread = threading.Thread(
+            target=self._pre_install_essentials, daemon=True
+        )
+        self._pre_install_thread.start()
+
     def stop(self) -> None:
         """Stop and remove the sandbox container."""
         if self.container:
@@ -182,7 +208,7 @@ class Sandbox:
             self.container = None
         self._installed_deps.clear()
 
-    def _install_deps(self, deps: list[str]) -> None:
+    def _install_deps(self, deps: set[str] | list[str]) -> None:
         """Install dependencies that haven't been installed yet."""
         new_deps = [d for d in deps if d not in self._installed_deps]
         if not new_deps:
@@ -242,6 +268,51 @@ class Sandbox:
             logger.error(f"Execution error: {e}")
             return {"success": False, "output": "", "error": str(e)}
 
+    def run_tool_test(self, tool_file: str) -> dict:
+        """Run the test_tool() function of a generated tool to verify it works.
+        
+        This executes `python tool_file.py` which should trigger:
+        if __name__ == "__main__":
+            test_tool()
+        
+        Returns:
+            {"success": bool, "output": str, "error": str}
+        """
+        if not self.container:
+            return {"success": False, "error": "Sandbox not started", "output": ""}
+
+        tool_path = self.tools_dir / tool_file
+        if not tool_path.exists():
+            return {
+                "success": False,
+                "error": f"Tool file not found: {tool_file}",
+                "output": "",
+            }
+
+        # Install dependencies
+        deps = extract_dependencies(tool_path)
+        deps.add("pydantic")
+        self._install_deps(deps)
+
+        logger.info(f"Running test for tool: {tool_file}")
+        try:
+            exit_code, output = self.container.exec_run(
+                f"python /tools/{tool_file}",
+                stderr=True,
+            )
+            output_str = output.decode() if output else ""
+
+            if exit_code == 0:
+                logger.info(f"Tool test passed: {tool_file}")
+                return {"success": True, "output": output_str, "error": ""}
+            else:
+                logger.error(f"Tool test failed: {tool_file}")
+                return {"success": False, "output": "", "error": output_str}
+
+        except Exception as e:
+            logger.error(f"Tool test execution error: {e}")
+            return {"success": False, "output": "", "error": str(e)}
+
     def execute_with_args(self, tool_name: str, tool_file: str, args: dict) -> dict:
         """Execute a tool with specific arguments inside the sandbox with profiling."""
         if not self.container:
@@ -263,13 +334,15 @@ class Sandbox:
 
         # Install dependencies
         deps = extract_dependencies(tool_path)
-        deps.append("pydantic")  # Always needed
+        deps.add("pydantic")  # Always needed
         self._install_deps(deps)
 
         # Create runner script with PROFILING
         import json as json_module
+        import base64 as b64_module
 
         args_json = json_module.dumps(args)
+        args_b64 = b64_module.b64encode(args_json.encode()).decode()
 
         runner_code = f'''
 import sys
@@ -279,6 +352,7 @@ import tracemalloc
 import traceback
 import os
 import shutil
+import base64
 from pathlib import Path
 
 sys.path.insert(0, '/tools')
@@ -318,9 +392,9 @@ try:
     start_time = time.perf_counter()
     start_memory = tracemalloc.get_traced_memory()[0]
     
-    # Execute tool
+    # Execute tool - decode args from base64 to avoid escaping issues
+    args = json.loads(base64.b64decode("{args_b64}").decode())
     tool = tool_class()
-    args = json.loads('{args_json}')
     result = tool.run(**args)
     
     # Stop profiling

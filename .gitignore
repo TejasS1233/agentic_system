@@ -13,3 +13,6 @@ wheels/
 # Workspace and benchmark outputs
 workspace/*
 benchmark_results/
+
+
+public-apis/keep

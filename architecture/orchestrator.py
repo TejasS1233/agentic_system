@@ -99,8 +99,8 @@ class Orchestrator:
                 best = primary[0]
                 tool_name = best["tool"]
                 distance = best["distance"]
-                matched = distance < 2.0
-                confidence = max(0, 1 - (distance / 2.0))
+                matched = distance < 1.0  # Stricter: trigger tool creation for poor matches
+                confidence = max(0, 1 - distance)  # Linear confidence
                 matches.append(
                     ToolMatch(
                         subtask_id=st.id,
@@ -207,7 +207,19 @@ class Orchestrator:
                     input_from=input_from_step,
                 )
             )
-        print(steps)
+        
+        # Log the complete plan
+        logger.info("=" * 60)
+        logger.info(f"EXECUTION PLAN: {len(steps)} steps")
+        logger.info("=" * 60)
+        for step in steps:
+            deps_str = f"depends_on={step.depends_on}" if step.depends_on else "no dependencies"
+            input_str = f"input_from=step_{step.input_from}" if step.input_from else "uses description"
+            logger.info(f"  Step {step.step_number}: {step.description[:50]}...")
+            logger.info(f"    Tool: {step.tool_name}")
+            logger.info(f"    {deps_str}, {input_str}")
+        logger.info("=" * 60)
+        
         return ExecutionPlan(original_query=decomposition.original_query, steps=steps)
 
     def _classify_request(self, query: str) -> str:

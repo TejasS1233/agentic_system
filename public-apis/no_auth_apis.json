@@ -1,0 +1,1159 @@
+{
+    "description": "Direct API endpoints that return data without authentication",
+    "total_count": 200,
+    "last_updated": "2026-02-07",
+    "apis": [
+        {
+            "name": "Random Dog Image",
+            "endpoint": "https://dog.ceo/api/breeds/image/random",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Random Cat Image",
+            "endpoint": "https://cataas.com/cat?json=true",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Cat Fact",
+            "endpoint": "https://catfact.ninja/fact",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Dog Fact",
+            "endpoint": "https://dog-api.kinduff.com/api/facts",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Random Fox",
+            "endpoint": "https://randomfox.ca/floof/",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Random Duck",
+            "endpoint": "https://random-d.uk/api/random",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Shibe Image",
+            "endpoint": "https://shibe.online/api/shibes",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "HTTP Cat",
+            "endpoint": "https://http.cat/200.jpg",
+            "method": "GET",
+            "returns": "image"
+        },
+        {
+            "name": "PlaceKitten",
+            "endpoint": "https://placekitten.com/200/300",
+            "method": "GET",
+            "returns": "image"
+        },
+        {
+            "name": "PlaceDog",
+            "endpoint": "https://place.dog/200/300",
+            "method": "GET",
+            "returns": "image"
+        },
+        {
+            "name": "PlaceBear",
+            "endpoint": "https://placebear.com/200/300",
+            "method": "GET",
+            "returns": "image"
+        },
+        {
+            "name": "Random User",
+            "endpoint": "https://randomuser.me/api/",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Random User (10)",
+            "endpoint": "https://randomuser.me/api/?results=10",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "JSONPlaceholder Posts",
+            "endpoint": "https://jsonplaceholder.typicode.com/posts",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "JSONPlaceholder Users",
+            "endpoint": "https://jsonplaceholder.typicode.com/users",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "JSONPlaceholder Comments",
+            "endpoint": "https://jsonplaceholder.typicode.com/comments",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "JSONPlaceholder Todos",
+            "endpoint": "https://jsonplaceholder.typicode.com/todos",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "DummyJSON Products",
+            "endpoint": "https://dummyjson.com/products",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "DummyJSON Users",
+            "endpoint": "https://dummyjson.com/users",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "DummyJSON Quotes",
+            "endpoint": "https://dummyjson.com/quotes",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "FakeStoreAPI Products",
+            "endpoint": "https://fakestoreapi.com/products",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "FakeStoreAPI Categories",
+            "endpoint": "https://fakestoreapi.com/products/categories",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "ReqRes Users",
+            "endpoint": "https://reqres.in/api/users",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Httpbin IP",
+            "endpoint": "https://httpbin.org/ip",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Httpbin Headers",
+            "endpoint": "https://httpbin.org/headers",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Httpbin User Agent",
+            "endpoint": "https://httpbin.org/user-agent",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Bacon Ipsum",
+            "endpoint": "https://baconipsum.com/api/?type=meat-and-filler",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Lorem Ipsum",
+            "endpoint": "https://loripsum.net/api/3/short",
+            "method": "GET",
+            "returns": "text"
+        },
+        {
+            "name": "UUID Generate",
+            "endpoint": "https://www.uuidtools.com/api/generate/v4",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Yes/No Random",
+            "endpoint": "https://yesno.wtf/api",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "RoboHash Avatar",
+            "endpoint": "https://robohash.org/test.png",
+            "method": "GET",
+            "returns": "image"
+        },
+        {
+            "name": "Dicebear Avatar",
+            "endpoint": "https://api.dicebear.com/7.x/avataaars/svg",
+            "method": "GET",
+            "returns": "svg"
+        },
+        {
+            "name": "UI Avatars",
+            "endpoint": "https://ui-avatars.com/api/?name=John+Doe",
+            "method": "GET",
+            "returns": "image"
+        },
+        {
+            "name": "This Person Does Not Exist",
+            "endpoint": "https://thispersondoesnotexist.com/",
+            "method": "GET",
+            "returns": "image"
+        },
+        {
+            "name": "Pokemon List",
+            "endpoint": "https://pokeapi.co/api/v2/pokemon",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Pokemon Pikachu",
+            "endpoint": "https://pokeapi.co/api/v2/pokemon/pikachu",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Star Wars People",
+            "endpoint": "https://swapi.dev/api/people/",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Star Wars Planets",
+            "endpoint": "https://swapi.dev/api/planets/",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Star Wars Films",
+            "endpoint": "https://swapi.dev/api/films/",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Rick and Morty Characters",
+            "endpoint": "https://rickandmortyapi.com/api/character",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Rick and Morty Locations",
+            "endpoint": "https://rickandmortyapi.com/api/location",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Rick and Morty Episodes",
+            "endpoint": "https://rickandmortyapi.com/api/episode",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Game of Thrones Characters",
+            "endpoint": "https://thronesapi.com/api/v2/Characters",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Harry Potter Characters",
+            "endpoint": "https://hp-api.onrender.com/api/characters",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Harry Potter Spells",
+            "endpoint": "https://hp-api.onrender.com/api/spells",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Breaking Bad Characters",
+            "endpoint": "https://breakingbadapi.com/api/characters",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Breaking Bad Quotes",
+            "endpoint": "https://api.breakingbadquotes.xyz/v1/quotes",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Final Space Characters",
+            "endpoint": "https://finalspaceapi.com/api/v0/character",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "TVMaze Shows",
+            "endpoint": "https://api.tvmaze.com/shows",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "TVMaze Search",
+            "endpoint": "https://api.tvmaze.com/search/shows?q=breaking",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Jikan Anime Top",
+            "endpoint": "https://api.jikan.moe/v4/top/anime",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Jikan Anime Search",
+            "endpoint": "https://api.jikan.moe/v4/anime?q=naruto",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Anime Quotes",
+            "endpoint": "https://animechan.xyz/api/random",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Disney Characters",
+            "endpoint": "https://api.disneyapi.dev/character",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "xkcd Latest",
+            "endpoint": "https://xkcd.com/info.0.json",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "xkcd Comic 1",
+            "endpoint": "https://xkcd.com/1/info.0.json",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Open Trivia Random",
+            "endpoint": "https://opentdb.com/api.php?amount=10",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Free To Play Games",
+            "endpoint": "https://www.freetogame.com/api/games",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Deck of Cards New",
+            "endpoint": "https://deckofcardsapi.com/api/deck/new/shuffle/",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "D&D Classes",
+            "endpoint": "https://www.dnd5eapi.co/api/classes",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "D&D Monsters",
+            "endpoint": "https://www.dnd5eapi.co/api/monsters",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "D&D Spells",
+            "endpoint": "https://www.dnd5eapi.co/api/spells",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Chess.com Player",
+            "endpoint": "https://api.chess.com/pub/player/hikaru",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Scryfall Random Card",
+            "endpoint": "https://api.scryfall.com/cards/random",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Valorant Agents",
+            "endpoint": "https://valorant-api.com/v1/agents",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Open Meteo Weather",
+            "endpoint": "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current_weather=true",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Wttr.in Weather",
+            "endpoint": "https://wttr.in/London?format=j1",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "US Weather Forecast",
+            "endpoint": "https://api.weather.gov/gridpoints/TOP/31,80/forecast",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "7Timer Weather",
+            "endpoint": "https://www.7timer.info/bin/astro.php?lon=0&lat=0&ac=0&unit=metric&output=json",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Sunrise Sunset",
+            "endpoint": "https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "REST Countries All",
+            "endpoint": "https://restcountries.com/v3.1/all",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "REST Countries by Name",
+            "endpoint": "https://restcountries.com/v3.1/name/india",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "REST Countries by Code",
+            "endpoint": "https://restcountries.com/v3.1/alpha/us",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Country State City",
+            "endpoint": "https://countriesnow.space/api/v0.1/countries",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "IP API",
+            "endpoint": "http://ip-api.com/json/",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "ipify",
+            "endpoint": "https://api.ipify.org?format=json",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "ipapi.co",
+            "endpoint": "https://ipapi.co/json/",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "GeoJS",
+            "endpoint": "https://get.geojs.io/v1/ip/geo.json",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Zippopotamus US",
+            "endpoint": "https://api.zippopotam.us/us/90210",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Nominatim Search",
+            "endpoint": "https://nominatim.openstreetmap.org/search?q=paris&format=json",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "World Time API",
+            "endpoint": "http://worldtimeapi.org/api/timezone/America/New_York",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "World Time Zones",
+            "endpoint": "http://worldtimeapi.org/api/timezone",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "CoinGecko List",
+            "endpoint": "https://api.coingecko.com/api/v3/coins/list",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "CoinGecko Bitcoin",
+            "endpoint": "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "CoinCap Assets",
+            "endpoint": "https://api.coincap.io/v2/assets",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "CoinCap Bitcoin",
+            "endpoint": "https://api.coincap.io/v2/assets/bitcoin",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Frankfurter Rates",
+            "endpoint": "https://api.frankfurter.app/latest",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Frankfurter Convert",
+            "endpoint": "https://api.frankfurter.app/latest?from=USD&to=EUR",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Exchange Rate USD",
+            "endpoint": "https://open.er-api.com/v6/latest/USD",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "NASA APOD",
+            "endpoint": "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "NASA Mars Photos",
+            "endpoint": "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=DEMO_KEY",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "ISS Location",
+            "endpoint": "http://api.open-notify.org/iss-now.json",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "People in Space",
+            "endpoint": "http://api.open-notify.org/astros.json",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "SpaceX Launches",
+            "endpoint": "https://api.spacexdata.com/v5/launches",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "SpaceX Rockets",
+            "endpoint": "https://api.spacexdata.com/v4/rockets",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Numbers Trivia",
+            "endpoint": "http://numbersapi.com/42",
+            "method": "GET",
+            "returns": "text"
+        },
+        {
+            "name": "Numbers Math",
+            "endpoint": "http://numbersapi.com/42/math",
+            "method": "GET",
+            "returns": "text"
+        },
+        {
+            "name": "Numbers Date",
+            "endpoint": "http://numbersapi.com/2/14/date",
+            "method": "GET",
+            "returns": "text"
+        },
+        {
+            "name": "Dictionary Word",
+            "endpoint": "https://api.dictionaryapi.dev/api/v2/entries/en/hello",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Datamuse Words",
+            "endpoint": "https://api.datamuse.com/words?ml=happy",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Datamuse Rhymes",
+            "endpoint": "https://api.datamuse.com/words?rel_rhy=love",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Wikipedia Random",
+            "endpoint": "https://en.wikipedia.org/api/rest_v1/page/random/summary",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Wikipedia Summary",
+            "endpoint": "https://en.wikipedia.org/api/rest_v1/page/summary/Albert_Einstein",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Gutenberg Books",
+            "endpoint": "https://gutendex.com/books/",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Open Library Search",
+            "endpoint": "https://openlibrary.org/search.json?q=harry+potter",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "MusicBrainz Artist",
+            "endpoint": "https://musicbrainz.org/ws/2/artist/?query=metallica&fmt=json",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "iTunes Search",
+            "endpoint": "https://itunes.apple.com/search?term=taylor+swift&limit=10",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Meal Random",
+            "endpoint": "https://www.themealdb.com/api/json/v1/1/random.php",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Meal Search",
+            "endpoint": "https://www.themealdb.com/api/json/v1/1/search.php?s=pasta",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Meal Categories",
+            "endpoint": "https://www.themealdb.com/api/json/v1/1/categories.php",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Cocktail Random",
+            "endpoint": "https://www.thecocktaildb.com/api/json/v1/1/random.php",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Cocktail Search",
+            "endpoint": "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Open Food Facts",
+            "endpoint": "https://world.openfoodfacts.org/api/v0/product/737628064502.json",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Open Brewery DB",
+            "endpoint": "https://api.openbrewerydb.org/v1/breweries",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Coffee Image",
+            "endpoint": "https://coffee.alexflipnote.dev/random.json",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Foodish Random",
+            "endpoint": "https://foodish-api.com/api/",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Hacker News Top Stories",
+            "endpoint": "https://hacker-news.firebaseio.com/v0/topstories.json",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Hacker News Best Stories",
+            "endpoint": "https://hacker-news.firebaseio.com/v0/beststories.json",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Hacker News Item",
+            "endpoint": "https://hacker-news.firebaseio.com/v0/item/8863.json",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Spaceflight News",
+            "endpoint": "https://api.spaceflightnewsapi.net/v4/articles/",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Art Institute Chicago",
+            "endpoint": "https://api.artic.edu/api/v1/artworks",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Metropolitan Museum",
+            "endpoint": "https://collectionapi.metmuseum.org/public/collection/v1/objects",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Lorem Picsum",
+            "endpoint": "https://picsum.photos/200/300",
+            "method": "GET",
+            "returns": "image"
+        },
+        {
+            "name": "Lorem Picsum Info",
+            "endpoint": "https://picsum.photos/id/0/info",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Placeholder Image",
+            "endpoint": "https://via.placeholder.com/300x200",
+            "method": "GET",
+            "returns": "image"
+        },
+        {
+            "name": "Icon Horse",
+            "endpoint": "https://icon.horse/icon/google.com",
+            "method": "GET",
+            "returns": "image"
+        },
+        {
+            "name": "QR Code Generate",
+            "endpoint": "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Hello",
+            "method": "GET",
+            "returns": "image"
+        },
+        {
+            "name": "Color API",
+            "endpoint": "https://www.thecolorapi.com/id?hex=0047AB",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Advice Slip",
+            "endpoint": "https://api.adviceslip.com/advice",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Affirmations",
+            "endpoint": "https://www.affirmations.dev/",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Chuck Norris Joke",
+            "endpoint": "https://api.chucknorris.io/jokes/random",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Dad Joke",
+            "endpoint": "https://icanhazdadjoke.com/",
+            "method": "GET",
+            "returns": "json",
+            "headers": {
+                "Accept": "application/json"
+            }
+        },
+        {
+            "name": "JokeAPI Random",
+            "endpoint": "https://v2.jokeapi.dev/joke/Any",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "JokeAPI Programming",
+            "endpoint": "https://v2.jokeapi.dev/joke/Programming",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Kanye Quote",
+            "endpoint": "https://api.kanye.rest/",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Taylor Swift Quote",
+            "endpoint": "https://api.taylor.rest/",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Quotable Random",
+            "endpoint": "https://api.quotable.io/random",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Quotable List",
+            "endpoint": "https://api.quotable.io/quotes",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Zen Quotes Random",
+            "endpoint": "https://zenquotes.io/api/random",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Forismatic Quote",
+            "endpoint": "https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Useless Facts",
+            "endpoint": "https://uselessfacts.jsph.pl/random.json?language=en",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Bored API",
+            "endpoint": "https://www.boredapi.com/api/activity",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "COVID-19 Global",
+            "endpoint": "https://disease.sh/v3/covid-19/all",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "COVID-19 Countries",
+            "endpoint": "https://disease.sh/v3/covid-19/countries",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Nager.Date Holidays",
+            "endpoint": "https://date.nager.at/api/v3/publicholidays/2024/US",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Nager.Date Countries",
+            "endpoint": "https://date.nager.at/api/v3/AvailableCountries",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "CityBikes Networks",
+            "endpoint": "https://api.citybik.es/v2/networks",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "OpenSky States",
+            "endpoint": "https://opensky-network.org/api/states/all",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Giphy Random",
+            "endpoint": "https://api.giphy.com/v1/gifs/random?api_key=0UTRbFtkMxAplrohufYco5IY74U8hOes",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Giphy Trending",
+            "endpoint": "https://api.giphy.com/v1/gifs/trending?api_key=0UTRbFtkMxAplrohufYco5IY74U8hOes",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Tenor Search GIF",
+            "endpoint": "https://tenor.googleapis.com/v2/search?q=funny&key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "URL Shortener CleanURI",
+            "endpoint": "https://cleanuri.com/api/v1/shorten",
+            "method": "POST",
+            "returns": "json",
+            "body": {
+                "url": "https://example.com"
+            }
+        },
+        {
+            "name": "URL Shortener 1pt",
+            "endpoint": "https://csclub.uwaterloo.ca/~phthlqpx/api/v1/new",
+            "method": "POST",
+            "returns": "json"
+        },
+        {
+            "name": "Agify (Age by Name)",
+            "endpoint": "https://api.agify.io/?name=michael",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Genderize (Gender by Name)",
+            "endpoint": "https://api.genderize.io/?name=peter",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Nationalize (Nationality by Name)",
+            "endpoint": "https://api.nationalize.io/?name=nathaniel",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Dog Breed List",
+            "endpoint": "https://dog.ceo/api/breeds/list/all",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Dog by Breed",
+            "endpoint": "https://dog.ceo/api/breed/husky/images/random",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Exchange Rates EUR",
+            "endpoint": "https://www.floatrates.com/daily/eur.json",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Public IP",
+            "endpoint": "https://api.ipify.org?format=json",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Random Word",
+            "endpoint": "https://random-word-api.herokuapp.com/word",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Random Words (10)",
+            "endpoint": "https://random-word-api.herokuapp.com/word?number=10",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Lorem Faces",
+            "endpoint": "https://loremfaces.github.io/images/people/1.jpg",
+            "method": "GET",
+            "returns": "image"
+        },
+        {
+            "name": "Ergast F1 Current",
+            "endpoint": "http://ergast.com/api/f1/current.json",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Ergast F1 Drivers",
+            "endpoint": "http://ergast.com/api/f1/drivers.json",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Fake Commerce Products",
+            "endpoint": "https://fakestoreapi.com/products",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Random Activity",
+            "endpoint": "https://www.boredapi.com/api/activity/",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Github Users",
+            "endpoint": "https://api.github.com/users",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Github Repos",
+            "endpoint": "https://api.github.com/users/torvalds/repos",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "CatFact",
+            "endpoint": "https://meowfacts.herokuapp.com/",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Programming Quote",
+            "endpoint": "https://programming-quotesapi.vercel.app/api/random",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Random Color",
+            "endpoint": "https://www.colr.org/json/color/random",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "Lorem Pixel",
+            "endpoint": "https://picsum.photos/seed/picsum/200/300",
+            "method": "GET",
+            "returns": "image"
+        },
+        {
+            "name": "Cloudflare Trace",
+            "endpoint": "https://www.cloudflare.com/cdn-cgi/trace",
+            "method": "GET",
+            "returns": "text"
+        },
+        {
+            "name": "GitHub User",
+            "endpoint": "https://api.github.com/users/{username}",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "GitHub User Repos",
+            "endpoint": "https://api.github.com/users/{username}/repos",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "GitHub Repo",
+            "endpoint": "https://api.github.com/repos/{owner}/{repo}",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "GitHub Repo Commits",
+            "endpoint": "https://api.github.com/repos/{owner}/{repo}/commits",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "GitHub Repo Contributors",
+            "endpoint": "https://api.github.com/repos/{owner}/{repo}/contributors",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "GitHub Repo Languages",
+            "endpoint": "https://api.github.com/repos/{owner}/{repo}/languages",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "GitHub Repo Issues",
+            "endpoint": "https://api.github.com/repos/{owner}/{repo}/issues",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "GitHub Repo Pulls",
+            "endpoint": "https://api.github.com/repos/{owner}/{repo}/pulls",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "GitHub Public Events",
+            "endpoint": "https://api.github.com/events",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "GitHub User Events",
+            "endpoint": "https://api.github.com/users/{username}/events/public",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "GitHub Gists Public",
+            "endpoint": "https://api.github.com/gists/public",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "GitHub Search Repos",
+            "endpoint": "https://api.github.com/search/repositories?q={query}",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "GitHub Search Users",
+            "endpoint": "https://api.github.com/search/users?q={query}",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "GitHub Rate Limit",
+            "endpoint": "https://api.github.com/rate_limit",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "GitHub Emojis",
+            "endpoint": "https://api.github.com/emojis",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "GitHub Gitignore Templates",
+            "endpoint": "https://api.github.com/gitignore/templates",
+            "method": "GET",
+            "returns": "json"
+        },
+        {
+            "name": "GitHub Licenses",
+            "endpoint": "https://api.github.com/licenses",
+            "method": "GET",
+            "returns": "json"
+        }
+    ]
+}

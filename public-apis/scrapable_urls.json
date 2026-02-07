@@ -1,0 +1,334 @@
+{
+    "description": "Web-scrapable URLs for common data sources. Use with WebScraperTool or BeautifulSoup.",
+    "last_updated": "2026-02-07",
+    "urls": [
+        {
+            "name": "GitHub Trending Repos",
+            "url": "https://github.com/trending",
+            "description": "Daily trending repositories on GitHub",
+            "data_type": "html_table",
+            "selectors": {
+                "repo": "article.Box-row h2 a",
+                "description": "article.Box-row p",
+                "stars": "article.Box-row span.d-inline-block"
+            }
+        },
+        {
+            "name": "GitHub Trending Developers",
+            "url": "https://github.com/trending/developers",
+            "description": "Daily trending developers on GitHub",
+            "data_type": "html_list"
+        },
+        {
+            "name": "Hacker News Front Page",
+            "url": "https://news.ycombinator.com/",
+            "description": "Top stories from Hacker News",
+            "data_type": "html_table",
+            "selectors": {
+                "title": ".titleline a",
+                "score": ".score",
+                "comments": "a:contains('comments')"
+            }
+        },
+        {
+            "name": "Hacker News New",
+            "url": "https://news.ycombinator.com/newest",
+            "description": "Newest stories from Hacker News",
+            "data_type": "html_table"
+        },
+        {
+            "name": "Hacker News Jobs",
+            "url": "https://news.ycombinator.com/jobs",
+            "description": "Job postings from Hacker News",
+            "data_type": "html_list"
+        },
+        {
+            "name": "Product Hunt",
+            "url": "https://www.producthunt.com/",
+            "description": "Daily new products and startups",
+            "data_type": "html_list"
+        },
+        {
+            "name": "Reddit Front Page",
+            "url": "https://old.reddit.com/",
+            "description": "Reddit front page (old design, easier to scrape)",
+            "data_type": "html_list",
+            "selectors": {
+                "title": "a.title",
+                "score": ".score.unvoted",
+                "subreddit": ".subreddit"
+            }
+        },
+        {
+            "name": "Reddit Programming",
+            "url": "https://old.reddit.com/r/programming/",
+            "description": "Programming subreddit",
+            "data_type": "html_list"
+        },
+        {
+            "name": "Reddit Technology",
+            "url": "https://old.reddit.com/r/technology/",
+            "description": "Technology subreddit",
+            "data_type": "html_list"
+        },
+        {
+            "name": "Reddit MachineLearning",
+            "url": "https://old.reddit.com/r/MachineLearning/",
+            "description": "Machine Learning subreddit",
+            "data_type": "html_list"
+        },
+        {
+            "name": "Stack Overflow Questions",
+            "url": "https://stackoverflow.com/questions",
+            "description": "Latest questions on Stack Overflow",
+            "data_type": "html_list",
+            "selectors": {
+                "title": ".s-post-summary--content-title a",
+                "votes": ".s-post-summary--stats-item-number",
+                "tags": ".post-tag"
+            }
+        },
+        {
+            "name": "Stack Overflow Hot",
+            "url": "https://stackoverflow.com/?tab=hot",
+            "description": "Hot questions on Stack Overflow",
+            "data_type": "html_list"
+        },
+        {
+            "name": "Dev.to Top Posts",
+            "url": "https://dev.to/top/week",
+            "description": "Top posts this week on Dev.to",
+            "data_type": "html_list",
+            "selectors": {
+                "title": ".crayons-story__title",
+                "reactions": ".crayons-story__meta-reactions"
+            }
+        },
+        {
+            "name": "Dev.to Latest",
+            "url": "https://dev.to/latest",
+            "description": "Latest posts on Dev.to",
+            "data_type": "html_list"
+        },
+        {
+            "name": "Lobsters Tech News",
+            "url": "https://lobste.rs/",
+            "description": "Lobsters tech news aggregator",
+            "data_type": "html_list",
+            "selectors": {
+                "title": ".link",
+                "score": ".score",
+                "tags": ".tag"
+            }
+        },
+        {
+            "name": "Echo JS",
+            "url": "https://www.echojs.com/",
+            "description": "JavaScript news aggregator",
+            "data_type": "html_list"
+        },
+        {
+            "name": "PyPI Recent Updates",
+            "url": "https://pypi.org/search/?o=-created",
+            "description": "Recently updated Python packages",
+            "data_type": "html_list",
+            "selectors": {
+                "name": ".package-snippet__name",
+                "version": ".package-snippet__version",
+                "description": ".package-snippet__description"
+            }
+        },
+        {
+            "name": "NPM Search",
+            "url": "https://www.npmjs.com/search?q={query}",
+            "description": "Search NPM packages",
+            "data_type": "html_list"
+        },
+        {
+            "name": "Crates.io Rust Packages",
+            "url": "https://crates.io/",
+            "description": "Rust package registry",
+            "data_type": "html_list"
+        },
+        {
+            "name": "Wikipedia Main Page",
+            "url": "https://en.wikipedia.org/wiki/Main_Page",
+            "description": "Wikipedia main page with featured content",
+            "data_type": "html_structured"
+        },
+        {
+            "name": "Wikipedia Portal",
+            "url": "https://en.wikipedia.org/wiki/Portal:Current_events",
+            "description": "Current events from Wikipedia",
+            "data_type": "html_structured"
+        },
+        {
+            "name": "IMDb Top 250",
+            "url": "https://www.imdb.com/chart/top/",
+            "description": "IMDb top 250 movies",
+            "data_type": "html_table",
+            "selectors": {
+                "title": ".titleColumn a",
+                "year": ".secondaryInfo",
+                "rating": ".imdbRating strong"
+            }
+        },
+        {
+            "name": "IMDb Box Office",
+            "url": "https://www.imdb.com/chart/boxoffice",
+            "description": "Weekend box office results",
+            "data_type": "html_table"
+        },
+        {
+            "name": "Rotten Tomatoes Opening",
+            "url": "https://www.rottentomatoes.com/browse/movies_in_theaters/",
+            "description": "Movies currently in theaters",
+            "data_type": "html_list"
+        },
+        {
+            "name": "Goodreads Popular",
+            "url": "https://www.goodreads.com/book/popular_by_date/2024/1",
+            "description": "Popular books by date",
+            "data_type": "html_list"
+        },
+        {
+            "name": "Amazon Best Sellers",
+            "url": "https://www.amazon.com/gp/bestsellers/",
+            "description": "Amazon best sellers (may require headers)",
+            "data_type": "html_list"
+        },
+        {
+            "name": "Arxiv Recent CS",
+            "url": "https://arxiv.org/list/cs/recent",
+            "description": "Recent computer science papers on arXiv",
+            "data_type": "html_list",
+            "selectors": {
+                "title": ".list-title",
+                "authors": ".list-authors",
+                "subjects": ".list-subjects"
+            }
+        },
+        {
+            "name": "Arxiv Recent AI",
+            "url": "https://arxiv.org/list/cs.AI/recent",
+            "description": "Recent AI papers on arXiv",
+            "data_type": "html_list"
+        },
+        {
+            "name": "Papers With Code Latest",
+            "url": "https://paperswithcode.com/latest",
+            "description": "Latest ML papers with code",
+            "data_type": "html_list"
+        },
+        {
+            "name": "Papers With Code Trending",
+            "url": "https://paperswithcode.com/",
+            "description": "Trending ML papers",
+            "data_type": "html_list"
+        },
+        {
+            "name": "CoinMarketCap",
+            "url": "https://coinmarketcap.com/",
+            "description": "Cryptocurrency prices and rankings",
+            "data_type": "html_table",
+            "selectors": {
+                "name": ".coin-name",
+                "price": ".price",
+                "change": ".percent-change"
+            }
+        },
+        {
+            "name": "Yahoo Finance Markets",
+            "url": "https://finance.yahoo.com/markets/",
+            "description": "Stock market overview",
+            "data_type": "html_table"
+        },
+        {
+            "name": "Google Finance",
+            "url": "https://www.google.com/finance/",
+            "description": "Stock market data from Google",
+            "data_type": "html_structured"
+        },
+        {
+            "name": "Weather Underground",
+            "url": "https://www.wunderground.com/weather/us/ny/new-york-city",
+            "description": "Detailed weather data",
+            "data_type": "html_structured"
+        },
+        {
+            "name": "World Population Clock",
+            "url": "https://www.worldometers.info/world-population/",
+            "description": "Real-time world population stats",
+            "data_type": "html_structured",
+            "selectors": {
+                "population": ".counter-number"
+            }
+        },
+        {
+            "name": "Worldometers Stats",
+            "url": "https://www.worldometers.info/",
+            "description": "Real-time world statistics",
+            "data_type": "html_structured"
+        },
+        {
+            "name": "Time and Date",
+            "url": "https://www.timeanddate.com/worldclock/",
+            "description": "World clock and time zones",
+            "data_type": "html_table"
+        },
+        {
+            "name": "GitHub Jobs Alternative",
+            "url": "https://remoteok.com/remote-dev-jobs",
+            "description": "Remote developer jobs",
+            "data_type": "html_list"
+        },
+        {
+            "name": "We Work Remotely",
+            "url": "https://weworkremotely.com/categories/remote-programming-jobs",
+            "description": "Remote programming jobs",
+            "data_type": "html_list"
+        },
+        {
+            "name": "HN Who is Hiring",
+            "url": "https://hnhiring.com/",
+            "description": "Aggregated HN Who is Hiring posts",
+            "data_type": "html_list"
+        },
+        {
+            "name": "Indie Hackers",
+            "url": "https://www.indiehackers.com/",
+            "description": "Indie hackers community posts",
+            "data_type": "html_list"
+        },
+        {
+            "name": "Hacker Noon",
+            "url": "https://hackernoon.com/",
+            "description": "Tech blog articles",
+            "data_type": "html_list"
+        },
+        {
+            "name": "TechCrunch",
+            "url": "https://techcrunch.com/",
+            "description": "Tech news from TechCrunch",
+            "data_type": "html_list"
+        },
+        {
+            "name": "The Verge",
+            "url": "https://www.theverge.com/tech",
+            "description": "Tech news from The Verge",
+            "data_type": "html_list"
+        },
+        {
+            "name": "Ars Technica",
+            "url": "https://arstechnica.com/",
+            "description": "Tech news and analysis",
+            "data_type": "html_list"
+        },
+        {
+            "name": "Slashdot",
+            "url": "https://slashdot.org/",
+            "description": "News for nerds",
+            "data_type": "html_list"
+        }
+    ]
+}

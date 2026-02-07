@@ -70,22 +70,38 @@ Do NOT repeat successful commands. If the output looks correct, STOP and report 
 
 
 def get_arg_extraction_prompt(
-    arg_names: list, description: str, input_data: str
+    arg_names: list, description: str, input_data: str, available_urls: str = ""
 ) -> str:
     """Generate prompt for extracting argument values from task description."""
-    return f"""Extract the actual values for these arguments from the task.
+    url_section = ""
+    if available_urls and any(arg in ["url", "target_url", "source_url", "webpage"] for arg in arg_names):
+        url_section = f"""
+AVAILABLE URLS (USE THESE INSTEAD OF GUESSING):
+{available_urls}
+If a URL argument is needed, PREFER one from the above list that matches the task.
+"""
+    
+    return f"""Extract the actual values for these arguments from the task context.
 
 Arguments needed: {arg_names}
 Task description: {description}
 Previous step result (if any): {str(input_data)[:500] if input_data else "None"}
+{url_section}
+CRITICAL RULES:
+1. Extract ONLY the actual data values - NOT descriptions or sentences.
+2. For arguments like 'query', 'username', 'user', 'name', 'id': Extract the IDENTIFIER only.
+   - If task says "TejasS1233's GitHub profile", extract just "TejasS1233"
+   - If task says "search for user JohnDoe", extract just "JohnDoe"
+   - If task says "fetch data for ID 12345", extract just "12345"
+3. For numeric arguments: Return the number (e.g., 144, not "calculate 144")
+4. For file/path arguments: Return only the path string
+5. For URL arguments: Use one from the AVAILABLE URLS if provided, or construct a proper URL.
+6. NEVER include phrases like "Search for", "Fetch", "Get", "'s profile", etc.
 
-IMPORTANT: Return the ACTUAL VALUES, not the description text.
-- For numeric arguments, return the number (e.g., 144, not "calculate 144")
-- For text arguments, return the actual text value
-
-Return ONLY a valid JSON object.
-Example for ['number']: {{"number": 144}}
-Example for ['text', 'count']: {{"text": "hello", "count": 5}}
+Return ONLY a valid JSON object with the extracted values.
+Example for ['username']: {{"username": "TejasS1233"}}
+Example for ['query']: {{"query": "TejasS1233"}}
+Example for ['number', 'text']: {{"number": 144, "text": "hello"}}
 """
 
 
@@ -108,15 +124,33 @@ ALLOWED_DOMAINS_STR = ", ".join(ALLOWED_DOMAINS)
 
 
 def get_tool_generator_prompt(
-    existing_code: str, domain_options: str = ALLOWED_DOMAINS_STR
+    existing_code: str, domain_options: str = ALLOWED_DOMAINS_STR, available_apis: str = ""
 ) -> str:
-    """Generate prompt for creating new tools."""
+    """Generate prompt for creating new tools.
+    
+    Args:
+        existing_code: Reference code style from existing tools
+        domain_options: Allowed domain categories
+        available_apis: Pre-formatted string of relevant free APIs to use
+    """
+    api_section = ""
+    if available_apis:
+        api_section = f"""
+
+AVAILABLE FREE APIs (USE THESE - NO AUTH REQUIRED):
+These are curated, working API endpoints that require NO authentication. PREFER these over searching/scraping when applicable:
+
+{available_apis}
+
+IMPORTANT: If one of these APIs matches your task requirements, USE IT directly in your code with `requests.get()`.
+"""
+    
     return f"""You are an expert Python Tool Generator. 
 You MUST generate a JSON object containing the tool code and metadata.
 
 REFERENCE CODE STYLE:
 {existing_code}
-
+{api_section}
 OUTPUT FORMAT (JSON ONLY):
 {{
   "class_name": "NameOfTool",
@@ -148,18 +182,21 @@ RULES:
 
    - **TIER 2: PUBLIC / FREE APIS**
      - Use ONLY if the task requires structured data that scraping cannot reliably provide (e.g., specific file downloads, complex mathematical services).
-     - Must be 100% open and require NO API KEY (e.g., Wikipedia API, Open-Meteo).
+     - Must be 100% open and require NO API KEY (e.g., Wikipedia API, Open-Meteo, GitHub public API without auth).
 
-   - **TIER 3 (LOWEST): PRIVATE APIS**
-     - STRICTLY FORBIDDEN unless no other option exists.
-     - API keys will NOT be provided.
-     - If a private API is seemingly required, try to use WebScraperTool instead.
+   - **TIER 3 (LOWEST): PRIVATE APIS - ABSOLUTELY FORBIDDEN**
+     - DO NOT use ANY API that requires authentication or API keys.
+     - NO Twitter/X API (tweepy), NO OpenAI, NO Anthropic, NO AWS, NO Google Cloud.
+     - API keys will NEVER be provided. Tools using them WILL BE REJECTED.
 
    - **SUMMARY**: If you are thinking "I'll make a Tool to hit the X API", STOP. Can you scrape it instead? If yes, Do NOT make the tool.
-7. HANDLING CREDENTIALS (only if absolutely unavoidable):
-   - Do NOT hardcode API keys. 
-   - If an API key is truly needed, make it an optional argument with graceful failure.
-   - But STRONGLY prefer public APIs that don't require keys!
+
+7. BANNED PATTERNS - YOUR CODE WILL BE REJECTED IF YOU INCLUDE:
+   - `api_key`, `consumer_key`, `access_token`, `client_secret` variables
+   - `"your_api_key"`, `"your_token"` placeholder strings
+   - `OAuthHandler`, `OAuth1`, `OAuth2` calls
+   - Imports: `tweepy`, `twitter`, `openai`, `anthropic`, `boto3`, `stripe`, `twilio`, `sendgrid`
+   - If you CANNOT accomplish the task without API keys, return an error explaining why.
 8. REAL IMPLEMENTATION ONLY:
    - NO MOCK APIS. NO FAKE DATA.
    - Use real logic (e.g., `requests.get`, `math.sqrt`).

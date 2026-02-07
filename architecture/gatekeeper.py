@@ -70,9 +70,21 @@ class VulnerabilityScanner:
         ),
         SecurityPattern(
             "SEC-001",
-            r'(password|secret|api_key|token)\s*=\s*["\'][^"\']+["\']',
+            r'(password|secret|api_key|token|consumer_key|consumer_secret|access_token|access_token_secret|bearer_token|client_secret|client_id)\s*=\s*["\'][^"\']+["\']',
             "Hardcoded credential",
-            RiskLevel.HIGH,
+            RiskLevel.CRITICAL,
+        ),
+        SecurityPattern(
+            "SEC-003",
+            r'["\']your_(api_key|consumer_key|access_token|token|secret|password)["\']',
+            "Placeholder API credential - tool requires authentication",
+            RiskLevel.CRITICAL,
+        ),
+        SecurityPattern(
+            "SEC-004",
+            r'(OAuthHandler|OAuth1|OAuth2|APIKey|Bearer)\s*\(',
+            "OAuth/API authentication - requires credentials",
+            RiskLevel.CRITICAL,
         ),
         SecurityPattern(
             "SEC-002",
@@ -197,7 +209,19 @@ class Gatekeeper:
     Layer 3: State Gatekeeper - Stateful operation tracking
     """
 
-    BANNED_IMPORTS: set[str] = {"shutil"}
+    BANNED_IMPORTS: set[str] = {
+        "shutil",
+        # Auth-requiring libraries (no keys will be provided)
+        "tweepy",           # Twitter API
+        "twitter",          # Twitter API
+        "openai",           # OpenAI API
+        "anthropic",        # Anthropic API  
+        "google.cloud",     # Google Cloud (requires service account)
+        "boto3",            # AWS SDK (requires credentials)
+        "stripe",           # Stripe payments
+        "twilio",           # Twilio SMS
+        "sendgrid",         # SendGrid email
+    }
     RISKY_IMPORTS: set[str] = {"subprocess", "multiprocessing", "ctypes", "pickle"}
     BANNED_CALLS: set[str] = {"eval", "exec", "compile", "__import__"}
 
