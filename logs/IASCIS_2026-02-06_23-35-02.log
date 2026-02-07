@@ -1,0 +1,146 @@
+2026-02-06 23:35:10 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-06 23:35:52 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-06 23:35:52 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-06 23:35:52 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-06 23:35:52 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-06 23:35:52 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\Omar\Desktop\Code\Research\workspace, profiling=True)
+2026-02-06 23:35:52 | INFO | architecture.sandbox:__init__:143 | Sandbox initialized with tools_dir=C:\Users\Omar\Desktop\Code\Research\workspace\tools, output_dir=C:\Users\Omar\Desktop\Code\Research\workspace\outputs
+2026-02-06 23:35:53 | INFO | architecture.sandbox:start:172 | Sandbox container started: 5c9dba1be4ba
+2026-02-06 23:35:53 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-06 23:35:53 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-06 23:35:53 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-06 23:35:53 | INFO | architecture.executor:load_registry:93 | Loaded 0 tool definitions
+2026-02-06 23:35:53 | INFO | architecture.llm_manager:__init__:72 | Loaded 2 GROQ keys
+2026-02-06 23:35:53 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-06 23:35:57 | INFO | architecture.orchestrator:__init__:35 | Orchestrator initialized with ToolRetriever
+2026-02-06 23:35:57 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-06 23:35:57 | INFO | __main__:run:121 | Task received: from this year's chess top grandmaster players, plot the gender ratio...
+2026-02-06 23:35:57 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-06 23:35:57 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-06 23:35:57 | INFO | architecture.orchestrator:run:39 | Processing: from this year's chess top grandmaster players, plot the gender ratio...
+2026-02-06 23:35:57 | INFO | architecture.llm_manager:generate:108 | Generating with groq/openai/gpt-oss-120b | Tokens: 100 | Temp: 0.7 | Session: 2026-02-06_23-35-02
+2026-02-06 23:35:57 | WARNING | architecture.llm_manager:generate:139 | Attempt 1/3 failed using key 1: litellm.BadRequestError: GroqException - {"error":{"message":"Failed to validate JSON. Please adjust your prompt. See 'failed_generation' for more details.","type":"invalid_request_error","code":"json_validate_failed","failed_generation":""}}
+
+2026-02-06 23:35:58 | INFO | architecture.llm_manager:generate:132 | Generation success in 1451.83ms
+2026-02-06 23:35:58 | INFO | architecture.orchestrator:run:43 | Task Classification: COMPLEX_TASK
+2026-02-06 23:35:58 | INFO | architecture.llm_manager:generate:108 | Generating with groq/openai/gpt-oss-120b | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-06_23-35-02
+2026-02-06 23:36:00 | INFO | architecture.llm_manager:generate:132 | Generation success in 1426.79ms
+2026-02-06 23:36:00 | INFO | architecture.orchestrator:run:50 | Decomposed into 3 subtasks
+2026-02-06 23:36:00 | INFO | architecture.orchestrator:_retrieve_tools:127 | st_1 → NO MATCH
+2026-02-06 23:36:00 | INFO | architecture.orchestrator:_retrieve_tools:127 | st_2 → NO MATCH
+2026-02-06 23:36:00 | INFO | architecture.orchestrator:_retrieve_tools:127 | st_3 → NO MATCH
+2026-02-06 23:36:00 | INFO | architecture.orchestrator:_ensure_tools:147 | Toolsmith creating: Search the web for the current year's list of top chess grandmaster players (e.g., FIDE rating list or reputable chess ranking source).
+2026-02-06 23:36:00 | INFO | architecture.toolsmith:create_tool:247 | Request: 'Search the web for the current year's list of top chess grandmaster players (e.g., FIDE rating list or reputable chess ranking source).'
+2026-02-06 23:36:00 | INFO | architecture.toolsmith:create_tool:254 | Domain: 'web' (method=phrase, conf=0.95)
+2026-02-06 23:36:00 | INFO | architecture.toolsmith:create_tool:311 | No match found. Generating with LLM...
+2026-02-06 23:36:00 | INFO | architecture.llm_manager:generate:108 | Generating with groq/openai/gpt-oss-120b | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_23-35-02
+2026-02-06 23:36:03 | INFO | architecture.llm_manager:generate:132 | Generation success in 3474.81ms
+2026-02-06 23:36:03 | INFO | architecture.toolsmith:create_tool:340 | Domain validated: web
+2026-02-06 23:36:03 | INFO | architecture.toolsmith:create_tool:344 | Tags: ['web']
+2026-02-06 23:36:03 | INFO | architecture.toolsmith:create_tool:355 | Tool saved: C:\Users\Omar\Desktop\Code\Research\workspace\tools\search_top_chess_grandmasters.py
+2026-02-06 23:36:03 | INFO | architecture.toolsmith:create_tool:361 | Dependencies: ['pydantic', 'requests', 'beautifulsoup4']
+2026-02-06 23:36:03 | DEBUG | architecture.toolsmith:create_tool:379 | PyPI publishing skipped: No PyPI token configured
+2026-02-06 23:36:03 | INFO | architecture.toolsmith:_update_registry:447 | Registry updated: SearchTopChessGrandmastersTool
+2026-02-06 23:36:03 | INFO | architecture.orchestrator:_ensure_tools:150 | Toolsmith: Created SearchTopChessGrandmastersTool with tags ['web']...
+2026-02-06 23:36:07 | INFO | architecture.orchestrator:_ensure_tools:147 | Toolsmith creating: Scrape the identified pages to extract each player's name and gender, then compile a list of records with fields "name" and "gender".
+2026-02-06 23:36:07 | INFO | architecture.toolsmith:create_tool:247 | Request: 'Scrape the identified pages to extract each player's name and gender, then compile a list of records with fields "name" and "gender".'
+2026-02-06 23:36:08 | INFO | architecture.toolsmith:create_tool:254 | Domain: 'web' (method=entity, conf=0.95)
+2026-02-06 23:36:08 | INFO | architecture.toolsmith:create_tool:311 | No match found. Generating with LLM...
+2026-02-06 23:36:08 | INFO | architecture.llm_manager:generate:108 | Generating with groq/openai/gpt-oss-120b | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_23-35-02
+2026-02-06 23:36:12 | INFO | architecture.llm_manager:generate:132 | Generation success in 3733.65ms
+2026-02-06 23:36:12 | INFO | architecture.toolsmith:create_tool:340 | Domain validated: web
+2026-02-06 23:36:12 | INFO | architecture.toolsmith:create_tool:344 | Tags: ['web']
+2026-02-06 23:36:12 | INFO | architecture.toolsmith:create_tool:355 | Tool saved: C:\Users\Omar\Desktop\Code\Research\workspace\tools\scrape_players.py
+2026-02-06 23:36:12 | INFO | architecture.toolsmith:create_tool:361 | Dependencies: ['pydantic', 'requests', 'beautifulsoup4']
+2026-02-06 23:36:12 | DEBUG | architecture.toolsmith:create_tool:379 | PyPI publishing skipped: No PyPI token configured
+2026-02-06 23:36:12 | INFO | architecture.toolsmith:_update_registry:447 | Registry updated: ScrapePlayersTool
+2026-02-06 23:36:12 | INFO | architecture.orchestrator:_ensure_tools:150 | Toolsmith: Created ScrapePlayersTool with tags ['web']...
+2026-02-06 23:36:15 | INFO | architecture.orchestrator:_ensure_tools:147 | Toolsmith creating: Calculate the gender distribution from the extracted data and generate a visual plot (e.g., pie chart or bar chart) showing the ratio of male to female grandmasters.
+2026-02-06 23:36:15 | INFO | architecture.toolsmith:create_tool:247 | Request: 'Calculate the gender distribution from the extracted data and generate a visual plot (e.g., pie chart or bar chart) showing the ratio of male to female grandmasters.'
+2026-02-06 23:36:15 | INFO | architecture.toolsmith:create_tool:254 | Domain: 'visualization' (method=entity+keyword, conf=0.95)
+2026-02-06 23:36:15 | INFO | architecture.toolsmith:create_tool:311 | No match found. Generating with LLM...
+2026-02-06 23:36:15 | INFO | architecture.llm_manager:generate:108 | Generating with groq/openai/gpt-oss-120b | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_23-35-02
+2026-02-06 23:36:19 | INFO | architecture.llm_manager:generate:132 | Generation success in 3230.79ms
+2026-02-06 23:36:19 | INFO | architecture.toolsmith:create_tool:340 | Domain validated: visualization
+2026-02-06 23:36:19 | INFO | architecture.toolsmith:create_tool:344 | Tags: ['chart']
+2026-02-06 23:36:19 | INFO | architecture.toolsmith:create_tool:355 | Tool saved: C:\Users\Omar\Desktop\Code\Research\workspace\tools\calculate_gender_distribution.py
+2026-02-06 23:36:19 | INFO | architecture.toolsmith:create_tool:361 | Dependencies: ['pydantic', 'matplotlib']
+2026-02-06 23:36:19 | DEBUG | architecture.toolsmith:create_tool:379 | PyPI publishing skipped: No PyPI token configured
+2026-02-06 23:36:19 | INFO | architecture.toolsmith:_update_registry:447 | Registry updated: CalculateGenderDistributionTool
+2026-02-06 23:36:19 | INFO | architecture.orchestrator:_ensure_tools:150 | Toolsmith: Created CalculateGenderDistributionTool with tags ['chart']...
+2026-02-06 23:36:23 | INFO | architecture.executor:execute:99 | Executing plan: Decompose: from this year's chess top grandmaster players, plot the gender ratio
+2026-02-06 23:36:23 | INFO | architecture.executor:execute:100 | Total steps: 3
+2026-02-06 23:36:23 | INFO | architecture.executor:_execute_step:129 | Step 1: Search the web for the current year's list of top chess grandmaster players (e.g., FIDE rating list or reputable chess ranking source). using SearchTopChessGrandmastersTool
+2026-02-06 23:36:23 | INFO | architecture.executor:load_registry:93 | Loaded 3 tool definitions
+2026-02-06 23:36:23 | INFO | architecture.executor:_execute_step:171 | Step 1: Using description as input
+2026-02-06 23:36:23 | ERROR | architecture.executor:_get_arg_names_from_file:567 | Failed to parse args from C:\Users\Omar\Desktop\Code\Research\workspace\tools\search_top_chess_grandmasters.py: unexpected character after line continuation character (<unknown>, line 1)
+2026-02-06 23:36:23 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'input': "Search the web for the current year's list of top chess grandmaster players (e.g., FIDE rating list or reputable chess ranking source)."}
+2026-02-06 23:36:23 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-06 23:36:23 | ERROR | architecture.sandbox:extract_dependencies:101 | Syntax error parsing C:\Users\Omar\Desktop\Code\Research\workspace\tools\search_top_chess_grandmasters.py: unexpected character after line continuation character (<unknown>, line 1)
+2026-02-06 23:36:23 | INFO | architecture.sandbox:_install_deps:192 | Installing dependencies: pydantic
+2026-02-06 23:36:29 | INFO | architecture.sandbox:execute_with_args:441 | DEBUG: sandbox received args = {'input': "Search the web for the current year's list of top chess grandmaster players (e.g., FIDE rating list or reputable chess ranking source)."}
+2026-02-06 23:36:29 | INFO | architecture.sandbox:execute_with_args:442 | DEBUG: args_json = {"input": "Search the web for the current year's list of top chess grandmaster players (e.g., FIDE rating list or reputable chess ranking source)."}
+2026-02-06 23:36:29 | INFO | architecture.sandbox:execute_with_args:443 | DEBUG: Runner script line: args = json.loads('{"input": "Search the web for the current year's list of top chess grandmaster players (e.g., FIDE rating list or reputable chess ranking source)."}')
+2026-02-06 23:36:29 | INFO | architecture.sandbox:execute_with_args:448 | Executing tool with args: SearchTopChessGrandmastersTool
+2026-02-06 23:36:29 | INFO | architecture.sandbox:execute_with_args:449 | Args JSON being passed: {"input": "Search the web for the current year's list of top chess grandmaster players (e.g., FIDE rating list or reputable chess ranking source)."}
+2026-02-06 23:36:29 | WARNING | architecture.sandbox:execute_with_args:512 | Failed to parse sandbox output: No valid JSON output found, Raw output:   File "/tools/_runner_SearchTopChessGrandmastersTool.py", line 50
+    args = json.loads('{"input": "Search the web for the current year's list of top chess grandmaster players (e.g., FIDE rating list or reputable chess ranking source)."}')
+                                                                                                                                                                         ^
+SyntaxError: unterminated string literal (detected at line 50)
+
+2026-02-06 23:36:29 | ERROR | architecture.executor:_execute_step:211 | Step 1: Failed -   File "/tools/_runner_SearchTopChessGrandmastersTool.py", line 50
+    args = json.loads('{"input": "Search the web for the current year's list of top chess grandmaster players (e.g., FIDE rating list or reputable chess ranking source)."}')
+                                                                                                                                                                         ^
+SyntaxError: unterminated string literal (detected at line 50)
+
+2026-02-06 23:36:29 | INFO | architecture.reflector:reflect:295 | Reflected: syntax, retry=True, remaining=2
+2026-02-06 23:36:29 | INFO | architecture.executor:_handle_failure:248 | Step 1: Failure type=tool_code, retrying...
+2026-02-06 23:36:29 | INFO | architecture.executor:_retry_with_regenerated_tool:308 | Step 1: Regenerating tool with error context
+2026-02-06 23:36:29 | INFO | architecture.toolsmith:create_tool:247 | Request: 'Task: Search the web for the current year's list of top chess grandmaster players (e.g., FIDE rating list or reputable chess ranking source).
+
+Input data sample:
+Search the web for the current year's list of top chess grandmaster players (e.g., FIDE rating list or reputable chess ranking source).
+
+Previous implementation failed with error:
+  File "/tools/_runner_SearchTopChessGrandmastersTool.py", line 50
+    args = json.loads('{"input": "Search the web for the current year's list of top chess grandmaster players (e.g., FIDE rating list or reputable chess ranking source)."}')
+                                                                                                                                                                         ^
+SyntaxError: unterminated string literal (detected at line 50)
+
+
+Create a tool that correctly handles this input format and fixes the error.'
+2026-02-06 23:36:29 | INFO | architecture.toolsmith:create_tool:254 | Domain: 'data' (method=code_pattern, conf=0.92)
+2026-02-06 23:36:29 | INFO | architecture.toolsmith:create_tool:311 | No match found. Generating with LLM...
+2026-02-06 23:36:29 | INFO | architecture.llm_manager:generate:108 | Generating with groq/openai/gpt-oss-120b | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_23-35-02
+2026-02-06 23:36:34 | INFO | architecture.llm_manager:generate:132 | Generation success in 4310.45ms
+2026-02-06 23:36:34 | INFO | architecture.toolsmith:create_tool:340 | Domain validated: web
+2026-02-06 23:36:34 | INFO | architecture.toolsmith:create_tool:344 | Tags: ['http', 'https', 'url', 'scrape']
+2026-02-06 23:36:34 | INFO | architecture.toolsmith:create_tool:355 | Tool saved: C:\Users\Omar\Desktop\Code\Research\workspace\tools\search_top_chess_grandmasters_tool.py
+2026-02-06 23:36:34 | INFO | architecture.toolsmith:create_tool:361 | Dependencies: ['pydantic', 'requests', 'beautifulsoup4']
+2026-02-06 23:36:34 | DEBUG | architecture.toolsmith:create_tool:379 | PyPI publishing skipped: No PyPI token configured
+2026-02-06 23:36:34 | INFO | architecture.toolsmith:_update_registry:447 | Registry updated: SearchTopChessGrandmastersTool
+2026-02-06 23:36:34 | INFO | architecture.executor:_retry_with_regenerated_tool:319 | Step 1: Toolsmith result = Created SearchTopChessGrandmastersTool with tags ['http', 'https', 'url', 'scrape']
+2026-02-06 23:36:34 | INFO | architecture.executor:load_registry:93 | Loaded 3 tool definitions
+2026-02-06 23:36:34 | INFO | architecture.executor:_retry_with_regenerated_tool:340 | Step 1: Using regenerated tool SearchTopChessGrandmastersTool
+2026-02-06 23:36:34 | ERROR | architecture.executor:_get_arg_names_from_file:567 | Failed to parse args from C:\Users\Omar\Desktop\Code\Research\workspace\tools\search_top_chess_grandmasters_tool.py: unexpected character after line continuation character (<unknown>, line 1)
+2026-02-06 23:36:34 | ERROR | architecture.sandbox:extract_dependencies:101 | Syntax error parsing C:\Users\Omar\Desktop\Code\Research\workspace\tools\search_top_chess_grandmasters_tool.py: unexpected character after line continuation character (<unknown>, line 1)
+2026-02-06 23:36:34 | INFO | architecture.sandbox:execute_with_args:441 | DEBUG: sandbox received args = {'input': "Search the web for the current year's list of top chess grandmaster players (e.g., FIDE rating list or reputable chess ranking source)."}
+2026-02-06 23:36:34 | INFO | architecture.sandbox:execute_with_args:442 | DEBUG: args_json = {"input": "Search the web for the current year's list of top chess grandmaster players (e.g., FIDE rating list or reputable chess ranking source)."}
+2026-02-06 23:36:34 | INFO | architecture.sandbox:execute_with_args:443 | DEBUG: Runner script line: args = json.loads('{"input": "Search the web for the current year's list of top chess grandmaster players (e.g., FIDE rating list or reputable chess ranking source)."}')
+2026-02-06 23:36:34 | INFO | architecture.sandbox:execute_with_args:448 | Executing tool with args: SearchTopChessGrandmastersTool
+2026-02-06 23:36:34 | INFO | architecture.sandbox:execute_with_args:449 | Args JSON being passed: {"input": "Search the web for the current year's list of top chess grandmaster players (e.g., FIDE rating list or reputable chess ranking source)."}
+2026-02-06 23:36:34 | WARNING | architecture.sandbox:execute_with_args:512 | Failed to parse sandbox output: No valid JSON output found, Raw output:   File "/tools/_runner_SearchTopChessGrandmastersTool.py", line 50
+    args = json.loads('{"input": "Search the web for the current year's list of top chess grandmaster players (e.g., FIDE rating list or reputable chess ranking source)."}')
+                                                                                                                                                                         ^
+SyntaxError: unterminated string literal (detected at line 50)
+
+2026-02-06 23:36:34 | WARNING | architecture.executor:_retry_with_regenerated_tool:357 | Step 1: Retry with SearchTopChessGrandmastersTool failed -   File "/tools/_runner_SearchTopChessGrandmastersTool.py", line 50
+    args = json.loads('{"input": "Search the web for the current year's list of top chess grandmaster players (e.g., FIDE rating list or reputable chess ranking source)."}')
+                                                                                                                                                                         ^
+SyntaxError: unterminated string literal (detected at line 50)
+
+2026-02-06 23:36:34 | INFO | __main__:main:218 | Completed in 37074.22ms
+2026-02-06 23:36:34 | INFO | __main__:main:219 | Zone: public
+2026-02-06 23:36:34 | INFO | architecture.executor:export_profiles:500 | Profiles exported to: C:\Users\Omar\Desktop\Code\Research\logs\profiles_20260206_233634.json
+2026-02-06 23:36:39 | INFO | architecture.sandbox:stop:179 | Sandbox container stopped: 5c9dba1be4ba
+2026-02-06 23:36:39 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

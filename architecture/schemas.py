@@ -59,6 +59,9 @@ class ExecutionStep(BaseModel):
     tool_args_template: dict = Field(default_factory=dict)
     expected_output: str
     depends_on: list[int] = Field(default_factory=list)
+    input_from: int | None = Field(
+        None, description="Step number to get input data from"
+    )
     result: str | None = None
     status: str = "pending"
 

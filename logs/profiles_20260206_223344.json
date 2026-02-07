@@ -1,0 +1,57 @@
+{
+  "exported_at": "2026-02-06T22:33:44.380681",
+  "summary": {
+    "FibonacciGenerator": {
+      "call_count": 2,
+      "avg_time_ms": 0.0685,
+      "max_time_ms": 0.069,
+      "min_time_ms": 0.068,
+      "avg_memory_mb": 0.002,
+      "max_memory_mb": 0.002,
+      "avg_memory_delta_mb": 0.0007,
+      "avg_efficiency": 1.0,
+      "last_grade": "fast"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 2,
+    "tools_profiled": [
+      "FibonacciGenerator"
+    ],
+    "execution_time_ms": {
+      "min": 0.068,
+      "max": 0.069,
+      "mean": 0.0685
+    },
+    "peak_memory_mb": {
+      "min": 0.002,
+      "max": 0.002,
+      "mean": 0.002
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "FibonacciGenerator": [
+      {
+        "tool_name": "FibonacciGenerator",
+        "execution_time_ms": 0.068,
+        "peak_memory_mb": 0.002,
+        "memory_delta_mb": 0.0007,
+        "latency_grade": "fast",
+        "efficiency_score": 1.0,
+        "success": true
+      },
+      {
+        "tool_name": "FibonacciGenerator",
+        "execution_time_ms": 0.069,
+        "peak_memory_mb": 0.002,
+        "memory_delta_mb": 0.0007,
+        "latency_grade": "fast",
+        "efficiency_score": 1.0,
+        "success": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+2026-02-06 22:43:57 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-06 22:44:40 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-06 22:44:40 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-06 22:44:40 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-06 22:44:40 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-06 22:44:40 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\Omar\Desktop\Code\Research\workspace, profiling=True)
+2026-02-06 22:44:40 | INFO | architecture.sandbox:__init__:143 | Sandbox initialized with tools_dir=C:\Users\Omar\Desktop\Code\Research\workspace\tools, output_dir=C:\Users\Omar\Desktop\Code\Research\workspace\outputs
+2026-02-06 22:44:40 | INFO | architecture.sandbox:start:172 | Sandbox container started: aee30df49403
+2026-02-06 22:44:40 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-06 22:44:40 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-06 22:44:40 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-06 22:44:40 | INFO | architecture.executor:load_registry:93 | Loaded 33 tool definitions
+2026-02-06 22:44:40 | INFO | architecture.llm_manager:__init__:72 | Loaded 2 GROQ keys
+2026-02-06 22:44:40 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-06 22:44:44 | INFO | architecture.orchestrator:__init__:35 | Orchestrator initialized with ToolRetriever
+2026-02-06 22:44:44 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-06 22:44:44 | INFO | __main__:run:121 | Task received: Give sum of first 10 numbers...
+2026-02-06 22:44:44 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-06 22:44:44 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-06 22:44:44 | INFO | architecture.orchestrator:run:39 | Processing: Give sum of first 10 numbers...
+2026-02-06 22:44:44 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-06_22-43-53
+2026-02-06 22:44:44 | INFO | architecture.llm_manager:generate:132 | Generation success in 240.36ms
+2026-02-06 22:44:44 | INFO | architecture.orchestrator:run:43 | Task Classification: DIRECT_RESPONSE
+2026-02-06 22:44:44 | INFO | architecture.orchestrator:_handle_direct_generation:233 | Handling as direct response
+2026-02-06 22:44:44 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_22-43-53
+2026-02-06 22:44:44 | INFO | architecture.llm_manager:generate:132 | Generation success in 328.99ms
+2026-02-06 22:44:44 | INFO | architecture.orchestrator:_handle_direct_generation:285 | Saved generated content to ['C:\\Users\\Omar\\Desktop\\Code\\Research\\workspace\\outputs\\generated_content_1.py']
+2026-02-06 22:44:44 | INFO | __main__:main:218 | Completed in 573.33ms
+2026-02-06 22:44:44 | INFO | __main__:main:219 | Zone: public
+2026-02-06 22:44:44 | INFO | architecture.executor:export_profiles:500 | Profiles exported to: C:\Users\Omar\Desktop\Code\Research\logs\profiles_20260206_224444.json
+2026-02-06 22:44:49 | INFO | architecture.sandbox:stop:179 | Sandbox container stopped: aee30df49403
+2026-02-06 22:44:49 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

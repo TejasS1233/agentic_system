@@ -1,0 +1,94 @@
+{
+  "exported_at": "2026-02-06T23:39:29.379679",
+  "summary": {
+    "ChessGrandmastersTool": {
+      "call_count": 1,
+      "avg_time_ms": 777.942,
+      "max_time_ms": 777.942,
+      "min_time_ms": 777.942,
+      "avg_memory_mb": 0.8734,
+      "max_memory_mb": 0.8734,
+      "avg_memory_delta_mb": 0.7081,
+      "avg_efficiency": 0.6075,
+      "last_grade": "slow"
+    },
+    "ChessGrandmasterGenderScraper": {
+      "call_count": 1,
+      "avg_time_ms": 7.908,
+      "max_time_ms": 7.908,
+      "min_time_ms": 7.908,
+      "avg_memory_mb": 0.0711,
+      "max_memory_mb": 0.0711,
+      "avg_memory_delta_mb": 0.0578,
+      "avg_efficiency": 0.9958,
+      "last_grade": "fast"
+    },
+    "GenderRatioPieChartTool": {
+      "call_count": 1,
+      "avg_time_ms": 0.049,
+      "max_time_ms": 0.049,
+      "min_time_ms": 0.049,
+      "avg_memory_mb": 0.0016,
+      "max_memory_mb": 0.0016,
+      "avg_memory_delta_mb": 0.0006,
+      "avg_efficiency": 1.0,
+      "last_grade": "fast"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 3,
+    "tools_profiled": [
+      "ChessGrandmastersTool",
+      "ChessGrandmasterGenderScraper",
+      "GenderRatioPieChartTool"
+    ],
+    "execution_time_ms": {
+      "min": 0.049,
+      "max": 777.942,
+      "mean": 261.96633333333335
+    },
+    "peak_memory_mb": {
+      "min": 0.0016,
+      "max": 0.8734,
+      "mean": 0.31536666666666663
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "ChessGrandmastersTool": [
+      {
+        "tool_name": "ChessGrandmastersTool",
+        "execution_time_ms": 777.942,
+        "peak_memory_mb": 0.8734,
+        "memory_delta_mb": 0.7081,
+        "latency_grade": "slow",
+        "efficiency_score": 0.6075,
+        "success": true
+      }
+    ],
+    "ChessGrandmasterGenderScraper": [
+      {
+        "tool_name": "ChessGrandmasterGenderScraper",
+        "execution_time_ms": 7.908,
+        "peak_memory_mb": 0.0711,
+        "memory_delta_mb": 0.0578,
+        "latency_grade": "fast",
+        "efficiency_score": 0.9958,
+        "success": true
+      }
+    ],
+    "GenderRatioPieChartTool": [
+      {
+        "tool_name": "GenderRatioPieChartTool",
+        "execution_time_ms": 0.049,
+        "peak_memory_mb": 0.0016,
+        "memory_delta_mb": 0.0006,
+        "latency_grade": "fast",
+        "efficiency_score": 1.0,
+        "success": true
+      }
+    ]
+  }
+}

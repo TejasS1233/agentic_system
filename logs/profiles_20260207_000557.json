@@ -1,0 +1,117 @@
+{
+  "exported_at": "2026-02-07T00:05:57.282100",
+  "summary": {
+    "GrandmasterSearchTool": {
+      "call_count": 1,
+      "avg_time_ms": 251.268,
+      "max_time_ms": 251.268,
+      "min_time_ms": 251.268,
+      "avg_memory_mb": 0.1509,
+      "max_memory_mb": 0.1509,
+      "avg_memory_delta_mb": 0.0692,
+      "avg_efficiency": 0.8738,
+      "last_grade": "slow"
+    },
+    "ChessGrandmastersTool": {
+      "call_count": 1,
+      "avg_time_ms": 498.785,
+      "max_time_ms": 498.785,
+      "min_time_ms": 498.785,
+      "avg_memory_mb": 0.1028,
+      "max_memory_mb": 0.1028,
+      "avg_memory_delta_mb": 0.0726,
+      "avg_efficiency": 0.7502,
+      "last_grade": "slow"
+    },
+    "ComputeGenderRatioTool": {
+      "call_count": 1,
+      "avg_time_ms": 0.086,
+      "max_time_ms": 0.086,
+      "min_time_ms": 0.086,
+      "avg_memory_mb": 0.0015,
+      "max_memory_mb": 0.0015,
+      "avg_memory_delta_mb": 0.0005,
+      "avg_efficiency": 1.0,
+      "last_grade": "fast"
+    },
+    "PlotGenderRatioTool": {
+      "call_count": 1,
+      "avg_time_ms": 0.121,
+      "max_time_ms": 0.121,
+      "min_time_ms": 0.121,
+      "avg_memory_mb": 0.0016,
+      "max_memory_mb": 0.0016,
+      "avg_memory_delta_mb": 0.0,
+      "avg_efficiency": 0.0,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 4,
+    "tools_profiled": [
+      "GrandmasterSearchTool",
+      "ChessGrandmastersTool",
+      "ComputeGenderRatioTool",
+      "PlotGenderRatioTool"
+    ],
+    "execution_time_ms": {
+      "min": 0.086,
+      "max": 498.785,
+      "mean": 187.565
+    },
+    "peak_memory_mb": {
+      "min": 0.0015,
+      "max": 0.1509,
+      "mean": 0.06420000000000001
+    },
+    "success_rate": 0.75
+  },
+  "raw_profiles": {
+    "GrandmasterSearchTool": [
+      {
+        "tool_name": "GrandmasterSearchTool",
+        "execution_time_ms": 251.268,
+        "peak_memory_mb": 0.1509,
+        "memory_delta_mb": 0.0692,
+        "latency_grade": "slow",
+        "efficiency_score": 0.8738,
+        "success": true
+      }
+    ],
+    "ChessGrandmastersTool": [
+      {
+        "tool_name": "ChessGrandmastersTool",
+        "execution_time_ms": 498.785,
+        "peak_memory_mb": 0.1028,
+        "memory_delta_mb": 0.0726,
+        "latency_grade": "slow",
+        "efficiency_score": 0.7502,
+        "success": true
+      }
+    ],
+    "ComputeGenderRatioTool": [
+      {
+        "tool_name": "ComputeGenderRatioTool",
+        "execution_time_ms": 0.086,
+        "peak_memory_mb": 0.0015,
+        "memory_delta_mb": 0.0005,
+        "latency_grade": "fast",
+        "efficiency_score": 1.0,
+        "success": true
+      }
+    ],
+    "PlotGenderRatioTool": [
+      {
+        "tool_name": "PlotGenderRatioTool",
+        "execution_time_ms": 0.121,
+        "peak_memory_mb": 0.0016,
+        "memory_delta_mb": 0,
+        "latency_grade": "critical",
+        "success": false,
+        "error_message": "'str' object has no attribute 'items'"
+      }
+    ]
+  }
+}

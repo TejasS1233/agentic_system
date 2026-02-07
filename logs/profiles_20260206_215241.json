@@ -1,0 +1,103 @@
+{
+  "exported_at": "2026-02-06T21:52:41.247083",
+  "summary": {
+    "GithubProfileSearch": {
+      "call_count": 2,
+      "avg_time_ms": 199.827,
+      "max_time_ms": 338.487,
+      "min_time_ms": 61.167,
+      "avg_memory_mb": 0.11875,
+      "max_memory_mb": 0.1188,
+      "avg_memory_delta_mb": 0.06675,
+      "avg_efficiency": 0.8996,
+      "last_grade": "moderate"
+    },
+    "LanguageUsageStatistics": {
+      "call_count": 1,
+      "avg_time_ms": 59.451,
+      "max_time_ms": 59.451,
+      "min_time_ms": 59.451,
+      "avg_memory_mb": 3.7793,
+      "max_memory_mb": 3.7793,
+      "avg_memory_delta_mb": 1.6855,
+      "avg_efficiency": 0.9552,
+      "last_grade": "moderate"
+    },
+    "LanguagePreferencePlotter": {
+      "call_count": 1,
+      "avg_time_ms": 16.608,
+      "max_time_ms": 16.608,
+      "min_time_ms": 16.608,
+      "avg_memory_mb": 0.3763,
+      "max_memory_mb": 0.3763,
+      "avg_memory_delta_mb": 0.0,
+      "avg_efficiency": 0.0,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 4,
+    "tools_profiled": [
+      "GithubProfileSearch",
+      "LanguageUsageStatistics",
+      "LanguagePreferencePlotter"
+    ],
+    "execution_time_ms": {
+      "min": 16.608,
+      "max": 338.487,
+      "mean": 118.92825
+    },
+    "peak_memory_mb": {
+      "min": 0.1187,
+      "max": 3.7793,
+      "mean": 1.0982750000000001
+    },
+    "success_rate": 0.75
+  },
+  "raw_profiles": {
+    "GithubProfileSearch": [
+      {
+        "tool_name": "GithubProfileSearch",
+        "execution_time_ms": 338.487,
+        "peak_memory_mb": 0.1188,
+        "memory_delta_mb": 0.0668,
+        "latency_grade": "slow",
+        "efficiency_score": 0.8303,
+        "success": true
+      },
+      {
+        "tool_name": "GithubProfileSearch",
+        "execution_time_ms": 61.167,
+        "peak_memory_mb": 0.1187,
+        "memory_delta_mb": 0.0667,
+        "latency_grade": "moderate",
+        "efficiency_score": 0.9689,
+        "success": true
+      }
+    ],
+    "LanguageUsageStatistics": [
+      {
+        "tool_name": "LanguageUsageStatistics",
+        "execution_time_ms": 59.451,
+        "peak_memory_mb": 3.7793,
+        "memory_delta_mb": 1.6855,
+        "latency_grade": "moderate",
+        "efficiency_score": 0.9552,
+        "success": true
+      }
+    ],
+    "LanguagePreferencePlotter": [
+      {
+        "tool_name": "LanguagePreferencePlotter",
+        "execution_time_ms": 16.608,
+        "peak_memory_mb": 0.3763,
+        "memory_delta_mb": 0,
+        "latency_grade": "critical",
+        "success": false,
+        "error_message": "setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part."
+      }
+    ]
+  }
+}

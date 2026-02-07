@@ -1,0 +1,53 @@
+2026-02-06 23:31:06 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-06 23:31:30 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-06 23:31:30 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-06 23:31:30 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-06 23:31:30 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-06 23:31:30 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\Omar\Desktop\Code\Research\workspace, profiling=True)
+2026-02-06 23:31:30 | INFO | architecture.sandbox:__init__:143 | Sandbox initialized with tools_dir=C:\Users\Omar\Desktop\Code\Research\workspace\tools, output_dir=C:\Users\Omar\Desktop\Code\Research\workspace\outputs
+2026-02-06 23:31:31 | INFO | architecture.sandbox:start:172 | Sandbox container started: e048e3dd4c6a
+2026-02-06 23:31:31 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-06 23:31:31 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-06 23:31:31 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-06 23:31:31 | INFO | architecture.executor:load_registry:93 | Loaded 0 tool definitions
+2026-02-06 23:31:31 | INFO | architecture.llm_manager:__init__:72 | Loaded 2 GROQ keys
+2026-02-06 23:31:31 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-06 23:31:35 | INFO | architecture.orchestrator:__init__:35 | Orchestrator initialized with ToolRetriever
+2026-02-06 23:31:35 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-06 23:31:35 | INFO | __main__:run:121 | Task received: from this year's chess top grandmaster players, plot the gender ratio...
+2026-02-06 23:31:35 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-06 23:31:35 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-06 23:31:35 | INFO | architecture.orchestrator:run:39 | Processing: from this year's chess top grandmaster players, plot the gender ratio...
+2026-02-06 23:31:35 | INFO | architecture.llm_manager:generate:108 | Generating with groq/gpt-oss-120b | Tokens: 100 | Temp: 0.7 | Session: 2026-02-06_23-30-57
+2026-02-06 23:31:35 | WARNING | architecture.llm_manager:generate:139 | Attempt 1/3 failed using key 1: litellm.NotFoundError: GroqException - {"error":{"message":"The model `gpt-oss-120b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-06 23:31:35 | ERROR | architecture.llm_manager:generate:154 | Non-retryable error: litellm.NotFoundError: GroqException - {"error":{"message":"The model `gpt-oss-120b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-06 23:31:35 | INFO | architecture.orchestrator:run:43 | Task Classification: COMPLEX_TASK
+2026-02-06 23:31:35 | INFO | architecture.llm_manager:generate:108 | Generating with groq/gpt-oss-120b | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-06_23-30-57
+2026-02-06 23:31:35 | WARNING | architecture.llm_manager:generate:139 | Attempt 1/3 failed using key 1: litellm.NotFoundError: GroqException - {"error":{"message":"The model `gpt-oss-120b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-06 23:31:35 | ERROR | architecture.llm_manager:generate:154 | Non-retryable error: litellm.NotFoundError: GroqException - {"error":{"message":"The model `gpt-oss-120b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-06 23:31:35 | ERROR | architecture.orchestrator:_decompose:71 | Decomposition failed: litellm.NotFoundError: GroqException - {"error":{"message":"The model `gpt-oss-120b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-06 23:31:35 | INFO | architecture.orchestrator:run:50 | Decomposed into 1 subtasks
+2026-02-06 23:31:35 | INFO | architecture.orchestrator:_retrieve_tools:127 | st_1 → NO MATCH
+2026-02-06 23:31:35 | INFO | architecture.orchestrator:_ensure_tools:147 | Toolsmith creating: from this year's chess top grandmaster players, plot the gender ratio
+2026-02-06 23:31:35 | INFO | architecture.toolsmith:create_tool:247 | Request: 'from this year's chess top grandmaster players, plot the gender ratio'
+2026-02-06 23:31:36 | INFO | architecture.toolsmith:create_tool:254 | Domain: 'visualization' (method=entity+keyword, conf=0.95)
+2026-02-06 23:31:36 | INFO | architecture.toolsmith:create_tool:311 | No match found. Generating with LLM...
+2026-02-06 23:31:36 | INFO | architecture.llm_manager:generate:108 | Generating with groq/gpt-oss-120b | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_23-30-57
+2026-02-06 23:31:36 | WARNING | architecture.llm_manager:generate:139 | Attempt 1/3 failed using key 1: litellm.NotFoundError: GroqException - {"error":{"message":"The model `gpt-oss-120b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-06 23:31:36 | ERROR | architecture.llm_manager:generate:154 | Non-retryable error: litellm.NotFoundError: GroqException - {"error":{"message":"The model `gpt-oss-120b` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+
+2026-02-06 23:31:36 | INFO | architecture.orchestrator:_ensure_tools:150 | Toolsmith: Tool creation failed: litellm.NotFoundError: GroqException - {"error":{"message":"The model `gpt-oss...
+2026-02-06 23:31:40 | INFO | architecture.executor:execute:99 | Executing plan: from this year's chess top grandmaster players, plot the gender ratio
+2026-02-06 23:31:40 | INFO | architecture.executor:execute:100 | Total steps: 1
+2026-02-06 23:31:40 | INFO | architecture.executor:_execute_step:129 | Step 1: from this year's chess top grandmaster players, plot the gender ratio using 
+2026-02-06 23:31:40 | INFO | __main__:main:218 | Completed in 5107.55ms
+2026-02-06 23:31:40 | INFO | __main__:main:219 | Zone: public
+2026-02-06 23:31:40 | INFO | architecture.executor:export_profiles:500 | Profiles exported to: C:\Users\Omar\Desktop\Code\Research\logs\profiles_20260206_233140.json
+2026-02-06 23:31:45 | INFO | architecture.sandbox:stop:179 | Sandbox container stopped: e048e3dd4c6a
+2026-02-06 23:31:45 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

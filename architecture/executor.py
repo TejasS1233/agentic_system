@@ -1,5 +1,6 @@
 """Executor Agent - Runs tools via persistent Docker container with profiling."""
 
+import re
 import time
 import json
 from pathlib import Path
@@ -8,6 +9,7 @@ from typing import Dict
 from architecture.schemas import ExecutionPlan, ExecutionStep
 from architecture.sandbox import Sandbox
 from architecture.llm_manager import get_llm_manager
+from architecture.reflector import Reflector, ExecutionResult
 from utils.logger import get_logger
 
 # Import profiler (optional)
@@ -31,18 +33,32 @@ logger = get_logger(__name__)
 class ExecutorAgent:
     """Executes ExecutionPlan by running tools in a persistent Docker container with profiling."""
 
+    ARG_ERROR_PATTERNS = [
+        r"missing.*argument",
+        r"KeyError",
+        r"takes.*positional",
+        r"got.*unexpected.*argument",
+        r"required field",
+        r"validation error",
+    ]
+
     def __init__(
         self,
         workspace_path: str,
         tools_dir: str,
         sandbox: Sandbox,
+        toolsmith=None,
         enable_profiling: bool = True,
         profiling_mode: str = "standard",
+        max_retries: int = 2,
     ):
         self.workspace = Path(workspace_path)
         self.tools_dir = Path(tools_dir)
         self.registry_path = self.tools_dir / "registry.json"
         self.sandbox = sandbox
+        self.toolsmith = toolsmith
+        self.reflector = Reflector(max_retries=max_retries)
+        self.max_retries = max_retries
         self._definitions = {}
         self._execution_profiles: Dict[str, list] = {}  # Store profiles per tool
 
@@ -138,10 +154,21 @@ class ExecutorAgent:
             logger.error(f"Step {step.step_number}: Tool file missing")
             return step.result
 
-        if step.depends_on:
+        # Determine input data for this step
+        # Priority: 1) input_from (explicit data source), 2) last dependency, 3) description
+        if step.input_from and step.input_from in previous_results:
+            input_data = previous_results[step.input_from]
+            logger.info(
+                f"Step {step.step_number}: Using input from step {step.input_from}"
+            )
+        elif step.depends_on:
             input_data = previous_results.get(step.depends_on[-1], "")
+            logger.info(
+                f"Step {step.step_number}: Using output from dependency step {step.depends_on[-1]}"
+            )
         else:
             input_data = step.description
+            logger.info(f"Step {step.step_number}: Using description as input")
 
         args = self._infer_args(step, input_data, definition)
         logger.info(f"DEBUG: Executor inferred args = {args}")
@@ -178,14 +205,166 @@ class ExecutorAgent:
             step.result = result["output"]
             step.status = "completed"
             logger.info(f"Step {step.step_number}: Completed in {host_latency:.2f}s")
+            return step.result
+
+        error_msg = result.get("error", "Unknown error")
+        logger.error(f"Step {step.step_number}: Failed - {error_msg}")
+
+        retry_result = self._handle_failure(
+            step, error_msg, input_data, definition, tool_file, previous_results
+        )
+        if retry_result is not None:
+            return retry_result
+
+        step.status = "failed"
+        step.result = f"Error: {error_msg}"
+        return step.result
+
+    def _classify_failure(self, error: str) -> str:
+        """Classify failure as arg_extraction or tool_code error."""
+        for pattern in self.ARG_ERROR_PATTERNS:
+            if re.search(pattern, error, re.IGNORECASE):
+                return "arg_extraction"
+        return "tool_code"
+
+    def _handle_failure(
+        self,
+        step: ExecutionStep,
+        error: str,
+        input_data: str,
+        definition: dict,
+        tool_file: str,
+        previous_results: dict,
+    ) -> str | None:
+        """Route failure to appropriate retry strategy."""
+        exec_result = ExecutionResult(success=False, error=error, exit_code=1)
+        reflection = self.reflector.reflect(exec_result)
+
+        if not reflection.should_retry:
+            logger.warning(f"Step {step.step_number}: No retry (max retries reached)")
+            return None
+
+        failure_type = self._classify_failure(error)
+        logger.info(
+            f"Step {step.step_number}: Failure type={failure_type}, retrying..."
+        )
+
+        if failure_type == "arg_extraction":
+            return self._retry_with_new_args(
+                step,
+                error,
+                input_data,
+                definition,
+                tool_file,
+                reflection.corrective_prompt,
+            )
         else:
-            step.status = "failed"
-            step.result = f"Error: {result['error']}"
-            logger.error(
-                f"Step {step.step_number}: Failed after {host_latency:.2f}s - {result['error']}"
+            return self._retry_with_regenerated_tool(
+                step, error, input_data, previous_results
             )
 
-        return step.result
+    def _retry_with_new_args(
+        self,
+        step: ExecutionStep,
+        error: str,
+        input_data: str,
+        definition: dict,
+        tool_file: str,
+        corrective_prompt: str,
+    ) -> str | None:
+        """Re-extract arguments using error context and retry execution."""
+        logger.info(f"Step {step.step_number}: Re-extracting args with error context")
+
+        enhanced_input = f"{input_data}\n\nPrevious error: {error}\n{corrective_prompt}"
+        new_args = self._infer_args(step, enhanced_input, definition)
+        logger.info(f"Step {step.step_number}: New args = {new_args}")
+
+        result = self.sandbox.execute_with_args(step.tool_name, tool_file, new_args)
+
+        if result["success"]:
+            step.result = result["output"]
+            step.status = "completed"
+            self.reflector.record_outcome(
+                error, self.reflector.classifier.classify(error), True
+            )
+            logger.info(f"Step {step.step_number}: Retry succeeded with new args")
+            return step.result
+
+        logger.warning(f"Step {step.step_number}: Retry with new args failed")
+        return None
+
+    def _retry_with_regenerated_tool(
+        self,
+        step: ExecutionStep,
+        error: str,
+        input_data: str,
+        previous_results: dict,
+    ) -> str | None:
+        """Regenerate tool with error context and retry execution."""
+        if not self.toolsmith:
+            logger.warning("No toolsmith available for tool regeneration")
+            return None
+
+        logger.info(f"Step {step.step_number}: Regenerating tool with error context")
+
+        input_sample = str(input_data)[:500] if input_data else "No input"
+        regeneration_prompt = (
+            f"Task: {step.description}\n\n"
+            f"Input data sample:\n{input_sample}\n\n"
+            f"Previous implementation failed with error:\n{error}\n\n"
+            f"Create a tool that correctly handles this input format and fixes the error."
+        )
+
+        result_msg = self.toolsmith.create_tool(regeneration_prompt)
+        logger.info(f"Step {step.step_number}: Toolsmith result = {result_msg}")
+
+        if "Error" in result_msg or "failed" in result_msg.lower():
+            logger.warning(f"Step {step.step_number}: Tool regeneration failed")
+            return None
+
+        new_tool_name = self._extract_tool_name(result_msg)
+        if not new_tool_name:
+            logger.warning(
+                f"Step {step.step_number}: Could not extract tool name from result"
+            )
+            return None
+
+        self.load_registry()
+
+        if new_tool_name not in self._definitions:
+            logger.warning(
+                f"Step {step.step_number}: New tool {new_tool_name} not in registry"
+            )
+            return None
+
+        logger.info(f"Step {step.step_number}: Using regenerated tool {new_tool_name}")
+        step.tool_name = new_tool_name
+
+        definition = self._definitions[new_tool_name]
+        tool_file = definition["file"]
+        new_args = self._infer_args(step, input_data, definition)
+
+        result = self.sandbox.execute_with_args(new_tool_name, tool_file, new_args)
+
+        if result["success"]:
+            step.result = result["output"]
+            step.status = "completed"
+            logger.info(
+                f"Step {step.step_number}: Retry succeeded with {new_tool_name}"
+            )
+            return step.result
+
+        logger.warning(
+            f"Step {step.step_number}: Retry with {new_tool_name} failed - {result.get('error')}"
+        )
+        return None
+
+    def _extract_tool_name(self, result_msg: str) -> str | None:
+        """Extract tool name from Toolsmith result message."""
+        match = re.search(r"Created (\w+)", result_msg)
+        if match:
+            return match.group(1)
+        return None
 
     def _execute_with_profiling(
         self, tool_name: str, tool_file: str, args: dict
@@ -332,20 +511,9 @@ class ExecutorAgent:
             return {"input": input_data}
 
         # Always use LLM to extract actual values (not raw description)
-        prompt = f"""Extract the actual values for these arguments from the task.
+        from architecture.prompts import get_arg_extraction_prompt
 
-Arguments needed: {arg_names}
-Task description: {step.description}
-Previous step result (if any): {str(input_data)[:500] if input_data else "None"}
-
-IMPORTANT: Return the ACTUAL VALUES, not the description text.
-- For numeric arguments, return the number (e.g., 144, not "calculate 144")
-- For text arguments, return the actual text value
-
-Return ONLY a valid JSON object.
-Example for ['number']: {{"number": 144}}
-Example for ['text', 'count']: {{"text": "hello", "count": 5}}
-"""
+        prompt = get_arg_extraction_prompt(arg_names, step.description, input_data)
 
         response = self.llm.generate_json(
             messages=[{"role": "user", "content": prompt}], max_tokens=256

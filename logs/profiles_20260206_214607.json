@@ -1,0 +1,80 @@
+{
+  "exported_at": "2026-02-06T21:46:07.454649",
+  "summary": {
+    "GithubProfileSearch": {
+      "call_count": 2,
+      "avg_time_ms": 185.0625,
+      "max_time_ms": 302.734,
+      "min_time_ms": 67.391,
+      "avg_memory_mb": 0.1187,
+      "max_memory_mb": 0.1188,
+      "avg_memory_delta_mb": 0.0668,
+      "avg_efficiency": 0.907,
+      "last_grade": "moderate"
+    },
+    "LanguageUsageStatistics": {
+      "call_count": 1,
+      "avg_time_ms": 1.271,
+      "max_time_ms": 1.271,
+      "min_time_ms": 1.271,
+      "avg_memory_mb": 0.0073,
+      "max_memory_mb": 0.0073,
+      "avg_memory_delta_mb": 0.0,
+      "avg_efficiency": 0.0,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 3,
+    "tools_profiled": [
+      "GithubProfileSearch",
+      "LanguageUsageStatistics"
+    ],
+    "execution_time_ms": {
+      "min": 1.271,
+      "max": 302.734,
+      "mean": 123.79866666666665
+    },
+    "peak_memory_mb": {
+      "min": 0.0073,
+      "max": 0.1188,
+      "mean": 0.08156666666666666
+    },
+    "success_rate": 0.6666666666666666
+  },
+  "raw_profiles": {
+    "GithubProfileSearch": [
+      {
+        "tool_name": "GithubProfileSearch",
+        "execution_time_ms": 302.734,
+        "peak_memory_mb": 0.1186,
+        "memory_delta_mb": 0.0667,
+        "latency_grade": "slow",
+        "efficiency_score": 0.8482,
+        "success": true
+      },
+      {
+        "tool_name": "GithubProfileSearch",
+        "execution_time_ms": 67.391,
+        "peak_memory_mb": 0.1188,
+        "memory_delta_mb": 0.0669,
+        "latency_grade": "moderate",
+        "efficiency_score": 0.9658,
+        "success": true
+      }
+    ],
+    "LanguageUsageStatistics": [
+      {
+        "tool_name": "LanguageUsageStatistics",
+        "execution_time_ms": 1.271,
+        "peak_memory_mb": 0.0073,
+        "memory_delta_mb": 0,
+        "latency_grade": "critical",
+        "success": false,
+        "error_message": "\n**********************************************************************\n  Resource \u001b[93mpunkt_tab\u001b[0m not found.\n  Please use the NLTK Downloader to obtain the resource:\n\n  \u001b[31m>>> import nltk\n  >>> nltk.download('punkt_tab')\n  \u001b[0m\n  For more information see: https://www.nltk.org/data.html\n\n  Attempted to load \u001b[93mtokenizers/punkt_tab/english/\u001b[0m\n\n  Searched in:\n    - '/root/nltk_data'\n    - '/usr/local/nltk_data'\n    - '/usr/local/share/nltk_data'\n    - '/usr/local/lib/nltk_data'\n    - '/usr/share/nltk_data'\n    - '/usr/local/share/nltk_data'\n    - '/usr/lib/nltk_data'\n    - '/usr/local/lib/nltk_data'\n**********************************************************************\n"
+      }
+    ]
+  }
+}

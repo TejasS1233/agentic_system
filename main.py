@@ -40,7 +40,7 @@ class IASCIS:
         workspace_path: Path = None,
         public_model: str = "groq/llama-3.3-70b-versatile",
         private_model: str = "groq/llama-3.3-70b-versatile",
-        safe_mode: bool = True,
+        safe_mode: bool = False,
         enable_profiling: bool = True,
         profiling_mode: str = "lightweight",
     ):
@@ -78,6 +78,7 @@ class IASCIS:
             workspace_path=str(self.workspace_path),
             tools_dir=str(self.tools_dir),
             sandbox=self.sandbox,
+            toolsmith=self.toolsmith,
             enable_profiling=self._enable_profiling,
             profiling_mode=self._profiling_mode,
         )

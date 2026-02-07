@@ -1,0 +1,131 @@
+2026-02-06 21:44:36 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-06 21:45:39 | INFO | __main__:main:212 | Starting IASCIS with Sandbox and Profiling
+2026-02-06 21:45:39 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-06 21:45:39 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-06 21:45:39 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-06 21:45:39 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\Omar\Desktop\Code\Research\workspace, profiling=True)
+2026-02-06 21:45:39 | INFO | architecture.sandbox:__init__:143 | Sandbox initialized with tools_dir=C:\Users\Omar\Desktop\Code\Research\workspace\tools, output_dir=C:\Users\Omar\Desktop\Code\Research\workspace\outputs
+2026-02-06 21:45:39 | INFO | architecture.sandbox:start:172 | Sandbox container started: 213536e4bdf9
+2026-02-06 21:45:39 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-06 21:45:39 | INFO | architecture.executor:__init__:62 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-06 21:45:39 | INFO | architecture.executor:load_registry:77 | Loaded 27 tool definitions
+2026-02-06 21:45:39 | INFO | architecture.llm_manager:__init__:72 | Loaded 2 GROQ keys
+2026-02-06 21:45:39 | INFO | architecture.executor:__init__:70 | ExecutorAgent initialized with Sandbox
+2026-02-06 21:45:43 | INFO | architecture.orchestrator:__init__:35 | Orchestrator initialized with ToolRetriever
+2026-02-06 21:45:43 | INFO | __main__:_initialize_runtime:91 | Runtime initialized with Sandbox
+2026-02-06 21:45:43 | INFO | __main__:run:120 | Task received: fetch stats from github profile "rakheOmar" and plot language preference graph...
+2026-02-06 21:45:43 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-06 21:45:43 | INFO | __main__:run:124 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-06 21:45:43 | INFO | architecture.orchestrator:run:39 | Processing,fetch stats from github profile "rakheOmar" and plot language preference graph...
+2026-02-06 21:45:43 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-06_21-44-30
+2026-02-06 21:45:44 | INFO | architecture.llm_manager:generate:132 | Generation success in 848.64ms
+2026-02-06 21:45:44 | INFO | architecture.orchestrator:run:42 | Decomposed into 4 subtasks
+2026-02-06 21:45:44 | INFO | architecture.orchestrator:_retrieve_tools:105 | st_1 → GithubProfileSearch (dist: 0.588, matched: True)
+2026-02-06 21:45:44 | INFO | architecture.orchestrator:_retrieve_tools:105 | st_2 → GithubProfileSearch (dist: 0.837, matched: True)
+2026-02-06 21:45:44 | INFO | architecture.orchestrator:_retrieve_tools:105 | st_3 → WordFrequencyTool (dist: 1.225, matched: False)
+2026-02-06 21:45:44 | INFO | architecture.orchestrator:_retrieve_tools:105 | st_4 → TopWordsBarChart (dist: 1.372, matched: False)
+2026-02-06 21:45:44 | INFO | architecture.orchestrator:_ensure_tools:139 | Toolsmith creating: Calculate language usage statistics
+2026-02-06 21:45:44 | INFO | architecture.toolsmith:create_tool:247 | Request: 'Calculate language usage statistics'
+2026-02-06 21:45:50 | INFO | architecture.toolsmith:create_tool:254 | Domain: 'math' (method=entity+keyword, conf=0.85)
+2026-02-06 21:45:50 | INFO | architecture.toolsmith:create_tool:311 | No match found. Generating with LLM...
+2026-02-06 21:45:50 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_21-44-30
+2026-02-06 21:45:51 | INFO | architecture.llm_manager:generate:132 | Generation success in 1010.28ms
+2026-02-06 21:45:51 | INFO | architecture.toolsmith:create_tool:340 | Domain validated: text
+2026-02-06 21:45:51 | INFO | architecture.toolsmith:create_tool:344 | Tags: ['text']
+2026-02-06 21:45:51 | INFO | architecture.toolsmith:create_tool:355 | Tool saved: C:\Users\Omar\Desktop\Code\Research\workspace\tools\language_usage_statistics.py
+2026-02-06 21:45:51 | INFO | architecture.toolsmith:create_tool:361 | Dependencies: ['pydantic', 'nltk', 'collections']
+2026-02-06 21:45:51 | DEBUG | architecture.toolsmith:create_tool:379 | PyPI publishing skipped: No PyPI token configured
+2026-02-06 21:45:51 | INFO | architecture.toolsmith:_update_registry:447 | Registry updated: LanguageUsageStatistics
+2026-02-06 21:45:51 | INFO | architecture.orchestrator:_ensure_tools:142 | Toolsmith: Created LanguageUsageStatistics with tags ['text']...
+2026-02-06 21:45:54 | INFO | architecture.orchestrator:_ensure_tools:139 | Toolsmith creating: Plot language preference graph using calculated statistics
+2026-02-06 21:45:54 | INFO | architecture.toolsmith:create_tool:247 | Request: 'Plot language preference graph using calculated statistics'
+2026-02-06 21:45:54 | INFO | architecture.toolsmith:create_tool:254 | Domain: 'visualization' (method=entity+keyword, conf=0.95)
+2026-02-06 21:45:54 | INFO | architecture.toolsmith:create_tool:311 | No match found. Generating with LLM...
+2026-02-06 21:45:54 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_21-44-30
+2026-02-06 21:45:55 | INFO | architecture.llm_manager:generate:132 | Generation success in 989.03ms
+2026-02-06 21:45:55 | INFO | architecture.toolsmith:create_tool:340 | Domain validated: visualization
+2026-02-06 21:45:55 | INFO | architecture.toolsmith:create_tool:344 | Tags: ['plot', 'chart', 'visualize', 'histogram']
+2026-02-06 21:45:55 | INFO | architecture.toolsmith:create_tool:355 | Tool saved: C:\Users\Omar\Desktop\Code\Research\workspace\tools\language_preference_plotter.py
+2026-02-06 21:45:55 | INFO | architecture.toolsmith:create_tool:361 | Dependencies: ['pydantic', 'matplotlib']
+2026-02-06 21:45:55 | DEBUG | architecture.toolsmith:create_tool:379 | PyPI publishing skipped: No PyPI token configured
+2026-02-06 21:45:55 | INFO | architecture.toolsmith:_update_registry:447 | Registry updated: LanguagePreferencePlotter
+2026-02-06 21:45:55 | INFO | architecture.orchestrator:_ensure_tools:142 | Toolsmith: Created LanguagePreferencePlotter with tags ['plot', 'chart', 'visualize', 'histogram']...
+2026-02-06 21:45:59 | INFO | architecture.executor:execute:83 | Executing plan: fetch stats from github profile "rakheOmar" and plot language preference graph
+2026-02-06 21:45:59 | INFO | architecture.executor:execute:84 | Total steps: 4
+2026-02-06 21:45:59 | INFO | architecture.executor:_execute_step:113 | Step 1: Fetch GitHub profile data for user "rakheOmar" using GithubProfileSearch
+2026-02-06 21:45:59 | INFO | architecture.executor:load_registry:77 | Loaded 29 tool definitions
+2026-02-06 21:45:59 | INFO | architecture.executor:_execute_step:155 | Step 1: Using description as input
+2026-02-06 21:45:59 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_21-44-30
+2026-02-06 21:45:59 | INFO | architecture.llm_manager:generate:132 | Generation success in 89.18ms
+2026-02-06 21:45:59 | INFO | architecture.executor:_infer_args:360 | LLM extracted args: {'username': 'rakheOmar'}
+2026-02-06 21:45:59 | INFO | architecture.executor:_execute_step:158 | DEBUG: Executor inferred args = {'username': 'rakheOmar'}
+2026-02-06 21:45:59 | INFO | architecture.executor:_execute_step:159 | DEBUG: Args type = <class 'dict'>
+2026-02-06 21:45:59 | INFO | architecture.sandbox:_install_deps:192 | Installing dependencies: pydantic requests pydantic
+2026-02-06 21:46:03 | INFO | architecture.sandbox:execute_with_args:434 | DEBUG: sandbox received args = {'username': 'rakheOmar'}
+2026-02-06 21:46:03 | INFO | architecture.sandbox:execute_with_args:435 | DEBUG: args_json = {"username": "rakheOmar"}
+2026-02-06 21:46:03 | INFO | architecture.sandbox:execute_with_args:436 | DEBUG: Runner script line: args = json.loads('{"username": "rakheOmar"}')
+2026-02-06 21:46:03 | INFO | architecture.sandbox:execute_with_args:441 | Executing tool with args: GithubProfileSearch
+2026-02-06 21:46:03 | INFO | architecture.sandbox:execute_with_args:442 | Args JSON being passed: {"username": "rakheOmar"}
+2026-02-06 21:46:04 | INFO | architecture.executor:_execute_step:176 | Step 1 SANDBOX Profile: time=302.734ms, peak_mem=0.1186MB, delta_mem=0.0667MB, efficiency=84.82%, grade=slow
+2026-02-06 21:46:04 | INFO | architecture.executor:_execute_step:186 |    (Total round-trip: 4672.55ms)
+2026-02-06 21:46:04 | INFO | architecture.executor:_execute_step:191 | Step 1: Completed in 4.67s
+2026-02-06 21:46:04 | INFO | architecture.executor:_execute_step:113 | Step 2: Extract repository language data from GitHub profile data using GithubProfileSearch
+2026-02-06 21:46:04 | INFO | architecture.executor:load_registry:77 | Loaded 29 tool definitions
+2026-02-06 21:46:04 | INFO | architecture.executor:_execute_step:145 | Step 2: Using input from step 1
+2026-02-06 21:46:04 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_21-44-30
+2026-02-06 21:46:04 | INFO | architecture.llm_manager:generate:132 | Generation success in 87.62ms
+2026-02-06 21:46:04 | INFO | architecture.executor:_infer_args:360 | LLM extracted args: {'username': 'rakheOmar'}
+2026-02-06 21:46:04 | INFO | architecture.executor:_execute_step:158 | DEBUG: Executor inferred args = {'username': 'rakheOmar'}
+2026-02-06 21:46:04 | INFO | architecture.executor:_execute_step:159 | DEBUG: Args type = <class 'dict'>
+2026-02-06 21:46:04 | INFO | architecture.sandbox:execute_with_args:434 | DEBUG: sandbox received args = {'username': 'rakheOmar'}
+2026-02-06 21:46:04 | INFO | architecture.sandbox:execute_with_args:435 | DEBUG: args_json = {"username": "rakheOmar"}
+2026-02-06 21:46:04 | INFO | architecture.sandbox:execute_with_args:436 | DEBUG: Runner script line: args = json.loads('{"username": "rakheOmar"}')
+2026-02-06 21:46:04 | INFO | architecture.sandbox:execute_with_args:441 | Executing tool with args: GithubProfileSearch
+2026-02-06 21:46:04 | INFO | architecture.sandbox:execute_with_args:442 | Args JSON being passed: {"username": "rakheOmar"}
+2026-02-06 21:46:04 | INFO | architecture.executor:_execute_step:176 | Step 2 SANDBOX Profile: time=67.391ms, peak_mem=0.1188MB, delta_mem=0.0669MB, efficiency=96.58%, grade=moderate
+2026-02-06 21:46:04 | INFO | architecture.executor:_execute_step:186 |    (Total round-trip: 396.55ms)
+2026-02-06 21:46:04 | INFO | architecture.executor:_execute_step:191 | Step 2: Completed in 0.40s
+2026-02-06 21:46:04 | INFO | architecture.executor:_execute_step:113 | Step 3: Calculate language usage statistics using LanguageUsageStatistics
+2026-02-06 21:46:04 | INFO | architecture.executor:load_registry:77 | Loaded 29 tool definitions
+2026-02-06 21:46:04 | INFO | architecture.executor:_execute_step:145 | Step 3: Using input from step 2
+2026-02-06 21:46:04 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_21-44-30
+2026-02-06 21:46:04 | INFO | architecture.llm_manager:generate:132 | Generation success in 99.64ms
+2026-02-06 21:46:04 | INFO | architecture.executor:_infer_args:360 | LLM extracted args: {'text': 'Calculate language usage statistics'}
+2026-02-06 21:46:04 | INFO | architecture.executor:_execute_step:158 | DEBUG: Executor inferred args = {'text': 'Calculate language usage statistics'}
+2026-02-06 21:46:04 | INFO | architecture.executor:_execute_step:159 | DEBUG: Args type = <class 'dict'>
+2026-02-06 21:46:04 | INFO | architecture.sandbox:_install_deps:192 | Installing dependencies: nltk
+2026-02-06 21:46:07 | INFO | architecture.sandbox:execute_with_args:434 | DEBUG: sandbox received args = {'text': 'Calculate language usage statistics'}
+2026-02-06 21:46:07 | INFO | architecture.sandbox:execute_with_args:435 | DEBUG: args_json = {"text": "Calculate language usage statistics"}
+2026-02-06 21:46:07 | INFO | architecture.sandbox:execute_with_args:436 | DEBUG: Runner script line: args = json.loads('{"text": "Calculate language usage statistics"}')
+2026-02-06 21:46:07 | INFO | architecture.sandbox:execute_with_args:441 | Executing tool with args: LanguageUsageStatistics
+2026-02-06 21:46:07 | INFO | architecture.sandbox:execute_with_args:442 | Args JSON being passed: {"text": "Calculate language usage statistics"}
+2026-02-06 21:46:07 | INFO | architecture.executor:_execute_step:176 | Step 3 SANDBOX Profile: time=1.271ms, peak_mem=0.0073MB, delta_mem=0.0000MB, efficiency=0.00%, grade=critical
+2026-02-06 21:46:07 | INFO | architecture.executor:_execute_step:186 |    (Total round-trip: 2690.43ms)
+2026-02-06 21:46:07 | ERROR | architecture.executor:_execute_step:195 | Step 3: Failed after 2.69s - 
+**********************************************************************
+  Resource [93mpunkt_tab[0m not found.
+  Please use the NLTK Downloader to obtain the resource:
+
+  [31m>>> import nltk
+  >>> nltk.download('punkt_tab')
+  [0m
+  For more information see: https://www.nltk.org/data.html
+
+  Attempted to load [93mtokenizers/punkt_tab/english/[0m
+
+  Searched in:
+    - '/root/nltk_data'
+    - '/usr/local/nltk_data'
+    - '/usr/local/share/nltk_data'
+    - '/usr/local/lib/nltk_data'
+    - '/usr/share/nltk_data'
+    - '/usr/local/share/nltk_data'
+    - '/usr/lib/nltk_data'
+    - '/usr/local/lib/nltk_data'
+**********************************************************************
+
+2026-02-06 21:46:07 | INFO | __main__:main:217 | Completed in 23716.55ms
+2026-02-06 21:46:07 | INFO | __main__:main:218 | Zone: public
+2026-02-06 21:46:07 | INFO | architecture.executor:export_profiles:332 | Profiles exported to: C:\Users\Omar\Desktop\Code\Research\logs\profiles_20260206_214607.json
+2026-02-06 21:46:12 | INFO | architecture.sandbox:stop:179 | Sandbox container stopped: 213536e4bdf9
+2026-02-06 21:46:12 | INFO | __main__:_shutdown_runtime:100 | Runtime shutdown complete

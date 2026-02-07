@@ -32,7 +32,7 @@ class LLMManager:
         },
         "gemini": {
             "env_prefix": "GEMINI_API_KEY",
-            "default_model": "gemini-2.5-flash",
+            "default_model": "gemini-3-flash-preview",
             "litellm_prefix": "gemini",
         },
         "openai": {

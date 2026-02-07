@@ -1,0 +1,125 @@
+2026-02-06 23:09:02 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-06 23:09:11 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-06 23:09:11 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-06 23:09:11 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-06 23:09:11 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-06 23:09:11 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\Omar\Desktop\Code\Research\workspace, profiling=True)
+2026-02-06 23:09:11 | INFO | architecture.sandbox:__init__:143 | Sandbox initialized with tools_dir=C:\Users\Omar\Desktop\Code\Research\workspace\tools, output_dir=C:\Users\Omar\Desktop\Code\Research\workspace\outputs
+2026-02-06 23:09:12 | INFO | architecture.sandbox:start:172 | Sandbox container started: 7ffedd2326dc
+2026-02-06 23:09:12 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-06 23:09:12 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-06 23:09:12 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-06 23:09:12 | INFO | architecture.executor:load_registry:93 | Loaded 37 tool definitions
+2026-02-06 23:09:12 | INFO | architecture.llm_manager:__init__:72 | Loaded 2 GROQ keys
+2026-02-06 23:09:12 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-06 23:09:15 | INFO | architecture.orchestrator:__init__:35 | Orchestrator initialized with ToolRetriever
+2026-02-06 23:09:15 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-06 23:09:15 | INFO | __main__:run:121 | Task received: from this year's chess top grandmaster players, plot the gender ratio...
+2026-02-06 23:09:15 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-06 23:09:15 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-06 23:09:15 | INFO | architecture.orchestrator:run:39 | Processing: from this year's chess top grandmaster players, plot the gender ratio...
+2026-02-06 23:09:15 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-06_23-08-59
+2026-02-06 23:09:15 | INFO | architecture.llm_manager:generate:132 | Generation success in 264.52ms
+2026-02-06 23:09:15 | INFO | architecture.orchestrator:run:43 | Task Classification: COMPLEX_TASK
+2026-02-06 23:09:15 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-06_23-08-59
+2026-02-06 23:09:16 | INFO | architecture.llm_manager:generate:132 | Generation success in 671.10ms
+2026-02-06 23:09:16 | INFO | architecture.orchestrator:run:50 | Decomposed into 4 subtasks
+2026-02-06 23:09:16 | INFO | architecture.orchestrator:_retrieve_tools:113 | st_1 → ChessGrandmasterSearch (dist: 0.596, matched: True)
+2026-02-06 23:09:16 | INFO | architecture.orchestrator:_retrieve_tools:113 | st_2 → ChessGrandmasterSearch (dist: 0.709, matched: True)
+2026-02-06 23:09:16 | INFO | architecture.orchestrator:_retrieve_tools:113 | st_3 → CalculateGenderRatio (dist: 1.029, matched: False)
+2026-02-06 23:09:16 | INFO | architecture.orchestrator:_retrieve_tools:113 | st_4 → ChessGrandmasterSearch (dist: 1.056, matched: False)
+2026-02-06 23:09:16 | INFO | architecture.orchestrator:_ensure_tools:147 | Toolsmith creating: Calculate the gender ratio of the top grandmaster players
+2026-02-06 23:09:16 | INFO | architecture.toolsmith:create_tool:247 | Request: 'Calculate the gender ratio of the top grandmaster players'
+2026-02-06 23:09:17 | INFO | architecture.toolsmith:create_tool:254 | Domain: 'math' (method=entity+keyword, conf=0.93)
+2026-02-06 23:09:17 | INFO | architecture.toolsmith:create_tool:311 | No match found. Generating with LLM...
+2026-02-06 23:09:17 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_23-08-59
+2026-02-06 23:09:18 | INFO | architecture.llm_manager:generate:132 | Generation success in 1397.10ms
+2026-02-06 23:09:18 | INFO | architecture.toolsmith:create_tool:340 | Domain validated: data
+2026-02-06 23:09:18 | INFO | architecture.toolsmith:create_tool:344 | Tags: ['sql', 'dataframe', 'pandas', 'etl']
+2026-02-06 23:09:18 | INFO | architecture.toolsmith:create_tool:355 | Tool saved: C:\Users\Omar\Desktop\Code\Research\workspace\tools\grandmaster_gender_ratio.py
+2026-02-06 23:09:18 | INFO | architecture.toolsmith:create_tool:361 | Dependencies: ['requests', 'beautifulsoup4', 'pydantic']
+2026-02-06 23:09:18 | DEBUG | architecture.toolsmith:create_tool:379 | PyPI publishing skipped: No PyPI token configured
+2026-02-06 23:09:18 | INFO | architecture.toolsmith:_update_registry:447 | Registry updated: GrandmasterGenderRatioTool
+2026-02-06 23:09:18 | INFO | architecture.orchestrator:_ensure_tools:150 | Toolsmith: Created GrandmasterGenderRatioTool with tags ['sql', 'dataframe', 'pandas', 'etl']...
+2026-02-06 23:09:22 | INFO | architecture.orchestrator:_ensure_tools:147 | Toolsmith creating: Plot the gender ratio of the top grandmaster players
+2026-02-06 23:09:22 | INFO | architecture.toolsmith:create_tool:247 | Request: 'Plot the gender ratio of the top grandmaster players'
+2026-02-06 23:09:22 | INFO | architecture.toolsmith:create_tool:254 | Domain: 'visualization' (method=entity+keyword, conf=0.95)
+2026-02-06 23:09:22 | INFO | architecture.toolsmith:create_tool:311 | No match found. Generating with LLM...
+2026-02-06 23:09:22 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_23-08-59
+2026-02-06 23:09:23 | INFO | architecture.llm_manager:generate:132 | Generation success in 1578.61ms
+2026-02-06 23:09:23 | INFO | architecture.toolsmith:create_tool:340 | Domain validated: visualization
+2026-02-06 23:09:23 | INFO | architecture.toolsmith:create_tool:344 | Tags: ['plot', 'chart', 'visualize', 'histogram']
+2026-02-06 23:09:23 | INFO | architecture.toolsmith:create_tool:355 | Tool saved: C:\Users\Omar\Desktop\Code\Research\workspace\tools\grandmaster_gender_ratio_plotter.py
+2026-02-06 23:09:23 | INFO | architecture.toolsmith:create_tool:361 | Dependencies: ['requests', 'pandas', 'matplotlib', 'pydantic']
+2026-02-06 23:09:23 | DEBUG | architecture.toolsmith:create_tool:379 | PyPI publishing skipped: No PyPI token configured
+2026-02-06 23:09:23 | INFO | architecture.toolsmith:_update_registry:447 | Registry updated: GrandmasterGenderRatioPlotter
+2026-02-06 23:09:23 | INFO | architecture.orchestrator:_ensure_tools:150 | Toolsmith: Created GrandmasterGenderRatioPlotter with tags ['plot', 'chart', 'visualize', 'histogram']...
+2026-02-06 23:09:27 | INFO | architecture.executor:execute:99 | Executing plan: from this year's chess top grandmaster players, plot the gender ratio
+2026-02-06 23:09:27 | INFO | architecture.executor:execute:100 | Total steps: 4
+2026-02-06 23:09:27 | INFO | architecture.executor:_execute_step:129 | Step 1: Search for this year's chess top grandmaster players using ChessGrandmasterSearch
+2026-02-06 23:09:27 | INFO | architecture.executor:load_registry:93 | Loaded 39 tool definitions
+2026-02-06 23:09:27 | INFO | architecture.executor:_execute_step:171 | Step 1: Using description as input
+2026-02-06 23:09:27 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_23-08-59
+2026-02-06 23:09:27 | INFO | architecture.llm_manager:generate:132 | Generation success in 77.90ms
+2026-02-06 23:09:27 | INFO | architecture.executor:_infer_args:528 | LLM extracted args: {'year': 2024}
+2026-02-06 23:09:27 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'year': 2024}
+2026-02-06 23:09:27 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-06 23:09:27 | INFO | architecture.sandbox:_install_deps:192 | Installing dependencies: requests pydantic pydantic
+2026-02-06 23:09:32 | INFO | architecture.sandbox:execute_with_args:441 | DEBUG: sandbox received args = {'year': 2024}
+2026-02-06 23:09:32 | INFO | architecture.sandbox:execute_with_args:442 | DEBUG: args_json = {"year": 2024}
+2026-02-06 23:09:32 | INFO | architecture.sandbox:execute_with_args:443 | DEBUG: Runner script line: args = json.loads('{"year": 2024}')
+2026-02-06 23:09:32 | INFO | architecture.sandbox:execute_with_args:448 | Executing tool with args: ChessGrandmasterSearch
+2026-02-06 23:09:32 | INFO | architecture.sandbox:execute_with_args:449 | Args JSON being passed: {"year": 2024}
+2026-02-06 23:09:32 | INFO | architecture.executor:_execute_step:192 | Step 1 SANDBOX Profile: time=60.734ms, peak_mem=0.1508MB, delta_mem=0.0691MB, efficiency=96.90%, grade=moderate
+2026-02-06 23:09:32 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 4981.81ms)
+2026-02-06 23:09:32 | INFO | architecture.executor:_execute_step:207 | Step 1: Completed in 4.98s
+2026-02-06 23:09:32 | INFO | architecture.executor:_execute_step:129 | Step 2: Scrape the search results to gather data on top grandmaster players using ChessGrandmasterSearch
+2026-02-06 23:09:32 | INFO | architecture.executor:load_registry:93 | Loaded 39 tool definitions
+2026-02-06 23:09:32 | INFO | architecture.executor:_execute_step:161 | Step 2: Using input from step 1
+2026-02-06 23:09:32 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_23-08-59
+2026-02-06 23:09:32 | INFO | architecture.llm_manager:generate:132 | Generation success in 81.41ms
+2026-02-06 23:09:32 | INFO | architecture.executor:_infer_args:528 | LLM extracted args: {'year': None}
+2026-02-06 23:09:32 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'year': None}
+2026-02-06 23:09:32 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-06 23:09:32 | INFO | architecture.sandbox:execute_with_args:441 | DEBUG: sandbox received args = {'year': None}
+2026-02-06 23:09:32 | INFO | architecture.sandbox:execute_with_args:442 | DEBUG: args_json = {"year": null}
+2026-02-06 23:09:32 | INFO | architecture.sandbox:execute_with_args:443 | DEBUG: Runner script line: args = json.loads('{"year": null}')
+2026-02-06 23:09:32 | INFO | architecture.sandbox:execute_with_args:448 | Executing tool with args: ChessGrandmasterSearch
+2026-02-06 23:09:32 | INFO | architecture.sandbox:execute_with_args:449 | Args JSON being passed: {"year": null}
+2026-02-06 23:09:33 | INFO | architecture.executor:_execute_step:192 | Step 2 SANDBOX Profile: time=53.678ms, peak_mem=0.1505MB, delta_mem=0.0688MB, efficiency=97.26%, grade=moderate
+2026-02-06 23:09:33 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 484.89ms)
+2026-02-06 23:09:33 | INFO | architecture.executor:_execute_step:207 | Step 2: Completed in 0.48s
+2026-02-06 23:09:33 | INFO | architecture.executor:_execute_step:129 | Step 3: Calculate the gender ratio of the top grandmaster players using GrandmasterGenderRatioTool
+2026-02-06 23:09:33 | INFO | architecture.executor:load_registry:93 | Loaded 39 tool definitions
+2026-02-06 23:09:33 | INFO | architecture.executor:_execute_step:161 | Step 3: Using input from step 2
+2026-02-06 23:09:33 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'input': 'Failed to retrieve data'}
+2026-02-06 23:09:33 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-06 23:09:33 | INFO | architecture.sandbox:_install_deps:192 | Installing dependencies: beautifulsoup4
+2026-02-06 23:09:34 | INFO | architecture.sandbox:execute_with_args:441 | DEBUG: sandbox received args = {'input': 'Failed to retrieve data'}
+2026-02-06 23:09:34 | INFO | architecture.sandbox:execute_with_args:442 | DEBUG: args_json = {"input": "Failed to retrieve data"}
+2026-02-06 23:09:34 | INFO | architecture.sandbox:execute_with_args:443 | DEBUG: Runner script line: args = json.loads('{"input": "Failed to retrieve data"}')
+2026-02-06 23:09:34 | INFO | architecture.sandbox:execute_with_args:448 | Executing tool with args: GrandmasterGenderRatioTool
+2026-02-06 23:09:34 | INFO | architecture.sandbox:execute_with_args:449 | Args JSON being passed: {"input": "Failed to retrieve data"}
+2026-02-06 23:09:34 | INFO | architecture.executor:_execute_step:192 | Step 3 SANDBOX Profile: time=0.041ms, peak_mem=0.0016MB, delta_mem=0.0000MB, efficiency=0.00%, grade=critical
+2026-02-06 23:09:34 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 1142.88ms)
+2026-02-06 23:09:34 | ERROR | architecture.executor:_execute_step:211 | Step 3: Failed - GrandmasterGenderRatioTool.run() got an unexpected keyword argument 'input'
+2026-02-06 23:09:34 | INFO | architecture.reflector:reflect:295 | Reflected: unknown, retry=True, remaining=2
+2026-02-06 23:09:34 | INFO | architecture.executor:_handle_failure:248 | Step 3: Failure type=arg_extraction, retrying...
+2026-02-06 23:09:34 | INFO | architecture.executor:_retry_with_new_args:276 | Step 3: Re-extracting args with error context
+2026-02-06 23:09:34 | INFO | architecture.executor:_retry_with_new_args:280 | Step 3: New args = {'input': "Failed to retrieve data\n\nPrevious error: GrandmasterGenderRatioTool.run() got an unexpected keyword argument 'input'\nThe previous code failed with a unknown error.\nRoot cause: Unclassified error\nSuggestion: Review the full error output. Check documentation for the failing operation.\n\nError output:\n```\nGrandmasterGenderRatioTool.run() got an unexpected keyword argument 'input'\n```\n\nPlease fix the code and try again."}
+2026-02-06 23:09:34 | INFO | architecture.sandbox:execute_with_args:441 | DEBUG: sandbox received args = {'input': "Failed to retrieve data\n\nPrevious error: GrandmasterGenderRatioTool.run() got an unexpected keyword argument 'input'\nThe previous code failed with a unknown error.\nRoot cause: Unclassified error\nSuggestion: Review the full error output. Check documentation for the failing operation.\n\nError output:\n```\nGrandmasterGenderRatioTool.run() got an unexpected keyword argument 'input'\n```\n\nPlease fix the code and try again."}
+2026-02-06 23:09:34 | INFO | architecture.sandbox:execute_with_args:442 | DEBUG: args_json = {"input": "Failed to retrieve data\n\nPrevious error: GrandmasterGenderRatioTool.run() got an unexpected keyword argument 'input'\nThe previous code failed with a unknown error.\nRoot cause: Unclassified error\nSuggestion: Review the full error output. Check documentation for the failing operation.\n\nError output:\n```\nGrandmasterGenderRatioTool.run() got an unexpected keyword argument 'input'\n```\n\nPlease fix the code and try again."}
+2026-02-06 23:09:34 | INFO | architecture.sandbox:execute_with_args:443 | DEBUG: Runner script line: args = json.loads('{"input": "Failed to retrieve data\n\nPrevious error: GrandmasterGenderRatioTool.run() got an unexpected keyword argument 'input'\nThe previous code failed with a unknown error.\nRoot cause: Unclassified error\nSuggestion: Review the full error output. Check documentation for the failing operation.\n\nError output:\n```\nGrandmasterGenderRatioTool.run() got an unexpected keyword argument 'input'\n```\n\nPlease fix the code and try again."}')
+2026-02-06 23:09:34 | INFO | architecture.sandbox:execute_with_args:448 | Executing tool with args: GrandmasterGenderRatioTool
+2026-02-06 23:09:34 | INFO | architecture.sandbox:execute_with_args:449 | Args JSON being passed: {"input": "Failed to retrieve data\n\nPrevious error: GrandmasterGenderRatioTool.run() got an unexpected keyword argument 'input'\nThe previous code failed with a unknown error.\nRoot cause: Unclassified error\nSuggestion: Review the full error output. Check documentation for the failing operation.\n\nError output:\n```\nGrandmasterGenderRatioTool.run() got an unexpected keyword argument 'input'\n```\n\nPlease fix the code and try again."}
+2026-02-06 23:09:34 | WARNING | architecture.sandbox:execute_with_args:512 | Failed to parse sandbox output: No valid JSON output found, Raw output:   File "/tools/_runner_GrandmasterGenderRatioTool.py", line 50
+    args = json.loads('{"input": "Failed to retrieve data\n\nPrevious error: GrandmasterGenderRatioTool.run() got an unexpected keyword argument 'input'\nThe previous code failed with a unknown error.\nRoot cause: Unclassified error\nSuggestion: Review the full error output. Check documentation for the failing operation.\n\nError output:\n```\nGrandmasterGenderRatioTool.run() got an unexpected keyword argument 'input'\n```\n\nPlease fix the code and try again."}')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: invalid syntax. Perhaps you forgot a comma?
+
+2026-02-06 23:09:34 | WARNING | architecture.executor:_retry_with_new_args:293 | Step 3: Retry with new args failed
+2026-02-06 23:09:34 | INFO | __main__:main:218 | Completed in 18904.12ms
+2026-02-06 23:09:34 | INFO | __main__:main:219 | Zone: public
+2026-02-06 23:09:34 | INFO | architecture.executor:export_profiles:500 | Profiles exported to: C:\Users\Omar\Desktop\Code\Research\logs\profiles_20260206_230934.json
+2026-02-06 23:09:39 | INFO | architecture.sandbox:stop:179 | Sandbox container stopped: 7ffedd2326dc
+2026-02-06 23:09:39 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

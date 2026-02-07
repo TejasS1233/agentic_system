@@ -1,0 +1,50 @@
+2026-02-06 22:40:05 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-06 22:40:15 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-06 22:40:15 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-06 22:40:15 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-06 22:40:15 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-06 22:40:15 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\Omar\Desktop\Code\Research\workspace, profiling=True)
+2026-02-06 22:40:15 | INFO | architecture.sandbox:__init__:143 | Sandbox initialized with tools_dir=C:\Users\Omar\Desktop\Code\Research\workspace\tools, output_dir=C:\Users\Omar\Desktop\Code\Research\workspace\outputs
+2026-02-06 22:40:15 | INFO | architecture.sandbox:start:172 | Sandbox container started: 6f6f672223fb
+2026-02-06 22:40:15 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-06 22:40:15 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-06 22:40:15 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-06 22:40:15 | INFO | architecture.executor:load_registry:93 | Loaded 33 tool definitions
+2026-02-06 22:40:15 | INFO | architecture.llm_manager:__init__:72 | Loaded 2 GROQ keys
+2026-02-06 22:40:15 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-06 22:40:19 | INFO | architecture.orchestrator:__init__:35 | Orchestrator initialized with ToolRetriever
+2026-02-06 22:40:19 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-06 22:40:19 | INFO | __main__:run:121 | Task received: give me a fibonacci script...
+2026-02-06 22:40:19 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-06 22:40:19 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-06 22:40:19 | INFO | architecture.orchestrator:run:39 | Processing: give me a fibonacci script...
+2026-02-06 22:40:19 | WARNING | architecture.orchestrator:_classify_request:228 | Classification failed: '"category"', defaulting to COMPLEX_TASK
+2026-02-06 22:40:19 | INFO | architecture.orchestrator:run:43 | Task Classification: COMPLEX_TASK
+2026-02-06 22:40:19 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-06_22-40-02
+2026-02-06 22:40:20 | INFO | architecture.llm_manager:generate:132 | Generation success in 890.80ms
+2026-02-06 22:40:20 | INFO | architecture.orchestrator:run:50 | Decomposed into 1 subtasks
+2026-02-06 22:40:20 | INFO | architecture.orchestrator:_retrieve_tools:113 | st_1 → FibonacciGenerator (dist: 0.690, matched: True)
+2026-02-06 22:40:20 | INFO | architecture.executor:execute:99 | Executing plan: give me a fibonacci script
+2026-02-06 22:40:20 | INFO | architecture.executor:execute:100 | Total steps: 1
+2026-02-06 22:40:20 | INFO | architecture.executor:_execute_step:129 | Step 1: Generate Fibonacci sequence script using FibonacciGenerator
+2026-02-06 22:40:20 | INFO | architecture.executor:load_registry:93 | Loaded 33 tool definitions
+2026-02-06 22:40:20 | INFO | architecture.executor:_execute_step:171 | Step 1: Using description as input
+2026-02-06 22:40:20 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_22-40-02
+2026-02-06 22:40:20 | INFO | architecture.llm_manager:generate:132 | Generation success in 237.28ms
+2026-02-06 22:40:20 | INFO | architecture.executor:_infer_args:528 | LLM extracted args: {'n': 10}
+2026-02-06 22:40:20 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'n': 10}
+2026-02-06 22:40:20 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-06 22:40:20 | INFO | architecture.sandbox:_install_deps:192 | Installing dependencies: pydantic pydantic
+2026-02-06 22:40:24 | INFO | architecture.sandbox:execute_with_args:441 | DEBUG: sandbox received args = {'n': 10}
+2026-02-06 22:40:24 | INFO | architecture.sandbox:execute_with_args:442 | DEBUG: args_json = {"n": 10}
+2026-02-06 22:40:24 | INFO | architecture.sandbox:execute_with_args:443 | DEBUG: Runner script line: args = json.loads('{"n": 10}')
+2026-02-06 22:40:24 | INFO | architecture.sandbox:execute_with_args:448 | Executing tool with args: FibonacciGenerator
+2026-02-06 22:40:24 | INFO | architecture.sandbox:execute_with_args:449 | Args JSON being passed: {"n": 10}
+2026-02-06 22:40:24 | INFO | architecture.executor:_execute_step:192 | Step 1 SANDBOX Profile: time=0.073ms, peak_mem=0.0020MB, delta_mem=0.0007MB, efficiency=100.00%, grade=fast
+2026-02-06 22:40:24 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 4400.03ms)
+2026-02-06 22:40:24 | INFO | architecture.executor:_execute_step:207 | Step 1: Completed in 4.40s
+2026-02-06 22:40:24 | INFO | __main__:main:218 | Completed in 5561.08ms
+2026-02-06 22:40:24 | INFO | __main__:main:219 | Zone: public
+2026-02-06 22:40:24 | INFO | architecture.executor:export_profiles:500 | Profiles exported to: C:\Users\Omar\Desktop\Code\Research\logs\profiles_20260206_224024.json
+2026-02-06 22:40:30 | INFO | architecture.sandbox:stop:179 | Sandbox container stopped: 6f6f672223fb
+2026-02-06 22:40:30 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

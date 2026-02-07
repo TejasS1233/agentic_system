@@ -1,0 +1,80 @@
+{
+  "exported_at": "2026-02-06T23:46:05.711135",
+  "summary": {
+    "FideRankingSearchTool": {
+      "call_count": 2,
+      "avg_time_ms": 1121.4234999999999,
+      "max_time_ms": 1149.507,
+      "min_time_ms": 1093.34,
+      "avg_memory_mb": 0.87515,
+      "max_memory_mb": 0.8752,
+      "avg_memory_delta_mb": 0.70965,
+      "avg_efficiency": 0.4965,
+      "last_grade": "critical"
+    },
+    "ChessGrandmasterGenderRatioTool": {
+      "call_count": 1,
+      "avg_time_ms": 553.081,
+      "max_time_ms": 553.081,
+      "min_time_ms": 553.081,
+      "avg_memory_mb": 0.145,
+      "max_memory_mb": 0.145,
+      "avg_memory_delta_mb": 0.0414,
+      "avg_efficiency": 0.7229,
+      "last_grade": "slow"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 3,
+    "tools_profiled": [
+      "FideRankingSearchTool",
+      "ChessGrandmasterGenderRatioTool"
+    ],
+    "execution_time_ms": {
+      "min": 553.081,
+      "max": 1149.507,
+      "mean": 931.976
+    },
+    "peak_memory_mb": {
+      "min": 0.145,
+      "max": 0.8752,
+      "mean": 0.6317666666666667
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "FideRankingSearchTool": [
+      {
+        "tool_name": "FideRankingSearchTool",
+        "execution_time_ms": 1093.34,
+        "peak_memory_mb": 0.8751,
+        "memory_delta_mb": 0.7096,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4965,
+        "success": true
+      },
+      {
+        "tool_name": "FideRankingSearchTool",
+        "execution_time_ms": 1149.507,
+        "peak_memory_mb": 0.8752,
+        "memory_delta_mb": 0.7097,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4965,
+        "success": true
+      }
+    ],
+    "ChessGrandmasterGenderRatioTool": [
+      {
+        "tool_name": "ChessGrandmasterGenderRatioTool",
+        "execution_time_ms": 553.081,
+        "peak_memory_mb": 0.145,
+        "memory_delta_mb": 0.0414,
+        "latency_grade": "slow",
+        "efficiency_score": 0.7229,
+        "success": true
+      }
+    ]
+  }
+}

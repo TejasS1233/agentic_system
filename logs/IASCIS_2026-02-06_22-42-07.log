@@ -1,0 +1,32 @@
+2026-02-06 22:42:11 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-06 22:42:22 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-06 22:42:22 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-06 22:42:22 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-06 22:42:22 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-06 22:42:22 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\Omar\Desktop\Code\Research\workspace, profiling=True)
+2026-02-06 22:42:22 | INFO | architecture.sandbox:__init__:143 | Sandbox initialized with tools_dir=C:\Users\Omar\Desktop\Code\Research\workspace\tools, output_dir=C:\Users\Omar\Desktop\Code\Research\workspace\outputs
+2026-02-06 22:42:22 | INFO | architecture.sandbox:start:172 | Sandbox container started: 42a532da5fd9
+2026-02-06 22:42:22 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-06 22:42:22 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-06 22:42:22 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-06 22:42:22 | INFO | architecture.executor:load_registry:93 | Loaded 33 tool definitions
+2026-02-06 22:42:22 | INFO | architecture.llm_manager:__init__:72 | Loaded 2 GROQ keys
+2026-02-06 22:42:22 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-06 22:42:26 | INFO | architecture.orchestrator:__init__:35 | Orchestrator initialized with ToolRetriever
+2026-02-06 22:42:26 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-06 22:42:26 | INFO | __main__:run:121 | Task received: give me a code that generates fibonnaci numbers upto n numbers...
+2026-02-06 22:42:26 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-06 22:42:26 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-06 22:42:26 | INFO | architecture.orchestrator:run:39 | Processing: give me a code that generates fibonnaci numbers upto n numbers...
+2026-02-06 22:42:26 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-06_22-42-07
+2026-02-06 22:42:26 | INFO | architecture.llm_manager:generate:132 | Generation success in 356.24ms
+2026-02-06 22:42:26 | INFO | architecture.orchestrator:run:43 | Task Classification: DIRECT_RESPONSE
+2026-02-06 22:42:26 | INFO | architecture.orchestrator:_handle_direct_generation:233 | Handling as direct response
+2026-02-06 22:42:26 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_22-42-07
+2026-02-06 22:42:26 | WARNING | architecture.llm_manager:generate:139 | Attempt 1/3 failed using key 1: 'str' object has no attribute 'get'
+2026-02-06 22:42:26 | ERROR | architecture.llm_manager:generate:154 | Non-retryable error: 'str' object has no attribute 'get'
+2026-02-06 22:42:26 | INFO | __main__:main:218 | Completed in 364.26ms
+2026-02-06 22:42:26 | INFO | __main__:main:219 | Zone: public
+2026-02-06 22:42:26 | INFO | architecture.executor:export_profiles:500 | Profiles exported to: C:\Users\Omar\Desktop\Code\Research\logs\profiles_20260206_224226.json
+2026-02-06 22:42:31 | INFO | architecture.sandbox:stop:179 | Sandbox container stopped: 42a532da5fd9
+2026-02-06 22:42:31 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

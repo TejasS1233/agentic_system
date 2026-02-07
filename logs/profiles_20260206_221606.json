@@ -1,0 +1,126 @@
+{
+  "exported_at": "2026-02-06T22:16:06.823019",
+  "summary": {
+    "GithubProfileSearch": {
+      "call_count": 2,
+      "avg_time_ms": 334.5415,
+      "max_time_ms": 572.588,
+      "min_time_ms": 96.495,
+      "avg_memory_mb": 0.11885000000000001,
+      "max_memory_mb": 0.1189,
+      "avg_memory_delta_mb": 0.06684999999999999,
+      "avg_efficiency": 0.8322499999999999,
+      "last_grade": "moderate"
+    },
+    "RepoLanguageExtractor": {
+      "call_count": 1,
+      "avg_time_ms": 343.444,
+      "max_time_ms": 343.444,
+      "min_time_ms": 343.444,
+      "avg_memory_mb": 0.1163,
+      "max_memory_mb": 0.1163,
+      "avg_memory_delta_mb": 0.0668,
+      "avg_efficiency": 0.8278,
+      "last_grade": "slow"
+    },
+    "LanguageCounter": {
+      "call_count": 1,
+      "avg_time_ms": 0.227,
+      "max_time_ms": 0.227,
+      "min_time_ms": 0.227,
+      "avg_memory_mb": 0.0074,
+      "max_memory_mb": 0.0074,
+      "avg_memory_delta_mb": 0.0062,
+      "avg_efficiency": 0.9999,
+      "last_grade": "fast"
+    },
+    "LanguagePreferencePlotter": {
+      "call_count": 1,
+      "avg_time_ms": 156.217,
+      "max_time_ms": 156.217,
+      "min_time_ms": 156.217,
+      "avg_memory_mb": 1.1237,
+      "max_memory_mb": 1.1237,
+      "avg_memory_delta_mb": 1.0645,
+      "avg_efficiency": 0.9174,
+      "last_grade": "slow"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 5,
+    "tools_profiled": [
+      "GithubProfileSearch",
+      "RepoLanguageExtractor",
+      "LanguageCounter",
+      "LanguagePreferencePlotter"
+    ],
+    "execution_time_ms": {
+      "min": 0.227,
+      "max": 572.588,
+      "mean": 233.7942
+    },
+    "peak_memory_mb": {
+      "min": 0.0074,
+      "max": 1.1237,
+      "mean": 0.29701999999999995
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "GithubProfileSearch": [
+      {
+        "tool_name": "GithubProfileSearch",
+        "execution_time_ms": 572.588,
+        "peak_memory_mb": 0.1188,
+        "memory_delta_mb": 0.0668,
+        "latency_grade": "slow",
+        "efficiency_score": 0.7132,
+        "success": true
+      },
+      {
+        "tool_name": "GithubProfileSearch",
+        "execution_time_ms": 96.495,
+        "peak_memory_mb": 0.1189,
+        "memory_delta_mb": 0.0669,
+        "latency_grade": "moderate",
+        "efficiency_score": 0.9513,
+        "success": true
+      }
+    ],
+    "RepoLanguageExtractor": [
+      {
+        "tool_name": "RepoLanguageExtractor",
+        "execution_time_ms": 343.444,
+        "peak_memory_mb": 0.1163,
+        "memory_delta_mb": 0.0668,
+        "latency_grade": "slow",
+        "efficiency_score": 0.8278,
+        "success": true
+      }
+    ],
+    "LanguageCounter": [
+      {
+        "tool_name": "LanguageCounter",
+        "execution_time_ms": 0.227,
+        "peak_memory_mb": 0.0074,
+        "memory_delta_mb": 0.0062,
+        "latency_grade": "fast",
+        "efficiency_score": 0.9999,
+        "success": true
+      }
+    ],
+    "LanguagePreferencePlotter": [
+      {
+        "tool_name": "LanguagePreferencePlotter",
+        "execution_time_ms": 156.217,
+        "peak_memory_mb": 1.1237,
+        "memory_delta_mb": 1.0645,
+        "latency_grade": "slow",
+        "efficiency_score": 0.9174,
+        "success": true
+      }
+    ]
+  }
+}

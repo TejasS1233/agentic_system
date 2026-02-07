@@ -1,0 +1,71 @@
+{
+  "exported_at": "2026-02-06T23:00:00.925778",
+  "summary": {
+    "ChessGrandmastersTool": {
+      "call_count": 1,
+      "avg_time_ms": 61.28,
+      "max_time_ms": 61.28,
+      "min_time_ms": 61.28,
+      "avg_memory_mb": 0.1509,
+      "max_memory_mb": 0.1509,
+      "avg_memory_delta_mb": 0.0692,
+      "avg_efficiency": 0.9688,
+      "last_grade": "moderate"
+    },
+    "PlayerGenderCounter": {
+      "call_count": 1,
+      "avg_time_ms": 0.033,
+      "max_time_ms": 0.033,
+      "min_time_ms": 0.033,
+      "avg_memory_mb": 0.0015,
+      "max_memory_mb": 0.0015,
+      "avg_memory_delta_mb": 0.0,
+      "avg_efficiency": 0.0,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 2,
+    "tools_profiled": [
+      "ChessGrandmastersTool",
+      "PlayerGenderCounter"
+    ],
+    "execution_time_ms": {
+      "min": 0.033,
+      "max": 61.28,
+      "mean": 30.6565
+    },
+    "peak_memory_mb": {
+      "min": 0.0015,
+      "max": 0.1509,
+      "mean": 0.0762
+    },
+    "success_rate": 0.5
+  },
+  "raw_profiles": {
+    "ChessGrandmastersTool": [
+      {
+        "tool_name": "ChessGrandmastersTool",
+        "execution_time_ms": 61.28,
+        "peak_memory_mb": 0.1509,
+        "memory_delta_mb": 0.0692,
+        "latency_grade": "moderate",
+        "efficiency_score": 0.9688,
+        "success": true
+      }
+    ],
+    "PlayerGenderCounter": [
+      {
+        "tool_name": "PlayerGenderCounter",
+        "execution_time_ms": 0.033,
+        "peak_memory_mb": 0.0015,
+        "memory_delta_mb": 0,
+        "latency_grade": "critical",
+        "success": false,
+        "error_message": "'NoneType' object is not iterable"
+      }
+    ]
+  }
+}

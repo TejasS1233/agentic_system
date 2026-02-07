@@ -1,0 +1,66 @@
+2026-02-06 22:22:29 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-06 22:22:59 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-06 22:22:59 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-06 22:22:59 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-06 22:22:59 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-06 22:22:59 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\Omar\Desktop\Code\Research\workspace, profiling=True)
+2026-02-06 22:22:59 | INFO | architecture.sandbox:__init__:143 | Sandbox initialized with tools_dir=C:\Users\Omar\Desktop\Code\Research\workspace\tools, output_dir=C:\Users\Omar\Desktop\Code\Research\workspace\outputs
+2026-02-06 22:23:00 | INFO | architecture.sandbox:start:172 | Sandbox container started: 6c05332e27d6
+2026-02-06 22:23:00 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-06 22:23:00 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-06 22:23:00 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-06 22:23:00 | INFO | architecture.executor:load_registry:93 | Loaded 32 tool definitions
+2026-02-06 22:23:00 | INFO | architecture.llm_manager:__init__:72 | Loaded 2 GROQ keys
+2026-02-06 22:23:00 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-06 22:23:03 | INFO | architecture.orchestrator:__init__:35 | Orchestrator initialized with ToolRetriever
+2026-02-06 22:23:03 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-06 22:23:03 | INFO | __main__:run:121 | Task received: fetch stats from github profile "rakheOmar" and plot language preference graph...
+2026-02-06 22:23:03 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-06 22:23:03 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-06 22:23:03 | INFO | architecture.orchestrator:run:39 | Processing,fetch stats from github profile "rakheOmar" and plot language preference graph...
+2026-02-06 22:23:03 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-06_22-22-25
+2026-02-06 22:23:04 | INFO | architecture.llm_manager:generate:132 | Generation success in 563.08ms
+2026-02-06 22:23:04 | INFO | architecture.orchestrator:run:42 | Decomposed into 2 subtasks
+2026-02-06 22:23:04 | INFO | architecture.orchestrator:_retrieve_tools:105 | st_1 → GithubProfileSearch (dist: 0.700, matched: True)
+2026-02-06 22:23:04 | INFO | architecture.orchestrator:_retrieve_tools:105 | st_2 → LanguagePreferencePlotter (dist: 0.735, matched: True)
+2026-02-06 22:23:04 | INFO | architecture.executor:execute:99 | Executing plan: fetch stats from github profile "rakheOmar" and plot language preference graph
+2026-02-06 22:23:04 | INFO | architecture.executor:execute:100 | Total steps: 2
+2026-02-06 22:23:04 | INFO | architecture.executor:_execute_step:129 | Step 1: Fetch repository languages for user rakheOmar from GitHub API using GithubProfileSearch
+2026-02-06 22:23:04 | INFO | architecture.executor:load_registry:93 | Loaded 32 tool definitions
+2026-02-06 22:23:04 | INFO | architecture.executor:_execute_step:171 | Step 1: Using description as input
+2026-02-06 22:23:04 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_22-22-25
+2026-02-06 22:23:04 | INFO | architecture.llm_manager:generate:132 | Generation success in 87.93ms
+2026-02-06 22:23:04 | INFO | architecture.executor:_infer_args:528 | LLM extracted args: {'username': 'rakheOmar'}
+2026-02-06 22:23:04 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'username': 'rakheOmar'}
+2026-02-06 22:23:04 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-06 22:23:04 | INFO | architecture.sandbox:_install_deps:192 | Installing dependencies: requests pydantic pydantic
+2026-02-06 22:23:09 | INFO | architecture.sandbox:execute_with_args:441 | DEBUG: sandbox received args = {'username': 'rakheOmar'}
+2026-02-06 22:23:09 | INFO | architecture.sandbox:execute_with_args:442 | DEBUG: args_json = {"username": "rakheOmar"}
+2026-02-06 22:23:09 | INFO | architecture.sandbox:execute_with_args:443 | DEBUG: Runner script line: args = json.loads('{"username": "rakheOmar"}')
+2026-02-06 22:23:09 | INFO | architecture.sandbox:execute_with_args:448 | Executing tool with args: GithubProfileSearch
+2026-02-06 22:23:09 | INFO | architecture.sandbox:execute_with_args:449 | Args JSON being passed: {"username": "rakheOmar"}
+2026-02-06 22:23:10 | INFO | architecture.executor:_execute_step:192 | Step 1 SANDBOX Profile: time=313.122ms, peak_mem=0.1186MB, delta_mem=0.0666MB, efficiency=84.30%, grade=slow
+2026-02-06 22:23:10 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 5836.27ms)
+2026-02-06 22:23:10 | INFO | architecture.executor:_execute_step:207 | Step 1: Completed in 5.84s
+2026-02-06 22:23:10 | INFO | architecture.executor:_execute_step:129 | Step 2: Create bar chart from language statistics using LanguagePreferencePlotter
+2026-02-06 22:23:10 | INFO | architecture.executor:load_registry:93 | Loaded 32 tool definitions
+2026-02-06 22:23:10 | INFO | architecture.executor:_execute_step:161 | Step 2: Using input from step 1
+2026-02-06 22:23:10 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_22-22-25
+2026-02-06 22:23:10 | INFO | architecture.llm_manager:generate:132 | Generation success in 163.27ms
+2026-02-06 22:23:10 | INFO | architecture.executor:_infer_args:528 | LLM extracted args: {'language_stats': {'Python': 50, 'Java': 30, 'JavaScript': 20}}
+2026-02-06 22:23:10 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'language_stats': {'Python': 50, 'Java': 30, 'JavaScript': 20}}
+2026-02-06 22:23:10 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-06 22:23:10 | INFO | architecture.sandbox:_install_deps:192 | Installing dependencies: matplotlib
+2026-02-06 22:23:24 | INFO | architecture.sandbox:execute_with_args:441 | DEBUG: sandbox received args = {'language_stats': {'Python': 50, 'Java': 30, 'JavaScript': 20}}
+2026-02-06 22:23:24 | INFO | architecture.sandbox:execute_with_args:442 | DEBUG: args_json = {"language_stats": {"Python": 50, "Java": 30, "JavaScript": 20}}
+2026-02-06 22:23:24 | INFO | architecture.sandbox:execute_with_args:443 | DEBUG: Runner script line: args = json.loads('{"language_stats": {"Python": 50, "Java": 30, "JavaScript": 20}}')
+2026-02-06 22:23:24 | INFO | architecture.sandbox:execute_with_args:448 | Executing tool with args: LanguagePreferencePlotter
+2026-02-06 22:23:24 | INFO | architecture.sandbox:execute_with_args:449 | Args JSON being passed: {"language_stats": {"Python": 50, "Java": 30, "JavaScript": 20}}
+2026-02-06 22:23:25 | INFO | architecture.executor:_execute_step:192 | Step 2 SANDBOX Profile: time=169.590ms, peak_mem=1.0722MB, delta_mem=1.0056MB, efficiency=91.09%, grade=slow
+2026-02-06 22:23:25 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 15414.99ms)
+2026-02-06 22:23:25 | INFO | architecture.executor:_execute_step:207 | Step 2: Completed in 15.41s
+2026-02-06 22:23:25 | INFO | __main__:main:218 | Completed in 22103.85ms
+2026-02-06 22:23:25 | INFO | __main__:main:219 | Zone: public
+2026-02-06 22:23:25 | INFO | architecture.executor:export_profiles:500 | Profiles exported to: C:\Users\Omar\Desktop\Code\Research\logs\profiles_20260206_222325.json
+2026-02-06 22:23:31 | INFO | architecture.sandbox:stop:179 | Sandbox container stopped: 6c05332e27d6
+2026-02-06 22:23:31 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

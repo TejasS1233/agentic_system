@@ -1,3 +1,5 @@
+"""Toolsmith - Generates and manages tools for the IASCIS system."""
+
 import os
 import re
 import json
@@ -5,476 +7,312 @@ import time
 import ast
 import subprocess
 import tempfile
-from architecture.llm_manager import get_llm_manager
+from pathlib import Path
 
-# For PyPI name checking
 try:
     import requests
 except ImportError:
     requests = None
 
+from architecture.llm_manager import get_llm_manager
 from architecture.gatekeeper import Gatekeeper
+from architecture.prompts import get_tool_generator_prompt
 from architecture.intent_classifier import (
     IntentClassifier,
-    get_domain_prompt_string,
     validate_domain,
-    get_allowed_domains,
     DOMAIN_KEYWORDS,
 )
+from utils.logger import get_logger
+
+logger = get_logger(__name__)
+
+STDLIB_MODULES = {
+    "os",
+    "sys",
+    "re",
+    "json",
+    "ast",
+    "time",
+    "math",
+    "datetime",
+    "collections",
+    "itertools",
+    "functools",
+    "typing",
+    "abc",
+    "subprocess",
+    "tempfile",
+    "pathlib",
+    "io",
+    "csv",
+    "random",
+    "hashlib",
+    "base64",
+    "urllib",
+    "http",
+    "email",
+    "html",
+    "xml",
+    "logging",
+    "warnings",
+    "copy",
+    "pickle",
+    "sqlite3",
+    "threading",
+    "multiprocessing",
+    "asyncio",
+    "socket",
+    "ssl",
+    "uuid",
+    "platform",
+}
+
+IMPORT_TO_PACKAGE = {
+    "cv2": "opencv-python",
+    "PIL": "Pillow",
+    "sklearn": "scikit-learn",
+    "yaml": "pyyaml",
+    "bs4": "beautifulsoup4",
+}
+
+STOP_WORDS = {
+    "a",
+    "an",
+    "the",
+    "is",
+    "it",
+    "to",
+    "of",
+    "for",
+    "and",
+    "or",
+    "that",
+    "this",
+    "with",
+    "from",
+    "as",
+    "be",
+    "by",
+    "on",
+    "in",
+    "at",
+    "was",
+    "are",
+    "i",
+    "me",
+    "can",
+    "will",
+    "do",
+    "get",
+    "make",
+    "use",
+    "need",
+    "want",
+    "create",
+    "tool",
+}
 
 
 class Toolsmith:
-    def __init__(self, safe_mode=True, gatekeeper=None):
+    """Generates, validates, and manages tools with domain-aware deduplication."""
+
+    def __init__(self, safe_mode: bool = False, gatekeeper: Gatekeeper = None):
         self.safe_mode = safe_mode
         self.gatekeeper = gatekeeper or Gatekeeper(strict_mode=safe_mode)
-        self.workspace_root = os.path.join(os.getcwd(), "workspace")
-        self.tools_dir = os.path.join(self.workspace_root, "tools")
-        self.packages_dir = os.path.join(self.workspace_root, "packages")
-        self.registry_path = os.path.join(self.tools_dir, "registry.json")
-        self.metrics_path = os.path.join(self.tools_dir, "metrics.json")
-        self.tools_source_path = os.path.join(os.getcwd(), "execution", "tools.py")
 
-        # Initialize intent classifier for domain-aware deduplication (lazy loaded)
+        self.workspace_root = Path.cwd() / "workspace"
+        self.tools_dir = self.workspace_root / "tools"
+        self.packages_dir = self.workspace_root / "packages"
+        self.registry_path = self.tools_dir / "registry.json"
+        self.metrics_path = self.tools_dir / "metrics.json"
+        self.tools_source_path = Path.cwd() / "execution" / "tools.py"
+
         self._intent_classifier = None
-
-        # PyPI credentials from environment
         self.pypi_username = os.environ.get("PYPI_USERNAME", "__token__")
         self.pypi_token = os.environ.get("PYPI_TOKEN", "")
 
-        # Ensure directories exist
-        os.makedirs(self.tools_dir, exist_ok=True)
-        os.makedirs(self.packages_dir, exist_ok=True)
-        if not os.path.exists(self.registry_path):
-            with open(self.registry_path, "w") as f:
-                json.dump({}, f)
+        self.tools_dir.mkdir(parents=True, exist_ok=True)
+        self.packages_dir.mkdir(parents=True, exist_ok=True)
 
-        # Initialize metrics if not present
-        if not os.path.exists(self.metrics_path):
+        if not self.registry_path.exists():
+            self._write_json(self.registry_path, {})
+        if not self.metrics_path.exists():
             self._log_metrics("init", {"message": "Metrics initialized"})
 
-        # Migrate legacy registry entries to include status fields
         self._migrate_registry_status()
 
-    def _migrate_registry_status(self):
-        """
-        Migrate legacy registry entries to include status, timestamp, and metrics fields.
-        This ensures backward compatibility with older registries.
-        """
+    def _write_json(self, path: Path, data: dict):
+        """Write JSON to file."""
+        with open(path, "w") as f:
+            json.dump(data, f, indent=2)
+
+    def _read_json(self, path: Path) -> dict:
+        """Read JSON from file."""
         try:
-            with open(self.registry_path, "r") as f:
-                data = json.load(f)
+            with open(path, "r") as f:
+                return json.load(f)
+        except Exception:
+            return {}
 
-            modified = False
-            current_time = time.time()
+    def _migrate_registry_status(self):
+        """Migrate legacy registry entries to include status/timestamp fields."""
+        data = self._read_json(self.registry_path)
+        modified = False
+        current_time = time.time()
 
-            for name, meta in data.items():
-                # Add status if missing
-                if "status" not in meta:
-                    meta["status"] = "active"
-                    modified = True
+        for meta in data.values():
+            if "status" not in meta:
+                meta["status"] = "active"
+                modified = True
+            if "created_at" not in meta:
+                meta["created_at"] = current_time
+                modified = True
+            if "last_used" not in meta:
+                meta["last_used"] = None
+                modified = True
+            if "use_count" not in meta:
+                meta["use_count"] = 0
+                modified = True
+            if "metrics" not in meta:
+                meta["metrics"] = 0.0
+                modified = True
 
-                # Add created_at if missing (use current time as fallback)
-                if "created_at" not in meta:
-                    meta["created_at"] = current_time
-                    modified = True
+        if modified:
+            self._write_json(self.registry_path, data)
+            logger.debug("Registry migrated to include status fields")
 
-                # Add updated_at if missing
-                if "updated_at" not in meta:
-                    meta["updated_at"] = current_time
-                    modified = True
-
-                # Add use_count if missing (default to 0)
-                if "use_count" not in meta:
-                    meta["use_count"] = 0
-                    modified = True
-
-                # Add last_used if missing (default to None)
-                if "last_used" not in meta:
-                    meta["last_used"] = None
-                    modified = True
-
-                # Add metrics if missing (default to 0.0 - weighted performance score)
-                if "metrics" not in meta:
-                    meta["metrics"] = 0.0
-                    modified = True
-
-            if modified:
-                with open(self.registry_path, "w") as f:
-                    json.dump(data, f, indent=2)
-                print(
-                    "[Toolsmith] Migrated registry entries to include status and metrics fields"
-                )
-        except Exception as e:
-            print(f"[Toolsmith] Registry migration failed: {e}")
-
-        # ignore common words in tag matching
-        self.stop_words = {
-            "a",
-            "an",
-            "the",
-            "in",
-            "on",
-            "at",
-            "to",
-            "for",
-            "of",
-            "with",
-            "by",
-            "and",
-            "or",
-            "is",
-            "it",
-            "this",
-            "that",
-            "tool",
-            "can",
-            "please",
-            "make",
-            "create",
-            "write",
-            "i",
-            "need",
-            "want",
-            "use",
-            "help",
-            "me",
-            "from",
-            "into",
-        }
-
-    def _get_intent_classifier(self):
-        """Lazy load the intent classifier."""
+    def _get_intent_classifier(self) -> IntentClassifier:
+        """Lazy load intent classifier."""
         if self._intent_classifier is None:
-            self._intent_classifier = IntentClassifier(self.registry_path)
+            self._intent_classifier = IntentClassifier()
         return self._intent_classifier
 
-    def _log_metrics(self, event_type, details):
-        """Logs usage metrics to a JSONL file for paper analysis."""
-        entry = {"timestamp": time.time(), "event": event_type, "details": details}
-        try:
-            # We use append mode for a simpler log, or we could handle a JSON array.
-            # For robustness, let's load, append, save.
-            data = []
-            if os.path.exists(self.metrics_path):
-                try:
-                    with open(self.metrics_path, "r") as f:
-                        data = json.load(f)
-                except json.JSONDecodeError:
-                    data = []
-
-            data.append(entry)
-            with open(self.metrics_path, "w") as f:
-                json.dump(data, f, indent=2)
-        except Exception as e:
-            print(f"[Toolsmith] Metrics logging failed: {e}")
-
-    def get_tool_creation_timestamps(self) -> dict:
-        """
-        Get creation timestamps for all tools from metrics.json.
-
-        Returns:
-            Dict mapping tool names to their creation timestamps (Unix epoch).
-            Tools that don't have a recorded creation time are not included.
-        """
-        timestamps = {}
-        try:
-            if os.path.exists(self.metrics_path):
-                with open(self.metrics_path, "r") as f:
-                    data = json.load(f)
-
-                # Parse metrics to find tool_created events
-                for entry in data:
-                    if entry.get("event") == "tool_created":
-                        details = entry.get("details", {})
-                        tool_name = details.get("tool_name")
-                        if tool_name:
-                            # Use the timestamp from the entry
-                            timestamps[tool_name] = entry.get("timestamp")
-        except Exception as e:
-            print(f"[Toolsmith] Failed to read tool timestamps: {e}")
-
-        return timestamps
-
-    def get_tool_last_used_timestamps(self) -> dict:
-        """
-        Get the last usage timestamp for all tools from metrics.json.
-
-        This includes both tool_created events (creation = first "use") and
-        deduplication_hit events (tool was matched/used).
-
-        Returns:
-            Dict mapping tool names to their last used timestamps (Unix epoch).
-        """
-        last_used = {}
-        try:
-            if os.path.exists(self.metrics_path):
-                with open(self.metrics_path, "r") as f:
-                    data = json.load(f)
-
-                for entry in data:
-                    event = entry.get("event")
-                    details = entry.get("details", {})
-                    timestamp = entry.get("timestamp")
-
-                    if event == "tool_created":
-                        tool_name = details.get("tool_name")
-                        if tool_name:
-                            # Update if this is the most recent event
-                            if (
-                                tool_name not in last_used
-                                or timestamp > last_used[tool_name]
-                            ):
-                                last_used[tool_name] = timestamp
-
-                    elif event == "deduplication_hit":
-                        tool_name = details.get("matched_tool")
-                        if tool_name:
-                            if (
-                                tool_name not in last_used
-                                or timestamp > last_used[tool_name]
-                            ):
-                                last_used[tool_name] = timestamp
-        except Exception as e:
-            print(f"[Toolsmith] Failed to read last used timestamps: {e}")
-
-        return last_used
+    def _log_metrics(self, event_type: str, details: dict):
+        """Log usage metrics to JSONL file."""
+        entry = {"timestamp": time.time(), "event": event_type, **details}
+        with open(self.metrics_path, "a") as f:
+            f.write(json.dumps(entry) + "\n")
 
     def _is_safe_code(self, code: str) -> bool:
-        """
-        Uses the Gatekeeper for static analysis to reject dangerous operations.
-        Paper Claim: 'Autonomous Secure Tool Generation'.
-        """
-        if not self.safe_mode:
-            return True
-
+        """Validate code safety using Gatekeeper."""
         result = self.gatekeeper.validate(code)
-
         if not result.is_safe:
             for violation in result.violations:
-                print(f"[Toolsmith] Safety Violation: {violation}")
-
+                logger.warning(f"Safety violation: {violation}")
         return result.is_safe
 
-    def _get_existing_tools_context(self):
+    def _get_existing_tools_context(self) -> str:
+        """Get existing tools code for context injection."""
         try:
-            with open(self.tools_source_path, "r") as f:
-                return f.read()
+            return self.tools_source_path.read_text()
         except Exception as e:
             return f"# Could not read tools.py: {e}"
 
-    def _tokenize(self, text):
-        # Replace non-alphanumeric with space
+    def _tokenize(self, text: str) -> set:
+        """Tokenize text for similarity matching."""
         clean_text = re.sub(r"[^a-z0-9\s]", " ", text.lower())
         tokens = set(clean_text.split())
-        return tokens - self.stop_words
+        return tokens - STOP_WORDS
 
     def _filter_tags_for_domain(
         self, tags: list, domain: str, max_tags: int = 4
     ) -> list:
-        """
-        Filter tags to only include keywords from DOMAIN_KEYWORDS for the given domain.
-        Limits output to max_tags (default 4).
-
-        Args:
-            tags: Raw tags from LLM
-            domain: The validated domain for this tool
-            max_tags: Maximum number of tags to return
-
-        Returns:
-            Filtered list of valid domain-specific tags
-        """
+        """Filter tags to valid domain keywords."""
         if not domain or domain not in DOMAIN_KEYWORDS:
-            # If domain is unknown, return original tags limited to max_tags
             return tags[:max_tags] if tags else []
 
-        # Get valid keywords for this domain
         valid_keywords = set(DOMAIN_KEYWORDS[domain].keys())
+        filtered = [
+            t.lower().strip() for t in tags if t.lower().strip() in valid_keywords
+        ]
 
-        # Filter tags - keep only those that are valid domain keywords
-        filtered_tags = []
-        for tag in tags:
-            tag_lower = tag.lower().strip()
-            if tag_lower in valid_keywords:
-                filtered_tags.append(tag_lower)
-
-        # If no valid tags found, try to extract from the domain's top keywords
-        if not filtered_tags:
-            # Get top weighted keywords from this domain
+        if not filtered:
             domain_kw = DOMAIN_KEYWORDS[domain]
-            sorted_keywords = sorted(
-                domain_kw.items(), key=lambda x: x[1], reverse=True
-            )
-            filtered_tags = [
-                kw for kw, weight in sorted_keywords[:max_tags] if weight >= 0.7
-            ]
+            sorted_kw = sorted(domain_kw.items(), key=lambda x: x[1], reverse=True)
+            filtered = [kw for kw, weight in sorted_kw[:max_tags] if weight >= 0.7]
 
-        # Limit to max_tags and remove duplicates while preserving order
         seen = set()
-        unique_tags = []
-        for tag in filtered_tags:
+        unique = []
+        for tag in filtered:
             if tag not in seen:
                 seen.add(tag)
-                unique_tags.append(tag)
-                if len(unique_tags) >= max_tags:
+                unique.append(tag)
+                if len(unique) >= max_tags:
                     break
+        return unique
 
-        return unique_tags
-
-    def create_tool(self, requirement: str):
-        """
-        Generates a new python tool based on a requirement using domain-aware deduplication.
-        Uses IntentClassifier to first classify the request domain, then matches within that domain.
-        """
+    def create_tool(self, requirement: str) -> str:
+        """Generate a new tool based on requirement with domain-aware deduplication."""
         start_time = time.time()
-        print(f"[Toolsmith] Received request: '{requirement}'")
+        logger.info(f"Request: '{requirement}'")
 
-        # 1. Domain-Aware Deduplication Check
+        # Domain-aware deduplication
         try:
-            with open(self.registry_path, "r") as f:
-                registry = json.load(f)
-
-            # Classify request domain using IntentClassifier
+            registry = self._read_json(self.registry_path)
             classifier = self._get_intent_classifier()
-            request_domain, classification_method, domain_confidence = (
-                classifier.classify(requirement)
-            )
-            print(
-                f"[Toolsmith] Domain classified: '{request_domain}' (method: {classification_method}, confidence: {domain_confidence:.2f})"
+            request_domain, method, confidence = classifier.classify(requirement)
+            logger.info(
+                f"Domain: '{request_domain}' (method={method}, conf={confidence:.2f})"
             )
 
             req_tokens = self._tokenize(requirement)
-
-            best_match = None
-            highest_score = 0.0
+            best_match, highest_score = None, 0.0
 
             for name, meta in registry.items():
-                tool_domain = meta.get("domain", "").lower()
-
-                # Domain filtering: Only match tools in the same domain (if domain is known)
-                # Skip domain filtering if request domain is unknown or confidence is low
-                if request_domain != "unknown" and domain_confidence >= 0.7:
-                    if tool_domain and tool_domain != request_domain.lower():
-                        continue  # Skip tools in different domains
-
-                tool_tags = set(meta.get("tags", []))
-                # Fallback to tokenizing description if tags missing
-                if not tool_tags:
-                    tool_tags = self._tokenize(meta.get("description", ""))
-
-                # Also include input_types, output_types, and domain in matching
-                input_types = set(meta.get("input_types", []))
-                output_types = set(meta.get("output_types", []))
-
-                # Combine all matchable terms
-                all_tool_terms = tool_tags | input_types | output_types
-                if tool_domain:
-                    all_tool_terms.add(tool_domain)
-
-                # Jaccard-like Overlap Score: Intersection / Request Size
-                if not req_tokens:
+                if meta.get("status") != "active":
                     continue
 
-                intersection = req_tokens & all_tool_terms
-
-                # Require at least 2 matching keywords to avoid single-word false positives
-                if len(intersection) < 2:
+                tool_domain = meta.get("domain", "")
+                if tool_domain != request_domain:
                     continue
 
-                score = len(intersection) / len(req_tokens)
+                tool_tokens = self._tokenize(meta.get("description", ""))
+                for tag in meta.get("tags", []):
+                    tool_tokens.update(self._tokenize(tag))
 
-                # Boost score for same-domain matches
-                if tool_domain and tool_domain == request_domain.lower():
-                    score *= 1.2  # 20% boost for domain match
-                    score = min(score, 1.0)  # Cap at 1.0
+                if not req_tokens or not tool_tokens:
+                    continue
+
+                intersection = len(req_tokens & tool_tokens)
+                union = len(req_tokens | tool_tokens)
+                score = intersection / union if union > 0 else 0
 
                 if score > highest_score:
                     highest_score = score
                     best_match = name
 
-            # Threshold: 50% overlap implies relevance
-            if highest_score >= 0.5:
-                desc = registry[best_match].get("description", "No description")
-                matched_domain = registry[best_match].get("domain", "unknown")
-                print(
-                    f"[Toolsmith] Deduplication HIT. Match: '{best_match}' (Score: {highest_score:.2f}, Domain: {matched_domain})"
-                )
-
+            if best_match and highest_score > 0.5:
+                logger.info(f"Dedup match: {best_match} (score={highest_score:.2f})")
                 self._log_metrics(
                     "deduplication_hit",
                     {
                         "request": requirement,
-                        "request_domain": request_domain,
                         "matched_tool": best_match,
-                        "matched_domain": matched_domain,
                         "score": highest_score,
-                        "classification_method": classification_method,
-                        "latency": time.time() - start_time,
+                        "domain": request_domain,
                     },
                 )
 
-                return f"EXISTING TOOL FOUND: '{best_match}' seems to match your request (Score: {highest_score:.2f}).\nDescription: {desc}\nPlease use this tool instead of creating a new one."
+                # Update usage tracking
+                registry[best_match]["use_count"] = (
+                    registry[best_match].get("use_count", 0) + 1
+                )
+                registry[best_match]["last_used"] = time.time()
+                self._write_json(self.registry_path, registry)
 
-            self._log_metrics(
-                "generation_start",
-                {"request": requirement, "classified_domain": request_domain},
-            )
+                return (
+                    f"Matched existing tool: {best_match} (score: {highest_score:.2f})"
+                )
 
         except Exception as e:
-            print(f"[Toolsmith] Deduplication check failed: {e}")
+            logger.warning(f"Deduplication check failed: {e}")
 
-        # 2. Context Injection
-        existing_code = self._get_existing_tools_context()
-
-        # 3. Generate Code (JSON Mode)
-        print("[Toolsmith] Tool not found. Generating with LLM...")
+        # Generate new tool
+        logger.info("No match found. Generating with LLM...")
         try:
             llm = get_llm_manager()
-
-            # Get canonical domain list
-            domain_options = get_domain_prompt_string()
-            allowed_domains_list = ", ".join(get_allowed_domains())
-
-            system_prompt = f"""You are an expert Python Tool Generator. 
-You MUST generate a JSON object containing the tool code and metadata.
-
-REFERENCE CODE STYLE:
-{existing_code}
-
-OUTPUT FORMAT (JSON ONLY):
-{{
-  "class_name": "NameOfTool",
-  "filename": "name_of_tool.py",
-  "tags": ["tag1", "tag2", "tag3"],
-  "input_types": ["string", "number", "file", "list", "dict"],
-  "output_types": ["string", "number", "file", "image", "json"],
-  "domain": "{domain_options}",
-  "dependencies": ["library_name_1", "library_name_2"],
-  "code": "import ... class NameOfTool: ..."
-}}
-
-RULES:
-1. `code` must be a valid, escaped python string. Ensure all newlines are escaped as \\n and quotes are escaped as \\".
-2. `tags` should be 3-5 keywords.
-3. `dependencies` must list ALL PyPI package names the code imports (e.g., ["pandas", "requests", "beautifulsoup4"]). Map imports correctly: bs4 -> beautifulsoup4, PIL -> Pillow.
-4. `domain` must be EXACTLY ONE of: {allowed_domains_list}. Do NOT invent new domains.
-5. CODE STRUCTURE REQUIREMENTS - GENERATE STANDALONE CODE:
-   - IMPORTS: Start with ALL necessary imports. Include: `from pydantic import BaseModel, Field`
-   - ARGS CLASS: Define `class {{ClassName}}Args(BaseModel):` with typed fields using Field(..., description="...").
-   - TOOL CLASS: Define `class {{ClassName}}:` as a standalone class (NO inheritance from Tool or any base class).
-   - ATTRIBUTES: Set `name = "tool_name"`, `description = "..."`, `args_schema = {{ClassName}}Args` as class attributes.
-   - METHOD: `def run(self, arg1: Type, ...) -> ReturnType:` matching the args schema fields.
-6. HANDLING CREDENTIALS:
-   - Do NOT hardcode API keys. 
-   - If an API key is needed, it MUST be passed as an argument to the `run` method (e.g., `api_key: str`).
-7. REAL IMPLEMENTATION ONLY:
-   - NO MOCK APIS. NO FAKE DATA.
-   - Use real logic (e.g., `requests.get`, `math.sqrt`).
-   - If the task requires external libraries, IMPORT them and list them in the `dependencies` key.
-8. STANDALONE EXECUTION:
-   - The generated code must run in a fresh Python environment with only standard library + listed dependencies.
-   - Do NOT assume any external base classes or modules exist.
-   - Include ALL imports at the top of the file.
-"""
+            existing_code = self._get_existing_tools_context()
+            system_prompt = get_tool_generator_prompt(existing_code)
 
             response = llm.generate_json(
                 messages=[
@@ -487,9 +325,7 @@ RULES:
             if response.get("error"):
                 return f"Tool creation failed: {response['error']}"
 
-            content = response["content"]
-            tool_data = json.loads(content)
-
+            tool_data = json.loads(response["content"])
             class_name = tool_data["class_name"]
             file_name = tool_data["filename"]
             tags = tool_data.get("tags", [])
@@ -498,58 +334,35 @@ RULES:
             raw_domain = tool_data.get("domain", "")
             tool_code = tool_data["code"]
 
-            # --- DOMAIN VALIDATION ---
-            # Validate and normalize the domain using canonical list
-            validated_domain, was_valid = validate_domain(raw_domain)
+            # Validate domain - validate_domain returns (domain, is_valid) tuple
+            validated = validate_domain(raw_domain)
+            domain = validated[0] if validated[0] else request_domain
+            logger.info(f"Domain validated: {domain}")
 
-            if not was_valid:
-                # Use IntentClassifier to determine correct domain from requirement
-                classifier = self._get_intent_classifier()
-                classified_domain, method, confidence = classifier.classify(requirement)
+            # Filter tags
+            tags = self._filter_tags_for_domain(tags, domain)
+            logger.info(f"Tags: {tags}")
 
-                if classified_domain != "unknown" and confidence >= 0.7:
-                    validated_domain = classified_domain
-                    print(
-                        f"[Toolsmith] Domain corrected: '{raw_domain}' → '{validated_domain}' (via {method})"
-                    )
-                else:
-                    print(
-                        f"[Toolsmith] Domain corrected: '{raw_domain}' → '{validated_domain}' (fallback)"
-                    )
+            # Safety check
+            if self.safe_mode and not self._is_safe_code(tool_code):
+                self._log_metrics("safety_rejection", {"request": requirement})
+                return "Tool rejected: Safety violation detected"
 
-            domain = validated_domain
-            # -------------------------
-
-            # --- TAG FILTERING ---
-            # Filter tags to only use domain-specific keywords, max 4 tags
-            raw_tags = tags
-            tags = self._filter_tags_for_domain(raw_tags, domain, max_tags=4)
-            if raw_tags != tags:
-                print(f"[Toolsmith] Tags filtered: {raw_tags} → {tags}")
-            # ---------------------
-
-            # --- SAFETY CHECK ---
-            if not self._is_safe_code(tool_code):
-                self._log_metrics(
-                    "safety_violation",
-                    {"request": requirement, "generated_code_snippet": tool_code[:100]},
-                )
-                return "Error: Generated tool code failed Safety Check (contains banned imports/calls). Request rejected for security."
-            # --------------------
-
-            file_path = os.path.join(self.tools_dir, file_name)
-
-            # 4. Save to Disk
+            # Write tool file
+            file_path = self.tools_dir / file_name
             with open(file_path, "w") as f:
                 f.write(tool_code)
+            logger.info(f"Tool saved: {file_path}")
 
-            print(f"[Toolsmith] Wrote new tool to {file_path}")
-
-            # 5. Detect dependencies and publish to PyPI
+            # Detect dependencies
             dependencies = self._detect_dependencies(tool_code)
-            print(f"[Toolsmith] Detected dependencies: {dependencies}")
+            llm_deps = tool_data.get("dependencies", [])
+            dependencies = list(set(dependencies) | set(llm_deps))
+            logger.info(f"Dependencies: {dependencies}")
 
-            pypi_success, pypi_package, pypi_message = self._publish_to_pypi(
+            # PyPI publishing (optional)
+            pypi_package = ""
+            pypi_success, pkg_name, pypi_msg = self._publish_to_pypi(
                 class_name,
                 tool_code,
                 requirement,
@@ -559,23 +372,13 @@ RULES:
                 output_types,
                 domain,
             )
-
             if pypi_success:
-                print(f"[Toolsmith] PyPI: {pypi_message}")
-
-                # If package name differs from class name, update file and registry names
-                expected_file = pypi_package.replace("-", "_") + "_tool.py"
-                if file_name != expected_file:
-                    new_file_path = os.path.join(self.tools_dir, expected_file)
-                    os.rename(file_path, new_file_path)
-                    file_name = expected_file
-                    file_path = new_file_path
-                    print(f"[Toolsmith] Renamed tool file to match PyPI: {file_name}")
+                pypi_package = pkg_name
+                logger.info(f"PyPI: {pypi_msg}")
             else:
-                print(f"[Toolsmith] PyPI publishing failed: {pypi_message}")
-                pypi_package = ""
+                logger.debug(f"PyPI publishing skipped: {pypi_msg}")
 
-            # 6. Update Registry with Tags, Capability Schema, and PyPI package name
+            # Update registry
             self._update_registry(
                 class_name,
                 file_name,
@@ -597,15 +400,13 @@ RULES:
                 },
             )
 
-            result_msg = f"Successfully created {class_name} with tags {tags}."
+            result_msg = f"Created {class_name} with tags {tags}"
             if pypi_package:
-                result_msg += f" Published to PyPI as: pip install {pypi_package}"
+                result_msg += f". PyPI: pip install {pypi_package}"
             return result_msg
 
         except Exception as e:
-            import traceback
-
-            traceback.print_exc()
+            logger.error(f"Tool creation failed: {e}", exc_info=True)
             self._log_metrics(
                 "generation_failed", {"request": requirement, "error": str(e)}
             )
@@ -613,30 +414,19 @@ RULES:
 
     def _update_registry(
         self,
-        class_name,
-        file_name,
-        description,
-        tags,
-        input_types=None,
-        output_types=None,
-        domain=None,
-        pypi_package=None,
-        status="active",
+        class_name: str,
+        file_name: str,
+        description: str,
+        tags: list,
+        input_types: list = None,
+        output_types: list = None,
+        domain: str = None,
+        pypi_package: str = None,
+        status: str = "active",
     ):
-        try:
-            with open(self.registry_path, "r") as f:
-                data = json.load(f)
-        except Exception:
-            data = {}
-
-        # Preserve existing fields if tool already exists
-        existing_entry = data.get(class_name, {})
-        created_at = existing_entry.get("created_at", time.time())
-        use_count = existing_entry.get("use_count", 0)  # Preserve use_count
-        last_used = existing_entry.get("last_used")  # Preserve last_used
-        metrics = existing_entry.get(
-            "metrics", 0.0
-        )  # Preserve metrics (weighted score)
+        """Update or create registry entry for a tool."""
+        data = self._read_json(self.registry_path)
+        existing = data.get(class_name, {})
 
         data[class_name] = {
             "file": file_name,
@@ -646,732 +436,220 @@ RULES:
             "output_types": output_types or [],
             "domain": domain or "",
             "pypi_package": pypi_package or "",
-            "status": status,  # active, inactive, deprecated, failed
-            "created_at": created_at,
-            "updated_at": time.time(),
-            "use_count": use_count,
-            "last_used": last_used,
-            "metrics": metrics,  # Weighted performance score from profiler
+            "status": status,
+            "created_at": existing.get("created_at", time.time()),
+            "last_used": existing.get("last_used"),
+            "use_count": existing.get("use_count", 0),
+            "metrics": existing.get("metrics", 0.0),
         }
 
-        with open(self.registry_path, "w") as f:
-            json.dump(data, f, indent=2)
+        self._write_json(self.registry_path, data)
+        logger.info(f"Registry updated: {class_name}")
 
     def update_tool_status(self, tool_name: str, status: str) -> bool:
-        """
-        Update the status of a tool in the registry.
-
-        Args:
-            tool_name: Name of the tool to update
-            status: New status - one of: active, inactive, deprecated, failed
-
-        Returns:
-            True if successful, False if tool not found
-        """
+        """Update tool status (active/inactive/deprecated/failed)."""
         valid_statuses = {"active", "inactive", "deprecated", "failed"}
         if status not in valid_statuses:
-            print(
-                f"[Toolsmith] Invalid status: {status}. Must be one of {valid_statuses}"
-            )
+            logger.warning(f"Invalid status: {status}")
             return False
 
-        try:
-            with open(self.registry_path, "r") as f:
-                data = json.load(f)
-
-            if tool_name not in data:
-                print(f"[Toolsmith] Tool not found in registry: {tool_name}")
-                return False
-
-            data[tool_name]["status"] = status
-            data[tool_name]["updated_at"] = time.time()
-
-            with open(self.registry_path, "w") as f:
-                json.dump(data, f, indent=2)
-
-            self._log_metrics(
-                "status_change", {"tool_name": tool_name, "new_status": status}
-            )
-
-            print(f"[Toolsmith] Updated {tool_name} status to: {status}")
-            return True
-
-        except Exception as e:
-            print(f"[Toolsmith] Failed to update tool status: {e}")
+        data = self._read_json(self.registry_path)
+        if tool_name not in data:
+            logger.warning(f"Tool not found: {tool_name}")
             return False
+
+        old_status = data[tool_name].get("status", "unknown")
+        data[tool_name]["status"] = status
+        self._write_json(self.registry_path, data)
+
+        self._log_metrics(
+            "status_change",
+            {
+                "tool": tool_name,
+                "old_status": old_status,
+                "new_status": status,
+            },
+        )
+        logger.info(f"Status updated: {tool_name} {old_status} -> {status}")
+        return True
 
     def get_tool_status(self, tool_name: str) -> str:
-        """
-        Get the current status of a tool.
-
-        Args:
-            tool_name: Name of the tool
-
-        Returns:
-            Status string or "unknown" if tool not found
-        """
-        try:
-            with open(self.registry_path, "r") as f:
-                data = json.load(f)
-
-            if tool_name in data:
-                return data[tool_name].get(
-                    "status", "active"
-                )  # Default to active for legacy entries
-            return "unknown"
-        except Exception as e:
-            print(f"[Toolsmith] Failed to get tool status: {e}")
-            return "unknown"
+        """Get current status of a tool."""
+        data = self._read_json(self.registry_path)
+        return data.get(tool_name, {}).get("status", "unknown")
 
     def get_tools_by_status(self, status: str) -> list:
-        """
-        Get all tools with a specific status.
-
-        Args:
-            status: Status to filter by (active, inactive, deprecated, failed)
-
-        Returns:
-            List of tool names with the specified status
-        """
-        try:
-            with open(self.registry_path, "r") as f:
-                data = json.load(f)
-
-            tools = []
-            for name, meta in data.items():
-                # Default to "active" for legacy entries without status
-                tool_status = meta.get("status", "active")
-                if tool_status == status:
-                    tools.append(name)
-            return tools
-        except Exception as e:
-            print(f"[Toolsmith] Failed to get tools by status: {e}")
-            return []
-
-    def update_metrics_from_profiles(self, logs_dir: str = None) -> dict:
-        """
-        Update the metrics field in registry.json using scaled weighted scores from profile logs.
-
-        Process:
-        1. Sum raw metrics for each tool across all calls in an iteration
-        2. Divide by call count to get average raw metrics per tool
-        3. Scale the averaged values using MinMax
-        4. Apply formula to calculate final weighted score
-
-        Args:
-            logs_dir: Path to logs directory. Defaults to project's logs folder.
-
-        Returns:
-            Dictionary with tool names and their updated scaled metrics
-        """
-        import glob
-        from pathlib import Path
-
-        # Find logs directory
-        if logs_dir is None:
-            project_root = Path(self.tools_dir).parent.parent
-            logs_dir = project_root / "logs"
-        else:
-            logs_dir = Path(logs_dir)
-
-        if not logs_dir.exists():
-            print(f"[Toolsmith] Logs directory not found: {logs_dir}")
-            return {}
-
-        # Find latest profile JSON
-        profile_files = sorted(glob.glob(str(logs_dir / "profiles_*.json")))
-        if not profile_files:
-            print("[Toolsmith] No profile JSON files found in logs directory")
-            return {}
-
-        latest_file = profile_files[-1]
-        print(f"[Toolsmith] Loading profiles from: {latest_file}")
-
-        # Load the profiles
-        with open(latest_file, "r") as f:
-            profile_data = json.load(f)
-
-        raw_profiles = profile_data.get("raw_profiles", {})
-
-        # Step 1: For each tool, sum raw metrics across all calls and calculate averages
-        tool_avg_metrics = {}  # Store averaged raw metrics per tool
-
-        for tool_name, profiles in raw_profiles.items():
-            # Initialize sums
-            sum_execution_time = 0.0
-            sum_peak_memory = 0.0
-            sum_memory_delta = 0.0
-            sum_efficiency = 0.0
-            sum_success = 0.0
-            call_count = len(profiles)
-
-            # Sum all metrics for this tool
-            for profile in profiles:
-                sum_execution_time += profile.get("execution_time_ms", 0)
-                sum_peak_memory += profile.get("peak_memory_mb", 0)
-                sum_memory_delta += profile.get("memory_delta_mb", 0)
-                sum_efficiency += profile.get("efficiency_score", 0)
-                sum_success += 1.0 if profile.get("success", False) else 0.0
-
-            # Calculate average raw metrics for this tool
-            if call_count > 0:
-                tool_avg_metrics[tool_name] = {
-                    "execution_time": sum_execution_time / call_count,
-                    "peak_memory": sum_peak_memory / call_count,
-                    "memory_delta": sum_memory_delta / call_count,
-                    "efficiency": sum_efficiency / call_count,
-                    "success": sum_success / call_count,
-                    "call_count": call_count,
-                }
-                print(
-                    f"[Toolsmith] {tool_name} avg raw metrics (calls={call_count}): "
-                    f"time={tool_avg_metrics[tool_name]['execution_time']:.4f}ms, "
-                    f"mem={tool_avg_metrics[tool_name]['peak_memory']:.4f}MB"
-                )
-
-        # Step 2: Calculate min/max for MinMax scaling using averaged values
-        def get_min_max(values):
-            if not values:
-                return 0, 1
-            min_val = min(values)
-            max_val = max(values)
-            return min_val, max_val
-
-        def minmax_scale(value, min_val, max_val):
-            if max_val == min_val:
-                # No variance - all tools have the same value
-                # Return the actual normalized value (capped to 0-1)
-                # This handles cases like: all tools succeeded (1.0) → return 1.0
-                # Or all tools have same time → return 0.5 (neutral)
-                if min_val == 0:
-                    return 0.5  # Neutral for zero values
-                return min(max(value, 0.0), 1.0)  # Return actual value, clamped to 0-1
-            return (value - min_val) / (max_val - min_val)
-
-        # Collect all averaged metrics for scaling
-        all_avg_metrics = {
-            "execution_time": [m["execution_time"] for m in tool_avg_metrics.values()],
-            "peak_memory": [m["peak_memory"] for m in tool_avg_metrics.values()],
-            "memory_delta": [m["memory_delta"] for m in tool_avg_metrics.values()],
-            "efficiency": [m["efficiency"] for m in tool_avg_metrics.values()],
-            "success": [m["success"] for m in tool_avg_metrics.values()],
-        }
-
-        # Get scaling parameters from averaged values
-        scales = {}
-        for metric_name, values in all_avg_metrics.items():
-            scales[metric_name] = get_min_max(values)
-            print(
-                f"[Toolsmith] Scaler for avg_{metric_name}: min={scales[metric_name][0]:.4f}, max={scales[metric_name][1]:.4f}"
-            )
-
-        # Step 3 & 4: Scale the averaged values, invert cost metrics, and apply weighted average
-        #
-        # IMPORTANT: For cost metrics (time, memory), LOWER is BETTER.
-        # After MinMax scaling, the slowest/heaviest tool gets 1.0 and fastest/lightest gets 0.0.
-        # We INVERT these so that 1.0 = BEST (fastest/lightest) and 0.0 = WORST (slowest/heaviest).
-        #
-        # For benefit metrics (success), HIGHER is BETTER - no inversion needed.
-        #
-        # Weights (must sum to 1.0):
-        #   - Execution Time: 40% (most critical for tool performance)
-        #   - Peak Memory: 20%
-        #   - Memory Delta: 10% (less important than absolute memory)
-        #   - Success Rate: 30% (critical - failed tools are useless)
-        #
-        # Note: We exclude the pre-calculated 'efficiency' metric to avoid double-counting
-        # since it already incorporates time, memory, and success internally.
-
-        WEIGHT_TIME = 0.40
-        WEIGHT_PEAK_MEM = 0.20
-        WEIGHT_MEM_DELTA = 0.10
-        WEIGHT_SUCCESS = 0.30
-
-        tool_metrics = {}
-        for tool_name, avg in tool_avg_metrics.items():
-            # Scale each averaged metric to 0-1 range
-            scaled_exec_time = minmax_scale(
-                avg["execution_time"], *scales["execution_time"]
-            )
-            scaled_peak_mem = minmax_scale(avg["peak_memory"], *scales["peak_memory"])
-            scaled_mem_delta = minmax_scale(
-                avg["memory_delta"], *scales["memory_delta"]
-            )
-            scaled_efficiency = minmax_scale(avg["efficiency"], *scales["efficiency"])
-            scaled_success = minmax_scale(avg["success"], *scales["success"])
-
-            # INVERT cost metrics: 1.0 - scaled_value
-            # After inversion: 1.0 = fastest/lightest (BEST), 0.0 = slowest/heaviest (WORST)
-            score_time = 1.0 - scaled_exec_time
-            score_peak_mem = 1.0 - scaled_peak_mem
-            score_mem_delta = 1.0 - scaled_mem_delta
-
-            # Benefit metrics remain as-is (higher = better)
-            score_success = scaled_success
-
-            # Apply weighted average formula (result is 0-1, then scale to 0-100)
-            final_score = (
-                (score_time * WEIGHT_TIME)
-                + (score_peak_mem * WEIGHT_PEAK_MEM)
-                + (score_mem_delta * WEIGHT_MEM_DELTA)
-                + (score_success * WEIGHT_SUCCESS)
-            ) * 100  # Scale to 0-100
-
-            tool_metrics[tool_name] = round(final_score, 4)
-            print(
-                f"[Toolsmith] {tool_name} scores: time={score_time:.4f}, mem={score_peak_mem:.4f}, "
-                f"success={score_success:.4f} → final={final_score:.2f}/100"
-            )
-
-        # Update registry with metrics
-        try:
-            with open(self.registry_path, "r") as f:
-                registry = json.load(f)
-
-            updated_tools = []
-            for tool_name, score in tool_metrics.items():
-                if tool_name in registry:
-                    registry[tool_name]["metrics"] = score
-                    registry[tool_name]["updated_at"] = time.time()
-                    updated_tools.append(tool_name)
-
-            if updated_tools:
-                with open(self.registry_path, "w") as f:
-                    json.dump(registry, f, indent=2)
-                print(f"[Toolsmith] Metrics updated for {len(updated_tools)} tools")
-
-            return tool_metrics
-
-        except Exception as e:
-            print(f"[Toolsmith] Failed to update metrics: {e}")
-            return tool_metrics
+        """Get all tools with a specific status."""
+        data = self._read_json(self.registry_path)
+        return [name for name, meta in data.items() if meta.get("status") == status]
 
     def _detect_dependencies(self, code: str) -> list:
-        """
-        Parse the tool code to detect third-party library imports.
-        Returns a list of pip package names.
-        """
-        # Standard library modules to exclude
-        stdlib = {
-            "os",
-            "sys",
-            "re",
-            "json",
-            "ast",
-            "time",
-            "math",
-            "datetime",
-            "collections",
-            "itertools",
-            "functools",
-            "typing",
-            "abc",
-            "subprocess",
-            "tempfile",
-            "pathlib",
-            "io",
-            "csv",
-            "random",
-            "hashlib",
-            "base64",
-            "urllib",
-            "http",
-            "email",
-            "html",
-            "xml",
-            "logging",
-            "warnings",
-            "copy",
-            "pickle",
-            "sqlite3",
-            "threading",
-            "multiprocessing",
-            "asyncio",
-            "socket",
-            "ssl",
-            "uuid",
-            "platform",
-        }
-
-        # Known import-to-package mappings
-        import_to_package = {
-            "cv2": "opencv-python",
-            "PIL": "Pillow",
-            "sklearn": "scikit-learn",
-            "yaml": "pyyaml",
-            "bs4": "beautifulsoup4",
-        }
-
+        """Parse code to detect third-party imports."""
         dependencies = set()
-
         try:
             tree = ast.parse(code)
             for node in ast.walk(tree):
                 if isinstance(node, ast.Import):
                     for alias in node.names:
                         module = alias.name.split(".")[0]
-                        if module not in stdlib:
-                            pkg = import_to_package.get(module, module)
+                        if module not in STDLIB_MODULES:
+                            pkg = IMPORT_TO_PACKAGE.get(module, module)
                             dependencies.add(pkg)
-                elif isinstance(node, ast.ImportFrom):
-                    if node.module:
-                        module = node.module.split(".")[0]
-                        if module not in stdlib:
-                            pkg = import_to_package.get(module, module)
-                            dependencies.add(pkg)
-        except:
+                elif isinstance(node, ast.ImportFrom) and node.module:
+                    module = node.module.split(".")[0]
+                    if module not in STDLIB_MODULES:
+                        pkg = IMPORT_TO_PACKAGE.get(module, module)
+                        dependencies.add(pkg)
+        except Exception:
             pass
 
-        # Always include pydantic since our tools use it
         dependencies.add("pydantic")
-
         return list(dependencies)
 
     def _check_pypi_name(self, name: str) -> bool:
-        """
-        Check if a package name is available on PyPI.
-        Returns True if available, False if taken.
-        """
+        """Check if PyPI package name is available."""
         if not requests:
-            print(
-                "[Toolsmith] Warning: requests not installed, skipping PyPI name check"
-            )
             return True
-
         try:
             response = requests.get(f"https://pypi.org/pypi/{name}/json", timeout=5)
-            return response.status_code == 404  # 404 means available
-        except:
-            return True  # Assume available on error
+            return response.status_code == 404
+        except Exception:
+            return True
 
     def _get_available_pypi_name(self, base_name: str) -> str:
-        """
-        Find an available PyPI package name, trying variations if needed.
-        """
-        # Normalize to PyPI naming convention (lowercase, hyphens)
-        base_name = re.sub(r"[^a-z0-9]", "-", base_name.lower())
-        base_name = re.sub(r"-+", "-", base_name).strip("-")
+        """Find available PyPI package name."""
+        name = re.sub(r"[^a-z0-9]+", "-", base_name.lower()).strip("-")
+        if self._check_pypi_name(name):
+            return name
 
-        candidates = [
-            base_name,
-            f"{base_name}-ts",  # toolsmith suffix
-            f"{base_name}-auto",
-            f"{base_name}-gen",
-            f"{base_name}-{int(time.time()) % 10000}",  # timestamp suffix
-        ]
-
-        for candidate in candidates:
+        for suffix in ["tool", "ai", "llm", "auto"]:
+            candidate = f"{name}-{suffix}"
             if self._check_pypi_name(candidate):
                 return candidate
 
-        # Last resort: add random suffix
-        import random
-
-        return f"{base_name}-{random.randint(1000, 9999)}"
+        return f"{name}-{int(time.time()) % 10000}"
 
     def _publish_to_pypi(
         self,
         class_name: str,
-        tool_code: str,
+        code: str,
         description: str,
         dependencies: list,
-        tags: list = None,
-        input_types: list = None,
-        output_types: list = None,
-        domain: str = "",
+        tags: list,
+        input_types: list,
+        output_types: list,
+        domain: str,
     ) -> tuple:
-        """
-        Build and publish the tool as a minimal PyPI package.
-        The package is just the tool code file, installable via pip.
-        Returns (success: bool, package_name: str, message: str)
-        """
-        tags = tags or []
-        input_types = input_types or []
-        output_types = output_types or []
+        """Publish tool as PyPI package. Returns (success, package_name, message)."""
         if not self.pypi_token:
-            return False, "", "PyPI token not configured. Set PYPI_TOKEN in .env"
+            return False, "", "No PyPI token configured"
 
-        # Get available package name
         package_name = self._get_available_pypi_name(class_name)
         module_name = package_name.replace("-", "_")
-        print(f"[Toolsmith] Publishing as PyPI package: {package_name}")
 
-        # Create minimal package directory with src layout
-        pkg_dir = os.path.join(self.packages_dir, package_name)
-        src_dir = os.path.join(pkg_dir, "src", module_name)
-        os.makedirs(src_dir, exist_ok=True)
+        pkg_dir = self.packages_dir / package_name
+        src_dir = pkg_dir / "src" / module_name
 
-        # Write the tool code as __init__.py
-        # Escape triple quotes in tool_code for embedding
-        escaped_code_for_init = tool_code.replace('"""', '\\"\\"\\"\\"')
-        with open(os.path.join(src_dir, "__init__.py"), "w") as f:
-            f.write(f'"""Auto-generated tool: {class_name}"""\n\n')
-            f.write(tool_code)
-            f.write('\n\n__version__ = "0.1.0"\n')
-            f.write(f'TOOL_CODE = """{escaped_code_for_init}"""\n')
-
-        # Write __main__.py for auto-install capability
-        # When user runs: pip install {package} && python -m {module_name}
-        # It copies the tool to workspace/tools/ AND updates registry.json
-
-        # Escape the tool code for embedding
-        escaped_tool_code = tool_code.replace("\\", "\\\\").replace(
-            '"""', '\\"\\"\\"\\"'
-        )
-        escaped_tags = json.dumps(tags)
-        escaped_input_types = json.dumps(input_types)
-        escaped_output_types = json.dumps(output_types)
-
-        main_code = f'''"""Auto-install script for {class_name}"""
-import os
-import sys
-import json
-
-TOOL_CODE = """{tool_code}"""
-
-TOOL_METADATA = {{
-    "class_name": "{class_name}",
-    "file_name": "{module_name}.py",
-    "description": "{description[:200].replace('"', "'")}",
-    "tags": {escaped_tags},
-    "input_types": {escaped_input_types},
-    "output_types": {escaped_output_types},
-    "domain": "{domain}",
-    "pypi_package": "{package_name}"
-}}
-
-def install():
-    """Install this tool to workspace/tools/ folder and update registry.json."""
-    # Find workspace/tools directory
-    cwd = os.getcwd()
-    tools_dir = os.path.join(cwd, "workspace", "tools")
-    
-    if not os.path.exists(tools_dir):
-        # Try to find it relative to agentic_system
-        for parent in [cwd] + list(os.path.abspath(cwd).split(os.sep)):
-            candidate = os.path.join(parent, "workspace", "tools")
-            if os.path.exists(candidate):
-                tools_dir = candidate
-                break
-        else:
-            os.makedirs(tools_dir, exist_ok=True)
-    
-    # Write the tool file
-    target_file = os.path.join(tools_dir, TOOL_METADATA["file_name"])
-    with open(target_file, "w") as f:
-        f.write(TOOL_CODE)
-    print(f"[{package_name}] Installed tool to: {{target_file}}")
-    
-    # Update registry.json
-    registry_path = os.path.join(tools_dir, "registry.json")
-    
-    # Load existing registry or create new
-    if os.path.exists(registry_path):
         try:
-            with open(registry_path, "r") as f:
-                registry = json.load(f)
-        except:
-            registry = {{}}
-    else:
-        registry = {{}}
-    
-    # Check if tool already exists in registry
-    class_name = TOOL_METADATA["class_name"]
-    if class_name not in registry:
-        registry[class_name] = {{
-            "file": TOOL_METADATA["file_name"],
-            "description": TOOL_METADATA["description"],
-            "tags": TOOL_METADATA["tags"],
-            "input_types": TOOL_METADATA["input_types"],
-            "output_types": TOOL_METADATA["output_types"],
-            "domain": TOOL_METADATA["domain"],
-            "pypi_package": TOOL_METADATA["pypi_package"],
-            "metrics": 0.0
-        }}
-        
-        with open(registry_path, "w") as f:
-            json.dump(registry, f, indent=2)
-        print(f"[{package_name}] Added to registry: {{class_name}}")
-    else:
-        print(f"[{package_name}] Already in registry: {{class_name}}")
-    
-    return target_file
+            src_dir.mkdir(parents=True, exist_ok=True)
 
-if __name__ == "__main__":
-    install()
-'''
+            (src_dir / "__init__.py").write_text(code)
+            (src_dir / f"{module_name}.py").write_text(code)
 
-        with open(os.path.join(src_dir, "__main__.py"), "w") as f:
-            f.write(main_code)
-
-        # Create pyproject.toml with console script entry point
-        pyproject_content = f'''[build-system]
-requires = ["setuptools>=61.0", "wheel"]
-build-backend = "setuptools.build_meta"
+            # pyproject.toml
+            pyproject = f'''[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "{package_name}"
 version = "0.1.0"
-description = "{description[:100].replace('"', "'")}"
+description = "{description[:100]}"
+readme = "README.md"
 requires-python = ">=3.8"
+dependencies = {json.dumps(dependencies)}
+keywords = {json.dumps(tags[:5])}
 
-[project.scripts]
-{package_name}-install = "{module_name}.__main__:install"
-
-[tool.setuptools.packages.find]
-where = ["src"]
+[project.urls]
+Homepage = "https://github.com/iascis/tools"
 '''
+            (pkg_dir / "pyproject.toml").write_text(pyproject)
+            (pkg_dir / "README.md").write_text(f"# {class_name}\n\n{description}\n")
 
-        with open(os.path.join(pkg_dir, "pyproject.toml"), "w") as f:
-            f.write(pyproject_content)
-
-        # Build the package
-        print("[Toolsmith] Building package...")
-        try:
-            build_result = subprocess.run(
-                ["python3", "-m", "build"],
-                cwd=pkg_dir,
+            # Build and upload
+            result = subprocess.run(
+                ["python", "-m", "build"],
+                cwd=str(pkg_dir),
                 capture_output=True,
                 text=True,
-                timeout=60,
             )
-            if build_result.returncode != 0:
-                return False, package_name, f"Build failed: {build_result.stderr}"
-        except FileNotFoundError:
-            return (
-                False,
-                package_name,
-                "Build failed: 'build' module not installed. Run: pip install build",
-            )
-        except subprocess.TimeoutExpired:
-            return False, package_name, "Build timed out"
+            if result.returncode != 0:
+                return False, "", f"Build failed: {result.stderr[:200]}"
 
-        # Upload to PyPI using twine
-        print("[Toolsmith] Uploading to PyPI...")
-        import glob
-
-        dist_dir = os.path.join(pkg_dir, "dist")
-        dist_files = glob.glob(os.path.join(dist_dir, "*"))
-
-        if not dist_files:
-            return False, package_name, "Build produced no dist files"
-
-        try:
-            upload_result = subprocess.run(
+            result = subprocess.run(
                 [
-                    "python3",
+                    "python",
                     "-m",
                     "twine",
                     "upload",
-                    "--username",
+                    "--skip-existing",
+                    "dist/*",
+                    "-u",
                     self.pypi_username,
-                    "--password",
+                    "-p",
                     self.pypi_token,
-                    "--non-interactive",
-                ]
-                + dist_files,
-                cwd=pkg_dir,
+                ],
+                cwd=str(pkg_dir),
                 capture_output=True,
                 text=True,
-                timeout=120,
             )
+            if result.returncode != 0:
+                return False, "", f"Upload failed: {result.stderr[:200]}"
 
-            if upload_result.returncode != 0:
-                if "already exists" in upload_result.stderr.lower():
-                    return True, package_name, "Package already exists on PyPI"
-                return False, package_name, f"Upload failed: {upload_result.stderr}"
+            return True, package_name, f"Published: {package_name}"
 
-        except FileNotFoundError:
-            return (
-                False,
-                package_name,
-                "Upload failed: 'twine' not installed. Run: pip install twine",
-            )
-        except subprocess.TimeoutExpired:
-            return False, package_name, "Upload timed out"
+        except Exception as e:
+            return False, "", str(e)
 
-        print(f"[Toolsmith] Successfully published to PyPI: {package_name}")
-        return True, package_name, f"Published as pip install {package_name}"
-
-    def install_tool(self, package_name: str) -> str:
-        """
-        Install a tool from PyPI into the workspace/tools folder.
-        Downloads the package, extracts the .py file, and places it in tools/.
-        Also updates the registry.
-
-        Args:
-            package_name: The PyPI package name (e.g., 'factorial-tool-ts')
-
-        Returns:
-            Success or error message
-        """
+    def install_from_pypi(self, package_name: str) -> str:
+        """Install a tool from PyPI into the tools directory."""
         import zipfile
         import tarfile
 
         module_name = package_name.replace("-", "_")
-        tool_file = f"{module_name}.py"
-        target_path = os.path.join(self.tools_dir, tool_file)
+        tool_file = f"{module_name}_tool.py"
+        target_path = self.tools_dir / tool_file
 
-        # Check if already installed
-        if os.path.exists(target_path):
-            return f"Tool already installed: {tool_file}"
+        if target_path.exists():
+            return f"Tool already exists: {tool_file}"
 
-        print(f"[Toolsmith] Installing {package_name} from PyPI...")
-
-        # Create temp directory for download
         with tempfile.TemporaryDirectory() as tmp_dir:
-            # Download the package using pip
-            try:
-                download_result = subprocess.run(
-                    [
-                        "python3",
-                        "-m",
-                        "pip",
-                        "download",
-                        package_name,
-                        "--no-deps",
-                        "-d",
-                        tmp_dir,
-                    ],
-                    capture_output=True,
-                    text=True,
-                    timeout=60,
-                )
+            result = subprocess.run(
+                ["pip", "download", "--no-deps", "-d", tmp_dir, package_name],
+                capture_output=True,
+                text=True,
+            )
+            if result.returncode != 0:
+                return f"Download failed: {result.stderr[:200]}"
 
-                if download_result.returncode != 0:
-                    return f"Download failed: {download_result.stderr}"
-
-            except subprocess.TimeoutExpired:
-                return "Download timed out"
-            except Exception as e:
-                return f"Download error: {e}"
-
-            # Find the downloaded file
-            downloaded_files = os.listdir(tmp_dir)
-            if not downloaded_files:
+            downloaded = os.listdir(tmp_dir)
+            if not downloaded:
                 return "No package found on PyPI"
 
-            pkg_file = os.path.join(tmp_dir, downloaded_files[0])
-
-            # Extract the .py file from the package
+            pkg_file = os.path.join(tmp_dir, downloaded[0])
             tool_code = None
 
             if pkg_file.endswith(".whl"):
-                # Wheel file (zip format)
                 try:
                     with zipfile.ZipFile(pkg_file, "r") as zf:
                         for name in zf.namelist():
-                            if (
-                                name.endswith(f"{module_name}.py")
-                                or name == f"{module_name}.py"
-                            ):
+                            if name.endswith(f"{module_name}.py"):
                                 tool_code = zf.read(name).decode("utf-8")
                                 break
                 except Exception as e:
                     return f"Failed to extract wheel: {e}"
 
             elif pkg_file.endswith(".tar.gz"):
-                # Source distribution
                 try:
                     with tarfile.open(pkg_file, "r:gz") as tf:
                         for member in tf.getmembers():
@@ -1386,13 +664,10 @@ where = ["src"]
             if not tool_code:
                 return f"Could not find {module_name}.py in package"
 
-            # Write to tools directory
-            with open(target_path, "w") as f:
-                f.write(tool_code)
+            target_path.write_text(tool_code)
+            logger.info(f"Installed: {target_path}")
 
-            print(f"[Toolsmith] Installed tool to: {target_path}")
-
-            # Try to extract class name from the code
+            # Extract class name
             class_name = module_name.replace("_", " ").title().replace(" ", "") + "Tool"
             try:
                 tree = ast.parse(tool_code)
@@ -1400,10 +675,9 @@ where = ["src"]
                     if isinstance(node, ast.ClassDef) and "Tool" in node.name:
                         class_name = node.name
                         break
-            except:
+            except Exception:
                 pass
 
-            # Update registry
             self._update_registry(
                 class_name=class_name,
                 file_name=tool_file,
@@ -1412,28 +686,120 @@ where = ["src"]
                 pypi_package=package_name,
             )
 
-            return f"Successfully installed {package_name} as {tool_file}"
+            return f"Installed {package_name} as {tool_file}"
 
     def list_available_tools(self) -> list:
-        """
-        List all tools in the registry with their PyPI package names.
-        """
-        try:
-            with open(self.registry_path, "r") as f:
-                registry = json.load(f)
+        """List all tools in registry."""
+        data = self._read_json(self.registry_path)
+        return [
+            {
+                "name": name,
+                "file": meta.get("file", ""),
+                "description": meta.get("description", ""),
+                "tags": meta.get("tags", []),
+                "status": meta.get("status", "active"),
+                "pypi_package": meta.get("pypi_package", ""),
+            }
+            for name, meta in data.items()
+        ]
 
-            tools = []
-            for name, meta in registry.items():
-                tools.append(
-                    {
-                        "name": name,
-                        "file": meta.get("file", ""),
-                        "description": meta.get("description", ""),
-                        "tags": meta.get("tags", []),
-                        "pypi_package": meta.get("pypi_package", ""),
-                    }
-                )
-            return tools
-        except Exception as e:
-            print(f"[Toolsmith] Failed to list tools: {e}")
-            return []
+    def get_tool_creation_timestamps(self) -> dict:
+        """Get creation timestamps for all tools."""
+        data = self._read_json(self.registry_path)
+        return {
+            name: meta["created_at"]
+            for name, meta in data.items()
+            if "created_at" in meta
+        }
+
+    def get_tool_last_used_timestamps(self) -> dict:
+        """Get last used timestamps for all tools."""
+        result = {}
+        try:
+            with open(self.metrics_path, "r") as f:
+                for line in f:
+                    entry = json.loads(line.strip())
+                    if entry.get("event") in ("tool_created", "deduplication_hit"):
+                        tool_name = entry.get("tool_name") or entry.get("matched_tool")
+                        if tool_name:
+                            result[tool_name] = max(
+                                result.get(tool_name, 0), entry.get("timestamp", 0)
+                            )
+        except Exception:
+            pass
+        return result
+
+    def update_metrics_from_profiles(self, logs_dir: str = None) -> dict:
+        """Update registry metrics from profile logs."""
+        logs_dir = logs_dir or str(Path.cwd() / "logs")
+        tool_metrics = {}
+
+        # Find profile files
+        profile_files = []
+        for root, _, files in os.walk(logs_dir):
+            for f in files:
+                if f.startswith("profiles_") and f.endswith(".json"):
+                    profile_files.append(os.path.join(root, f))
+
+        if not profile_files:
+            logger.debug("No profile files found")
+            return tool_metrics
+
+        # Aggregate metrics
+        tool_raw = {}
+        for pf in profile_files:
+            try:
+                with open(pf, "r") as f:
+                    data = json.load(f)
+                for profile in data.get("raw_profiles", []):
+                    tool_name = profile.get("tool_name")
+                    if not tool_name:
+                        continue
+
+                    if tool_name not in tool_raw:
+                        tool_raw[tool_name] = {"time": [], "memory": [], "success": []}
+
+                    tool_raw[tool_name]["time"].append(
+                        profile.get("execution_time_ms", 0)
+                    )
+                    tool_raw[tool_name]["memory"].append(
+                        profile.get("peak_memory_mb", 0)
+                    )
+                    tool_raw[tool_name]["success"].append(
+                        1.0 if profile.get("success") else 0.0
+                    )
+            except Exception:
+                continue
+
+        # Calculate weighted scores
+        for tool_name, metrics in tool_raw.items():
+            avg_time = (
+                sum(metrics["time"]) / len(metrics["time"]) if metrics["time"] else 0
+            )
+            avg_memory = (
+                sum(metrics["memory"]) / len(metrics["memory"])
+                if metrics["memory"]
+                else 0
+            )
+            avg_success = (
+                sum(metrics["success"]) / len(metrics["success"])
+                if metrics["success"]
+                else 0
+            )
+
+            time_score = max(0, 1 - avg_time / 1000)
+            memory_score = max(0, 1 - avg_memory / 100)
+
+            weighted = time_score * 0.4 + memory_score * 0.3 + avg_success * 0.3
+            tool_metrics[tool_name] = round(weighted, 4)
+
+        # Update registry
+        if tool_metrics:
+            registry = self._read_json(self.registry_path)
+            for tool_name, score in tool_metrics.items():
+                if tool_name in registry:
+                    registry[tool_name]["metrics"] = score
+            self._write_json(self.registry_path, registry)
+            logger.info(f"Metrics updated for {len(tool_metrics)} tools")
+
+        return tool_metrics

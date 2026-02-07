@@ -1,0 +1,103 @@
+{
+  "exported_at": "2026-02-07T00:17:47.197642",
+  "summary": {
+    "ChessGrandmastersTool": {
+      "call_count": 2,
+      "avg_time_ms": 1232.4265,
+      "max_time_ms": 1861.455,
+      "min_time_ms": 603.398,
+      "avg_memory_mb": 1.9591500000000002,
+      "max_memory_mb": 3.5283,
+      "avg_memory_delta_mb": 1.4075,
+      "avg_efficiency": 0.5912999999999999,
+      "last_grade": "slow"
+    },
+    "ComputeGenderRatioTool": {
+      "call_count": 1,
+      "avg_time_ms": 0.319,
+      "max_time_ms": 0.319,
+      "min_time_ms": 0.319,
+      "avg_memory_mb": 0.0015,
+      "max_memory_mb": 0.0015,
+      "avg_memory_delta_mb": 0.0005,
+      "avg_efficiency": 0.9998,
+      "last_grade": "fast"
+    },
+    "PlotGenderRatioTool": {
+      "call_count": 1,
+      "avg_time_ms": 0.087,
+      "max_time_ms": 0.087,
+      "min_time_ms": 0.087,
+      "avg_memory_mb": 0.0015,
+      "max_memory_mb": 0.0015,
+      "avg_memory_delta_mb": 0.0005,
+      "avg_efficiency": 1.0,
+      "last_grade": "fast"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 4,
+    "tools_profiled": [
+      "ChessGrandmastersTool",
+      "ComputeGenderRatioTool",
+      "PlotGenderRatioTool"
+    ],
+    "execution_time_ms": {
+      "min": 0.087,
+      "max": 1861.455,
+      "mean": 616.31475
+    },
+    "peak_memory_mb": {
+      "min": 0.0015,
+      "max": 3.5283,
+      "mean": 0.980325
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "ChessGrandmastersTool": [
+      {
+        "tool_name": "ChessGrandmastersTool",
+        "execution_time_ms": 1861.455,
+        "peak_memory_mb": 3.5283,
+        "memory_delta_mb": 2.564,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4859,
+        "success": true
+      },
+      {
+        "tool_name": "ChessGrandmastersTool",
+        "execution_time_ms": 603.398,
+        "peak_memory_mb": 0.39,
+        "memory_delta_mb": 0.251,
+        "latency_grade": "slow",
+        "efficiency_score": 0.6967,
+        "success": true
+      }
+    ],
+    "ComputeGenderRatioTool": [
+      {
+        "tool_name": "ComputeGenderRatioTool",
+        "execution_time_ms": 0.319,
+        "peak_memory_mb": 0.0015,
+        "memory_delta_mb": 0.0005,
+        "latency_grade": "fast",
+        "efficiency_score": 0.9998,
+        "success": true
+      }
+    ],
+    "PlotGenderRatioTool": [
+      {
+        "tool_name": "PlotGenderRatioTool",
+        "execution_time_ms": 0.087,
+        "peak_memory_mb": 0.0015,
+        "memory_delta_mb": 0.0005,
+        "latency_grade": "fast",
+        "efficiency_score": 1.0,
+        "success": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,143 @@
+2026-02-06 22:15:14 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-06 22:15:29 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-06 22:15:29 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-06 22:15:29 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-06 22:15:29 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-06 22:15:29 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\Omar\Desktop\Code\Research\workspace, profiling=True)
+2026-02-06 22:15:29 | INFO | architecture.sandbox:__init__:143 | Sandbox initialized with tools_dir=C:\Users\Omar\Desktop\Code\Research\workspace\tools, output_dir=C:\Users\Omar\Desktop\Code\Research\workspace\outputs
+2026-02-06 22:15:29 | INFO | architecture.sandbox:start:172 | Sandbox container started: af116f9c3123
+2026-02-06 22:15:29 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-06 22:15:29 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-06 22:15:29 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-06 22:15:29 | INFO | architecture.executor:load_registry:93 | Loaded 30 tool definitions
+2026-02-06 22:15:29 | INFO | architecture.llm_manager:__init__:72 | Loaded 2 GROQ keys
+2026-02-06 22:15:29 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-06 22:15:32 | INFO | architecture.orchestrator:__init__:35 | Orchestrator initialized with ToolRetriever
+2026-02-06 22:15:32 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-06 22:15:32 | INFO | __main__:run:121 | Task received: fetch stats from github profile "rakheOmar" and plot language preference graph...
+2026-02-06 22:15:32 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-06 22:15:32 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-06 22:15:32 | INFO | architecture.orchestrator:run:39 | Processing,fetch stats from github profile "rakheOmar" and plot language preference graph...
+2026-02-06 22:15:32 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-06_22-15-09
+2026-02-06 22:15:33 | INFO | architecture.llm_manager:generate:132 | Generation success in 867.81ms
+2026-02-06 22:15:33 | INFO | architecture.orchestrator:run:42 | Decomposed into 5 subtasks
+2026-02-06 22:15:33 | INFO | architecture.orchestrator:_retrieve_tools:105 | st_1 → GithubProfileSearch (dist: 0.520, matched: True)
+2026-02-06 22:15:33 | INFO | architecture.orchestrator:_retrieve_tools:105 | st_2 → GithubProfileSearch (dist: 0.544, matched: True)
+2026-02-06 22:15:33 | INFO | architecture.orchestrator:_retrieve_tools:105 | st_3 → LanguageUsageStatistics (dist: 1.174, matched: False)
+2026-02-06 22:15:33 | INFO | architecture.orchestrator:_retrieve_tools:105 | st_4 → LanguageUsageStatistics (dist: 1.016, matched: False)
+2026-02-06 22:15:33 | INFO | architecture.orchestrator:_retrieve_tools:105 | st_5 → LanguagePreferencePlotter (dist: 0.561, matched: True)
+2026-02-06 22:15:33 | INFO | architecture.orchestrator:_ensure_tools:139 | Toolsmith creating: Extract programming languages used from repository data
+2026-02-06 22:15:33 | INFO | architecture.toolsmith:create_tool:247 | Request: 'Extract programming languages used from repository data'
+2026-02-06 22:15:34 | INFO | architecture.toolsmith:create_tool:254 | Domain: 'data' (method=entity, conf=0.85)
+2026-02-06 22:15:34 | INFO | architecture.toolsmith:create_tool:311 | No match found. Generating with LLM...
+2026-02-06 22:15:34 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_22-15-09
+2026-02-06 22:15:35 | INFO | architecture.llm_manager:generate:132 | Generation success in 1040.23ms
+2026-02-06 22:15:35 | INFO | architecture.toolsmith:create_tool:340 | Domain validated: data
+2026-02-06 22:15:35 | INFO | architecture.toolsmith:create_tool:344 | Tags: ['sql', 'dataframe', 'pandas', 'etl']
+2026-02-06 22:15:35 | INFO | architecture.toolsmith:create_tool:355 | Tool saved: C:\Users\Omar\Desktop\Code\Research\workspace\tools\repo_language_extractor.py
+2026-02-06 22:15:35 | INFO | architecture.toolsmith:create_tool:361 | Dependencies: ['pydantic', 'github', 'requests']
+2026-02-06 22:15:35 | DEBUG | architecture.toolsmith:create_tool:379 | PyPI publishing skipped: No PyPI token configured
+2026-02-06 22:15:35 | INFO | architecture.toolsmith:_update_registry:447 | Registry updated: RepoLanguageExtractor
+2026-02-06 22:15:35 | INFO | architecture.orchestrator:_ensure_tools:142 | Toolsmith: Created RepoLanguageExtractor with tags ['sql', 'dataframe', 'pandas', 'etl']...
+2026-02-06 22:15:39 | INFO | architecture.orchestrator:_ensure_tools:139 | Toolsmith creating: Count occurrences of each programming language
+2026-02-06 22:15:39 | INFO | architecture.toolsmith:create_tool:247 | Request: 'Count occurrences of each programming language'
+2026-02-06 22:15:39 | INFO | architecture.toolsmith:create_tool:254 | Domain: 'text' (method=keyword_low, conf=0.50)
+2026-02-06 22:15:39 | INFO | architecture.toolsmith:create_tool:311 | No match found. Generating with LLM...
+2026-02-06 22:15:39 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_22-15-09
+2026-02-06 22:15:39 | INFO | architecture.llm_manager:generate:132 | Generation success in 835.96ms
+2026-02-06 22:15:39 | INFO | architecture.toolsmith:create_tool:340 | Domain validated: text
+2026-02-06 22:15:39 | INFO | architecture.toolsmith:create_tool:344 | Tags: ['palindrome', 'anagram', 'uppercase', 'lowercase']
+2026-02-06 22:15:39 | INFO | architecture.toolsmith:create_tool:355 | Tool saved: C:\Users\Omar\Desktop\Code\Research\workspace\tools\language_counter.py
+2026-02-06 22:15:39 | INFO | architecture.toolsmith:create_tool:361 | Dependencies: ['pygithub', 'pydantic']
+2026-02-06 22:15:39 | DEBUG | architecture.toolsmith:create_tool:379 | PyPI publishing skipped: No PyPI token configured
+2026-02-06 22:15:39 | INFO | architecture.toolsmith:_update_registry:447 | Registry updated: LanguageCounter
+2026-02-06 22:15:39 | INFO | architecture.orchestrator:_ensure_tools:142 | Toolsmith: Created LanguageCounter with tags ['palindrome', 'anagram', 'uppercase', 'lowercase']...
+2026-02-06 22:15:43 | INFO | architecture.executor:execute:99 | Executing plan: fetch stats from github profile "rakheOmar" and plot language preference graph
+2026-02-06 22:15:43 | INFO | architecture.executor:execute:100 | Total steps: 5
+2026-02-06 22:15:43 | INFO | architecture.executor:_execute_step:129 | Step 1: Search for Github user 'rakheOmar' to fetch profile data using GithubProfileSearch
+2026-02-06 22:15:43 | INFO | architecture.executor:load_registry:93 | Loaded 32 tool definitions
+2026-02-06 22:15:43 | INFO | architecture.executor:_execute_step:171 | Step 1: Using description as input
+2026-02-06 22:15:43 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_22-15-09
+2026-02-06 22:15:44 | INFO | architecture.llm_manager:generate:132 | Generation success in 85.52ms
+2026-02-06 22:15:44 | INFO | architecture.executor:_infer_args:528 | LLM extracted args: {'username': 'rakheOmar'}
+2026-02-06 22:15:44 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'username': 'rakheOmar'}
+2026-02-06 22:15:44 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-06 22:15:44 | INFO | architecture.sandbox:_install_deps:192 | Installing dependencies: pydantic requests pydantic
+2026-02-06 22:15:48 | INFO | architecture.sandbox:execute_with_args:441 | DEBUG: sandbox received args = {'username': 'rakheOmar'}
+2026-02-06 22:15:48 | INFO | architecture.sandbox:execute_with_args:442 | DEBUG: args_json = {"username": "rakheOmar"}
+2026-02-06 22:15:48 | INFO | architecture.sandbox:execute_with_args:443 | DEBUG: Runner script line: args = json.loads('{"username": "rakheOmar"}')
+2026-02-06 22:15:48 | INFO | architecture.sandbox:execute_with_args:448 | Executing tool with args: GithubProfileSearch
+2026-02-06 22:15:48 | INFO | architecture.sandbox:execute_with_args:449 | Args JSON being passed: {"username": "rakheOmar"}
+2026-02-06 22:15:49 | INFO | architecture.executor:_execute_step:192 | Step 1 SANDBOX Profile: time=572.588ms, peak_mem=0.1188MB, delta_mem=0.0668MB, efficiency=71.32%, grade=slow
+2026-02-06 22:15:49 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 4989.84ms)
+2026-02-06 22:15:49 | INFO | architecture.executor:_execute_step:207 | Step 1: Completed in 4.99s
+2026-02-06 22:15:49 | INFO | architecture.executor:_execute_step:129 | Step 2: Fetch repository data from the Github profile 'rakheOmar' using GithubProfileSearch
+2026-02-06 22:15:49 | INFO | architecture.executor:load_registry:93 | Loaded 32 tool definitions
+2026-02-06 22:15:49 | INFO | architecture.executor:_execute_step:161 | Step 2: Using input from step 1
+2026-02-06 22:15:49 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_22-15-09
+2026-02-06 22:15:49 | INFO | architecture.llm_manager:generate:132 | Generation success in 411.81ms
+2026-02-06 22:15:49 | INFO | architecture.executor:_infer_args:528 | LLM extracted args: {'username': 'rakheOmar'}
+2026-02-06 22:15:49 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'username': 'rakheOmar'}
+2026-02-06 22:15:49 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-06 22:15:49 | INFO | architecture.sandbox:execute_with_args:441 | DEBUG: sandbox received args = {'username': 'rakheOmar'}
+2026-02-06 22:15:49 | INFO | architecture.sandbox:execute_with_args:442 | DEBUG: args_json = {"username": "rakheOmar"}
+2026-02-06 22:15:49 | INFO | architecture.sandbox:execute_with_args:443 | DEBUG: Runner script line: args = json.loads('{"username": "rakheOmar"}')
+2026-02-06 22:15:49 | INFO | architecture.sandbox:execute_with_args:448 | Executing tool with args: GithubProfileSearch
+2026-02-06 22:15:49 | INFO | architecture.sandbox:execute_with_args:449 | Args JSON being passed: {"username": "rakheOmar"}
+2026-02-06 22:15:49 | INFO | architecture.executor:_execute_step:192 | Step 2 SANDBOX Profile: time=96.495ms, peak_mem=0.1189MB, delta_mem=0.0669MB, efficiency=95.13%, grade=moderate
+2026-02-06 22:15:49 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 423.88ms)
+2026-02-06 22:15:49 | INFO | architecture.executor:_execute_step:207 | Step 2: Completed in 0.42s
+2026-02-06 22:15:49 | INFO | architecture.executor:_execute_step:129 | Step 3: Extract programming languages used from repository data using RepoLanguageExtractor
+2026-02-06 22:15:49 | INFO | architecture.executor:load_registry:93 | Loaded 32 tool definitions
+2026-02-06 22:15:49 | INFO | architecture.executor:_execute_step:161 | Step 3: Using input from step 2
+2026-02-06 22:15:49 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_22-15-09
+2026-02-06 22:15:50 | INFO | architecture.llm_manager:generate:132 | Generation success in 228.70ms
+2026-02-06 22:15:50 | INFO | architecture.executor:_infer_args:528 | LLM extracted args: {'repo_url': 'https://github.com/rakheOmar'}
+2026-02-06 22:15:50 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'repo_url': 'https://github.com/rakheOmar'}
+2026-02-06 22:15:50 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-06 22:15:50 | INFO | architecture.sandbox:execute_with_args:441 | DEBUG: sandbox received args = {'repo_url': 'https://github.com/rakheOmar'}
+2026-02-06 22:15:50 | INFO | architecture.sandbox:execute_with_args:442 | DEBUG: args_json = {"repo_url": "https://github.com/rakheOmar"}
+2026-02-06 22:15:50 | INFO | architecture.sandbox:execute_with_args:443 | DEBUG: Runner script line: args = json.loads('{"repo_url": "https://github.com/rakheOmar"}')
+2026-02-06 22:15:50 | INFO | architecture.sandbox:execute_with_args:448 | Executing tool with args: RepoLanguageExtractor
+2026-02-06 22:15:50 | INFO | architecture.sandbox:execute_with_args:449 | Args JSON being passed: {"repo_url": "https://github.com/rakheOmar"}
+2026-02-06 22:15:50 | INFO | architecture.executor:_execute_step:192 | Step 3 SANDBOX Profile: time=343.444ms, peak_mem=0.1163MB, delta_mem=0.0668MB, efficiency=82.78%, grade=slow
+2026-02-06 22:15:50 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 712.18ms)
+2026-02-06 22:15:50 | INFO | architecture.executor:_execute_step:207 | Step 3: Completed in 0.71s
+2026-02-06 22:15:50 | INFO | architecture.executor:_execute_step:129 | Step 4: Count occurrences of each programming language using LanguageCounter
+2026-02-06 22:15:50 | INFO | architecture.executor:load_registry:93 | Loaded 32 tool definitions
+2026-02-06 22:15:50 | INFO | architecture.executor:_execute_step:161 | Step 4: Using input from step 3
+2026-02-06 22:15:50 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_22-15-09
+2026-02-06 22:15:50 | INFO | architecture.llm_manager:generate:132 | Generation success in 99.46ms
+2026-02-06 22:15:50 | INFO | architecture.executor:_infer_args:528 | LLM extracted args: {'text': 'Error: Failed to fetch repository data'}
+2026-02-06 22:15:50 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'text': 'Error: Failed to fetch repository data'}
+2026-02-06 22:15:50 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-06 22:15:50 | INFO | architecture.sandbox:execute_with_args:441 | DEBUG: sandbox received args = {'text': 'Error: Failed to fetch repository data'}
+2026-02-06 22:15:50 | INFO | architecture.sandbox:execute_with_args:442 | DEBUG: args_json = {"text": "Error: Failed to fetch repository data"}
+2026-02-06 22:15:50 | INFO | architecture.sandbox:execute_with_args:443 | DEBUG: Runner script line: args = json.loads('{"text": "Error: Failed to fetch repository data"}')
+2026-02-06 22:15:50 | INFO | architecture.sandbox:execute_with_args:448 | Executing tool with args: LanguageCounter
+2026-02-06 22:15:50 | INFO | architecture.sandbox:execute_with_args:449 | Args JSON being passed: {"text": "Error: Failed to fetch repository data"}
+2026-02-06 22:15:51 | INFO | architecture.executor:_execute_step:192 | Step 4 SANDBOX Profile: time=0.227ms, peak_mem=0.0074MB, delta_mem=0.0062MB, efficiency=99.99%, grade=fast
+2026-02-06 22:15:51 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 473.08ms)
+2026-02-06 22:15:51 | INFO | architecture.executor:_execute_step:207 | Step 4: Completed in 0.47s
+2026-02-06 22:15:51 | INFO | architecture.executor:_execute_step:129 | Step 5: Generate a graph to visualize language preferences using LanguagePreferencePlotter
+2026-02-06 22:15:51 | INFO | architecture.executor:load_registry:93 | Loaded 32 tool definitions
+2026-02-06 22:15:51 | INFO | architecture.executor:_execute_step:161 | Step 5: Using input from step 4
+2026-02-06 22:15:51 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_22-15-09
+2026-02-06 22:15:51 | INFO | architecture.llm_manager:generate:132 | Generation success in 307.72ms
+2026-02-06 22:15:51 | INFO | architecture.executor:_infer_args:528 | LLM extracted args: {'language_stats': {}}
+2026-02-06 22:15:51 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'language_stats': {}}
+2026-02-06 22:15:51 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-06 22:15:51 | INFO | architecture.sandbox:_install_deps:192 | Installing dependencies: matplotlib
+2026-02-06 22:16:05 | INFO | architecture.sandbox:execute_with_args:441 | DEBUG: sandbox received args = {'language_stats': {}}
+2026-02-06 22:16:05 | INFO | architecture.sandbox:execute_with_args:442 | DEBUG: args_json = {"language_stats": {}}
+2026-02-06 22:16:05 | INFO | architecture.sandbox:execute_with_args:443 | DEBUG: Runner script line: args = json.loads('{"language_stats": {}}')
+2026-02-06 22:16:05 | INFO | architecture.sandbox:execute_with_args:448 | Executing tool with args: LanguagePreferencePlotter
+2026-02-06 22:16:05 | INFO | architecture.sandbox:execute_with_args:449 | Args JSON being passed: {"language_stats": {}}
+2026-02-06 22:16:06 | INFO | architecture.executor:_execute_step:192 | Step 5 SANDBOX Profile: time=156.217ms, peak_mem=1.1237MB, delta_mem=1.0645MB, efficiency=91.74%, grade=slow
+2026-02-06 22:16:06 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 15103.01ms)
+2026-02-06 22:16:06 | INFO | architecture.executor:_execute_step:207 | Step 5: Completed in 15.10s
+2026-02-06 22:16:06 | INFO | __main__:main:218 | Completed in 33851.10ms
+2026-02-06 22:16:06 | INFO | __main__:main:219 | Zone: public
+2026-02-06 22:16:06 | INFO | architecture.executor:export_profiles:500 | Profiles exported to: C:\Users\Omar\Desktop\Code\Research\logs\profiles_20260206_221606.json
+2026-02-06 22:16:12 | INFO | architecture.sandbox:stop:179 | Sandbox container stopped: af116f9c3123
+2026-02-06 22:16:12 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

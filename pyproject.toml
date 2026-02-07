@@ -27,6 +27,7 @@ dependencies = [
     "docker>=7.1.0",
     "opik>=1.10.6",
     "nest-asyncio>=1.6.0",
+    "bs4>=0.0.2",
 ]
 
 [dependency-groups]

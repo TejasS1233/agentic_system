@@ -1,0 +1,101 @@
+2026-02-06 21:51:35 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-06 21:52:10 | INFO | __main__:main:212 | Starting IASCIS with Sandbox and Profiling
+2026-02-06 21:52:10 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-06 21:52:10 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-06 21:52:10 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-06 21:52:10 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\Omar\Desktop\Code\Research\workspace, profiling=True)
+2026-02-06 21:52:10 | INFO | architecture.sandbox:__init__:143 | Sandbox initialized with tools_dir=C:\Users\Omar\Desktop\Code\Research\workspace\tools, output_dir=C:\Users\Omar\Desktop\Code\Research\workspace\outputs
+2026-02-06 21:52:10 | INFO | architecture.sandbox:start:172 | Sandbox container started: c816c19955fb
+2026-02-06 21:52:10 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-06 21:52:10 | INFO | architecture.executor:__init__:62 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-06 21:52:10 | INFO | architecture.executor:load_registry:77 | Loaded 29 tool definitions
+2026-02-06 21:52:10 | INFO | architecture.llm_manager:__init__:72 | Loaded 2 GROQ keys
+2026-02-06 21:52:10 | INFO | architecture.executor:__init__:70 | ExecutorAgent initialized with Sandbox
+2026-02-06 21:52:14 | INFO | architecture.orchestrator:__init__:35 | Orchestrator initialized with ToolRetriever
+2026-02-06 21:52:14 | INFO | __main__:_initialize_runtime:91 | Runtime initialized with Sandbox
+2026-02-06 21:52:14 | INFO | __main__:run:120 | Task received: fetch stats from github profile "rakheOmar" and plot language preference graph...
+2026-02-06 21:52:14 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-06 21:52:14 | INFO | __main__:run:124 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-06 21:52:14 | INFO | architecture.orchestrator:run:39 | Processing,fetch stats from github profile "rakheOmar" and plot language preference graph...
+2026-02-06 21:52:14 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-06_21-51-32
+2026-02-06 21:52:15 | INFO | architecture.llm_manager:generate:132 | Generation success in 834.28ms
+2026-02-06 21:52:15 | INFO | architecture.orchestrator:run:42 | Decomposed into 4 subtasks
+2026-02-06 21:52:15 | INFO | architecture.orchestrator:_retrieve_tools:105 | st_1 → GithubProfileSearch (dist: 0.570, matched: True)
+2026-02-06 21:52:15 | INFO | architecture.orchestrator:_retrieve_tools:105 | st_2 → GithubProfileSearch (dist: 0.788, matched: True)
+2026-02-06 21:52:15 | INFO | architecture.orchestrator:_retrieve_tools:105 | st_3 → LanguageUsageStatistics (dist: 0.744, matched: True)
+2026-02-06 21:52:15 | INFO | architecture.orchestrator:_retrieve_tools:105 | st_4 → LanguagePreferencePlotter (dist: 0.699, matched: True)
+2026-02-06 21:52:15 | INFO | architecture.executor:execute:83 | Executing plan: fetch stats from github profile "rakheOmar" and plot language preference graph
+2026-02-06 21:52:15 | INFO | architecture.executor:execute:84 | Total steps: 4
+2026-02-06 21:52:15 | INFO | architecture.executor:_execute_step:113 | Step 1: Fetch the GitHub profile data for user "rakheOmar" using GithubProfileSearch
+2026-02-06 21:52:15 | INFO | architecture.executor:load_registry:77 | Loaded 29 tool definitions
+2026-02-06 21:52:15 | INFO | architecture.executor:_execute_step:155 | Step 1: Using description as input
+2026-02-06 21:52:15 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_21-51-32
+2026-02-06 21:52:15 | INFO | architecture.llm_manager:generate:132 | Generation success in 87.11ms
+2026-02-06 21:52:15 | INFO | architecture.executor:_infer_args:360 | LLM extracted args: {'username': 'rakheOmar'}
+2026-02-06 21:52:15 | INFO | architecture.executor:_execute_step:158 | DEBUG: Executor inferred args = {'username': 'rakheOmar'}
+2026-02-06 21:52:15 | INFO | architecture.executor:_execute_step:159 | DEBUG: Args type = <class 'dict'>
+2026-02-06 21:52:15 | INFO | architecture.sandbox:_install_deps:192 | Installing dependencies: requests pydantic pydantic
+2026-02-06 21:52:19 | INFO | architecture.sandbox:execute_with_args:441 | DEBUG: sandbox received args = {'username': 'rakheOmar'}
+2026-02-06 21:52:19 | INFO | architecture.sandbox:execute_with_args:442 | DEBUG: args_json = {"username": "rakheOmar"}
+2026-02-06 21:52:19 | INFO | architecture.sandbox:execute_with_args:443 | DEBUG: Runner script line: args = json.loads('{"username": "rakheOmar"}')
+2026-02-06 21:52:19 | INFO | architecture.sandbox:execute_with_args:448 | Executing tool with args: GithubProfileSearch
+2026-02-06 21:52:19 | INFO | architecture.sandbox:execute_with_args:449 | Args JSON being passed: {"username": "rakheOmar"}
+2026-02-06 21:52:19 | INFO | architecture.executor:_execute_step:176 | Step 1 SANDBOX Profile: time=338.487ms, peak_mem=0.1188MB, delta_mem=0.0668MB, efficiency=83.03%, grade=slow
+2026-02-06 21:52:19 | INFO | architecture.executor:_execute_step:186 |    (Total round-trip: 4359.71ms)
+2026-02-06 21:52:19 | INFO | architecture.executor:_execute_step:191 | Step 1: Completed in 4.36s
+2026-02-06 21:52:19 | INFO | architecture.executor:_execute_step:113 | Step 2: Extract repository data from the fetched GitHub profile using GithubProfileSearch
+2026-02-06 21:52:19 | INFO | architecture.executor:load_registry:77 | Loaded 29 tool definitions
+2026-02-06 21:52:19 | INFO | architecture.executor:_execute_step:145 | Step 2: Using input from step 1
+2026-02-06 21:52:19 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_21-51-32
+2026-02-06 21:52:19 | INFO | architecture.llm_manager:generate:132 | Generation success in 90.96ms
+2026-02-06 21:52:19 | INFO | architecture.executor:_infer_args:360 | LLM extracted args: {'username': 'rakheOmar'}
+2026-02-06 21:52:19 | INFO | architecture.executor:_execute_step:158 | DEBUG: Executor inferred args = {'username': 'rakheOmar'}
+2026-02-06 21:52:19 | INFO | architecture.executor:_execute_step:159 | DEBUG: Args type = <class 'dict'>
+2026-02-06 21:52:19 | INFO | architecture.sandbox:execute_with_args:441 | DEBUG: sandbox received args = {'username': 'rakheOmar'}
+2026-02-06 21:52:19 | INFO | architecture.sandbox:execute_with_args:442 | DEBUG: args_json = {"username": "rakheOmar"}
+2026-02-06 21:52:19 | INFO | architecture.sandbox:execute_with_args:443 | DEBUG: Runner script line: args = json.loads('{"username": "rakheOmar"}')
+2026-02-06 21:52:19 | INFO | architecture.sandbox:execute_with_args:448 | Executing tool with args: GithubProfileSearch
+2026-02-06 21:52:19 | INFO | architecture.sandbox:execute_with_args:449 | Args JSON being passed: {"username": "rakheOmar"}
+2026-02-06 21:52:20 | INFO | architecture.executor:_execute_step:176 | Step 2 SANDBOX Profile: time=61.167ms, peak_mem=0.1187MB, delta_mem=0.0667MB, efficiency=96.89%, grade=moderate
+2026-02-06 21:52:20 | INFO | architecture.executor:_execute_step:186 |    (Total round-trip: 459.49ms)
+2026-02-06 21:52:20 | INFO | architecture.executor:_execute_step:191 | Step 2: Completed in 0.46s
+2026-02-06 21:52:20 | INFO | architecture.executor:_execute_step:113 | Step 3: Calculate language usage statistics from the repository data using LanguageUsageStatistics
+2026-02-06 21:52:20 | INFO | architecture.executor:load_registry:77 | Loaded 29 tool definitions
+2026-02-06 21:52:20 | INFO | architecture.executor:_execute_step:145 | Step 3: Using input from step 2
+2026-02-06 21:52:20 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_21-51-32
+2026-02-06 21:52:20 | INFO | architecture.llm_manager:generate:132 | Generation success in 103.00ms
+2026-02-06 21:52:20 | INFO | architecture.executor:_infer_args:360 | LLM extracted args: {'text': 'https://github.com/rakheOmar'}
+2026-02-06 21:52:20 | INFO | architecture.executor:_execute_step:158 | DEBUG: Executor inferred args = {'text': 'https://github.com/rakheOmar'}
+2026-02-06 21:52:20 | INFO | architecture.executor:_execute_step:159 | DEBUG: Args type = <class 'dict'>
+2026-02-06 21:52:20 | INFO | architecture.sandbox:_install_deps:192 | Installing dependencies: nltk
+2026-02-06 21:52:22 | INFO | architecture.sandbox:_install_deps:202 | Downloading NLTK data...
+2026-02-06 21:52:26 | INFO | architecture.sandbox:execute_with_args:441 | DEBUG: sandbox received args = {'text': 'https://github.com/rakheOmar'}
+2026-02-06 21:52:26 | INFO | architecture.sandbox:execute_with_args:442 | DEBUG: args_json = {"text": "https://github.com/rakheOmar"}
+2026-02-06 21:52:26 | INFO | architecture.sandbox:execute_with_args:443 | DEBUG: Runner script line: args = json.loads('{"text": "https://github.com/rakheOmar"}')
+2026-02-06 21:52:26 | INFO | architecture.sandbox:execute_with_args:448 | Executing tool with args: LanguageUsageStatistics
+2026-02-06 21:52:26 | INFO | architecture.sandbox:execute_with_args:449 | Args JSON being passed: {"text": "https://github.com/rakheOmar"}
+2026-02-06 21:52:27 | INFO | architecture.executor:_execute_step:176 | Step 3 SANDBOX Profile: time=59.451ms, peak_mem=3.7793MB, delta_mem=1.6855MB, efficiency=95.52%, grade=moderate
+2026-02-06 21:52:27 | INFO | architecture.executor:_execute_step:186 |    (Total round-trip: 6990.15ms)
+2026-02-06 21:52:27 | INFO | architecture.executor:_execute_step:191 | Step 3: Completed in 6.99s
+2026-02-06 21:52:27 | INFO | architecture.executor:_execute_step:113 | Step 4: Create a language preference graph based on the calculated statistics using LanguagePreferencePlotter
+2026-02-06 21:52:27 | INFO | architecture.executor:load_registry:77 | Loaded 29 tool definitions
+2026-02-06 21:52:27 | INFO | architecture.executor:_execute_step:145 | Step 4: Using input from step 3
+2026-02-06 21:52:27 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-06_21-51-32
+2026-02-06 21:52:27 | INFO | architecture.llm_manager:generate:132 | Generation success in 157.82ms
+2026-02-06 21:52:27 | INFO | architecture.executor:_infer_args:360 | LLM extracted args: {'language_stats': {'total_words': 1, 'top_10_words': [['https', 1]]}}
+2026-02-06 21:52:27 | INFO | architecture.executor:_execute_step:158 | DEBUG: Executor inferred args = {'language_stats': {'total_words': 1, 'top_10_words': [['https', 1]]}}
+2026-02-06 21:52:27 | INFO | architecture.executor:_execute_step:159 | DEBUG: Args type = <class 'dict'>
+2026-02-06 21:52:27 | INFO | architecture.sandbox:_install_deps:192 | Installing dependencies: matplotlib
+2026-02-06 21:52:40 | INFO | architecture.sandbox:execute_with_args:441 | DEBUG: sandbox received args = {'language_stats': {'total_words': 1, 'top_10_words': [['https', 1]]}}
+2026-02-06 21:52:40 | INFO | architecture.sandbox:execute_with_args:442 | DEBUG: args_json = {"language_stats": {"total_words": 1, "top_10_words": [["https", 1]]}}
+2026-02-06 21:52:40 | INFO | architecture.sandbox:execute_with_args:443 | DEBUG: Runner script line: args = json.loads('{"language_stats": {"total_words": 1, "top_10_words": [["https", 1]]}}')
+2026-02-06 21:52:40 | INFO | architecture.sandbox:execute_with_args:448 | Executing tool with args: LanguagePreferencePlotter
+2026-02-06 21:52:40 | INFO | architecture.sandbox:execute_with_args:449 | Args JSON being passed: {"language_stats": {"total_words": 1, "top_10_words": [["https", 1]]}}
+2026-02-06 21:52:41 | INFO | architecture.executor:_execute_step:176 | Step 4 SANDBOX Profile: time=16.608ms, peak_mem=0.3763MB, delta_mem=0.0000MB, efficiency=0.00%, grade=critical
+2026-02-06 21:52:41 | INFO | architecture.executor:_execute_step:186 |    (Total round-trip: 13653.67ms)
+2026-02-06 21:52:41 | ERROR | architecture.executor:_execute_step:195 | Step 4: Failed after 13.65s - setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+2026-02-06 21:52:41 | INFO | __main__:main:217 | Completed in 26793.59ms
+2026-02-06 21:52:41 | INFO | __main__:main:218 | Zone: public
+2026-02-06 21:52:41 | INFO | architecture.executor:export_profiles:332 | Profiles exported to: C:\Users\Omar\Desktop\Code\Research\logs\profiles_20260206_215241.json
+2026-02-06 21:52:46 | INFO | architecture.sandbox:stop:179 | Sandbox container stopped: c816c19955fb
+2026-02-06 21:52:46 | INFO | __main__:_shutdown_runtime:100 | Runtime shutdown complete

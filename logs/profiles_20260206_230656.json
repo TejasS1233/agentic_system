@@ -1,0 +1,48 @@
+{
+  "exported_at": "2026-02-06T23:06:56.269610",
+  "summary": {
+    "ChessGrandmasterSearch": {
+      "call_count": 1,
+      "avg_time_ms": 53.421,
+      "max_time_ms": 53.421,
+      "min_time_ms": 53.421,
+      "avg_memory_mb": 0.1506,
+      "max_memory_mb": 0.1506,
+      "avg_memory_delta_mb": 0.069,
+      "avg_efficiency": 0.9727,
+      "last_grade": "moderate"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 1,
+    "tools_profiled": [
+      "ChessGrandmasterSearch"
+    ],
+    "execution_time_ms": {
+      "min": 53.421,
+      "max": 53.421,
+      "mean": 53.421
+    },
+    "peak_memory_mb": {
+      "min": 0.1506,
+      "max": 0.1506,
+      "mean": 0.1506
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "ChessGrandmasterSearch": [
+      {
+        "tool_name": "ChessGrandmasterSearch",
+        "execution_time_ms": 53.421,
+        "peak_memory_mb": 0.1506,
+        "memory_delta_mb": 0.069,
+        "latency_grade": "moderate",
+        "efficiency_score": 0.9727,
+        "success": true
+      }
+    ]
+  }
+}

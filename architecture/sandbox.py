@@ -121,15 +121,28 @@ def extract_dependencies(tool_path: Path) -> list[str]:
 
 
 class Sandbox:
-    """Docker-based sandbox for isolated tool execution."""
+    """Docker-based sandbox for isolated tool execution with artifact persistence."""
 
-    def __init__(self, tools_dir: Path, image: str = "python:3.11-slim"):
+    def __init__(
+        self,
+        tools_dir: Path,
+        output_dir: Path = None,
+        image: str = "python:3.11-slim",
+    ):
         self.tools_dir = Path(tools_dir).resolve()
+        # Default output_dir to workspace/outputs if not specified
+        if output_dir is None:
+            self.output_dir = self.tools_dir.parent / "outputs"
+        else:
+            self.output_dir = Path(output_dir).resolve()
+        self.output_dir.mkdir(parents=True, exist_ok=True)
         self.image = image
         self.client = None
         self.container = None
         self._installed_deps: set[str] = set()
-        logger.info(f"Sandbox initialized with tools_dir={self.tools_dir}")
+        logger.info(
+            f"Sandbox initialized with tools_dir={self.tools_dir}, output_dir={self.output_dir}"
+        )
 
     def start(self) -> None:
         """Start the sandbox container."""
@@ -148,7 +161,10 @@ class Sandbox:
         self.container = self.client.containers.run(
             self.image,
             command="tail -f /dev/null",
-            volumes={str(self.tools_dir): {"bind": "/tools", "mode": "ro"}},
+            volumes={
+                str(self.tools_dir): {"bind": "/tools", "mode": "ro"},
+                str(self.output_dir): {"bind": "/output", "mode": "rw"},
+            },
             working_dir="/tools",
             detach=True,
             remove=True,
@@ -181,6 +197,13 @@ class Sandbox:
             logger.warning(f"pip install failed: {output.decode()}")
         else:
             self._installed_deps.update(new_deps)
+
+            if "nltk" in new_deps:
+                logger.info("Downloading NLTK data...")
+                self.container.exec_run(
+                    "python -c \"import nltk; nltk.download('punkt_tab', quiet=True); "
+                    "nltk.download('punkt', quiet=True); nltk.download('stopwords', quiet=True)\""
+                )
 
     def execute(self, tool_file: str, input_data: str) -> dict:
         """Execute a tool inside the sandbox."""
@@ -254,8 +277,18 @@ import json
 import time
 import tracemalloc
 import traceback
+import os
+import shutil
+from pathlib import Path
 
 sys.path.insert(0, '/tools')
+
+# Track files before execution
+files_before = set()
+for root, dirs, files in os.walk('/tools'):
+    for f in files:
+        if not f.startswith('_runner_'):
+            files_before.add(os.path.join(root, f))
 
 from {tool_path.stem} import *
 
@@ -276,7 +309,7 @@ for cls_name, obj in list(globals().items()):
         break
 
 if tool_class is None:
-    print(json.dumps({{"error": "No Tool class found", "profile": None}}))
+    print(json.dumps({{"error": "No Tool class found", "profile": None, "artifacts": []}}))
     sys.exit(1)
 
 try:
@@ -295,6 +328,36 @@ try:
     current, peak = tracemalloc.get_traced_memory()
     tracemalloc.stop()
     
+    # Detect new files created during execution
+    files_after = set()
+    for root, dirs, files in os.walk('/tools'):
+        for f in files:
+            if not f.startswith('_runner_'):
+                files_after.add(os.path.join(root, f))
+    
+    # Also check current working directory
+    cwd = os.getcwd()
+    if os.path.exists(cwd):
+        for f in os.listdir(cwd):
+            full_path = os.path.join(cwd, f)
+            if os.path.isfile(full_path) and not f.startswith('_runner_'):
+                files_after.add(full_path)
+    
+    # Find new files
+    new_files = files_after - files_before
+    
+    # Copy artifacts to output directory
+    artifacts = []
+    for src_path in new_files:
+        if os.path.exists(src_path) and os.path.isfile(src_path):
+            filename = os.path.basename(src_path)
+            dst_path = f'/output/{{filename}}'
+            try:
+                shutil.copy2(src_path, dst_path)
+                artifacts.append(filename)
+            except Exception as copy_err:
+                pass  # Skip files that can't be copied
+    
     # Calculate metrics
     execution_time_ms = (end_time - start_time) * 1000
     memory_delta_mb = (current - start_memory) / (1024 * 1024)
@@ -311,17 +374,17 @@ try:
         grade = "critical"
     
     # Calculate efficiency score (0.0 - 1.0)
-    # Based on: latency (50%), memory (40%), success (10%)
-    latency_score = max(0, 1 - (execution_time_ms / 1000))  # 1.0 at 0ms, 0.0 at 1000ms+
-    memory_score = max(0, 1 - (peak_memory_mb / 100))  # 1.0 at 0MB, 0.0 at 100MB+
+    latency_score = max(0, 1 - (execution_time_ms / 1000))
+    memory_score = max(0, 1 - (peak_memory_mb / 100))
     success_score = 1.0
     efficiency = (latency_score * 0.5) + (memory_score * 0.4) + (success_score * 0.1)
     efficiency = round(min(1.0, max(0.0, efficiency)), 4)
     
-    # Output result with profile
+    # Output result with profile and artifacts
     output = {{
         "success": True,
-        "result": result,  # Return raw result, JSONEncoder will handle serialization
+        "result": result,
+        "artifacts": artifacts,
         "profile": {{
             "tool_name": "{tool_name}",
             "execution_time_ms": round(execution_time_ms, 3),
@@ -333,7 +396,7 @@ try:
         }}
     }}
     
-    # Custom encoder for non-serializable objects if needed
+    # Custom encoder for non-serializable objects
     class CustomEncoder(json.JSONEncoder):
         def default(self, obj):
             try:
@@ -358,6 +421,7 @@ except Exception as e:
     output = {{
         "error": str(e),
         "traceback": traceback.format_exc(),
+        "artifacts": [],
         "profile": {{
             "tool_name": "{tool_name}",
             "execution_time_ms": round(execution_time_ms, 3),
@@ -421,6 +485,7 @@ except Exception as e:
                         "error": data["error"],
                         "output": "",
                         "profile": profile,
+                        "artifacts": data.get("artifacts", []),
                     }
 
                 # Handle result which might be in "result" field or raw output
@@ -431,11 +496,17 @@ except Exception as e:
                 elif not isinstance(result_val, str):
                     result_val = str(result_val)
 
+                # Extract artifacts
+                artifacts = data.get("artifacts", [])
+                if artifacts:
+                    logger.info(f"Artifacts generated: {artifacts}")
+
                 return {
                     "success": True,
                     "output": result_val,
                     "error": "",
                     "profile": profile,
+                    "artifacts": artifacts,
                 }
             except Exception as e:
                 logger.warning(

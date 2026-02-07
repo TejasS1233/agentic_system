@@ -1,0 +1,13 @@
+2026-02-06 21:42:02 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-06 21:42:18 | INFO | __main__:main:212 | Starting IASCIS with Sandbox and Profiling
+2026-02-06 21:42:18 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-06 21:42:18 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-06 21:42:18 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-06 21:42:18 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\Omar\Desktop\Code\Research\workspace, profiling=True)
+2026-02-06 21:42:18 | INFO | architecture.sandbox:__init__:143 | Sandbox initialized with tools_dir=C:\Users\Omar\Desktop\Code\Research\workspace\tools, output_dir=C:\Users\Omar\Desktop\Code\Research\workspace\outputs
+2026-02-06 21:42:18 | INFO | architecture.sandbox:start:172 | Sandbox container started: a58cbea11ee6
+2026-02-06 21:42:18 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-06 21:42:18 | INFO | architecture.executor:__init__:62 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-06 21:42:18 | INFO | architecture.executor:load_registry:77 | Loaded 27 tool definitions
+2026-02-06 21:42:18 | INFO | architecture.llm_manager:__init__:72 | Loaded 2 GROQ keys
+2026-02-06 21:42:18 | INFO | architecture.executor:__init__:70 | ExecutorAgent initialized with Sandbox

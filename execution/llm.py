@@ -2,11 +2,10 @@
 
 import json
 import os
-import platform
 import warnings
 from abc import ABC, abstractmethod
 
-
+from architecture.prompts import EXECUTION_AGENT_PROMPT as SYSTEM_PROMPT
 from utils.logger import get_logger
 
 from .schemas import Message
@@ -17,22 +16,6 @@ warnings.filterwarnings("ignore", message=".*PydanticSerializationUnexpectedValu
 logger = get_logger(__name__)
 
 OLLAMA_URL = os.environ.get("OLLAMA_BASE_API_URL", "http://localhost:11434")
-
-OS_INFO = f"OS: {platform.system()} ({platform.release()})"
-
-SYSTEM_PROMPT = f"""You are an expert DevOps engineer and Python developer.
-{OS_INFO}
-Always create a docker container to run your code.
-Your goal is to autonomously solve infrastructure and coding tasks.
-You can write files and execute commands.
-If a command fails, analyze the error output, fix the code or configuration, and try again.
-Always verify your work by running the code you wrote.
-
-IMPORTANT: On Windows, use %cd% instead of $(pwd) for Docker volume mounts.
-
-CRITICAL: Once you have successfully completed the task and verified the output is correct, 
-you MUST respond with a final summary message WITHOUT making any more tool calls. 
-Do NOT repeat successful commands. If the output looks correct, STOP and report success."""
 
 
 class LLMClient(ABC):

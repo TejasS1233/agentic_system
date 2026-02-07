@@ -1,0 +1,80 @@
+{
+  "exported_at": "2026-02-06T23:09:34.524420",
+  "summary": {
+    "ChessGrandmasterSearch": {
+      "call_count": 2,
+      "avg_time_ms": 57.206,
+      "max_time_ms": 60.734,
+      "min_time_ms": 53.678,
+      "avg_memory_mb": 0.15065,
+      "max_memory_mb": 0.1508,
+      "avg_memory_delta_mb": 0.06895,
+      "avg_efficiency": 0.9708,
+      "last_grade": "moderate"
+    },
+    "GrandmasterGenderRatioTool": {
+      "call_count": 1,
+      "avg_time_ms": 0.041,
+      "max_time_ms": 0.041,
+      "min_time_ms": 0.041,
+      "avg_memory_mb": 0.0016,
+      "max_memory_mb": 0.0016,
+      "avg_memory_delta_mb": 0.0,
+      "avg_efficiency": 0.0,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 3,
+    "tools_profiled": [
+      "ChessGrandmasterSearch",
+      "GrandmasterGenderRatioTool"
+    ],
+    "execution_time_ms": {
+      "min": 0.041,
+      "max": 60.734,
+      "mean": 38.151
+    },
+    "peak_memory_mb": {
+      "min": 0.0016,
+      "max": 0.1508,
+      "mean": 0.10096666666666666
+    },
+    "success_rate": 0.6666666666666666
+  },
+  "raw_profiles": {
+    "ChessGrandmasterSearch": [
+      {
+        "tool_name": "ChessGrandmasterSearch",
+        "execution_time_ms": 60.734,
+        "peak_memory_mb": 0.1508,
+        "memory_delta_mb": 0.0691,
+        "latency_grade": "moderate",
+        "efficiency_score": 0.969,
+        "success": true
+      },
+      {
+        "tool_name": "ChessGrandmasterSearch",
+        "execution_time_ms": 53.678,
+        "peak_memory_mb": 0.1505,
+        "memory_delta_mb": 0.0688,
+        "latency_grade": "moderate",
+        "efficiency_score": 0.9726,
+        "success": true
+      }
+    ],
+    "GrandmasterGenderRatioTool": [
+      {
+        "tool_name": "GrandmasterGenderRatioTool",
+        "execution_time_ms": 0.041,
+        "peak_memory_mb": 0.0016,
+        "memory_delta_mb": 0,
+        "latency_grade": "critical",
+        "success": false,
+        "error_message": "GrandmasterGenderRatioTool.run() got an unexpected keyword argument 'input'"
+      }
+    ]
+  }
+}

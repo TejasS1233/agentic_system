@@ -1,0 +1,52 @@
+2026-02-06 23:52:35 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-06 23:53:19 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-06 23:53:19 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-06 23:53:19 | DEBUG | architecture.toolsmith:_migrate_registry_status:182 | Registry migrated to include status fields
+2026-02-06 23:53:19 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-06 23:53:19 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-06 23:53:19 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\Omar\Desktop\Code\Research\workspace, profiling=True)
+2026-02-06 23:53:19 | INFO | architecture.sandbox:__init__:143 | Sandbox initialized with tools_dir=C:\Users\Omar\Desktop\Code\Research\workspace\tools, output_dir=C:\Users\Omar\Desktop\Code\Research\workspace\outputs
+2026-02-06 23:53:20 | INFO | architecture.sandbox:start:172 | Sandbox container started: 52e1e2635768
+2026-02-06 23:53:20 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-06 23:53:20 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-06 23:53:20 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-06 23:53:20 | INFO | architecture.executor:load_registry:93 | Loaded 2 tool definitions
+2026-02-06 23:53:20 | INFO | architecture.llm_manager:__init__:72 | Loaded 2 GROQ keys
+2026-02-06 23:53:20 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-06 23:53:25 | INFO | architecture.orchestrator:__init__:35 | Orchestrator initialized with ToolRetriever
+2026-02-06 23:53:25 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-06 23:53:25 | INFO | __main__:run:121 | Task received: from this year's chess top grandmaster players, plot the gender ratio...
+2026-02-06 23:53:25 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-06 23:53:25 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-06 23:53:25 | INFO | architecture.orchestrator:run:39 | Processing: from this year's chess top grandmaster players, plot the gender ratio...
+2026-02-06 23:53:25 | INFO | architecture.llm_manager:generate:108 | Generating with groq/meta-llama/llama-4-scout-17b-16e-instruct | Tokens: 100 | Temp: 0.7 | Session: 2026-02-06_23-52-18
+2026-02-06 23:53:26 | INFO | architecture.llm_manager:generate:132 | Generation success in 738.15ms
+2026-02-06 23:53:26 | INFO | architecture.orchestrator:run:43 | Task Classification: COMPLEX_TASK
+2026-02-06 23:53:26 | INFO | architecture.llm_manager:generate:108 | Generating with groq/meta-llama/llama-4-scout-17b-16e-instruct | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-06_23-52-18
+2026-02-06 23:53:27 | WARNING | architecture.llm_manager:generate:139 | Attempt 1/3 failed using key 1: litellm.BadRequestError: GroqException - {"error":{"message":"Failed to generate JSON. Please adjust your prompt. See 'failed_generation' for more details.","type":"invalid_request_error","code":"json_validate_failed","failed_generation":"{\n\"original_query\": \"plot the gender ratio of this year's chess top grandmaster players\",\n  \"subtasks\": [\n    {\n      \"id\": \"st_assistant\u003c|start_header_id|\u003e \\n{\\n  \"original_query\": \"plot the gender ratio of this year's chess top grandmaster players\",\\n  \"subtasks\": [\\n    {\\n      \"id\": \"st_1\",\n      \"description\": \"Get list of top chess grandmaster players this year\",\n      \"domain\": \"search\",\n      \"depends_on\": [],\n      \"input_from\": null,\n      \"output_format\": \"list of player names and genders\"\n    },\n    {\n      \"id\": \"st_2\",\n      \"description\": \"Process player data and compute gender ratio\",\n      \"domain\": \"data\",\n      \"depends_on\": [\"st_1\"],\n      \"input_from\": \"st_1\",\n      \"output_format\": \"dict with gender:count pairs\"\n    },\n    {\n      \"id\": \n      \"id\": \"st_3\",\n      \"description\": \"Plot gender ratio\",\n      \"domain\": \"visualization\",\n      \"depends_on\": [\"st_2\"],\n      \"input_from\": \"st_3\": {\n      \"id\": \"st_3\",\n      \"description\": \"Plot gender ratio\",\n      \"domain\": \"visualization\",\n      \"depends_on\": [\"st_2\"],\n      \"input_from\": \"st_2\",\n      \"output_format\": \"plot\"\n    }\n  ]\n}}"}}
+
+2026-02-06 23:53:28 | INFO | architecture.llm_manager:generate:132 | Generation success in 1993.12ms
+2026-02-06 23:53:28 | ERROR | architecture.orchestrator:_decompose:81 | Parse error: architecture.schemas.DecompositionResult() argument after ** must be a mapping, not list
+2026-02-06 23:53:28 | INFO | architecture.orchestrator:run:50 | Decomposed into 1 subtasks
+2026-02-06 23:53:28 | INFO | architecture.orchestrator:_retrieve_tools:113 | st_1 → WebScraperTool (dist: 1.970, matched: False)
+2026-02-06 23:53:28 | INFO | architecture.orchestrator:_ensure_tools:147 | Toolsmith creating: from this year's chess top grandmaster players, plot the gender ratio
+2026-02-06 23:53:28 | INFO | architecture.toolsmith:create_tool:247 | Request: 'from this year's chess top grandmaster players, plot the gender ratio'
+2026-02-06 23:53:30 | INFO | architecture.toolsmith:create_tool:254 | Domain: 'visualization' (method=entity+keyword, conf=0.95)
+2026-02-06 23:53:30 | INFO | architecture.toolsmith:create_tool:311 | No match found. Generating with LLM...
+2026-02-06 23:53:30 | INFO | architecture.llm_manager:generate:108 | Generating with groq/meta-llama/llama-4-scout-17b-16e-instruct | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_23-52-18
+2026-02-06 23:53:32 | INFO | architecture.llm_manager:generate:132 | Generation success in 1232.21ms
+2026-02-06 23:53:32 | INFO | architecture.toolsmith:create_tool:340 | Domain validated: visualization
+2026-02-06 23:53:32 | INFO | architecture.toolsmith:create_tool:344 | Tags: ['plot']
+2026-02-06 23:53:32 | INFO | architecture.toolsmith:create_tool:355 | Tool saved: C:\Users\Omar\Desktop\Code\Research\workspace\tools\chess_grandmaster_gender_ratio.py
+2026-02-06 23:53:32 | INFO | architecture.toolsmith:create_tool:361 | Dependencies: ['pydantic', 'matplotlib', 'requests', 'pandas']
+2026-02-06 23:53:32 | DEBUG | architecture.toolsmith:create_tool:379 | PyPI publishing skipped: No PyPI token configured
+2026-02-06 23:53:32 | INFO | architecture.toolsmith:_update_registry:447 | Registry updated: ChessGrandmasterGenderRatio
+2026-02-06 23:53:32 | INFO | architecture.orchestrator:_ensure_tools:150 | Toolsmith: Created ChessGrandmasterGenderRatio with tags ['plot']...
+2026-02-06 23:53:36 | INFO | architecture.executor:execute:99 | Executing plan: from this year's chess top grandmaster players, plot the gender ratio
+2026-02-06 23:53:36 | INFO | architecture.executor:execute:100 | Total steps: 1
+2026-02-06 23:53:36 | INFO | architecture.executor:_execute_step:129 | Step 1: from this year's chess top grandmaster players, plot the gender ratio using ChessGrandmasterGenderRatio
+2026-02-06 23:53:36 | INFO | architecture.executor:load_registry:93 | Loaded 3 tool definitions
+2026-02-06 23:53:36 | INFO | architecture.executor:_execute_step:171 | Step 1: Using description as input
+2026-02-06 23:53:36 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'input': "from this year's chess top grandmaster players, plot the gender ratio"}
+2026-02-06 23:53:36 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-06 23:53:36 | INFO | architecture.sandbox:_install_deps:192 | Installing dependencies: requests pandas matplotlib pydantic

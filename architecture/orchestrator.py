@@ -12,27 +12,10 @@ from architecture.schemas import (
 from architecture.llm_manager import get_llm_manager
 from architecture.toolsmith import Toolsmith
 from architecture.tool_retriever import ToolRetriever
+from architecture.prompts import DECOMPOSITION_PROMPT, ROUTING_PROMPT
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
-
-DECOMPOSITION_PROMPT = """You are a task decomposition expert.
-Break down the user's query into granular subtasks, each mapping to ONE domain.
-DOMAINS: math, text, file, web, visualization, data, system, conversion, search
-OUTPUT FORMAT (JSON only):
-{
-  "original_query": "<the user query>",
-  "subtasks": [
-    {"id": "st_1", "description": "...", "domain": "<domain>", "depends_on": [], "input_from": null},
-    {"id": "st_2", "description": "...", "domain": "<domain>", "depends_on": ["st_1"], "input_from": "st_1"}
-  ]
-}
-RULES:
-1. Each subtask = one atomic operation
-2. Use depends_on for ordering (list of subtask IDs)
-3. Use input_from when a subtask needs output from another
-4. Keep descriptions actionable and specific
-"""
 
 
 class Orchestrator:
@@ -52,9 +35,17 @@ class Orchestrator:
         logger.info("Orchestrator initialized with ToolRetriever")
 
     def run(self, user_query: str) -> str:
-        """Pipline chain of decompose+retriever+plan+execute"""
-        logger.info(f"Processing,{user_query[:80]}...")
+        """Execute request, routing between direct generation and tool execution."""
+        logger.info(f"Processing: {user_query[:80]}...")
 
+        # 1. Classify request
+        task_type = self._classify_request(user_query)
+        logger.info(f"Task Classification: {task_type}")
+
+        if task_type == "DIRECT_RESPONSE":
+            return self._handle_direct_generation(user_query)
+
+        # 2. Decompose and execute (Complex Task)
         decomposition = self._decompose(user_query)
         logger.info(f"Decomposed into {len(decomposition.subtasks)} subtasks")
 
@@ -108,8 +99,8 @@ class Orchestrator:
                 best = primary[0]
                 tool_name = best["tool"]
                 distance = best["distance"]
-                matched = distance < 1.0
-                confidence = max(0, 1 - distance)
+                matched = distance < 2.0
+                confidence = max(0, 1 - (distance / 2.0))
                 matches.append(
                     ToolMatch(
                         subtask_id=st.id,
@@ -196,13 +187,15 @@ class Orchestrator:
     def _create_plan(
         self, decomposition: DecompositionResult, tool_matches: list[ToolMatch]
     ) -> ExecutionPlan:
-        """Generate execution plan."""
+        """Generate execution plan with proper DAG data flow."""
         match_map = {m.subtask_id: m for m in tool_matches}
         step_num_map = {st.id: i + 1 for i, st in enumerate(decomposition.subtasks)}
         steps = []
         for i, st in enumerate(decomposition.subtasks):
             match = match_map.get(st.id)
             dep_steps = [step_num_map[d] for d in st.depends_on if d in step_num_map]
+            # Convert input_from subtask ID to step number
+            input_from_step = step_num_map.get(st.input_from) if st.input_from else None
             steps.append(
                 ExecutionStep(
                     step_number=i + 1,
@@ -211,6 +204,86 @@ class Orchestrator:
                     tool_name=match.tool_name if match else "",
                     expected_output=f"Output{st.description}",
                     depends_on=dep_steps,
+                    input_from=input_from_step,
                 )
             )
+        print(steps)
         return ExecutionPlan(original_query=decomposition.original_query, steps=steps)
+
+    def _classify_request(self, query: str) -> str:
+        """Determine if request is direct response or complex task."""
+        try:
+            prompt = ROUTING_PROMPT.format(query=query)
+            response = self.llm.generate_json(
+                messages=[{"role": "user", "content": prompt}], max_tokens=100
+            )
+            # Response content is a JSON string, need to parse it
+            content_str = response.get("content", "{}")
+            if not content_str:
+                return "COMPLEX_TASK"
+
+            data = json.loads(content_str)
+            return data.get("category", "COMPLEX_TASK")
+
+        except Exception as e:
+            logger.warning(f"Classification failed: {e}, defaulting to COMPLEX_TASK")
+            return "COMPLEX_TASK"
+
+    def _handle_direct_generation(self, query: str) -> str:
+        """Handle direct response requests (code, text, explanations)."""
+        logger.info("Handling as direct response")
+
+        prompt = f"""Fulfill the following request directly.
+        
+        User Request: {query}
+        
+        Rules:
+        1. If writing code, put it in a Markdown code block (```python, ```bash, etc).
+        2. If writing text/creative content, just write it naturally.
+        3. Be concise and helpful.
+        """
+
+        # Use generate_text which expects a prompt string and returns a dict
+        result = self.llm.generate_text(prompt)
+        response = result.get("content", "")
+
+        if not response:
+            logger.error(f"Direct generation failed: {result.get('error')}")
+            return f"Error generating response: {result.get('error')}"
+
+        # Check for code blocks to save
+        saved_files = []
+        if "```" in response:
+            import re
+
+            # Extract all code blocks
+            matches = re.findall(r"```(\w+)?\n(.*?)```", response, re.DOTALL)
+
+            for i, (lang, code) in enumerate(matches):
+                lang = lang.strip().lower() if lang else "txt"
+                ext = (
+                    "py"
+                    if lang == "python"
+                    else "sh"
+                    if lang in ["bash", "shell"]
+                    else "txt"
+                )
+
+                filename = f"generated_content_{i + 1}.{ext}"
+                # If explicit name requested, logic could be added here, but simple for now
+
+                filepath = self.executor.workspace / "outputs" / filename
+                filepath.parent.mkdir(parents=True, exist_ok=True)
+
+                try:
+                    with open(filepath, "w", encoding="utf-8") as f:
+                        f.write(code.strip())
+                    saved_files.append(str(filepath))
+                except Exception as e:
+                    logger.warning(f"Failed to save generated content: {e}")
+
+        if saved_files:
+            logger.info(f"Saved generated content to {saved_files}")
+            return f"{response}\n\n[System: Content saved to {', '.join(saved_files)}]"
+
+        return response

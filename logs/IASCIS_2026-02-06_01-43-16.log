@@ -1,0 +1,9 @@
+2026-02-06 01:43:28 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-06 01:44:30 | INFO | __main__:main:212 | Starting IASCIS with Sandbox and Profiling
+2026-02-06 01:44:30 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-06 01:44:30 | DEBUG | architecture.toolsmith:_migrate_registry_status:184 | Registry migrated to include status fields
+2026-02-06 01:44:30 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-06 01:44:30 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-06 01:44:30 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\Omar\Desktop\Code\Research\workspace, profiling=True)
+2026-02-06 01:44:30 | INFO | architecture.sandbox:__init__:143 | Sandbox initialized with tools_dir=C:\Users\Omar\Desktop\Code\Research\workspace\tools, output_dir=C:\Users\Omar\Desktop\Code\Research\workspace\outputs
+2026-02-06 01:44:30 | ERROR | architecture.sandbox:start:152 | Failed to connect to Docker: Error while fetching server API version: (2, 'CreateFile', 'The system cannot find the file specified.')

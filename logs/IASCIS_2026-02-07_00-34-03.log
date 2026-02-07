@@ -1,0 +1,58 @@
+2026-02-07 00:34:08 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-07 00:35:32 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-07 00:35:32 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-07 00:35:32 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-07 00:35:32 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-07 00:35:32 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\Omar\Desktop\Code\Research\workspace, profiling=True)
+2026-02-07 00:35:32 | INFO | architecture.sandbox:__init__:143 | Sandbox initialized with tools_dir=C:\Users\Omar\Desktop\Code\Research\workspace\tools, output_dir=C:\Users\Omar\Desktop\Code\Research\workspace\outputs
+2026-02-07 00:35:32 | INFO | architecture.sandbox:start:172 | Sandbox container started: 730b007f87bf
+2026-02-07 00:35:32 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-07 00:35:32 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-07 00:35:32 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-07 00:35:32 | INFO | architecture.executor:load_registry:93 | Loaded 6 tool definitions
+2026-02-07 00:35:32 | INFO | architecture.llm_manager:__init__:72 | Loaded 2 GROQ keys
+2026-02-07 00:35:32 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-07 00:35:37 | INFO | architecture.orchestrator:__init__:35 | Orchestrator initialized with ToolRetriever
+2026-02-07 00:35:37 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-07 00:35:37 | INFO | __main__:run:121 | Task received: from this year's chess top grandmaster players, plot the gender ratio...
+2026-02-07 00:35:37 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-07 00:35:37 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-07 00:35:37 | INFO | architecture.orchestrator:run:39 | Processing: from this year's chess top grandmaster players, plot the gender ratio...
+2026-02-07 00:35:37 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-07_00-34-03
+2026-02-07 00:35:38 | INFO | architecture.llm_manager:generate:132 | Generation success in 653.16ms
+2026-02-07 00:35:38 | INFO | architecture.orchestrator:run:43 | Task Classification: COMPLEX_TASK
+2026-02-07 00:35:38 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-07_00-34-03
+2026-02-07 00:35:39 | INFO | architecture.llm_manager:generate:132 | Generation success in 854.84ms
+2026-02-07 00:35:39 | INFO | architecture.orchestrator:run:50 | Decomposed into 4 subtasks
+2026-02-07 00:35:39 | INFO | architecture.orchestrator:_retrieve_tools:113 | st_1 → GrandmasterSearchTool (dist: 0.615, matched: True)
+2026-02-07 00:35:39 | INFO | architecture.orchestrator:_retrieve_tools:113 | st_2 → ChessGrandmastersTool (dist: 0.359, matched: True)
+2026-02-07 00:35:39 | INFO | architecture.orchestrator:_retrieve_tools:113 | st_3 → ComputeGenderRatioTool (dist: 0.893, matched: True)
+2026-02-07 00:35:39 | INFO | architecture.orchestrator:_retrieve_tools:113 | st_4 → PlotGenderRatioTool (dist: 1.010, matched: True)
+2026-02-07 00:35:39 | INFO | architecture.executor:execute:99 | Executing plan: from this year's chess top grandmaster players, plot the gender ratio
+2026-02-07 00:35:39 | INFO | architecture.executor:execute:100 | Total steps: 4
+2026-02-07 00:35:39 | INFO | architecture.executor:_execute_step:129 | Step 1: Search for this year's chess top grandmaster players using GrandmasterSearchTool
+2026-02-07 00:35:39 | INFO | architecture.executor:load_registry:93 | Loaded 6 tool definitions
+2026-02-07 00:35:39 | INFO | architecture.executor:_execute_step:171 | Step 1: Using description as input
+2026-02-07 00:35:39 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_00-34-03
+2026-02-07 00:35:39 | INFO | architecture.llm_manager:generate:132 | Generation success in 225.86ms
+2026-02-07 00:35:39 | INFO | architecture.executor:_infer_args:528 | LLM extracted args: {'year': 'this year'}
+2026-02-07 00:35:39 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'year': 'this year'}
+2026-02-07 00:35:39 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-07 00:35:39 | INFO | architecture.sandbox:_install_deps:192 | Installing dependencies: requests pydantic pydantic
+2026-02-07 00:35:54 | INFO | architecture.sandbox:execute_with_args:441 | DEBUG: sandbox received args = {'year': 'this year'}
+2026-02-07 00:35:54 | INFO | architecture.sandbox:execute_with_args:442 | DEBUG: args_json = {"year": "this year"}
+2026-02-07 00:35:54 | INFO | architecture.sandbox:execute_with_args:443 | DEBUG: Runner script line: args = json.loads('{"year": "this year"}')
+2026-02-07 00:35:54 | INFO | architecture.sandbox:execute_with_args:448 | Executing tool with args: GrandmasterSearchTool
+2026-02-07 00:35:54 | INFO | architecture.sandbox:execute_with_args:449 | Args JSON being passed: {"year": "this year"}
+2026-02-07 00:36:00 | INFO | architecture.executor:_execute_step:192 | Step 1 SANDBOX Profile: time=5557.417ms, peak_mem=0.1503MB, delta_mem=0.0685MB, efficiency=49.94%, grade=critical
+2026-02-07 00:36:00 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 20598.95ms)
+2026-02-07 00:36:00 | INFO | architecture.executor:_execute_step:207 | Step 1: Completed in 20.60s
+2026-02-07 00:36:00 | INFO | architecture.executor:_execute_step:129 | Step 2: Scrape and process the search results to get the list of top grandmaster players with their gender using ChessGrandmastersTool
+2026-02-07 00:36:00 | INFO | architecture.executor:load_registry:93 | Loaded 6 tool definitions
+2026-02-07 00:36:00 | INFO | architecture.executor:_execute_step:161 | Step 2: Using input from step 1
+2026-02-07 00:36:00 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_00-34-03
+2026-02-07 00:36:00 | INFO | architecture.llm_manager:generate:132 | Generation success in 383.05ms
+2026-02-07 00:36:00 | INFO | architecture.executor:_infer_args:528 | LLM extracted args: {'search_url': None}
+2026-02-07 00:36:00 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'search_url': None}
+2026-02-07 00:36:00 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-07 00:36:00 | INFO | architecture.sandbox:_install_deps:192 | Installing dependencies: beautifulsoup4

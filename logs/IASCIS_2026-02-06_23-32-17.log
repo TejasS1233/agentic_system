@@ -1,0 +1,65 @@
+2026-02-06 23:32:24 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-06 23:32:44 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-06 23:32:44 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-06 23:32:44 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-06 23:32:44 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-06 23:32:44 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\Omar\Desktop\Code\Research\workspace, profiling=True)
+2026-02-06 23:32:44 | INFO | architecture.sandbox:__init__:143 | Sandbox initialized with tools_dir=C:\Users\Omar\Desktop\Code\Research\workspace\tools, output_dir=C:\Users\Omar\Desktop\Code\Research\workspace\outputs
+2026-02-06 23:32:44 | INFO | architecture.sandbox:start:172 | Sandbox container started: cb191125eb36
+2026-02-06 23:32:44 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-06 23:32:44 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-06 23:32:44 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-06 23:32:44 | INFO | architecture.executor:load_registry:93 | Loaded 0 tool definitions
+2026-02-06 23:32:44 | INFO | architecture.llm_manager:__init__:72 | Loaded 2 GROQ keys
+2026-02-06 23:32:44 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-06 23:32:48 | INFO | architecture.orchestrator:__init__:35 | Orchestrator initialized with ToolRetriever
+2026-02-06 23:32:48 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-06 23:32:48 | INFO | __main__:run:121 | Task received: from this year's chess top grandmaster players, plot the gender ratio...
+2026-02-06 23:32:48 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-06 23:32:48 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-06 23:32:48 | INFO | architecture.orchestrator:run:39 | Processing: from this year's chess top grandmaster players, plot the gender ratio...
+2026-02-06 23:32:48 | INFO | architecture.llm_manager:generate:108 | Generating with groq/openai/gpt-oss-120b | Tokens: 100 | Temp: 0.7 | Session: 2026-02-06_23-32-17
+2026-02-06 23:32:49 | INFO | architecture.llm_manager:generate:132 | Generation success in 664.45ms
+2026-02-06 23:32:49 | INFO | architecture.orchestrator:run:43 | Task Classification: COMPLEX_TASK
+2026-02-06 23:32:49 | INFO | architecture.llm_manager:generate:108 | Generating with groq/openai/gpt-oss-120b | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-06_23-32-17
+2026-02-06 23:32:50 | INFO | architecture.llm_manager:generate:132 | Generation success in 1598.59ms
+2026-02-06 23:32:50 | INFO | architecture.orchestrator:run:50 | Decomposed into 4 subtasks
+2026-02-06 23:32:50 | INFO | architecture.orchestrator:_retrieve_tools:127 | st_1 → NO MATCH
+2026-02-06 23:32:50 | INFO | architecture.orchestrator:_retrieve_tools:127 | st_2 → NO MATCH
+2026-02-06 23:32:50 | INFO | architecture.orchestrator:_retrieve_tools:127 | st_3 → NO MATCH
+2026-02-06 23:32:50 | INFO | architecture.orchestrator:_retrieve_tools:127 | st_4 → NO MATCH
+2026-02-06 23:32:50 | INFO | architecture.orchestrator:_ensure_tools:147 | Toolsmith creating: Search the web for a reliable source (e.g., FIDE rating list or reputable chess news site) that lists this year's top grandmaster players.
+2026-02-06 23:32:50 | INFO | architecture.toolsmith:create_tool:247 | Request: 'Search the web for a reliable source (e.g., FIDE rating list or reputable chess news site) that lists this year's top grandmaster players.'
+2026-02-06 23:32:50 | INFO | architecture.toolsmith:create_tool:254 | Domain: 'web' (method=phrase, conf=0.95)
+2026-02-06 23:32:50 | INFO | architecture.toolsmith:create_tool:311 | No match found. Generating with LLM...
+2026-02-06 23:32:50 | INFO | architecture.llm_manager:generate:108 | Generating with groq/openai/gpt-oss-120b | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_23-32-17
+2026-02-06 23:32:54 | INFO | architecture.llm_manager:generate:132 | Generation success in 4290.64ms
+2026-02-06 23:32:54 | INFO | architecture.toolsmith:create_tool:340 | Domain validated: web
+2026-02-06 23:32:54 | INFO | architecture.toolsmith:create_tool:344 | Tags: ['web']
+2026-02-06 23:32:54 | WARNING | architecture.toolsmith:_is_safe_code:201 | Safety violation: Syntax error: unexpected character after line continuation character (<unknown>, line 1)
+2026-02-06 23:32:54 | INFO | architecture.orchestrator:_ensure_tools:150 | Toolsmith: Tool rejected: Safety violation detected...
+2026-02-06 23:32:58 | INFO | architecture.orchestrator:_ensure_tools:147 | Toolsmith creating: Visit the most relevant URL, scrape the player names and their gender (if indicated) from the ranking table, and output a structured list.
+2026-02-06 23:32:58 | INFO | architecture.toolsmith:create_tool:247 | Request: 'Visit the most relevant URL, scrape the player names and their gender (if indicated) from the ranking table, and output a structured list.'
+2026-02-06 23:32:59 | INFO | architecture.toolsmith:create_tool:254 | Domain: 'web' (method=entity+keyword, conf=0.95)
+2026-02-06 23:32:59 | INFO | architecture.toolsmith:create_tool:311 | No match found. Generating with LLM...
+2026-02-06 23:32:59 | INFO | architecture.llm_manager:generate:108 | Generating with groq/openai/gpt-oss-120b | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_23-32-17
+2026-02-06 23:33:02 | INFO | architecture.llm_manager:generate:132 | Generation success in 3205.75ms
+2026-02-06 23:33:02 | INFO | architecture.toolsmith:create_tool:340 | Domain validated: web
+2026-02-06 23:33:02 | INFO | architecture.toolsmith:create_tool:344 | Tags: ['scrape']
+2026-02-06 23:33:02 | WARNING | architecture.toolsmith:_is_safe_code:201 | Safety violation: Syntax error: unexpected character after line continuation character (<unknown>, line 1)
+2026-02-06 23:33:02 | INFO | architecture.orchestrator:_ensure_tools:150 | Toolsmith: Tool rejected: Safety violation detected...
+2026-02-06 23:33:06 | INFO | architecture.orchestrator:_ensure_tools:147 | Toolsmith creating: Calculate the gender ratio from the scraped list (count males, count females, compute percentages).
+2026-02-06 23:33:06 | INFO | architecture.toolsmith:create_tool:247 | Request: 'Calculate the gender ratio from the scraped list (count males, count females, compute percentages).'
+2026-02-06 23:33:06 | INFO | architecture.toolsmith:create_tool:254 | Domain: 'math' (method=entity+keyword, conf=0.93)
+2026-02-06 23:33:06 | INFO | architecture.toolsmith:create_tool:311 | No match found. Generating with LLM...
+2026-02-06 23:33:06 | INFO | architecture.llm_manager:generate:108 | Generating with groq/openai/gpt-oss-120b | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_23-32-17
+2026-02-06 23:33:09 | INFO | architecture.llm_manager:generate:132 | Generation success in 3326.26ms
+2026-02-06 23:33:09 | INFO | architecture.toolsmith:create_tool:340 | Domain validated: data
+2026-02-06 23:33:09 | INFO | architecture.toolsmith:create_tool:344 | Tags: ['sql', 'dataframe', 'pandas', 'etl']
+2026-02-06 23:33:09 | WARNING | architecture.toolsmith:_is_safe_code:201 | Safety violation: Syntax error: unexpected character after line continuation character (<unknown>, line 1)
+2026-02-06 23:33:09 | INFO | architecture.orchestrator:_ensure_tools:150 | Toolsmith: Tool rejected: Safety violation detected...
+2026-02-06 23:33:12 | INFO | architecture.orchestrator:_ensure_tools:147 | Toolsmith creating: Create a bar chart visualizing the gender ratio (male vs. female) using the counts or percentages.
+2026-02-06 23:33:12 | INFO | architecture.toolsmith:create_tool:247 | Request: 'Create a bar chart visualizing the gender ratio (male vs. female) using the counts or percentages.'
+2026-02-06 23:33:12 | INFO | architecture.toolsmith:create_tool:254 | Domain: 'visualization' (method=entity+keyword, conf=0.95)
+2026-02-06 23:33:12 | INFO | architecture.toolsmith:create_tool:311 | No match found. Generating with LLM...
+2026-02-06 23:33:12 | INFO | architecture.llm_manager:generate:108 | Generating with groq/openai/gpt-oss-120b | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_23-32-17

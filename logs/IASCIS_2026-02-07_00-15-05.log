@@ -1,0 +1,103 @@
+2026-02-07 00:15:22 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-07 00:16:22 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-07 00:16:22 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-07 00:16:22 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-07 00:16:22 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-07 00:16:22 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\Omar\Desktop\Code\Research\workspace, profiling=True)
+2026-02-07 00:16:22 | INFO | architecture.sandbox:__init__:143 | Sandbox initialized with tools_dir=C:\Users\Omar\Desktop\Code\Research\workspace\tools, output_dir=C:\Users\Omar\Desktop\Code\Research\workspace\outputs
+2026-02-07 00:16:24 | INFO | architecture.sandbox:start:172 | Sandbox container started: 578fe9f1981c
+2026-02-07 00:16:24 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-07 00:16:24 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-07 00:16:24 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-07 00:16:24 | INFO | architecture.executor:load_registry:93 | Loaded 6 tool definitions
+2026-02-07 00:16:24 | INFO | architecture.llm_manager:__init__:72 | Loaded 2 GROQ keys
+2026-02-07 00:16:24 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-07 00:16:28 | INFO | architecture.orchestrator:__init__:35 | Orchestrator initialized with ToolRetriever
+2026-02-07 00:16:28 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-07 00:16:28 | INFO | __main__:run:121 | Task received: from this year's chess top grandmaster players, plot the gender ratio...
+2026-02-07 00:16:28 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-07 00:16:28 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-07 00:16:28 | INFO | architecture.orchestrator:run:39 | Processing: from this year's chess top grandmaster players, plot the gender ratio...
+2026-02-07 00:16:28 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-07_00-15-05
+2026-02-07 00:16:29 | INFO | architecture.llm_manager:generate:132 | Generation success in 643.52ms
+2026-02-07 00:16:29 | INFO | architecture.orchestrator:run:43 | Task Classification: COMPLEX_TASK
+2026-02-07 00:16:29 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-07_00-15-05
+2026-02-07 00:16:30 | INFO | architecture.llm_manager:generate:132 | Generation success in 701.05ms
+2026-02-07 00:16:30 | INFO | architecture.orchestrator:run:50 | Decomposed into 4 subtasks
+2026-02-07 00:16:30 | INFO | architecture.orchestrator:_retrieve_tools:113 | st_1 → ChessGrandmastersTool (dist: 0.659, matched: True)
+2026-02-07 00:16:30 | INFO | architecture.orchestrator:_retrieve_tools:113 | st_2 → ChessGrandmastersTool (dist: 0.681, matched: True)
+2026-02-07 00:16:30 | INFO | architecture.orchestrator:_retrieve_tools:113 | st_3 → ComputeGenderRatioTool (dist: 0.823, matched: True)
+2026-02-07 00:16:30 | INFO | architecture.orchestrator:_retrieve_tools:113 | st_4 → PlotGenderRatioTool (dist: 1.010, matched: True)
+2026-02-07 00:16:30 | INFO | architecture.executor:execute:99 | Executing plan: from this year's chess top grandmaster players, plot the gender ratio
+2026-02-07 00:16:30 | INFO | architecture.executor:execute:100 | Total steps: 4
+2026-02-07 00:16:30 | INFO | architecture.executor:_execute_step:129 | Step 1: Fetch list of this year's top chess grandmaster players using ChessGrandmastersTool
+2026-02-07 00:16:30 | INFO | architecture.executor:load_registry:93 | Loaded 6 tool definitions
+2026-02-07 00:16:30 | INFO | architecture.executor:_execute_step:171 | Step 1: Using description as input
+2026-02-07 00:16:30 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_00-15-05
+2026-02-07 00:16:30 | INFO | architecture.llm_manager:generate:132 | Generation success in 119.12ms
+2026-02-07 00:16:30 | INFO | architecture.executor:_infer_args:528 | LLM extracted args: {'search_url': 'https://www.chess.com/ratings'}
+2026-02-07 00:16:30 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'search_url': 'https://www.chess.com/ratings'}
+2026-02-07 00:16:30 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-07 00:16:30 | INFO | architecture.sandbox:_install_deps:192 | Installing dependencies: pydantic requests beautifulsoup4 pydantic
+2026-02-07 00:16:50 | INFO | architecture.sandbox:execute_with_args:441 | DEBUG: sandbox received args = {'search_url': 'https://www.chess.com/ratings'}
+2026-02-07 00:16:50 | INFO | architecture.sandbox:execute_with_args:442 | DEBUG: args_json = {"search_url": "https://www.chess.com/ratings"}
+2026-02-07 00:16:50 | INFO | architecture.sandbox:execute_with_args:443 | DEBUG: Runner script line: args = json.loads('{"search_url": "https://www.chess.com/ratings"}')
+2026-02-07 00:16:51 | INFO | architecture.sandbox:execute_with_args:448 | Executing tool with args: ChessGrandmastersTool
+2026-02-07 00:16:51 | INFO | architecture.sandbox:execute_with_args:449 | Args JSON being passed: {"search_url": "https://www.chess.com/ratings"}
+2026-02-07 00:16:55 | INFO | architecture.executor:_execute_step:192 | Step 1 SANDBOX Profile: time=1861.455ms, peak_mem=3.5283MB, delta_mem=2.5640MB, efficiency=48.59%, grade=critical
+2026-02-07 00:16:55 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 24589.09ms)
+2026-02-07 00:16:55 | INFO | architecture.executor:_execute_step:207 | Step 1: Completed in 24.59s
+2026-02-07 00:16:55 | INFO | architecture.executor:_execute_step:129 | Step 2: Scrape and process the list to extract player information including gender using ChessGrandmastersTool
+2026-02-07 00:16:55 | INFO | architecture.executor:load_registry:93 | Loaded 6 tool definitions
+2026-02-07 00:16:55 | INFO | architecture.executor:_execute_step:161 | Step 2: Using input from step 1
+2026-02-07 00:16:55 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_00-15-05
+2026-02-07 00:16:55 | INFO | architecture.llm_manager:generate:132 | Generation success in 175.08ms
+2026-02-07 00:16:55 | INFO | architecture.executor:_infer_args:528 | LLM extracted args: {'search_url': 'https://www.chess.com/rankings'}
+2026-02-07 00:16:55 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'search_url': 'https://www.chess.com/rankings'}
+2026-02-07 00:16:55 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-07 00:16:55 | INFO | architecture.sandbox:execute_with_args:441 | DEBUG: sandbox received args = {'search_url': 'https://www.chess.com/rankings'}
+2026-02-07 00:16:55 | INFO | architecture.sandbox:execute_with_args:442 | DEBUG: args_json = {"search_url": "https://www.chess.com/rankings"}
+2026-02-07 00:16:55 | INFO | architecture.sandbox:execute_with_args:443 | DEBUG: Runner script line: args = json.loads('{"search_url": "https://www.chess.com/rankings"}')
+2026-02-07 00:16:55 | INFO | architecture.sandbox:execute_with_args:448 | Executing tool with args: ChessGrandmastersTool
+2026-02-07 00:16:55 | INFO | architecture.sandbox:execute_with_args:449 | Args JSON being passed: {"search_url": "https://www.chess.com/rankings"}
+2026-02-07 00:16:58 | INFO | architecture.executor:_execute_step:192 | Step 2 SANDBOX Profile: time=603.398ms, peak_mem=0.3900MB, delta_mem=0.2510MB, efficiency=69.67%, grade=slow
+2026-02-07 00:16:58 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 2484.21ms)
+2026-02-07 00:16:58 | INFO | architecture.executor:_execute_step:207 | Step 2: Completed in 2.48s
+2026-02-07 00:16:58 | INFO | architecture.executor:_execute_step:129 | Step 3: Compute the gender ratio from the player information using ComputeGenderRatioTool
+2026-02-07 00:16:58 | INFO | architecture.executor:load_registry:93 | Loaded 6 tool definitions
+2026-02-07 00:16:58 | INFO | architecture.executor:_execute_step:161 | Step 3: Using input from step 2
+2026-02-07 00:16:58 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_00-15-05
+2026-02-07 00:16:58 | INFO | architecture.llm_manager:generate:132 | Generation success in 93.23ms
+2026-02-07 00:16:58 | INFO | architecture.executor:_infer_args:528 | LLM extracted args: {'players': []}
+2026-02-07 00:16:58 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'players': []}
+2026-02-07 00:16:58 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-07 00:16:58 | INFO | architecture.sandbox:execute_with_args:441 | DEBUG: sandbox received args = {'players': []}
+2026-02-07 00:16:58 | INFO | architecture.sandbox:execute_with_args:442 | DEBUG: args_json = {"players": []}
+2026-02-07 00:16:58 | INFO | architecture.sandbox:execute_with_args:443 | DEBUG: Runner script line: args = json.loads('{"players": []}')
+2026-02-07 00:16:58 | INFO | architecture.sandbox:execute_with_args:448 | Executing tool with args: ComputeGenderRatioTool
+2026-02-07 00:16:58 | INFO | architecture.sandbox:execute_with_args:449 | Args JSON being passed: {"players": []}
+2026-02-07 00:16:59 | INFO | architecture.executor:_execute_step:192 | Step 3 SANDBOX Profile: time=0.319ms, peak_mem=0.0015MB, delta_mem=0.0005MB, efficiency=99.98%, grade=fast
+2026-02-07 00:16:59 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 1513.36ms)
+2026-02-07 00:16:59 | INFO | architecture.executor:_execute_step:207 | Step 3: Completed in 1.51s
+2026-02-07 00:16:59 | INFO | architecture.executor:_execute_step:129 | Step 4: Plot the gender ratio using PlotGenderRatioTool
+2026-02-07 00:16:59 | INFO | architecture.executor:load_registry:93 | Loaded 6 tool definitions
+2026-02-07 00:16:59 | INFO | architecture.executor:_execute_step:161 | Step 4: Using input from step 3
+2026-02-07 00:16:59 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-07_00-15-05
+2026-02-07 00:16:59 | INFO | architecture.llm_manager:generate:132 | Generation success in 124.29ms
+2026-02-07 00:16:59 | INFO | architecture.executor:_infer_args:528 | LLM extracted args: {'players': None}
+2026-02-07 00:16:59 | INFO | architecture.executor:_execute_step:174 | DEBUG: Executor inferred args = {'players': None}
+2026-02-07 00:16:59 | INFO | architecture.executor:_execute_step:175 | DEBUG: Args type = <class 'dict'>
+2026-02-07 00:16:59 | INFO | architecture.sandbox:_install_deps:192 | Installing dependencies: matplotlib
+2026-02-07 00:17:43 | INFO | architecture.sandbox:execute_with_args:441 | DEBUG: sandbox received args = {'players': None}
+2026-02-07 00:17:43 | INFO | architecture.sandbox:execute_with_args:442 | DEBUG: args_json = {"players": null}
+2026-02-07 00:17:43 | INFO | architecture.sandbox:execute_with_args:443 | DEBUG: Runner script line: args = json.loads('{"players": null}')
+2026-02-07 00:17:43 | INFO | architecture.sandbox:execute_with_args:448 | Executing tool with args: PlotGenderRatioTool
+2026-02-07 00:17:43 | INFO | architecture.sandbox:execute_with_args:449 | Args JSON being passed: {"players": null}
+2026-02-07 00:17:47 | INFO | architecture.executor:_execute_step:192 | Step 4 SANDBOX Profile: time=0.087ms, peak_mem=0.0015MB, delta_mem=0.0005MB, efficiency=100.00%, grade=fast
+2026-02-07 00:17:47 | INFO | architecture.executor:_execute_step:202 |    (Total round-trip: 47328.02ms)
+2026-02-07 00:17:47 | INFO | architecture.executor:_execute_step:207 | Step 4: Completed in 47.33s
+2026-02-07 00:17:47 | INFO | __main__:main:218 | Completed in 78221.28ms
+2026-02-07 00:17:47 | INFO | __main__:main:219 | Zone: public
+2026-02-07 00:17:47 | INFO | architecture.executor:export_profiles:500 | Profiles exported to: C:\Users\Omar\Desktop\Code\Research\logs\profiles_20260207_001747.json
+2026-02-07 00:17:52 | INFO | architecture.sandbox:stop:179 | Sandbox container stopped: 578fe9f1981c
+2026-02-07 00:17:52 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

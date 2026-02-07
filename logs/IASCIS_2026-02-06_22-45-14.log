@@ -1,0 +1,75 @@
+2026-02-06 22:45:17 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-06 22:46:08 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-06 22:46:08 | INFO | architecture.gatekeeper:__init__:218 | Gatekeeper initialized (strict=True, stateful=True)
+2026-02-06 22:46:08 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-06 22:46:08 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-06 22:46:08 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\Omar\Desktop\Code\Research\workspace, profiling=True)
+2026-02-06 22:46:08 | INFO | architecture.sandbox:__init__:143 | Sandbox initialized with tools_dir=C:\Users\Omar\Desktop\Code\Research\workspace\tools, output_dir=C:\Users\Omar\Desktop\Code\Research\workspace\outputs
+2026-02-06 22:46:08 | INFO | architecture.sandbox:start:172 | Sandbox container started: 2b4b844b0bdf
+2026-02-06 22:46:08 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-06 22:46:08 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-06 22:46:08 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-06 22:46:08 | INFO | architecture.executor:load_registry:93 | Loaded 33 tool definitions
+2026-02-06 22:46:08 | INFO | architecture.llm_manager:__init__:72 | Loaded 2 GROQ keys
+2026-02-06 22:46:08 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-06 22:46:13 | INFO | architecture.orchestrator:__init__:35 | Orchestrator initialized with ToolRetriever
+2026-02-06 22:46:13 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-06 22:46:13 | INFO | __main__:run:121 | Task received: from this year's chess top grandmaster players, plot the gender ratio...
+2026-02-06 22:46:13 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-06 22:46:13 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-06 22:46:13 | INFO | architecture.orchestrator:run:39 | Processing: from this year's chess top grandmaster players, plot the gender ratio...
+2026-02-06 22:46:13 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-06_22-45-14
+2026-02-06 22:46:13 | INFO | architecture.llm_manager:generate:132 | Generation success in 272.07ms
+2026-02-06 22:46:13 | INFO | architecture.orchestrator:run:43 | Task Classification: COMPLEX_TASK
+2026-02-06 22:46:13 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-06_22-45-14
+2026-02-06 22:46:14 | INFO | architecture.llm_manager:generate:132 | Generation success in 610.50ms
+2026-02-06 22:46:14 | INFO | architecture.orchestrator:run:50 | Decomposed into 3 subtasks
+2026-02-06 22:46:14 | INFO | architecture.orchestrator:_retrieve_tools:113 | st_1 → InterestDiscoveryTool (dist: 1.506, matched: False)
+2026-02-06 22:46:14 | INFO | architecture.orchestrator:_retrieve_tools:113 | st_2 → LanguageUsageStatistics (dist: 1.569, matched: False)
+2026-02-06 22:46:14 | INFO | architecture.orchestrator:_retrieve_tools:113 | st_3 → TopWordsBarChart (dist: 1.400, matched: False)
+2026-02-06 22:46:14 | INFO | architecture.orchestrator:_ensure_tools:147 | Toolsmith creating: Fetch current year's top grandmaster chess players from a reliable chess database or API
+2026-02-06 22:46:14 | INFO | architecture.toolsmith:create_tool:247 | Request: 'Fetch current year's top grandmaster chess players from a reliable chess database or API'
+2026-02-06 22:46:14 | INFO | architecture.toolsmith:create_tool:254 | Domain: 'web' (method=first_verb, conf=0.93)
+2026-02-06 22:46:14 | INFO | architecture.toolsmith:create_tool:311 | No match found. Generating with LLM...
+2026-02-06 22:46:14 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_22-45-14
+2026-02-06 22:46:15 | INFO | architecture.llm_manager:generate:132 | Generation success in 857.06ms
+2026-02-06 22:46:15 | INFO | architecture.toolsmith:create_tool:340 | Domain validated: web
+2026-02-06 22:46:15 | INFO | architecture.toolsmith:create_tool:344 | Tags: ['api']
+2026-02-06 22:46:15 | WARNING | architecture.toolsmith:_is_safe_code:201 | Safety violation: Syntax error: unterminated string literal (detected at line 9) (<unknown>, line 9)
+2026-02-06 22:46:15 | INFO | architecture.orchestrator:_ensure_tools:150 | Toolsmith: Tool rejected: Safety violation detected...
+2026-02-06 22:46:18 | INFO | architecture.orchestrator:_ensure_tools:147 | Toolsmith creating: Count the number of male and female players from the list
+2026-02-06 22:46:18 | INFO | architecture.toolsmith:create_tool:247 | Request: 'Count the number of male and female players from the list'
+2026-02-06 22:46:19 | INFO | architecture.toolsmith:create_tool:254 | Domain: 'math' (method=entity, conf=0.85)
+2026-02-06 22:46:19 | INFO | architecture.toolsmith:create_tool:311 | No match found. Generating with LLM...
+2026-02-06 22:46:19 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_22-45-14
+2026-02-06 22:46:20 | INFO | architecture.llm_manager:generate:132 | Generation success in 906.21ms
+2026-02-06 22:46:20 | INFO | architecture.toolsmith:create_tool:340 | Domain validated: data
+2026-02-06 22:46:20 | INFO | architecture.toolsmith:create_tool:344 | Tags: ['sql', 'dataframe', 'pandas', 'etl']
+2026-02-06 22:46:20 | INFO | architecture.toolsmith:create_tool:355 | Tool saved: C:\Users\Omar\Desktop\Code\Research\workspace\tools\player_gender_counter.py
+2026-02-06 22:46:20 | INFO | architecture.toolsmith:create_tool:361 | Dependencies: ['pydantic']
+2026-02-06 22:46:20 | DEBUG | architecture.toolsmith:create_tool:379 | PyPI publishing skipped: No PyPI token configured
+2026-02-06 22:46:20 | INFO | architecture.toolsmith:_update_registry:447 | Registry updated: PlayerGenderCounter
+2026-02-06 22:46:20 | INFO | architecture.orchestrator:_ensure_tools:150 | Toolsmith: Created PlayerGenderCounter with tags ['sql', 'dataframe', 'pandas', 'etl']...
+2026-02-06 22:46:23 | INFO | architecture.orchestrator:_ensure_tools:147 | Toolsmith creating: Plot the gender ratio as a pie chart or bar chart
+2026-02-06 22:46:23 | INFO | architecture.toolsmith:create_tool:247 | Request: 'Plot the gender ratio as a pie chart or bar chart'
+2026-02-06 22:46:23 | INFO | architecture.toolsmith:create_tool:254 | Domain: 'visualization' (method=entity+keyword, conf=0.95)
+2026-02-06 22:46:23 | INFO | architecture.toolsmith:create_tool:311 | No match found. Generating with LLM...
+2026-02-06 22:46:23 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-06_22-45-14
+2026-02-06 22:46:24 | INFO | architecture.llm_manager:generate:132 | Generation success in 989.35ms
+2026-02-06 22:46:24 | INFO | architecture.toolsmith:create_tool:340 | Domain validated: visualization
+2026-02-06 22:46:24 | INFO | architecture.toolsmith:create_tool:344 | Tags: ['plot', 'chart', 'visualize', 'histogram']
+2026-02-06 22:46:24 | INFO | architecture.toolsmith:create_tool:355 | Tool saved: C:\Users\Omar\Desktop\Code\Research\workspace\tools\gender_ratio_plotter.py
+2026-02-06 22:46:24 | INFO | architecture.toolsmith:create_tool:361 | Dependencies: ['pydantic', 'matplotlib']
+2026-02-06 22:46:24 | DEBUG | architecture.toolsmith:create_tool:379 | PyPI publishing skipped: No PyPI token configured
+2026-02-06 22:46:24 | INFO | architecture.toolsmith:_update_registry:447 | Registry updated: GenderRatioPlotter
+2026-02-06 22:46:24 | INFO | architecture.orchestrator:_ensure_tools:150 | Toolsmith: Created GenderRatioPlotter with tags ['plot', 'chart', 'visualize', 'histogram']...
+2026-02-06 22:46:28 | INFO | architecture.executor:execute:99 | Executing plan: from this year's chess top grandmaster players, plot the gender ratio
+2026-02-06 22:46:28 | INFO | architecture.executor:execute:100 | Total steps: 3
+2026-02-06 22:46:28 | INFO | architecture.executor:_execute_step:129 | Step 1: Fetch current year's top grandmaster chess players from a reliable chess database or API using InterestDiscoveryTool
+2026-02-06 22:46:28 | INFO | architecture.executor:load_registry:93 | Loaded 35 tool definitions
+2026-02-06 22:46:28 | ERROR | architecture.executor:_execute_step:154 | Step 1: Tool file missing
+2026-02-06 22:46:28 | INFO | __main__:main:218 | Completed in 14780.91ms
+2026-02-06 22:46:28 | INFO | __main__:main:219 | Zone: public
+2026-02-06 22:46:28 | INFO | architecture.executor:export_profiles:500 | Profiles exported to: C:\Users\Omar\Desktop\Code\Research\logs\profiles_20260206_224628.json
+2026-02-06 22:46:33 | INFO | architecture.sandbox:stop:179 | Sandbox container stopped: 2b4b844b0bdf
+2026-02-06 22:46:33 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete
