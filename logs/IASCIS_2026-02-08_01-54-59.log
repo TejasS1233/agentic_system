@@ -1,0 +1,92 @@
+2026-02-08 01:55:11 | INFO | architecture.llm_manager:<module>:21 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-08 01:55:43 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-08 01:55:43 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-08 01:55:43 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-08 01:55:43 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-08 01:55:43 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\Omar\Desktop\Code\Research\workspace, profiling=True)
+2026-02-08 01:55:43 | INFO | architecture.sandbox:__init__:152 | Sandbox initialized with tools_dir=C:\Users\Omar\Desktop\Code\Research\workspace\tools, output_dir=C:\Users\Omar\Desktop\Code\Research\workspace\outputs
+2026-02-08 01:55:44 | INFO | architecture.sandbox:start:192 | Sandbox container started: 3a6b79cf643a
+2026-02-08 01:55:44 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-08 01:55:44 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-08 01:55:44 | INFO | architecture.executor:__init__:85 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-08 01:55:44 | INFO | architecture.executor:load_registry:100 | Loaded 13 tool definitions
+2026-02-08 01:55:44 | INFO | architecture.llm_manager:__init__:81 | Loaded 4 GROQ keys
+2026-02-08 01:55:44 | INFO | architecture.executor:__init__:93 | ExecutorAgent initialized with Sandbox
+2026-02-08 01:55:44 | INFO | architecture.llm_manager:__init__:81 | Loaded 4 GROQ keys
+2026-02-08 01:55:45 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: beautifulsoup4 requests pydantic numpy pandas
+2026-02-08 01:55:53 | INFO | architecture.orchestrator:__init__:44 | Orchestrator initialized with ToolRetriever
+2026-02-08 01:55:53 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-08 01:55:53 | INFO | __main__:run:121 | Task received: Analyze GitHub trending repos and visualize language distribution...
+2026-02-08 01:55:53 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-08 01:55:53 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-08 01:55:53 | INFO | architecture.orchestrator:run:48 | Processing: Analyze GitHub trending repos and visualize language distribution...
+2026-02-08 01:55:53 | INFO | architecture.llm_manager:generate:119 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-08_01-54-59
+2026-02-08 01:55:54 | INFO | architecture.llm_manager:generate:143 | Generation success in 822.23ms
+2026-02-08 01:55:54 | INFO | architecture.orchestrator:run:51 | Task Classification: COMPLEX_TASK
+2026-02-08 01:55:54 | INFO | architecture.llm_manager:generate:119 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-08_01-54-59
+2026-02-08 01:55:55 | INFO | architecture.llm_manager:generate:143 | Generation success in 608.09ms
+2026-02-08 01:55:55 | INFO | architecture.orchestrator:run:57 | Decomposed into 3 subtasks
+2026-02-08 01:55:55 | INFO | architecture.llm_manager:generate:119 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-08_01-54-59
+2026-02-08 01:55:55 | INFO | architecture.llm_manager:generate:143 | Generation success in 218.57ms
+2026-02-08 01:55:55 | INFO | architecture.orchestrator:_retrieve_tools:222 | st_1 -> GitHubTrendingTool (LLM selected, semantic: 0.663, tags: +3, in-domain)
+2026-02-08 01:55:55 | INFO | architecture.llm_manager:generate:119 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-08_01-54-59
+2026-02-08 01:55:55 | INFO | architecture.llm_manager:generate:143 | Generation success in 121.89ms
+2026-02-08 01:55:55 | INFO | architecture.orchestrator:_retrieve_tools:222 | st_2 -> GitHubTrendingReposLanguageExtractor (LLM selected, semantic: 0.696, tags: +2, cross-domain)
+2026-02-08 01:55:55 | INFO | architecture.llm_manager:generate:119 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-08_01-54-59
+2026-02-08 01:55:56 | INFO | architecture.llm_manager:generate:143 | Generation success in 115.96ms
+2026-02-08 01:55:56 | INFO | architecture.orchestrator:_retrieve_tools:222 | st_3 -> GitHubRepoTool (LLM selected, semantic: 0.406, tags: +0, cross-domain)
+2026-02-08 01:55:56 | INFO | architecture.orchestrator:_ensure_tools:269 | Toolsmith creating: Visualize language distribution of trending repositories
+2026-02-08 01:55:56 | INFO | architecture.toolsmith:create_tool:112 | Request: 'Visualize language distribution of trending repositories'
+2026-02-08 01:55:56 | INFO | architecture.llm_manager:__init__:81 | Loaded 4 GROQ keys
+2026-02-08 01:55:56 | INFO | architecture.toolsmith:create_tool:128 | Generating tool with LLM (attempt 1/3)...
+2026-02-08 01:55:56 | INFO | architecture.toolsmith:create_tool:133 | Available APIs context length: 733
+2026-02-08 01:55:56 | INFO | architecture.llm_manager:generate:119 | Generating with groq/meta-llama/llama-4-maverick-17b-128e-instruct | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-08_01-54-59
+2026-02-08 01:55:57 | INFO | architecture.llm_manager:generate:143 | Generation success in 1591.86ms
+2026-02-08 01:55:57 | INFO | architecture.toolsmith:create_tool:185 | Tool saved: C:\Users\Omar\Desktop\Code\Research\workspace\tools\trending_repo_languages_visualizer.py
+2026-02-08 01:55:57 | INFO | architecture.toolsmith:_update_registry:277 | Registry updated: TrendingRepoLanguagesVisualizer
+2026-02-08 01:55:57 | INFO | architecture.orchestrator:_ensure_tools:271 | Toolsmith: Created TrendingRepoLanguagesVisualizer with tags ['github', 'trending', 'languages', 'visualization...
+2026-02-08 01:55:57 | INFO | architecture.orchestrator:_ensure_tools:288 | Tool assigned: TrendingRepoLanguagesVisualizer
+2026-02-08 01:55:57 | INFO | architecture.orchestrator:_create_plan:347 | ============================================================
+2026-02-08 01:55:57 | INFO | architecture.orchestrator:_create_plan:348 | EXECUTION PLAN: 3 steps
+2026-02-08 01:55:57 | INFO | architecture.orchestrator:_create_plan:349 | ============================================================
+2026-02-08 01:55:57 | INFO | architecture.orchestrator:_create_plan:361 |   Step 1: Get trending GitHub repositories...
+2026-02-08 01:55:57 | INFO | architecture.orchestrator:_create_plan:362 |     Tool: GitHubTrendingTool
+2026-02-08 01:55:57 | INFO | architecture.orchestrator:_create_plan:363 |     no dependencies, uses description
+2026-02-08 01:55:57 | INFO | architecture.orchestrator:_create_plan:361 |   Step 2: Extract language information from trending reposit...
+2026-02-08 01:55:57 | INFO | architecture.orchestrator:_create_plan:362 |     Tool: GitHubTrendingReposLanguageExtractor
+2026-02-08 01:55:57 | INFO | architecture.orchestrator:_create_plan:363 |     depends_on=[1], input_from=step_1
+2026-02-08 01:55:57 | INFO | architecture.orchestrator:_create_plan:361 |   Step 3: Visualize language distribution of trending reposi...
+2026-02-08 01:55:57 | INFO | architecture.orchestrator:_create_plan:362 |     Tool: TrendingRepoLanguagesVisualizer
+2026-02-08 01:55:57 | INFO | architecture.orchestrator:_create_plan:363 |     depends_on=[2], input_from=step_2
+2026-02-08 01:55:57 | INFO | architecture.orchestrator:_create_plan:364 | ============================================================
+2026-02-08 01:55:57 | INFO | architecture.executor:execute:106 | Executing plan: Analyze GitHub trending repos and visualize language distribution
+2026-02-08 01:55:57 | INFO | architecture.executor:execute:107 | Total steps: 3
+2026-02-08 01:55:57 | INFO | architecture.executor:_execute_step:179 | Step 1: Get trending GitHub repositories using GitHubTrendingTool
+2026-02-08 01:55:57 | INFO | architecture.executor:load_registry:100 | Loaded 14 tool definitions
+2026-02-08 01:55:57 | INFO | architecture.executor:_execute_step:219 | Step 1: Using description as input
+2026-02-08 01:55:57 | INFO | architecture.llm_manager:generate:119 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-08_01-54-59
+2026-02-08 01:55:58 | INFO | architecture.llm_manager:generate:143 | Generation success in 307.42ms
+2026-02-08 01:55:58 | INFO | architecture.executor:_infer_args:672 | LLM extracted args: {'trending_type': 'repositories', 'language': 'all', 'since': 'daily', 'spoken_language': 'en'}
+2026-02-08 01:55:58 | DEBUG | architecture.executor:_execute_step:222 | Executor inferred args = {'trending_type': 'repositories', 'language': 'all', 'since': 'daily', 'spoken_language': 'en'}
+2026-02-08 01:55:58 | DEBUG | architecture.executor:_execute_step:223 | Args type = <class 'dict'>
+2026-02-08 01:55:58 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: requests pydantic beautifulsoup4
+2026-02-08 01:56:28 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: sandbox received args = {'trending_type': 'repositories', 'language': 'all', 'since': 'daily', 'spoken_language': 'en'}
+2026-02-08 01:56:28 | INFO | architecture.sandbox:execute_with_args:518 | DEBUG: args_json = {"trending_type": "repositories", "language": "all", "since": "daily", "spoken_language": "en"}
+2026-02-08 01:56:28 | INFO | architecture.sandbox:execute_with_args:519 | DEBUG: Runner script line: args = json.loads('{"trending_type": "repositories", "language": "all", "since": "daily", "spoken_language": "en"}')
+2026-02-08 01:56:28 | INFO | architecture.sandbox:execute_with_args:524 | Executing tool with args: GitHubTrendingTool
+2026-02-08 01:56:28 | INFO | architecture.sandbox:execute_with_args:525 | Args JSON being passed: {"trending_type": "repositories", "language": "all", "since": "daily", "spoken_language": "en"}
+2026-02-08 01:56:35 | INFO | architecture.executor:_execute_step:236 | Step 1 SANDBOX Profile: time=6350.838ms, peak_mem=8.7981MB, delta_mem=6.0421MB, efficiency=46.48%, grade=critical
+2026-02-08 01:56:35 | INFO | architecture.executor:_execute_step:244 |    (Total round-trip: 37684.65ms)
+2026-02-08 01:56:35 | INFO | architecture.executor:_execute_step:249 | Step 1: Completed in 37.68s
+2026-02-08 01:56:35 | INFO | architecture.executor:_execute_step:179 | Step 2: Extract language information from trending repositories using GitHubTrendingReposLanguageExtractor
+2026-02-08 01:56:35 | INFO | architecture.executor:load_registry:100 | Loaded 14 tool definitions
+2026-02-08 01:56:35 | ERROR | architecture.executor:_execute_step:204 | Step 2: Tool file missing
+2026-02-08 01:56:35 | INFO | architecture.llm_manager:generate:119 | Generating with groq/llama-3.3-70b-versatile | Tokens: 500 | Temp: 0.3 | Session: 2026-02-08_01-54-59
+2026-02-08 01:56:37 | INFO | architecture.llm_manager:generate:143 | Generation success in 1671.36ms
+2026-02-08 01:56:37 | INFO | __main__:main:218 | Completed in 43710.07ms
+2026-02-08 01:56:37 | INFO | __main__:main:219 | Zone: public
+2026-02-08 01:56:37 | INFO | architecture.executor:export_profiles:562 | Profiles exported to: C:\Users\Omar\Desktop\Code\Research\logs\profiles_20260208_015637.json
+2026-02-08 01:56:42 | WARNING | architecture.sandbox:_install_deps:225 | pip install failed: 
+2026-02-08 01:56:42 | INFO | architecture.sandbox:_pre_install_essentials:161 | Essential packages pre-installed
+2026-02-08 01:56:42 | INFO | architecture.sandbox:stop:207 | Sandbox container stopped: 3a6b79cf643a
+2026-02-08 01:56:42 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

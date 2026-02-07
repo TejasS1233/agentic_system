@@ -316,5 +316,48 @@
     "last_used": null,
     "use_count": 0,
     "metrics": 0.0
+  },
+  "TrendingRepoLanguagesTool": {
+    "file": "trending_repo_languages_tool.py",
+    "description": "Extract language distribution from trending repositories",
+    "tags": [
+      "github",
+      "trending",
+      "languages",
+      "repositories"
+    ],
+    "input_types": [
+      "string"
+    ],
+    "output_types": [
+      "json"
+    ],
+    "domain": "web",
+    "status": "active",
+    "created_at": 1770498009.6987767,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "LanguageDistributionVisualizer": {
+    "file": "language_distribution_visualizer.py",
+    "description": "Task: Visualize language distribution\n\nInput data sample:\n{\n  \"language_distribution\": {\n       \"TypeScript\": 2,\n       \"Python\": 4,\n       \"Rust\": 2,\n       \"Shell\": 1,\n       \"Go\": 2,\n       \"JavaScript\": 1\n   }\n}\n\nPrevious implementation failed with error:\nlist index out of range\n\nCreate a tool that correctly handles this input format and fixes the error.",
+    "tags": [
+      "visualization",
+      "language",
+      "distribution"
+    ],
+    "input_types": [
+      "dict"
+    ],
+    "output_types": [
+      "image"
+    ],
+    "domain": "visualization",
+    "status": "active",
+    "created_at": 1770498011.02538,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
   }
 }

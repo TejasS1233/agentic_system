@@ -31,7 +31,7 @@ class LLMManager:
     PROVIDER_CONFIG = {
         "groq": {
             "env_prefix": "GROQ_API_KEY",
-            "default_model": "meta-llama/llama-4-scout-17b-16e-instruct",
+            "default_model": "llama-3.3-70b-versatile",
             "litellm_prefix": "groq",
         },
         "gemini": {
@@ -169,10 +169,24 @@ class LLMManager:
         return {"content": None, "error": str(last_error)}
 
     def generate_json(self, messages: List[Dict[str, str]], **kwargs) -> Dict[str, Any]:
-        """Generate completion with JSON response format."""
-        return self.generate(
+        """Generate completion with JSON response format, with fallback."""
+        result = self.generate(
             messages, response_format={"type": "json_object"}, **kwargs
         )
+
+        if result.get("error") and "json_validate_failed" in str(result["error"]):
+            logger.warning("JSON mode failed, retrying without JSON format constraint")
+            result = self.generate(messages, **kwargs)
+
+            if result.get("content"):
+                import re
+
+                content = result["content"]
+                json_match = re.search(r"\{[\s\S]*\}", content)
+                if json_match:
+                    result["content"] = json_match.group(0)
+
+        return result
 
     def generate_text(
         self, prompt: str, system_prompt: Optional[str] = None, **kwargs

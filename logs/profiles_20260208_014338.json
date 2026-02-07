@@ -1,0 +1,94 @@
+{
+  "exported_at": "2026-02-08T01:43:38.281103",
+  "summary": {
+    "GitHubTrendingTool": {
+      "call_count": 1,
+      "avg_time_ms": 3630.211,
+      "max_time_ms": 3630.211,
+      "min_time_ms": 3630.211,
+      "avg_memory_mb": 8.7983,
+      "max_memory_mb": 8.7983,
+      "avg_memory_delta_mb": 6.042,
+      "avg_efficiency": 0.4648,
+      "last_grade": "critical"
+    },
+    "GitHubTrendingReposLanguageExtractor": {
+      "call_count": 1,
+      "avg_time_ms": 2233.051,
+      "max_time_ms": 2233.051,
+      "min_time_ms": 2233.051,
+      "avg_memory_mb": 6.8336,
+      "max_memory_mb": 6.8336,
+      "avg_memory_delta_mb": 4.483,
+      "avg_efficiency": 0.4727,
+      "last_grade": "critical"
+    },
+    "AdvancedGraphTool": {
+      "call_count": 1,
+      "avg_time_ms": 12.664,
+      "max_time_ms": 12.664,
+      "min_time_ms": 12.664,
+      "avg_memory_mb": 0.0985,
+      "max_memory_mb": 0.0985,
+      "avg_memory_delta_mb": 0.0952,
+      "avg_efficiency": 0.9933,
+      "last_grade": "moderate"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 3,
+    "tools_profiled": [
+      "GitHubTrendingTool",
+      "GitHubTrendingReposLanguageExtractor",
+      "AdvancedGraphTool"
+    ],
+    "execution_time_ms": {
+      "min": 12.664,
+      "max": 3630.211,
+      "mean": 1958.6419999999998
+    },
+    "peak_memory_mb": {
+      "min": 0.0985,
+      "max": 8.7983,
+      "mean": 5.2434666666666665
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "GitHubTrendingTool": [
+      {
+        "tool_name": "GitHubTrendingTool",
+        "execution_time_ms": 3630.211,
+        "peak_memory_mb": 8.7983,
+        "memory_delta_mb": 6.042,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4648,
+        "success": true
+      }
+    ],
+    "GitHubTrendingReposLanguageExtractor": [
+      {
+        "tool_name": "GitHubTrendingReposLanguageExtractor",
+        "execution_time_ms": 2233.051,
+        "peak_memory_mb": 6.8336,
+        "memory_delta_mb": 4.483,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4727,
+        "success": true
+      }
+    ],
+    "AdvancedGraphTool": [
+      {
+        "tool_name": "AdvancedGraphTool",
+        "execution_time_ms": 12.664,
+        "peak_memory_mb": 0.0985,
+        "memory_delta_mb": 0.0952,
+        "latency_grade": "moderate",
+        "efficiency_score": 0.9933,
+        "success": true
+      }
+    ]
+  }
+}

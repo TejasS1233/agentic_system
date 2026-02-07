@@ -1,0 +1,48 @@
+{
+  "exported_at": "2026-02-08T01:56:37.396030",
+  "summary": {
+    "GitHubTrendingTool": {
+      "call_count": 1,
+      "avg_time_ms": 6350.838,
+      "max_time_ms": 6350.838,
+      "min_time_ms": 6350.838,
+      "avg_memory_mb": 8.7981,
+      "max_memory_mb": 8.7981,
+      "avg_memory_delta_mb": 6.0421,
+      "avg_efficiency": 0.4648,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 1,
+    "tools_profiled": [
+      "GitHubTrendingTool"
+    ],
+    "execution_time_ms": {
+      "min": 6350.838,
+      "max": 6350.838,
+      "mean": 6350.838
+    },
+    "peak_memory_mb": {
+      "min": 8.7981,
+      "max": 8.7981,
+      "mean": 8.7981
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "GitHubTrendingTool": [
+      {
+        "tool_name": "GitHubTrendingTool",
+        "execution_time_ms": 6350.838,
+        "peak_memory_mb": 8.7981,
+        "memory_delta_mb": 6.0421,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4648,
+        "success": true
+      }
+    ]
+  }
+}

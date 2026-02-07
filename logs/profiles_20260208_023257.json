@@ -1,0 +1,71 @@
+{
+  "exported_at": "2026-02-08T02:32:57.934900",
+  "summary": {
+    "GitHubTrendingTool": {
+      "call_count": 1,
+      "avg_time_ms": 3111.975,
+      "max_time_ms": 3111.975,
+      "min_time_ms": 3111.975,
+      "avg_memory_mb": 8.7983,
+      "max_memory_mb": 8.7983,
+      "avg_memory_delta_mb": 6.0423,
+      "avg_efficiency": 0.4648,
+      "last_grade": "critical"
+    },
+    "LanguageDistributionVisualizer": {
+      "call_count": 1,
+      "avg_time_ms": 0.14,
+      "max_time_ms": 0.14,
+      "min_time_ms": 0.14,
+      "avg_memory_mb": 0.0013,
+      "max_memory_mb": 0.0013,
+      "avg_memory_delta_mb": 0.0,
+      "avg_efficiency": 0.0,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 2,
+    "tools_profiled": [
+      "GitHubTrendingTool",
+      "LanguageDistributionVisualizer"
+    ],
+    "execution_time_ms": {
+      "min": 0.14,
+      "max": 3111.975,
+      "mean": 1556.0575
+    },
+    "peak_memory_mb": {
+      "min": 0.0013,
+      "max": 8.7983,
+      "mean": 4.3998
+    },
+    "success_rate": 0.5
+  },
+  "raw_profiles": {
+    "GitHubTrendingTool": [
+      {
+        "tool_name": "GitHubTrendingTool",
+        "execution_time_ms": 3111.975,
+        "peak_memory_mb": 8.7983,
+        "memory_delta_mb": 6.0423,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4648,
+        "success": true
+      }
+    ],
+    "LanguageDistributionVisualizer": [
+      {
+        "tool_name": "LanguageDistributionVisualizer",
+        "execution_time_ms": 0.14,
+        "peak_memory_mb": 0.0013,
+        "memory_delta_mb": 0,
+        "latency_grade": "critical",
+        "success": false,
+        "error_message": "list index out of range"
+      }
+    ]
+  }
+}

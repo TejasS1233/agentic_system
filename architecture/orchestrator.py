@@ -36,7 +36,7 @@ class Orchestrator:
         executor=None,
         registry_path: Optional[str] = None,
     ):
-        self.llm = get_llm_manager()
+        self.llm = get_llm_manager(model="llama-3.3-70b-versatile")
         self.toolsmith = toolsmith or Toolsmith()
         self.executor = executor
         self.registry_path = registry_path or self.toolsmith.registry_path
@@ -66,9 +66,15 @@ class Orchestrator:
             return plan.model_dump_json(indent=2)
 
     def _decompose(self, query: str) -> DecompositionResult:
-        """LLM decomposes task into subtasks."""
+        """LLM decomposes task into subtasks with awareness of available tools."""
+        tool_context = self._get_tool_context_for_decomposition(query)
+
+        enhanced_prompt = DECOMPOSITION_PROMPT
+        if tool_context:
+            enhanced_prompt += f"\n\nAVAILABLE TOOLS (use this to avoid redundant steps):\n{tool_context}\n\nIMPORTANT: If a tool already outputs the data you need (e.g., 'language' field in repos), do NOT create a separate extraction step."
+
         messages = [
-            {"role": "system", "content": DECOMPOSITION_PROMPT},
+            {"role": "system", "content": enhanced_prompt},
             {"role": "user", "content": f"Decompose:\n{query}"},
         ]
 
@@ -88,6 +94,51 @@ class Orchestrator:
                 original_query=query,
                 subtasks=[SubTask(id="st_1", description=query, domain=Domain.SYSTEM)],
             )
+
+    def _get_tool_context_for_decomposition(self, query: str) -> str:
+        """Retrieve relevant tools and format for decomposition prompt."""
+        try:
+            candidates = self.retriever.retrieve_with_scoring(query=query, top_k=5)
+            if not candidates:
+                return ""
+
+            tool_lines = []
+            for c in candidates[:3]:
+                tool_name = c.get("tool", "")
+                desc = c.get("description", "")[:100]
+
+                registry_info = self._get_tool_registry_info(tool_name)
+                output_schema = registry_info.get("output_schema", {})
+
+                if output_schema:
+                    output_keys = output_schema.get("keys", [])
+                    item_keys = output_schema.get(
+                        "repos_item_keys", output_schema.get("item_keys", [])
+                    )
+                    output_str = f"outputs: {output_keys}"
+                    if item_keys:
+                        output_str += f", each item has: {item_keys}"
+                else:
+                    output_str = ""
+
+                tool_lines.append(
+                    f"- {tool_name}: {desc}"
+                    + (f" [{output_str}]" if output_str else "")
+                )
+
+            return "\n".join(tool_lines)
+        except Exception as e:
+            logger.warning(f"Could not get tool context: {e}")
+            return ""
+
+    def _get_tool_registry_info(self, tool_name: str) -> dict:
+        """Get full registry entry for a tool."""
+        try:
+            with open(self.registry_path, "r") as f:
+                registry = json.load(f)
+            return registry.get(tool_name, {})
+        except Exception:
+            return {}
 
     def _retrieve_tools(self, subtasks: list[SubTask]) -> list[ToolMatch]:
         """Use hybrid retrieval for tool matching."""
@@ -279,12 +330,14 @@ class Orchestrator:
             match = match_map.get(st.id)
             dep_steps = [step_num_map[d] for d in st.depends_on if d in step_num_map]
             input_from_step = step_num_map.get(st.input_from) if st.input_from else None
+            step_type = getattr(st, "step_type", "tool") or "tool"
             steps.append(
                 ExecutionStep(
                     step_number=i + 1,
                     subtask_id=st.id,
                     description=st.description,
-                    tool_name=match.tool_name if match else "",
+                    tool_name=match.tool_name if match and step_type == "tool" else "",
+                    step_type=step_type,
                     expected_output=f"Output{st.description}",
                     depends_on=dep_steps,
                     input_from=input_from_step,

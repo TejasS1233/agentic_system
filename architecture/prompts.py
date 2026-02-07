@@ -1,5 +1,6 @@
 """Centralized system prompts for IASCIS components."""
 
+import json
 import platform
 
 OS_INFO = f"OS: {platform.system()} ({platform.release()})"
@@ -9,7 +10,14 @@ OS_INFO = f"OS: {platform.system()} ({platform.release()})"
 # ORCHESTRATOR PROMPTS
 # =============================================================================
 
-DECOMPOSITION_PROMPT = """You are the orchestration engine of the system with limited resources. Use them wisely when splitting tasks into subtasks.
+DECOMPOSITION_PROMPT = """You are the orchestration engine of the system with limited resources.
+
+STEP TYPES:
+1. TOOL STEPS ("type": "tool") - Actions that need external data or execution:
+   - Web scraping, API calls, file operations, creating visualizations
+   
+2. TRANSFORM STEPS ("type": "transform") - Data processing handled by LLM (NO tool needed):
+   - Extracting, filtering, aggregating, counting, reformatting data from previous step
 
 DECISION PROTOCOL:
 1. SIMPLE TASKS (1 STEP): Most single-action requests should be ONE subtask. Examples:
@@ -17,31 +25,30 @@ DECISION PROTOCOL:
    - "Get trending repos on GitHub" -> 1 subtask (domain: web)
    - "Create a bar chart of X" -> 1 subtask (domain: visualization)
    - "Scrape headlines from Y" -> 1 subtask (domain: web)
-   - "Get info about repo X" -> 1 subtask (domain: web)
    
 2. COMPLEX TASKS (2-3 STEPS): Only split when there are CLEAR dependencies:
-   - "Search for X, then create a chart" -> 2 subtasks (search depends, visualization uses result)
+   - "Search for X, then create a chart" -> 2 subtasks (search, then visualization)
    - "Get repo stats and visualize them" -> 2 subtasks (fetch first, then graph)
+   - Use "type": "transform" for data processing between tool steps
 
 OUTPUT FORMAT (JSON only):
 {
   "original_query": "<the user query>",
   "subtasks": [
-    {"id": "st_1", "description": "...", "domain": "<domain>", "depends_on": [], "input_from": null, "output_format": "<what this step produces>"},
-    ...add more ONLY IF TRULY NECESSARY
+    {"id": "st_1", "description": "...", "domain": "<domain>", "type": "tool", "depends_on": [], "input_from": null, "output_format": "..."},
+    {"id": "st_2", "description": "...", "domain": "data", "type": "transform", "depends_on": ["st_1"], "input_from": "step_1", "output_format": "..."},
+    {"id": "st_3", "description": "...", "domain": "<domain>", "type": "tool", "depends_on": ["st_2"], "input_from": "step_2", "output_format": "..."}
   ]
 }
 
 DOMAINS: math, text, file, web, visualization, data, system, conversion, search
 
 CRITICAL RULES:
-1. PREFER 1 STEP - If the task can be done by a single tool, use 1 subtask. DO NOT over-decompose.
-2. COMBINE related operations. "Search and get results" is 1 step, not 2.
-3. DATA FLOW - each step's output_format MUST match the next step's expected_input.
-4. DATA from tools goes through a LLM before the next tool execution.
-5. Be SPECIFIC about data formats: "dict with language:percentage pairs", "list of repo URLs", etc.
-6. NO HALLUCINATED APIS: Do NOT assume specific APIs exist unless you see them.
-7. For SEARCH tasks (Google, web lookup, find info), use domain: search with ONE subtask.
+1. Use "type": "transform" for data processing between tool steps - these are FREE (no tool needed)
+2. ONLY use "type": "tool" when you need external data/action
+3. COMBINE related operations. "Search and get results" is 1 step, not 2.
+4. For SEARCH tasks, use domain: search with ONE subtask.
+5. Prefer FEWER tool steps. Transforms between them are lightweight.
 """
 
 
@@ -70,7 +77,11 @@ Do NOT repeat successful commands. If the output looks correct, STOP and report 
 
 
 def get_arg_extraction_prompt(
-    arg_names: list, description: str, input_data: str, available_urls: str = ""
+    arg_names: list,
+    description: str,
+    input_data: str,
+    available_urls: str = "",
+    arg_types: dict = None,
 ) -> str:
     """Generate prompt for extracting argument values from task description."""
     url_section = ""
@@ -83,18 +94,32 @@ AVAILABLE URLS (USE THESE INSTEAD OF GUESSING):
 If a URL argument is needed, PREFER one from the above list that matches the task.
 """
 
+    type_hints = ""
+    if arg_types:
+        type_lines = []
+        for name in arg_names:
+            if name in arg_types:
+                type_lines.append(f"  - {name}: {arg_types[name]}")
+        if type_lines:
+            type_hints = f"""
+ARGUMENT TYPES AND CONSTRAINTS:
+{chr(10).join(type_lines)}
+For Literal types, you MUST use one of the listed values exactly.
+"""
+
     return f"""Extract the actual values for these arguments from the task context.
 
 Arguments needed: {arg_names}
 Task description: {description}
 Previous step result (if any): {str(input_data)[:2000] if input_data else "None"}
-{url_section}
+{url_section}{type_hints}
 CRITICAL RULES:
 1. Extract ONLY the actual data values - NOT descriptions or sentences.
 2. For arguments like 'query', 'username', 'user', 'name', 'id': Extract the IDENTIFIER only.
 3. For numeric arguments: Return the number (e.g., 144, not "calculate 144")
 4. For 'data' arguments with previous step JSON: Parse the JSON and extract relevant fields.
 5. NEVER include phrases like "Search for", "Fetch", "Get", etc.
+6. For Literal types, use ONLY one of the allowed values.
 
 Return ONLY a valid JSON object with the extracted values.
 """
@@ -138,9 +163,46 @@ Rules:
 3. Be concise and helpful."""
 
 
-# =============================================================================
-# TOOLSMITH PROMPTS
-# =============================================================================
+def get_pipeline_aware_arg_prompt(
+    arg_names: list,
+    arg_types: dict,
+    description: str,
+    previous_output: str,
+    previous_schema: dict,
+) -> str:
+    """Generate prompt for arg extraction with full pipeline context."""
+    schema_hint = ""
+    if previous_schema:
+        schema_hint = f"""
+PREVIOUS STEP OUTPUT SCHEMA:
+{json.dumps(previous_schema, indent=2)}
+
+IMPORTANT: If previous output contains a field that matches a target arg:
+- list of urls -> extract first url for 'url' arg
+- dict with 'results' -> extract from results
+- Pass data directly when schemas align
+"""
+
+    type_hints = ""
+    if arg_types:
+        type_hints = f"\nArg types: {arg_types}"
+
+    return f"""Extract argument values for the NEXT tool in a data pipeline.
+
+Arguments needed: {arg_names}{type_hints}
+Task description: {description}
+
+Previous step output:
+{str(previous_output)[:3000]}
+{schema_hint}
+EXTRACTION RULES:
+1. If previous output has a LIST and target needs a SINGLE item, extract the FIRST item.
+2. If previous output is structured JSON and target needs 'data', pass the relevant portion.
+3. For 'url' args: Look for urls/links in previous output, take the most relevant one.
+4. Extract ACTUAL VALUES, not descriptions.
+
+Return ONLY a valid JSON object with extracted values."""
+
 
 ALLOWED_DOMAINS = [
     "math",

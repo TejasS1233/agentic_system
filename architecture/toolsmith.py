@@ -106,12 +106,30 @@ class Toolsmith:
         except Exception as e:
             return f"# Could not read tools.py: {e}"
 
+    def _fix_common_typos(self, code: str) -> str:
+        """Fix common typos in LLM-generated code."""
+        typo_fixes = {
+            "Beautifulsoup": "BeautifulSoup",
+            "beautifulsoup": "BeautifulSoup",
+            "BeautifulSoup4": "BeautifulSoup",
+            "beautifulsoup4": "beautifulsoup4",  # keep package name
+            "import beautifulsoup": "from bs4 import BeautifulSoup",
+            "import BeautifulSoup": "from bs4 import BeautifulSoup",
+            "from beautifulsoup": "from bs4",
+            "from BeautifulSoup": "from bs4",
+            "Pydantic": "pydantic",
+            "BaseModel.": "BaseModel,",
+        }
+        for typo, fix in typo_fixes.items():
+            code = code.replace(typo, fix)
+        return code
+
     def create_tool(self, requirement: str) -> str:
         """Generate a new tool based on requirement with verification."""
         start_time = time.time()
         logger.info(f"Request: '{requirement}'")
 
-        llm = get_llm_manager()
+        llm = get_llm_manager(model="meta-llama/llama-4-maverick-17b-128e-instruct")
         existing_code = self._get_existing_tools_context()
 
         # Search for relevant free APIs and scrapable URLs based on the requirement
@@ -177,6 +195,9 @@ Fix the code to resolve this error."""
                 if self.safe_mode and not self._is_safe_code(tool_code):
                     self._log_metrics("safety_rejection", {"request": requirement})
                     return "Tool rejected: Safety violation detected"
+
+                # Fix common typos in generated code
+                tool_code = self._fix_common_typos(tool_code)
 
                 # Write tool file
                 file_path = self.tools_dir / file_name

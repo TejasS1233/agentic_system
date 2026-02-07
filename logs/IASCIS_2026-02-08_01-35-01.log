@@ -1,0 +1,121 @@
+2026-02-08 01:35:10 | INFO | architecture.llm_manager:<module>:21 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-08 01:35:37 | INFO | __main__:main:213 | Starting IASCIS with Sandbox and Profiling
+2026-02-08 01:35:37 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-08 01:35:37 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-08 01:35:37 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-08 01:35:37 | INFO | __main__:__init__:68 | IASCIS initialized (workspace=C:\Users\Omar\Desktop\Code\Research\workspace, profiling=True)
+2026-02-08 01:35:37 | INFO | architecture.sandbox:__init__:152 | Sandbox initialized with tools_dir=C:\Users\Omar\Desktop\Code\Research\workspace\tools, output_dir=C:\Users\Omar\Desktop\Code\Research\workspace\outputs
+2026-02-08 01:35:38 | INFO | architecture.sandbox:start:192 | Sandbox container started: 489857b32996
+2026-02-08 01:35:38 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-08 01:35:38 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-08 01:35:38 | INFO | architecture.executor:__init__:85 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-08 01:35:38 | INFO | architecture.executor:load_registry:100 | Loaded 13 tool definitions
+2026-02-08 01:35:38 | INFO | architecture.llm_manager:__init__:81 | Loaded 4 GROQ keys
+2026-02-08 01:35:38 | INFO | architecture.executor:__init__:93 | ExecutorAgent initialized with Sandbox
+2026-02-08 01:35:38 | INFO | architecture.llm_manager:__init__:81 | Loaded 4 GROQ keys
+2026-02-08 01:35:39 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: pandas beautifulsoup4 numpy pydantic requests
+2026-02-08 01:35:43 | INFO | architecture.orchestrator:__init__:44 | Orchestrator initialized with ToolRetriever
+2026-02-08 01:35:43 | INFO | __main__:_initialize_runtime:92 | Runtime initialized with Sandbox
+2026-02-08 01:35:43 | INFO | __main__:run:121 | Task received: Search for recent AI research papers and summarize the top 3...
+2026-02-08 01:35:43 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-08 01:35:43 | INFO | __main__:run:125 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-08 01:35:43 | INFO | architecture.orchestrator:run:48 | Processing: Search for recent AI research papers and summarize the top 3...
+2026-02-08 01:35:43 | INFO | architecture.llm_manager:generate:119 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-08_01-35-01
+2026-02-08 01:35:43 | INFO | architecture.llm_manager:generate:143 | Generation success in 542.34ms
+2026-02-08 01:35:43 | INFO | architecture.orchestrator:run:51 | Task Classification: COMPLEX_TASK
+2026-02-08 01:35:43 | INFO | architecture.llm_manager:generate:119 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-08_01-35-01
+2026-02-08 01:35:44 | INFO | architecture.llm_manager:generate:143 | Generation success in 373.31ms
+2026-02-08 01:35:44 | INFO | architecture.orchestrator:run:57 | Decomposed into 2 subtasks
+2026-02-08 01:35:44 | INFO | architecture.orchestrator:_retrieve_tools:105 | st_1 -> SerpSearchTool (Forced by Domain.SEARCH)
+2026-02-08 01:35:44 | INFO | architecture.orchestrator:_retrieve_tools:105 | st_2 -> SerpSearchTool (Forced by Domain.SEARCH)
+2026-02-08 01:35:44 | INFO | architecture.orchestrator:_ensure_tools:196 | Tool SerpSearchTool already used. Invalidating match.
+2026-02-08 01:35:44 | INFO | architecture.orchestrator:_ensure_tools:218 | Toolsmith creating: Summarize the top 3 AI research papers
+2026-02-08 01:35:44 | INFO | architecture.toolsmith:create_tool:112 | Request: 'Summarize the top 3 AI research papers'
+2026-02-08 01:35:44 | INFO | architecture.llm_manager:__init__:81 | Loaded 4 GROQ keys
+2026-02-08 01:35:44 | INFO | architecture.toolsmith:create_tool:128 | Generating tool with LLM (attempt 1/3)...
+2026-02-08 01:35:44 | INFO | architecture.toolsmith:create_tool:133 | Available APIs context length: 703
+2026-02-08 01:35:44 | INFO | architecture.llm_manager:generate:119 | Generating with groq/meta-llama/llama-4-maverick-17b-128e-instruct | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-08_01-35-01
+2026-02-08 01:35:45 | INFO | architecture.llm_manager:generate:143 | Generation success in 1269.38ms
+2026-02-08 01:35:45 | INFO | architecture.toolsmith:create_tool:185 | Tool saved: C:\Users\Omar\Desktop\Code\Research\workspace\tools\summarize_ai_research_papers.py
+2026-02-08 01:35:45 | INFO | architecture.toolsmith:_update_registry:277 | Registry updated: SummarizeAiResearchPapers
+2026-02-08 01:35:45 | INFO | architecture.orchestrator:_ensure_tools:220 | Toolsmith: Created SummarizeAiResearchPapers with tags ['AI', 'research', 'summarization']...
+2026-02-08 01:35:45 | INFO | architecture.orchestrator:_ensure_tools:237 | Tool assigned: SummarizeAiResearchPapers
+2026-02-08 01:35:45 | INFO | architecture.orchestrator:_create_plan:294 | ============================================================
+2026-02-08 01:35:45 | INFO | architecture.orchestrator:_create_plan:295 | EXECUTION PLAN: 2 steps
+2026-02-08 01:35:45 | INFO | architecture.orchestrator:_create_plan:296 | ============================================================
+2026-02-08 01:35:45 | INFO | architecture.orchestrator:_create_plan:308 |   Step 1: Search for recent AI research papers...
+2026-02-08 01:35:45 | INFO | architecture.orchestrator:_create_plan:309 |     Tool: SerpSearchTool
+2026-02-08 01:35:45 | INFO | architecture.orchestrator:_create_plan:310 |     no dependencies, uses description
+2026-02-08 01:35:45 | INFO | architecture.orchestrator:_create_plan:308 |   Step 2: Summarize the top 3 AI research papers...
+2026-02-08 01:35:45 | INFO | architecture.orchestrator:_create_plan:309 |     Tool: SummarizeAiResearchPapers
+2026-02-08 01:35:45 | INFO | architecture.orchestrator:_create_plan:310 |     depends_on=[1], input_from=step_1
+2026-02-08 01:35:45 | INFO | architecture.orchestrator:_create_plan:311 | ============================================================
+2026-02-08 01:35:45 | INFO | architecture.executor:execute:106 | Executing plan: Search for recent AI research papers and summarize the top 3
+2026-02-08 01:35:45 | INFO | architecture.executor:execute:107 | Total steps: 2
+2026-02-08 01:35:45 | INFO | architecture.executor:_execute_step:174 | Step 1: Search for recent AI research papers using SerpSearchTool
+2026-02-08 01:35:45 | INFO | architecture.executor:load_registry:100 | Loaded 14 tool definitions
+2026-02-08 01:35:45 | INFO | architecture.executor:_execute_step:214 | Step 1: Using description as input
+2026-02-08 01:35:45 | INFO | architecture.llm_manager:generate:119 | Generating with groq/qwen/qwen3-32b | Tokens: 256 | Temp: 0.7 | Session: 2026-02-08_01-35-01
+2026-02-08 01:35:46 | WARNING | architecture.llm_manager:generate:150 | Attempt 1/3 failed using key 1: litellm.BadRequestError: GroqException - {"error":{"message":"Failed to validate JSON. Please adjust your prompt. See 'failed_generation' for more details.","type":"invalid_request_error","code":"json_validate_failed","failed_generation":""}}
+
+2026-02-08 01:35:47 | WARNING | architecture.llm_manager:generate:150 | Attempt 2/3 failed using key 1: litellm.BadRequestError: GroqException - {"error":{"message":"Failed to validate JSON. Please adjust your prompt. See 'failed_generation' for more details.","type":"invalid_request_error","code":"json_validate_failed","failed_generation":""}}
+
+2026-02-08 01:35:48 | WARNING | architecture.llm_manager:generate:150 | Attempt 3/3 failed using key 1: litellm.BadRequestError: GroqException - {"error":{"message":"Failed to validate JSON. Please adjust your prompt. See 'failed_generation' for more details.","type":"invalid_request_error","code":"json_validate_failed","failed_generation":""}}
+
+2026-02-08 01:35:49 | WARNING | architecture.llm_manager:generate:150 | Attempt 1/3 failed using key 2: litellm.BadRequestError: GroqException - {"error":{"message":"Failed to validate JSON. Please adjust your prompt. See 'failed_generation' for more details.","type":"invalid_request_error","code":"json_validate_failed","failed_generation":""}}
+
+2026-02-08 01:35:50 | WARNING | architecture.llm_manager:generate:150 | Attempt 2/3 failed using key 2: litellm.BadRequestError: GroqException - {"error":{"message":"Failed to validate JSON. Please adjust your prompt. See 'failed_generation' for more details.","type":"invalid_request_error","code":"json_validate_failed","failed_generation":""}}
+
+2026-02-08 01:35:51 | WARNING | architecture.llm_manager:generate:150 | Attempt 3/3 failed using key 2: litellm.BadRequestError: GroqException - {"error":{"message":"Failed to validate JSON. Please adjust your prompt. See 'failed_generation' for more details.","type":"invalid_request_error","code":"json_validate_failed","failed_generation":""}}
+
+2026-02-08 01:35:52 | WARNING | architecture.llm_manager:generate:150 | Attempt 1/3 failed using key 3: litellm.BadRequestError: GroqException - {"error":{"message":"Failed to validate JSON. Please adjust your prompt. See 'failed_generation' for more details.","type":"invalid_request_error","code":"json_validate_failed","failed_generation":""}}
+
+2026-02-08 01:35:53 | WARNING | architecture.llm_manager:generate:150 | Attempt 2/3 failed using key 3: litellm.BadRequestError: GroqException - {"error":{"message":"Failed to validate JSON. Please adjust your prompt. See 'failed_generation' for more details.","type":"invalid_request_error","code":"json_validate_failed","failed_generation":""}}
+
+2026-02-08 01:35:55 | WARNING | architecture.llm_manager:generate:150 | Attempt 3/3 failed using key 3: litellm.BadRequestError: GroqException - {"error":{"message":"Failed to validate JSON. Please adjust your prompt. See 'failed_generation' for more details.","type":"invalid_request_error","code":"json_validate_failed","failed_generation":""}}
+
+2026-02-08 01:35:55 | WARNING | architecture.llm_manager:generate:150 | Attempt 1/3 failed using key 4: litellm.BadRequestError: GroqException - {"error":{"message":"Failed to validate JSON. Please adjust your prompt. See 'failed_generation' for more details.","type":"invalid_request_error","code":"json_validate_failed","failed_generation":""}}
+
+2026-02-08 01:35:56 | WARNING | architecture.llm_manager:generate:150 | Attempt 2/3 failed using key 4: litellm.BadRequestError: GroqException - {"error":{"message":"Failed to validate JSON. Please adjust your prompt. See 'failed_generation' for more details.","type":"invalid_request_error","code":"json_validate_failed","failed_generation":""}}
+
+2026-02-08 01:35:58 | WARNING | architecture.llm_manager:generate:150 | Attempt 3/3 failed using key 4: litellm.BadRequestError: GroqException - {"error":{"message":"Failed to validate JSON. Please adjust your prompt. See 'failed_generation' for more details.","type":"invalid_request_error","code":"json_validate_failed","failed_generation":""}}
+
+2026-02-08 01:35:58 | ERROR | architecture.llm_manager:generate:168 | All keys failed. Last error: litellm.BadRequestError: GroqException - {"error":{"message":"Failed to validate JSON. Please adjust your prompt. See 'failed_generation' for more details.","type":"invalid_request_error","code":"json_validate_failed","failed_generation":""}}
+
+2026-02-08 01:35:58 | ERROR | architecture.executor:_infer_args:619 | Arg inference failed: litellm.BadRequestError: GroqException - {"error":{"message":"Failed to validate JSON. Please adjust your prompt. See 'failed_generation' for more details.","type":"invalid_request_error","code":"json_validate_failed","failed_generation":""}}
+
+2026-02-08 01:35:58 | DEBUG | architecture.executor:_execute_step:217 | Executor inferred args = {'query': 'Search for recent AI research papers'}
+2026-02-08 01:35:58 | DEBUG | architecture.executor:_execute_step:218 | Args type = <class 'dict'>
+2026-02-08 01:35:58 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: requests pydantic
+2026-02-08 01:36:05 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: sandbox received args = {'query': 'Search for recent AI research papers'}
+2026-02-08 01:36:05 | INFO | architecture.sandbox:execute_with_args:518 | DEBUG: args_json = {"query": "Search for recent AI research papers"}
+2026-02-08 01:36:05 | INFO | architecture.sandbox:execute_with_args:519 | DEBUG: Runner script line: args = json.loads('{"query": "Search for recent AI research papers"}')
+2026-02-08 01:36:05 | INFO | architecture.sandbox:execute_with_args:524 | Executing tool with args: SerpSearchTool
+2026-02-08 01:36:05 | INFO | architecture.sandbox:execute_with_args:525 | Args JSON being passed: {"query": "Search for recent AI research papers"}
+2026-02-08 01:36:09 | INFO | architecture.executor:_execute_step:231 | Step 1 SANDBOX Profile: time=2938.869ms, peak_mem=0.2662MB, delta_mem=0.0754MB, efficiency=49.89%, grade=critical
+2026-02-08 01:36:09 | INFO | architecture.executor:_execute_step:239 |    (Total round-trip: 11581.46ms)
+2026-02-08 01:36:09 | INFO | architecture.executor:_execute_step:244 | Step 1: Completed in 11.58s
+2026-02-08 01:36:09 | INFO | architecture.executor:_execute_step:174 | Step 2: Summarize the top 3 AI research papers using SummarizeAiResearchPapers
+2026-02-08 01:36:09 | INFO | architecture.executor:load_registry:100 | Loaded 14 tool definitions
+2026-02-08 01:36:09 | INFO | architecture.executor:_execute_step:204 | Step 2: Using input from step 1
+2026-02-08 01:36:09 | INFO | architecture.executor:_infer_args:547 | DataTransformer: query <- extracted from pipeline
+2026-02-08 01:36:09 | INFO | architecture.executor:_infer_args:568 | Pipeline args via DataTransformer: ['query']
+2026-02-08 01:36:09 | DEBUG | architecture.executor:_execute_step:217 | Executor inferred args = {'query': 'Search for recent AI research papers'}
+2026-02-08 01:36:09 | DEBUG | architecture.executor:_execute_step:218 | Args type = <class 'dict'>
+2026-02-08 01:36:09 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: beautifulsoup4
+2026-02-08 01:36:11 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: sandbox received args = {'query': 'Search for recent AI research papers'}
+2026-02-08 01:36:11 | INFO | architecture.sandbox:execute_with_args:518 | DEBUG: args_json = {"query": "Search for recent AI research papers"}
+2026-02-08 01:36:11 | INFO | architecture.sandbox:execute_with_args:519 | DEBUG: Runner script line: args = json.loads('{"query": "Search for recent AI research papers"}')
+2026-02-08 01:36:11 | INFO | architecture.sandbox:execute_with_args:524 | Executing tool with args: SummarizeAiResearchPapers
+2026-02-08 01:36:11 | INFO | architecture.sandbox:execute_with_args:525 | Args JSON being passed: {"query": "Search for recent AI research papers"}
+2026-02-08 01:36:13 | INFO | architecture.executor:_execute_step:231 | Step 2 SANDBOX Profile: time=434.439ms, peak_mem=0.1192MB, delta_mem=0.0692MB, efficiency=78.23%, grade=slow
+2026-02-08 01:36:13 | INFO | architecture.executor:_execute_step:239 |    (Total round-trip: 3483.69ms)
+2026-02-08 01:36:13 | INFO | architecture.executor:_execute_step:244 | Step 2: Completed in 3.48s
+2026-02-08 01:36:13 | INFO | architecture.llm_manager:generate:119 | Generating with groq/qwen/qwen3-32b | Tokens: 500 | Temp: 0.3 | Session: 2026-02-08_01-35-01
+2026-02-08 01:36:14 | INFO | architecture.llm_manager:generate:143 | Generation success in 995.75ms
+2026-02-08 01:36:14 | INFO | __main__:main:218 | Completed in 31226.23ms
+2026-02-08 01:36:14 | INFO | __main__:main:219 | Zone: public
+2026-02-08 01:36:14 | INFO | architecture.executor:export_profiles:514 | Profiles exported to: C:\Users\Omar\Desktop\Code\Research\logs\profiles_20260208_013614.json
+2026-02-08 01:36:15 | INFO | architecture.sandbox:_pre_install_essentials:161 | Essential packages pre-installed
+2026-02-08 01:36:19 | INFO | architecture.sandbox:stop:207 | Sandbox container stopped: 489857b32996
+2026-02-08 01:36:19 | INFO | __main__:_shutdown_runtime:101 | Runtime shutdown complete

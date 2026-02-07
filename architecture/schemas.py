@@ -24,6 +24,11 @@ class SubTask(BaseModel):
     id: str = Field(..., description="Unique subtask ID like 'st_1', 'st_2'")
     description: str = Field(..., description="What this subtask needs to do")
     domain: Domain = Field(..., description="Primary domain for this subtask")
+    step_type: str = Field(
+        "tool",
+        alias="type",
+        description="'tool' for external actions, 'transform' for LLM data processing",
+    )
     depends_on: list[str] = Field(
         default_factory=list, description="IDs of subtasks this depends on"
     )
@@ -56,6 +61,7 @@ class ExecutionStep(BaseModel):
     subtask_id: str
     description: str
     tool_name: str
+    step_type: str = Field("tool", description="'tool' or 'transform'")
     tool_args_template: dict = Field(default_factory=dict)
     expected_output: str
     depends_on: list[int] = Field(default_factory=list)

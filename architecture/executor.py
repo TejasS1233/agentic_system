@@ -9,9 +9,11 @@ from pathlib import Path
 from typing import Dict
 
 from architecture.llm_manager import get_llm_manager
+from architecture.pipeline_state import DataTransformer, StepResult
 from architecture.prompts import (
     get_arg_extraction_prompt,
     get_chart_args_prompt,
+    get_pipeline_aware_arg_prompt,
     get_response_synthesis_prompt,
 )
 from architecture.reflector import ExecutionResult, Reflector
@@ -65,6 +67,8 @@ class ExecutorAgent:
         self.max_retries = max_retries
         self._definitions = {}
         self._execution_profiles: Dict[str, list] = {}
+
+        self._data_transformer = DataTransformer()
 
         self._enable_profiling = enable_profiling and HAS_PROFILER
         if self._enable_profiling:
@@ -167,6 +171,11 @@ class ExecutorAgent:
 
     def _execute_step(self, step: ExecutionStep, previous_results: dict) -> str:
         """Execute a single step using the Sandbox with profiling."""
+        step_type = getattr(step, "step_type", "tool")
+
+        if step_type == "transform":
+            return self._execute_transform_step(step, previous_results)
+
         logger.info(
             f"Step {step.step_number}: {step.description} using {step.tool_name}"
         )
@@ -252,6 +261,49 @@ class ExecutorAgent:
         step.status = "failed"
         step.result = f"Error: {error_msg}"
         return step.result
+
+    def _execute_transform_step(
+        self, step: ExecutionStep, previous_results: dict
+    ) -> str:
+        """Execute a transform step using LLM to process data."""
+        logger.info(f"Step {step.step_number}: TRANSFORM - {step.description}")
+        step.status = "running"
+
+        input_data = ""
+        if step.input_from and step.input_from in previous_results:
+            input_data = previous_results[step.input_from]
+            logger.info(
+                f"Step {step.step_number}: Using input from step {step.input_from}"
+            )
+
+        if not input_data:
+            step.status = "failed"
+            step.result = "Error: Transform step has no input data"
+            return step.result
+
+        prompt = f"""Process this data according to the instruction.
+
+INSTRUCTION: {step.description}
+
+INPUT DATA:
+{input_data[:8000]}
+
+OUTPUT: Return ONLY the transformed data as valid JSON. No explanations."""
+
+        response = self.llm.generate_json(
+            messages=[{"role": "user", "content": prompt}], max_tokens=2048
+        )
+
+        if response.get("error"):
+            step.status = "failed"
+            step.result = f"Transform failed: {response['error']}"
+            return step.result
+
+        result = response.get("content", "{}")
+        step.status = "completed"
+        step.result = result
+        logger.info(f"Step {step.step_number}: Transform completed")
+        return result
 
     def _classify_failure(self, error: str) -> str:
         """Classify failure as arg_extraction or tool_code error."""
@@ -513,22 +565,66 @@ class ExecutorAgent:
     def _infer_args(
         self, step: ExecutionStep, input_data: str, definition: dict
     ) -> dict:
-        """Use LLM to extract argument values from task description."""
+        """Use DataTransformer + LLM to extract argument values with pipeline context."""
         tool_file = self.tools_dir / definition.get("file", "")
         arg_names = self._get_arg_names_from_file(tool_file)
+        arg_types = self._get_arg_types_from_file(tool_file)
 
         if not arg_names:
             return {"input": input_data}
 
-        if "data" in arg_names and input_data and input_data != step.description:
+        is_pipeline_step = input_data and input_data != step.description
+        source_schema = {}
+
+        if is_pipeline_step:
             try:
                 parsed = (
                     json.loads(input_data)
                     if isinstance(input_data, str)
                     else input_data
                 )
-                if isinstance(parsed, dict) and any(
-                    k in parsed for k in ["repos", "results", "items", "data", "labels"]
+                source_schema = StepResult._infer_schema(parsed)
+
+                transformed_args = {}
+                for arg_name in arg_names:
+                    transformed = self._data_transformer.transform(
+                        parsed, source_schema, arg_name, arg_types.get(arg_name)
+                    )
+                    if transformed is not None:
+                        transformed_args[arg_name] = transformed
+                        logger.info(
+                            f"DataTransformer: {arg_name} <- extracted from pipeline"
+                        )
+
+                if transformed_args:
+                    remaining_args = [a for a in arg_names if a not in transformed_args]
+                    if remaining_args:
+                        prompt = get_chart_args_prompt(remaining_args, step.description)
+                        response = self.llm.generate_json(
+                            messages=[{"role": "user", "content": prompt}],
+                            max_tokens=256,
+                        )
+                        if not response.get("error"):
+                            try:
+                                other_values = json.loads(response["content"])
+                                for k, v in other_values.items():
+                                    if k in remaining_args:
+                                        transformed_args[k] = v
+                            except Exception:
+                                pass
+
+                    logger.info(
+                        f"Pipeline args via DataTransformer: {list(transformed_args.keys())}"
+                    )
+                    return transformed_args
+
+                if (
+                    "data" in arg_names
+                    and isinstance(parsed, dict)
+                    and any(
+                        k in parsed
+                        for k in ["repos", "results", "items", "data", "labels"]
+                    )
                 ):
                     logger.info(
                         "Direct pass-through: Using structured JSON for 'data' arg"
@@ -536,6 +632,7 @@ class ExecutorAgent:
                     return self._infer_args_with_direct_data(
                         step, parsed, arg_names, definition
                     )
+
             except (json.JSONDecodeError, TypeError):
                 pass
 
@@ -553,9 +650,14 @@ class ExecutorAgent:
             except Exception as e:
                 logger.warning(f"Could not search for URLs: {e}")
 
-        prompt = get_arg_extraction_prompt(
-            arg_names, step.description, input_data, available_urls
-        )
+        if is_pipeline_step and source_schema:
+            prompt = get_pipeline_aware_arg_prompt(
+                arg_names, arg_types, step.description, input_data, source_schema
+            )
+        else:
+            prompt = get_arg_extraction_prompt(
+                arg_names, step.description, input_data, available_urls, arg_types
+            )
 
         response = self.llm.generate_json(
             messages=[{"role": "user", "content": prompt}], max_tokens=256
@@ -630,3 +732,57 @@ class ExecutorAgent:
         except Exception as e:
             logger.error(f"Failed to parse args from {tool_file}: {e}")
             return []
+
+    def _get_arg_types_from_file(self, tool_file: Path) -> dict:
+        """Extract argument types and constraints from the tool's Args class using AST."""
+        try:
+            with open(tool_file, "r", encoding="utf-8") as f:
+                content = f.read()
+
+            tree = ast.parse(content)
+
+            for node in ast.walk(tree):
+                if isinstance(node, ast.ClassDef) and ("Args" in node.name):
+                    arg_types = {}
+                    for item in node.body:
+                        if isinstance(item, ast.AnnAssign) and isinstance(
+                            item.target, ast.Name
+                        ):
+                            arg_name = item.target.id
+                            if isinstance(item.annotation, ast.Name):
+                                arg_types[arg_name] = item.annotation.id
+                            elif isinstance(item.annotation, ast.Subscript):
+                                if isinstance(item.annotation.value, ast.Name):
+                                    base_type = item.annotation.value.id
+                                    if base_type == "Literal":
+                                        literal_values = self._extract_literal_values(
+                                            item.annotation
+                                        )
+                                        arg_types[arg_name] = (
+                                            f"Literal[{', '.join(literal_values)}]"
+                                        )
+                                    else:
+                                        arg_types[arg_name] = base_type
+                            else:
+                                arg_types[arg_name] = "Any"
+                    if arg_types:
+                        return arg_types
+
+            return {}
+        except Exception as e:
+            logger.error(f"Failed to parse arg types from {tool_file}: {e}")
+            return {}
+
+    def _extract_literal_values(self, subscript_node) -> list:
+        """Extract values from a Literal type annotation."""
+        values = []
+        try:
+            if isinstance(subscript_node.slice, ast.Tuple):
+                for elt in subscript_node.slice.elts:
+                    if isinstance(elt, ast.Constant):
+                        values.append(repr(elt.value))
+            elif isinstance(subscript_node.slice, ast.Constant):
+                values.append(repr(subscript_node.slice.value))
+        except Exception:
+            pass
+        return values
