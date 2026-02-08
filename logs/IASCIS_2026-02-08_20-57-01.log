@@ -1,0 +1,76 @@
+2026-02-08 20:57:04 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-08 20:57:18 | INFO | __main__:main:233 | Starting IASCIS with Sandbox and Profiling
+2026-02-08 20:57:18 | INFO | architecture.input_loader:__init__:26 | InputLoader initialized: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-08 20:57:18 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-08 20:57:18 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-08 20:57:18 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-08 20:57:18 | INFO | __main__:__init__:74 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-08 20:57:18 | INFO | architecture.sandbox:__init__:161 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs, inputs_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-08 20:57:18 | INFO | architecture.sandbox:start:258 | Sandbox container started: b92a5e9c36b0
+2026-02-08 20:57:18 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-08 20:57:18 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-08 20:57:18 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-08 20:57:18 | INFO | architecture.executor:load_registry:93 | Loaded 19 tool definitions
+2026-02-08 20:57:18 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-08 20:57:18 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-08 20:57:19 | INFO | architecture.sandbox:_install_deps:286 | Installing dependencies: beautifulsoup4 pandas pydantic requests numpy
+2026-02-08 20:57:22 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-08 20:57:22 | INFO | __main__:_initialize_runtime:98 | Runtime initialized with Sandbox
+2026-02-08 20:57:22 | INFO | architecture.input_loader:build_context:148 | Built context from 1 file(s) (4082 chars, 0 images)
+2026-02-08 20:57:22 | INFO | __main__:run:133 | Loaded input documents: ['sales_data.csv']
+2026-02-08 20:57:22 | INFO | __main__:run:141 | Task received: [CONTEXT: Working with local documents: ['sales_data.csv']]
+
+"Perform statistical analysis on this d...
+2026-02-08 20:57:22 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-08 20:57:22 | INFO | __main__:run:145 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-08 20:57:22 | INFO | architecture.orchestrator:run:47 | Processing: [CONTEXT: Working with local documents: ['sales_data.csv']]
+
+"Perform statistica...
+2026-02-08 20:57:22 | INFO | architecture.orchestrator:run:52 | Document context available (4082 chars)
+2026-02-08 20:57:22 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-08_20-57-01
+2026-02-08 20:57:23 | INFO | architecture.llm_manager:generate:132 | Generation success in 613.37ms
+2026-02-08 20:57:23 | INFO | architecture.orchestrator:run:56 | Task Classification: COMPLEX_TASK
+2026-02-08 20:57:23 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-08_20-57-01
+2026-02-08 20:57:23 | INFO | architecture.llm_manager:generate:132 | Generation success in 400.25ms
+2026-02-08 20:57:23 | INFO | architecture.orchestrator:run:63 | Decomposed into 1 subtasks
+2026-02-08 20:57:23 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-08_20-57-01
+2026-02-08 20:57:23 | INFO | architecture.llm_manager:generate:132 | Generation success in 175.56ms
+2026-02-08 20:57:23 | INFO | architecture.orchestrator:_retrieve_tools:184 | st_1 → SalesDataAnalyzer (LLM selected, semantic: 0.498, tags: +0, cross-domain)
+2026-02-08 20:57:23 | INFO | architecture.orchestrator:_create_plan:313 | ============================================================
+2026-02-08 20:57:23 | INFO | architecture.orchestrator:_create_plan:314 | EXECUTION PLAN: 1 steps
+2026-02-08 20:57:23 | INFO | architecture.orchestrator:_create_plan:315 | ============================================================
+2026-02-08 20:57:23 | INFO | architecture.orchestrator:_create_plan:319 |   Step 1: Calculate mean, median, standard deviation, and 95...
+2026-02-08 20:57:23 | INFO | architecture.orchestrator:_create_plan:320 |     Tool: SalesDataAnalyzer
+2026-02-08 20:57:23 | INFO | architecture.orchestrator:_create_plan:321 |     no dependencies, uses description
+2026-02-08 20:57:23 | INFO | architecture.orchestrator:_create_plan:322 | ============================================================
+2026-02-08 20:57:23 | INFO | architecture.executor:execute:115 | Executing plan: Perform statistical analysis on this dataset: mean, median, std dev, and 95% confidence interval
+2026-02-08 20:57:23 | INFO | architecture.executor:execute:116 | Total steps: 1
+2026-02-08 20:57:23 | INFO | architecture.executor:execute:121 | Document context available for execution (4082 chars)
+2026-02-08 20:57:23 | INFO | architecture.executor:_execute_step:195 | Step 1: Calculate mean, median, standard deviation, and 95% confidence interval for sales_data.csv using SalesDataAnalyzer
+2026-02-08 20:57:23 | INFO | architecture.executor:load_registry:93 | Loaded 19 tool definitions
+2026-02-08 20:57:23 | INFO | architecture.executor:_execute_step:237 | Step 1: Using description as input
+2026-02-08 20:57:23 | INFO | architecture.executor:_infer_args:590 | Using document context for argument inference
+2026-02-08 20:57:23 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-08_20-57-01
+2026-02-08 20:57:23 | INFO | architecture.llm_manager:generate:132 | Generation success in 190.81ms
+2026-02-08 20:57:23 | INFO | architecture.executor:_infer_args:656 | LLM extracted args: {'filepath': 'sales_data.csv'}
+2026-02-08 20:57:23 | INFO | architecture.sandbox:translate_path_for_container:214 | Path translation (filename only): sales_data.csv -> /inputs/sales_data.csv
+2026-02-08 20:57:23 | INFO | architecture.executor:_execute_step:244 | DEBUG: Executor inferred args = {'filepath': 'sales_data.csv'}
+2026-02-08 20:57:23 | INFO | architecture.executor:_execute_step:245 | DEBUG: Translated args = {'filepath': '/inputs/sales_data.csv'}
+2026-02-08 20:57:23 | INFO | architecture.executor:_execute_step:246 | DEBUG: Args type = <class 'dict'>
+2026-02-08 20:57:23 | INFO | architecture.sandbox:_install_deps:286 | Installing dependencies: pandas numpy pydantic scipy
+2026-02-08 20:57:30 | INFO | architecture.sandbox:_pre_install_essentials:226 | Essential packages pre-installed
+2026-02-08 20:57:36 | INFO | architecture.sandbox:execute_with_args:583 | DEBUG: sandbox received args = {'filepath': '/inputs/sales_data.csv'}
+2026-02-08 20:57:36 | INFO | architecture.sandbox:execute_with_args:584 | DEBUG: args_json = {"filepath": "/inputs/sales_data.csv"}
+2026-02-08 20:57:36 | INFO | architecture.sandbox:execute_with_args:585 | DEBUG: Runner script line: args = json.loads('{"filepath": "/inputs/sales_data.csv"}')
+2026-02-08 20:57:36 | INFO | architecture.sandbox:execute_with_args:590 | Executing tool with args: SalesDataAnalyzer
+2026-02-08 20:57:36 | INFO | architecture.sandbox:execute_with_args:591 | Args JSON being passed: {"filepath": "/inputs/sales_data.csv"}
+2026-02-08 20:57:37 | INFO | architecture.executor:_execute_step:263 | Step 1 SANDBOX Profile: time=18.490ms, peak_mem=0.2884MB, delta_mem=0.0236MB, efficiency=98.96%, grade=moderate
+2026-02-08 20:57:37 | INFO | architecture.executor:_execute_step:273 |    (Total round-trip: 13678.13ms)
+2026-02-08 20:57:37 | INFO | architecture.executor:_execute_step:278 | Step 1: Completed in 13.68s
+2026-02-08 20:57:37 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 500 | Temp: 0.3 | Session: 2026-02-08_20-57-01
+2026-02-08 20:57:38 | INFO | architecture.llm_manager:generate:132 | Generation success in 1122.26ms
+2026-02-08 20:57:38 | INFO | __main__:main:244 | Completed in 16213.88ms
+2026-02-08 20:57:38 | INFO | __main__:main:245 | Zone: public
+2026-02-08 20:57:38 | INFO | architecture.executor:export_profiles:574 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260208_205738.json
+2026-02-08 20:57:43 | INFO | architecture.sandbox:stop:273 | Sandbox container stopped: b92a5e9c36b0
+2026-02-08 20:57:43 | INFO | __main__:_shutdown_runtime:107 | Runtime shutdown complete

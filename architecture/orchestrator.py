@@ -18,7 +18,7 @@ from utils.logger import get_logger
 logger = get_logger(__name__)
 
 # Configurable similarity threshold (tune based on retrieval logs)
-SIMILARITY_THRESHOLD = 0.5
+SIMILARITY_THRESHOLD = 0.4
 
 
 class Orchestrator:
@@ -37,9 +37,19 @@ class Orchestrator:
         self.retriever = ToolRetriever(self.registry_path)
         logger.info("Orchestrator initialized with ToolRetriever")
 
-    def run(self, user_query: str) -> str:
-        """Execute request, routing between direct generation and tool execution."""
+    def run(self, user_query: str, document_context: str = None) -> str:
+        """Execute request, routing between direct generation and tool execution.
+        
+        Args:
+            user_query: The user's query/task
+            document_context: Optional pre-loaded document content to use as context
+        """
         logger.info(f"Processing: {user_query[:80]}...")
+        
+        # Store document context for use by executor
+        self._document_context = document_context
+        if document_context:
+            logger.info(f"Document context available ({len(document_context)} chars)")
 
         # 1. Classify request
         task_type = self._classify_request(user_query)
@@ -56,9 +66,9 @@ class Orchestrator:
         tool_matches = self._ensure_tools(tool_matches, decomposition.subtasks)
         plan = self._create_plan(decomposition, tool_matches)
 
-        # if there is exec then run it otherwvise show the plan
+        # if there is exec then run it otherwise show the plan
         if self.executor:
-            return self.executor.execute(plan)
+            return self.executor.execute(plan, document_context=self._document_context)
         else:
             return plan.model_dump_json(indent=2)
 
@@ -96,8 +106,9 @@ class Orchestrator:
             domain = st.domain.value if hasattr(st.domain, 'value') else str(st.domain)
 
             # --- FORCE SERP SEARCH FOR SEARCH DOMAIN ---
+            # Skip online search if we have local document context
             # If the domain is SEARCH or the description explicitly asks for a search, use SerpSearchTool.
-            if domain == "search" or "search" in st.description.lower():
+            if not self._document_context and (domain == "search" or "search" in st.description.lower()):
                 # Check if SerpSearchTool exists in registry
                 serp_tool_name = "SerpSearchTool"
                 try:
@@ -147,6 +158,14 @@ class Orchestrator:
             similarity = best_match.get("similarity", 0)
             combined_score = best_match.get("combined_score", 0)
             tag_matches = best_match.get("tag_matches", 0)
+            # Override for ImageProcessorTool if image-related keywords present
+            if tool_name == "ImageProcessorTool":
+                query_lower = st.description.lower()
+                image_terms = ["image", "photo", "picture", "png", "jpg", "jpeg"]
+                if any(term in query_lower for term in image_terms):
+                    logger.info(f"Overriding threshold for ImageProcessorTool due to image prompt: {st.description}")
+                    combined_score = 1.0
+
             matched = combined_score >= SIMILARITY_THRESHOLD
             used_tools.add(tool_name)
             

@@ -1,0 +1,48 @@
+{
+  "exported_at": "2026-02-08T21:16:02.699893",
+  "summary": {
+    "RoutePlannerTool": {
+      "call_count": 1,
+      "avg_time_ms": 4143.611,
+      "max_time_ms": 4143.611,
+      "min_time_ms": 4143.611,
+      "avg_memory_mb": 0.1062,
+      "max_memory_mb": 0.1062,
+      "avg_memory_delta_mb": 0.0731,
+      "avg_efficiency": 0.4996,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 1,
+    "tools_profiled": [
+      "RoutePlannerTool"
+    ],
+    "execution_time_ms": {
+      "min": 4143.611,
+      "max": 4143.611,
+      "mean": 4143.611
+    },
+    "peak_memory_mb": {
+      "min": 0.1062,
+      "max": 0.1062,
+      "mean": 0.1062
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "RoutePlannerTool": [
+      {
+        "tool_name": "RoutePlannerTool",
+        "execution_time_ms": 4143.611,
+        "peak_memory_mb": 0.1062,
+        "memory_delta_mb": 0.0731,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4996,
+        "success": true
+      }
+    ]
+  }
+}

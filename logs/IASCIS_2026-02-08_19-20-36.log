@@ -1,0 +1,74 @@
+2026-02-08 19:20:40 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-08 19:20:47 | INFO | __main__:main:228 | Starting IASCIS with Sandbox and Profiling
+2026-02-08 19:20:47 | INFO | architecture.input_loader:__init__:24 | InputLoader initialized: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-08 19:20:47 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-08 19:20:47 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-08 19:20:47 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-08 19:20:47 | INFO | __main__:__init__:74 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-08 19:20:47 | INFO | architecture.sandbox:__init__:152 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs
+2026-02-08 19:20:48 | INFO | architecture.sandbox:start:192 | Sandbox container started: 5d6ab5cda20f
+2026-02-08 19:20:48 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-08 19:20:48 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-08 19:20:48 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-08 19:20:48 | INFO | architecture.executor:load_registry:93 | Loaded 16 tool definitions
+2026-02-08 19:20:48 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-08 19:20:48 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-08 19:20:49 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: requests beautifulsoup4 pandas pydantic numpy
+2026-02-08 19:20:51 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-08 19:20:51 | INFO | __main__:_initialize_runtime:98 | Runtime initialized with Sandbox
+2026-02-08 19:20:51 | INFO | architecture.input_loader:build_context:113 | Built context from 1 file(s) (39859 chars)
+2026-02-08 19:20:51 | INFO | __main__:run:132 | Loaded input documents: ['research_paper.pdf']
+2026-02-08 19:20:51 | INFO | __main__:run:136 | Task received: [CONTEXT: Working with local documents: ['research_paper.pdf']]
+
+Extract Tables Parse and structure ...
+2026-02-08 19:20:51 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-08 19:20:51 | INFO | __main__:run:140 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-08 19:20:51 | INFO | architecture.orchestrator:run:47 | Processing: [CONTEXT: Working with local documents: ['research_paper.pdf']]
+
+Extract Tables ...
+2026-02-08 19:20:51 | INFO | architecture.orchestrator:run:52 | Document context available (39859 chars)
+2026-02-08 19:20:51 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-08_19-20-36
+2026-02-08 19:20:52 | INFO | architecture.llm_manager:generate:132 | Generation success in 609.89ms
+2026-02-08 19:20:52 | INFO | architecture.orchestrator:run:56 | Task Classification: COMPLEX_TASK
+2026-02-08 19:20:52 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-08_19-20-36
+2026-02-08 19:20:52 | INFO | architecture.llm_manager:generate:132 | Generation success in 351.38ms
+2026-02-08 19:20:52 | INFO | architecture.orchestrator:run:63 | Decomposed into 1 subtasks
+2026-02-08 19:20:52 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-08_19-20-36
+2026-02-08 19:20:53 | INFO | architecture.llm_manager:generate:132 | Generation success in 150.18ms
+2026-02-08 19:20:53 | INFO | architecture.orchestrator:_retrieve_tools:176 | st_1 → TableParserTool (LLM selected, semantic: 0.390, tags: +1, cross-domain)
+2026-02-08 19:20:53 | INFO | architecture.orchestrator:_create_plan:305 | ============================================================
+2026-02-08 19:20:53 | INFO | architecture.orchestrator:_create_plan:306 | EXECUTION PLAN: 1 steps
+2026-02-08 19:20:53 | INFO | architecture.orchestrator:_create_plan:307 | ============================================================
+2026-02-08 19:20:53 | INFO | architecture.orchestrator:_create_plan:311 |   Step 1: Extract tables from 'research_paper.pdf' and struc...
+2026-02-08 19:20:53 | INFO | architecture.orchestrator:_create_plan:312 |     Tool: TableParserTool
+2026-02-08 19:20:53 | INFO | architecture.orchestrator:_create_plan:313 |     no dependencies, uses description
+2026-02-08 19:20:53 | INFO | architecture.orchestrator:_create_plan:314 | ============================================================
+2026-02-08 19:20:53 | INFO | architecture.executor:execute:104 | Executing plan: Extract Tables Parse and structure tabular data from this paper
+2026-02-08 19:20:53 | INFO | architecture.executor:execute:105 | Total steps: 1
+2026-02-08 19:20:53 | INFO | architecture.executor:execute:110 | Document context available for execution (39859 chars)
+2026-02-08 19:20:53 | INFO | architecture.executor:_execute_step:184 | Step 1: Extract tables from 'research_paper.pdf' and structure tabular data using TableParserTool
+2026-02-08 19:20:53 | INFO | architecture.executor:load_registry:93 | Loaded 16 tool definitions
+2026-02-08 19:20:53 | INFO | architecture.executor:_execute_step:226 | Step 1: Using description as input
+2026-02-08 19:20:53 | INFO | architecture.executor:_infer_args:571 | Using document context for argument inference
+2026-02-08 19:20:53 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-08_19-20-36
+2026-02-08 19:20:53 | INFO | architecture.llm_manager:generate:132 | Generation success in 187.83ms
+2026-02-08 19:20:53 | INFO | architecture.executor:_infer_args:617 | LLM extracted args: {'html_content': ''}
+2026-02-08 19:20:53 | INFO | architecture.executor:_execute_step:229 | DEBUG: Executor inferred args = {'html_content': ''}
+2026-02-08 19:20:53 | INFO | architecture.executor:_execute_step:230 | DEBUG: Args type = <class 'dict'>
+2026-02-08 19:20:53 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: pandas pydantic beautifulsoup4
+2026-02-08 19:21:02 | INFO | architecture.sandbox:execute_with_args:517 | DEBUG: sandbox received args = {'html_content': ''}
+2026-02-08 19:21:02 | INFO | architecture.sandbox:execute_with_args:518 | DEBUG: args_json = {"html_content": ""}
+2026-02-08 19:21:02 | INFO | architecture.sandbox:execute_with_args:519 | DEBUG: Runner script line: args = json.loads('{"html_content": ""}')
+2026-02-08 19:21:02 | INFO | architecture.sandbox:execute_with_args:524 | Executing tool with args: TableParserTool
+2026-02-08 19:21:02 | INFO | architecture.sandbox:execute_with_args:525 | Args JSON being passed: {"html_content": ""}
+2026-02-08 19:21:02 | INFO | architecture.sandbox:_pre_install_essentials:161 | Essential packages pre-installed
+2026-02-08 19:21:03 | INFO | architecture.executor:_execute_step:247 | Step 1 SANDBOX Profile: time=0.492ms, peak_mem=0.0058MB, delta_mem=0.0041MB, efficiency=99.97%, grade=fast
+2026-02-08 19:21:03 | INFO | architecture.executor:_execute_step:257 |    (Total round-trip: 9723.31ms)
+2026-02-08 19:21:03 | INFO | architecture.executor:_execute_step:262 | Step 1: Completed in 9.72s
+2026-02-08 19:21:03 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 500 | Temp: 0.3 | Session: 2026-02-08_19-20-36
+2026-02-08 19:21:03 | INFO | architecture.llm_manager:generate:132 | Generation success in 771.20ms
+2026-02-08 19:21:03 | INFO | __main__:main:239 | Completed in 12041.20ms
+2026-02-08 19:21:03 | INFO | __main__:main:240 | Zone: public
+2026-02-08 19:21:03 | INFO | architecture.executor:export_profiles:555 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260208_192103.json
+2026-02-08 19:21:08 | INFO | architecture.sandbox:stop:207 | Sandbox container stopped: 5d6ab5cda20f
+2026-02-08 19:21:08 | INFO | __main__:_shutdown_runtime:107 | Runtime shutdown complete

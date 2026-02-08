@@ -1,0 +1,71 @@
+{
+  "exported_at": "2026-02-08T19:10:49.995691",
+  "summary": {
+    "WebScraperTool": {
+      "call_count": 1,
+      "avg_time_ms": 1755.607,
+      "max_time_ms": 1755.607,
+      "min_time_ms": 1755.607,
+      "avg_memory_mb": 9.8963,
+      "max_memory_mb": 9.8963,
+      "avg_memory_delta_mb": 8.3185,
+      "avg_efficiency": 0.4604,
+      "last_grade": "critical"
+    },
+    "TableParserTool": {
+      "call_count": 1,
+      "avg_time_ms": 0.42,
+      "max_time_ms": 0.42,
+      "min_time_ms": 0.42,
+      "avg_memory_mb": 0.0058,
+      "max_memory_mb": 0.0058,
+      "avg_memory_delta_mb": 0.0041,
+      "avg_efficiency": 0.9998,
+      "last_grade": "fast"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 2,
+    "tools_profiled": [
+      "WebScraperTool",
+      "TableParserTool"
+    ],
+    "execution_time_ms": {
+      "min": 0.42,
+      "max": 1755.607,
+      "mean": 878.0135
+    },
+    "peak_memory_mb": {
+      "min": 0.0058,
+      "max": 9.8963,
+      "mean": 4.95105
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "WebScraperTool": [
+      {
+        "tool_name": "WebScraperTool",
+        "execution_time_ms": 1755.607,
+        "peak_memory_mb": 9.8963,
+        "memory_delta_mb": 8.3185,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4604,
+        "success": true
+      }
+    ],
+    "TableParserTool": [
+      {
+        "tool_name": "TableParserTool",
+        "execution_time_ms": 0.42,
+        "peak_memory_mb": 0.0058,
+        "memory_delta_mb": 0.0041,
+        "latency_grade": "fast",
+        "efficiency_score": 0.9998,
+        "success": true
+      }
+    ]
+  }
+}

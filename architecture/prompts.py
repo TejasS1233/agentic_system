@@ -98,8 +98,11 @@ CRITICAL RULES:
 3. For numeric arguments: Return the number (e.g., 144, not "calculate 144")
 4. For 'data' arguments with previous step JSON: Parse the JSON and extract relevant fields.
 5. NEVER include phrases like "Search for", "Fetch", "Get", etc.
+6. OMIT any argument you cannot determine a concrete value for - do NOT set it to null/None. The tool will use its own defaults.
+7. For subreddit/community arguments: Choose REAL, popular, relevant subreddit names (e.g., "python", "programming", "technology") - NEVER use placeholders like "topic1".
+8. When the task says "about a topic" without specifying, pick a reasonable trending topic.
 
-Return ONLY a valid JSON object with the extracted values.
+Return ONLY a valid JSON object with the extracted values. Only include keys where you have actual values.
 """
 
 
@@ -235,10 +238,15 @@ RULES:
 
 ROUTING_PROMPT = """Classify the query into one of two categories:
 
-1. DIRECT_RESPONSE: The user wants a direct answer, code, creative writing, or explanation that can be answered by an LLM immediately WITHOUT external tools.
+1. DIRECT_RESPONSE: The user wants a direct answer, code, creative writing, or explanation that can be answered by an LLM immediately WITHOUT external tools or file operations.
    - Examples: "write a python script", "make a poem", "explain quantum physics", "draft an email", "how do I center a div"
-2. COMPLEX_TASK: The user wants to perform an action, fetch data, analysis, research, or use external APIs.
+2. COMPLEX_TASK: The user wants to perform an action that requires tools, including: fetching data, file processing, image manipulation, document analysis, research, external APIs, or ANY real-time/live information.
    - Examples: "fetch stats from github", "search for latest news", "analyze this file", "scrape a website"
+   - Examples involving files/images: "make the image black and white", "convert to grayscale", "process the document", "extract tables", "resize the image", "edit this file"
+   - Examples requiring live data: "convert USD to INR", "currency conversion", "what's the weather", "current exchange rate", "stock price", "weather forecast"
+
+IMPORTANT: If the query mentions processing, editing, or manipulating any FILE, IMAGE, or DOCUMENT, classify as COMPLEX_TASK.
+IMPORTANT: If the query requires REAL-TIME, LIVE, or CURRENT data (currency rates, weather, stock prices, sports scores, etc.), classify as COMPLEX_TASK. An LLM does NOT have live data.
 
 Query: {query}
 

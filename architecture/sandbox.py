@@ -104,7 +104,7 @@ ESSENTIAL_PACKAGES = {
 def extract_dependencies(tool_path: Path) -> set[str]:
     """Parse tool file and extract pip packages from imports."""
     try:
-        with open(tool_path) as f:
+        with open(tool_path, encoding="utf-8") as f:
             tree = ast.parse(f.read())
     except SyntaxError as e:
         logger.error(f"Syntax error parsing {tool_path}: {e}")
@@ -136,6 +136,7 @@ class Sandbox:
         self,
         tools_dir: Path,
         output_dir: Path = None,
+        inputs_dir: Path = None,
         image: str = "python:3.11-slim",
     ):
         self.tools_dir = Path(tools_dir).resolve()
@@ -145,13 +146,77 @@ class Sandbox:
         else:
             self.output_dir = Path(output_dir).resolve()
         self.output_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Default inputs_dir to workspace/inputs if not specified
+        if inputs_dir is None:
+            self.inputs_dir = self.tools_dir.parent / "inputs"
+        else:
+            self.inputs_dir = Path(inputs_dir).resolve()
+        self.inputs_dir.mkdir(parents=True, exist_ok=True)
+        
         self.image = image
         self.client = None
         self.container = None
         self._installed_deps: set[str] = set()
         logger.info(
-            f"Sandbox initialized with tools_dir={self.tools_dir}, output_dir={self.output_dir}"
+            f"Sandbox initialized with tools_dir={self.tools_dir}, output_dir={self.output_dir}, inputs_dir={self.inputs_dir}"
         )
+
+    def translate_path_for_container(self, host_path: str) -> str:
+        """Translate a Windows host path to a Linux container path.
+        
+        Maps:
+        - inputs_dir -> /inputs
+        - output_dir -> /output
+        - tools_dir -> /tools
+        """
+        from pathlib import PureWindowsPath, PurePosixPath
+        
+        # Normalize the host path
+        host_path_str = str(host_path)
+        
+        # Try to resolve the path to check against our known directories
+        try:
+            host_path_resolved = Path(host_path_str).resolve()
+        except Exception:
+            host_path_resolved = Path(host_path_str)
+        
+        # Check if path is under inputs_dir
+        try:
+            relative = host_path_resolved.relative_to(self.inputs_dir)
+            container_path = f"/inputs/{relative.as_posix()}"
+            logger.info(f"Path translation: {host_path} -> {container_path}")
+            return container_path
+        except ValueError:
+            pass
+        
+        # Check if path is under output_dir
+        try:
+            relative = host_path_resolved.relative_to(self.output_dir)
+            container_path = f"/output/{relative.as_posix()}"
+            logger.info(f"Path translation: {host_path} -> {container_path}")
+            return container_path
+        except ValueError:
+            pass
+        
+        # Check if path is under tools_dir
+        try:
+            relative = host_path_resolved.relative_to(self.tools_dir)
+            container_path = f"/tools/{relative.as_posix()}"
+            logger.info(f"Path translation: {host_path} -> {container_path}")
+            return container_path
+        except ValueError:
+            pass
+        
+        # If just a filename, assume it's in inputs
+        if not '/' in host_path_str and not '\\' in host_path_str:
+            container_path = f"/inputs/{host_path_str}"
+            logger.info(f"Path translation (filename only): {host_path} -> {container_path}")
+            return container_path
+        
+        # Return original if no mapping found
+        logger.warning(f"No path translation found for: {host_path}")
+        return host_path_str
 
     def _pre_install_essentials(self):
         """Background task to install essential packages."""
@@ -182,6 +247,7 @@ class Sandbox:
             volumes={
                 str(self.tools_dir): {"bind": "/tools", "mode": "ro"},
                 str(self.output_dir): {"bind": "/output", "mode": "rw"},
+                str(self.inputs_dir): {"bind": "/inputs", "mode": "ro"},
             },
             working_dir="/tools",
             detach=True,
@@ -518,7 +584,7 @@ except Exception as e:
         logger.info(f"DEBUG: args_json = {args_json}")
         logger.info(f"DEBUG: Runner script line: args = json.loads('{args_json}')")
 
-        with open(runner_path, "w") as f:
+        with open(runner_path, "w", encoding="utf-8") as f:
             f.write(runner_code)
 
         logger.info(f"Executing tool with args: {tool_name}")

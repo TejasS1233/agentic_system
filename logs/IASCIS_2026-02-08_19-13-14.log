@@ -1,0 +1,44 @@
+2026-02-08 19:13:18 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-08 19:13:27 | INFO | __main__:main:226 | Starting IASCIS with Sandbox and Profiling
+2026-02-08 19:13:27 | INFO | architecture.input_loader:__init__:24 | InputLoader initialized: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-08 19:13:27 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-08 19:13:27 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-08 19:13:27 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-08 19:13:27 | INFO | __main__:__init__:74 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-08 19:13:27 | INFO | architecture.sandbox:__init__:152 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs
+2026-02-08 19:13:27 | INFO | architecture.sandbox:start:192 | Sandbox container started: dcd01e29fec3
+2026-02-08 19:13:27 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-08 19:13:27 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-08 19:13:27 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-08 19:13:27 | INFO | architecture.executor:load_registry:93 | Loaded 16 tool definitions
+2026-02-08 19:13:27 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-08 19:13:27 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-08 19:13:28 | INFO | architecture.sandbox:_install_deps:220 | Installing dependencies: pydantic beautifulsoup4 requests pandas numpy
+2026-02-08 19:13:31 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-08 19:13:31 | INFO | __main__:_initialize_runtime:98 | Runtime initialized with Sandbox
+2026-02-08 19:13:31 | INFO | architecture.input_loader:build_context:113 | Built context from 1 file(s) (39859 chars)
+2026-02-08 19:13:31 | INFO | __main__:run:131 | Loaded input documents: ['research_paper.pdf']
+2026-02-08 19:13:31 | INFO | __main__:run:134 | Task received: ============================================================
+INPUT DOCUMENTS
+=======================...
+2026-02-08 19:13:31 | INFO | architecture.dispatcher:route:64 | Routing decision: private (Sensitive keyword in task)
+2026-02-08 19:13:31 | INFO | __main__:run:138 | Routed to private zone, model: groq/llama-3.3-70b-versatile
+2026-02-08 19:13:31 | INFO | architecture.orchestrator:run:42 | Processing: ============================================================
+INPUT DOCUMENTS
+===...
+2026-02-08 19:13:31 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-08_19-13-14
+2026-02-08 19:13:32 | WARNING | architecture.llm_manager:generate:139 | Attempt 1/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kgcdbh1cev7v1etnfxakgyff` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 97845, Requested 10422. Please try again in 1h59m2.687999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-08 19:13:33 | WARNING | architecture.llm_manager:generate:139 | Attempt 2/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kgcdbh1cev7v1etnfxakgyff` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 97843, Requested 10422. Please try again in 1h59m0.96s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-08 19:13:35 | WARNING | architecture.llm_manager:generate:139 | Attempt 3/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kgcdbh1cev7v1etnfxakgyff` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 97841, Requested 10422. Please try again in 1h58m59.232s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-08 19:13:35 | ERROR | architecture.llm_manager:generate:157 | All keys failed. Last error: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kgcdbh1cev7v1etnfxakgyff` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 97841, Requested 10422. Please try again in 1h58m59.232s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-08 19:13:35 | INFO | architecture.orchestrator:run:46 | Task Classification: COMPLEX_TASK
+2026-02-08 19:13:35 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-08_19-13-14
+2026-02-08 19:13:35 | WARNING | architecture.llm_manager:generate:139 | Attempt 1/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kgcdbh1cev7v1etnfxakgyff` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 97841, Requested 10759. Please try again in 2h3m50.4s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-08 19:13:36 | WARNING | architecture.llm_manager:generate:139 | Attempt 2/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kgcdbh1cev7v1etnfxakgyff` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 97840, Requested 10759. Please try again in 2h3m49.536s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-08 19:13:42 | INFO | architecture.sandbox:_pre_install_essentials:161 | Essential packages pre-installed

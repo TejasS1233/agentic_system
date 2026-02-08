@@ -28,6 +28,7 @@ dependencies = [
     "opik>=1.10.6",
     "nest-asyncio>=1.6.0",
     "bs4>=0.0.2",
+    "pymupdf>=1.26.7",
 ]
 
 [dependency-groups]

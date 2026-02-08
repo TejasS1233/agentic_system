@@ -1,0 +1,48 @@
+{
+  "exported_at": "2026-02-08T20:52:27.475437",
+  "summary": {
+    "SalesSummaryTool": {
+      "call_count": 1,
+      "avg_time_ms": 52.808,
+      "max_time_ms": 52.808,
+      "min_time_ms": 52.808,
+      "avg_memory_mb": 0.2908,
+      "max_memory_mb": 0.2908,
+      "avg_memory_delta_mb": 0.0711,
+      "avg_efficiency": 0.9724,
+      "last_grade": "moderate"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 1,
+    "tools_profiled": [
+      "SalesSummaryTool"
+    ],
+    "execution_time_ms": {
+      "min": 52.808,
+      "max": 52.808,
+      "mean": 52.808
+    },
+    "peak_memory_mb": {
+      "min": 0.2908,
+      "max": 0.2908,
+      "mean": 0.2908
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "SalesSummaryTool": [
+      {
+        "tool_name": "SalesSummaryTool",
+        "execution_time_ms": 52.808,
+        "peak_memory_mb": 0.2908,
+        "memory_delta_mb": 0.0711,
+        "latency_grade": "moderate",
+        "efficiency_score": 0.9724,
+        "success": true
+      }
+    ]
+  }
+}

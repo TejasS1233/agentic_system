@@ -1,0 +1,48 @@
+{
+  "exported_at": "2026-02-08T21:03:44.321550",
+  "summary": {
+    "WeatherForecastTool": {
+      "call_count": 1,
+      "avg_time_ms": 2108.717,
+      "max_time_ms": 2108.717,
+      "min_time_ms": 2108.717,
+      "avg_memory_mb": 0.1646,
+      "max_memory_mb": 0.1646,
+      "avg_memory_delta_mb": 0.0797,
+      "avg_efficiency": 0.4993,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 1,
+    "tools_profiled": [
+      "WeatherForecastTool"
+    ],
+    "execution_time_ms": {
+      "min": 2108.717,
+      "max": 2108.717,
+      "mean": 2108.717
+    },
+    "peak_memory_mb": {
+      "min": 0.1646,
+      "max": 0.1646,
+      "mean": 0.1646
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "WeatherForecastTool": [
+      {
+        "tool_name": "WeatherForecastTool",
+        "execution_time_ms": 2108.717,
+        "peak_memory_mb": 0.1646,
+        "memory_delta_mb": 0.0797,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4993,
+        "success": true
+      }
+    ]
+  }
+}

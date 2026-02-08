@@ -1,0 +1,48 @@
+{
+  "exported_at": "2026-02-08T20:44:29.473043",
+  "summary": {
+    "AdvancedGraphTool": {
+      "call_count": 1,
+      "avg_time_ms": 1.088,
+      "max_time_ms": 1.088,
+      "min_time_ms": 1.088,
+      "avg_memory_mb": 0.0042,
+      "max_memory_mb": 0.0042,
+      "avg_memory_delta_mb": 0.0,
+      "avg_efficiency": 0.0,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 1,
+    "tools_profiled": [
+      "AdvancedGraphTool"
+    ],
+    "execution_time_ms": {
+      "min": 1.088,
+      "max": 1.088,
+      "mean": 1.088
+    },
+    "peak_memory_mb": {
+      "min": 0.0042,
+      "max": 0.0042,
+      "mean": 0.0042
+    },
+    "success_rate": 0.0
+  },
+  "raw_profiles": {
+    "AdvancedGraphTool": [
+      {
+        "tool_name": "AdvancedGraphTool",
+        "execution_time_ms": 1.088,
+        "peak_memory_mb": 0.0042,
+        "memory_delta_mb": 0,
+        "latency_grade": "critical",
+        "success": false,
+        "error_message": "AdvancedGraphTool.run() missing 1 required positional argument: 'title'"
+      }
+    ]
+  }
+}

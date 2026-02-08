@@ -1,0 +1,1314 @@
+{
+  "scan_date": "2026-02-08T22:08:11.745202",
+  "total_logs": 134,
+  "successful_runs": 86,
+  "unique_tasks": 47,
+  "aggregate": {
+    "avg_time_s": 13.54,
+    "min_time_s": 4.35,
+    "max_time_s": 82.38,
+    "tool_frequency": {
+      "DevToTopPostsTool": 3,
+      "PopulationCensusPlotter": 1,
+      "PopulationCensusTool": 1,
+      "DuckDuckGoDogImageSearchTool": 1,
+      "RandomDogImageTool": 2,
+      "CatImageSearchTool": 1,
+      "ProductHuntSearchTool": 1,
+      "ProductLaunchScraper": 1,
+      "RoyalRumble2026ParticipantsTool": 2,
+      "RoyalRumble2026Scraper": 2,
+      "SearchWinnerExtractor": 1,
+      "BrawlStarsBrawlerStatsTool": 1,
+      "PythonFrameworksSearchTool": 2,
+      "PythonFrameworkSearchTool": 1,
+      "SerpSearchTool": 7,
+      "GetProgrammingLanguagePopularityTool": 1,
+      "AdvancedGraphTool": 7,
+      "GitHubTrendingTool": 1,
+      "ThadomalShahaniPlacementStats": 1,
+      "BrawlStarsTopBrawlersTool": 1,
+      "ExtractCitationsTool": 1,
+      "BibliographyCreator": 1,
+      "TableParserTool": 2,
+      "ImageConverterTool": 1,
+      "SalesSummaryTool": 2,
+      "SalesDataAnalyzer": 1,
+      "WeatherForecastTool": 1,
+      "CurrencyConverterTool": 2,
+      "RoutePlannerTool": 1,
+      "GitHubRepoTool": 1,
+      "StockPriceTool": 1,
+      "ImageProcessorTool": 1,
+      "RedditTool": 1,
+      "RedditSentimentAnalyzerTool": 1,
+      "RedditSubredditComparator": 1
+    },
+    "step_distribution": {
+      "2": 20,
+      "1": 23,
+      "3": 4
+    }
+  },
+  "tasks": [
+    {
+      "timestamp": "2026-02-06_22-22-25",
+      "log_file": "IASCIS_2026-02-06_22-22-25.log",
+      "query": "fetch stats from github profile \"rakheOmar\" and plot language preference graph",
+      "num_steps": 2,
+      "steps_completed": 2,
+      "tools": [],
+      "total_time_ms": 22103.85,
+      "total_time_s": 22.1,
+      "step_timings": {
+        "1": 5.84,
+        "2": 15.41
+      },
+      "tool_profiles": [
+        {
+          "tool": "GithubProfileSearch",
+          "avg_time_ms": 313.12,
+          "peak_mem_mb": 0.1186,
+          "grade": "slow",
+          "calls": 1
+        },
+        {
+          "tool": "LanguagePreferencePlotter",
+          "avg_time_ms": 169.59,
+          "peak_mem_mb": 1.0722,
+          "grade": "slow",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-06_22-33-11",
+      "log_file": "IASCIS_2026-02-06_22-33-11.log",
+      "query": "give me a code for fibonacci series upto n numbers",
+      "num_steps": 2,
+      "steps_completed": 2,
+      "tools": [],
+      "total_time_ms": 4933.66,
+      "total_time_s": 4.93,
+      "step_timings": {
+        "1": 3.68,
+        "2": 0.37
+      },
+      "tool_profiles": [
+        {
+          "tool": "FibonacciGenerator",
+          "avg_time_ms": 0.07,
+          "peak_mem_mb": 0.002,
+          "grade": "fast",
+          "calls": 2
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-06_22-35-31",
+      "log_file": "IASCIS_2026-02-06_22-35-31.log",
+      "query": "give me a code that generates fibonnaci numbers upto n numbers",
+      "num_steps": 2,
+      "steps_completed": 2,
+      "tools": [],
+      "total_time_ms": 5404.11,
+      "total_time_s": 5.4,
+      "step_timings": {
+        "1": 4.15,
+        "2": 0.4
+      },
+      "tool_profiles": [
+        {
+          "tool": "FibonacciGenerator",
+          "avg_time_ms": 0.07,
+          "peak_mem_mb": 0.002,
+          "grade": "fast",
+          "calls": 2
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-06_22-40-02",
+      "log_file": "IASCIS_2026-02-06_22-40-02.log",
+      "query": "give me a fibonacci script",
+      "num_steps": 1,
+      "steps_completed": 1,
+      "tools": [],
+      "total_time_ms": 5561.08,
+      "total_time_s": 5.56,
+      "step_timings": {
+        "1": 4.4
+      },
+      "tool_profiles": [
+        {
+          "tool": "FibonacciGenerator",
+          "avg_time_ms": 0.07,
+          "peak_mem_mb": 0.002,
+          "grade": "fast",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-06_22-59-31",
+      "log_file": "IASCIS_2026-02-06_22-59-31.log",
+      "query": "from this year's chess top grandmaster players, plot the gender ratio",
+      "num_steps": 1,
+      "steps_completed": 1,
+      "tools": [],
+      "total_time_ms": 8799.04,
+      "total_time_s": 8.8,
+      "step_timings": {
+        "1": 5.18
+      },
+      "tool_profiles": [],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-07_10-21-01",
+      "log_file": "IASCIS_2026-02-07_10-21-01.log",
+      "query": "gimme top 10 games of 2026",
+      "num_steps": 2,
+      "steps_completed": 2,
+      "tools": [],
+      "total_time_ms": 22170.01,
+      "total_time_s": 22.17,
+      "step_timings": {
+        "1": 14.71,
+        "2": 4.95
+      },
+      "tool_profiles": [],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-07_10-28-58",
+      "log_file": "IASCIS_2026-02-07_10-28-58.log",
+      "query": "plot the census of population for 2026",
+      "num_steps": 3,
+      "steps_completed": 3,
+      "tools": [],
+      "total_time_ms": 82377.11,
+      "total_time_s": 82.38,
+      "step_timings": {
+        "1": 10.19,
+        "2": 27.41,
+        "3": 19.56
+      },
+      "tool_profiles": [],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-07_11-25-15",
+      "log_file": "IASCIS_2026-02-07_11-25-15.log",
+      "query": "plot my github stats for user TejasS1233",
+      "num_steps": 3,
+      "steps_completed": 3,
+      "tools": [],
+      "total_time_ms": 20789.91,
+      "total_time_s": 20.79,
+      "step_timings": {
+        "1": 14.87,
+        "2": 1.1,
+        "3": 1.12
+      },
+      "tool_profiles": [
+        {
+          "tool": "GitHubProfileSearchTool",
+          "avg_time_ms": 567.48,
+          "peak_mem_mb": 0.1161,
+          "grade": "slow",
+          "calls": 3
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-07_11-35-21",
+      "log_file": "IASCIS_2026-02-07_11-35-21.log",
+      "query": "plot my gihtub stats for user TejasS1233",
+      "num_steps": 2,
+      "steps_completed": 2,
+      "tools": [],
+      "total_time_ms": 10984.57,
+      "total_time_s": 10.98,
+      "step_timings": {
+        "1": 3.89,
+        "2": 0.61
+      },
+      "tool_profiles": [
+        {
+          "tool": "GitHubProfileSearchTool",
+          "avg_time_ms": 251.86,
+          "peak_mem_mb": 0.1187,
+          "grade": "slow",
+          "calls": 2
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-07_11-59-13",
+      "log_file": "IASCIS_2026-02-07_11-59-13.log",
+      "query": "list down top 10 twitter trends",
+      "num_steps": 1,
+      "steps_completed": 1,
+      "tools": [],
+      "total_time_ms": 24609.61,
+      "total_time_s": 24.61,
+      "step_timings": {
+        "2": 3.74
+      },
+      "tool_profiles": [
+        {
+          "tool": "TwitterTrendsTool",
+          "avg_time_ms": 3150.28,
+          "peak_mem_mb": 1.2754,
+          "grade": "critical",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-07_13-37-13",
+      "log_file": "IASCIS_2026-02-07_13-37-13.log",
+      "query": "fetch all the top dev.to posts of the week",
+      "num_steps": 3,
+      "steps_completed": 3,
+      "tools": [
+        "DevToTopPostsTool",
+        "DevToTopPostsTool",
+        "DevToTopPostsTool"
+      ],
+      "total_time_ms": 7470.47,
+      "total_time_s": 7.47,
+      "step_timings": {
+        "1": 4.35,
+        "2": 0.7,
+        "3": 0.69
+      },
+      "tool_profiles": [
+        {
+          "tool": "DevToTopPostsTool",
+          "avg_time_ms": 302.17,
+          "peak_mem_mb": 4.5787,
+          "grade": "slow",
+          "calls": 3
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-07_14-29-34",
+      "log_file": "IASCIS_2026-02-07_14-29-34.log",
+      "query": "get me a random dog image",
+      "num_steps": 2,
+      "steps_completed": 2,
+      "tools": [
+        "PopulationCensusPlotter",
+        "PopulationCensusTool"
+      ],
+      "total_time_ms": 31968.95,
+      "total_time_s": 31.97,
+      "step_timings": {
+        "1": 8.75,
+        "2": 2.18
+      },
+      "tool_profiles": [
+        {
+          "tool": "DevToTopPostsTool",
+          "avg_time_ms": 1168.82,
+          "peak_mem_mb": 4.5783,
+          "grade": "critical",
+          "calls": 1
+        },
+        {
+          "tool": "DevToScraperTool",
+          "avg_time_ms": 814.5,
+          "peak_mem_mb": 4.5785,
+          "grade": "slow",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-07_14-41-44",
+      "log_file": "IASCIS_2026-02-07_14-41-44.log",
+      "query": "get me a dog image",
+      "num_steps": 2,
+      "steps_completed": 2,
+      "tools": [
+        "DuckDuckGoDogImageSearchTool",
+        "RandomDogImageTool"
+      ],
+      "total_time_ms": 9434.23,
+      "total_time_s": 9.43,
+      "step_timings": {
+        "1": 5.54,
+        "2": 1.53
+      },
+      "tool_profiles": [
+        {
+          "tool": "DuckDuckGoDogImageSearchTool",
+          "avg_time_ms": 1312.96,
+          "peak_mem_mb": 0.6512,
+          "grade": "critical",
+          "calls": 1
+        },
+        {
+          "tool": "RandomDogImageTool",
+          "avg_time_ms": 1004.31,
+          "peak_mem_mb": 0.253,
+          "grade": "critical",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-07_14-42-41",
+      "log_file": "IASCIS_2026-02-07_14-42-41.log",
+      "query": "get me a cat image",
+      "num_steps": 2,
+      "steps_completed": 2,
+      "tools": [
+        "CatImageSearchTool",
+        "RandomDogImageTool"
+      ],
+      "total_time_ms": 9486.39,
+      "total_time_s": 9.49,
+      "step_timings": {
+        "1": 5.81,
+        "2": 1.63
+      },
+      "tool_profiles": [
+        {
+          "tool": "DuckDuckGoDogImageSearchTool",
+          "avg_time_ms": 1312.96,
+          "peak_mem_mb": 0.6512,
+          "grade": "critical",
+          "calls": 1
+        },
+        {
+          "tool": "RandomDogImageTool",
+          "avg_time_ms": 1004.31,
+          "peak_mem_mb": 0.253,
+          "grade": "critical",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-07_14-48-46",
+      "log_file": "IASCIS_2026-02-07_14-48-46.log",
+      "query": "get top 10 product launches today in product hunt",
+      "num_steps": 2,
+      "steps_completed": 2,
+      "tools": [
+        "ProductHuntSearchTool",
+        "ProductLaunchScraper"
+      ],
+      "total_time_ms": 9738.32,
+      "total_time_s": 9.74,
+      "step_timings": {
+        "1": 4.12,
+        "2": 1.73
+      },
+      "tool_profiles": [
+        {
+          "tool": "DevToTopPostsTool",
+          "avg_time_ms": 2002.88,
+          "peak_mem_mb": 4.3885,
+          "grade": "critical",
+          "calls": 1
+        },
+        {
+          "tool": "StoryDataExtractor",
+          "avg_time_ms": 1781.18,
+          "peak_mem_mb": 8.8576,
+          "grade": "critical",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-07_14-50-02",
+      "log_file": "IASCIS_2026-02-07_14-50-02.log",
+      "query": "all 30 entries of royal rumble in 2026",
+      "num_steps": 2,
+      "steps_completed": 2,
+      "tools": [
+        "RoyalRumble2026ParticipantsTool",
+        "RoyalRumble2026Scraper"
+      ],
+      "total_time_ms": 11747.67,
+      "total_time_s": 11.75,
+      "step_timings": {
+        "1": 4.42,
+        "2": 3.23
+      },
+      "tool_profiles": [
+        {
+          "tool": "ProductHuntSearchTool",
+          "avg_time_ms": 339.69,
+          "peak_mem_mb": 9.0007,
+          "grade": "slow",
+          "calls": 1
+        },
+        {
+          "tool": "ProductLaunchScraper",
+          "avg_time_ms": 1123.21,
+          "peak_mem_mb": 0.3959,
+          "grade": "critical",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-07_14-54-00",
+      "log_file": "IASCIS_2026-02-07_14-54-00.log",
+      "query": "who is the winner of royal rumble 2026",
+      "num_steps": 2,
+      "steps_completed": 2,
+      "tools": [
+        "RoyalRumble2026ParticipantsTool",
+        "SearchWinnerExtractor"
+      ],
+      "total_time_ms": 12536.16,
+      "total_time_s": 12.54,
+      "step_timings": {
+        "1": 7.59,
+        "2": 2.1
+      },
+      "tool_profiles": [
+        {
+          "tool": "RoyalRumble2026ParticipantsTool",
+          "avg_time_ms": 1002.89,
+          "peak_mem_mb": 5.0791,
+          "grade": "critical",
+          "calls": 1
+        },
+        {
+          "tool": "SearchWinnerExtractor",
+          "avg_time_ms": 1510.65,
+          "peak_mem_mb": 0.7466,
+          "grade": "critical",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-07_15-00-54",
+      "log_file": "IASCIS_2026-02-07_15-00-54.log",
+      "query": "brawl stars highest played brawlers give stats",
+      "num_steps": 2,
+      "steps_completed": 2,
+      "tools": [
+        "BrawlStarsBrawlerStatsTool",
+        "RoyalRumble2026Scraper"
+      ],
+      "total_time_ms": 10280.75,
+      "total_time_s": 10.28,
+      "step_timings": {
+        "1": 5.81,
+        "2": 1.43
+      },
+      "tool_profiles": [],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-07_20-04-53",
+      "log_file": "IASCIS_2026-02-07_20-04-53.log",
+      "query": "Search Google for the best Python frameworks in 2024",
+      "num_steps": 2,
+      "steps_completed": 2,
+      "tools": [
+        "PythonFrameworksSearchTool",
+        "PythonFrameworkSearchTool"
+      ],
+      "total_time_ms": 10875.71,
+      "total_time_s": 10.88,
+      "step_timings": {
+        "1": 4.93,
+        "2": 1.37
+      },
+      "tool_profiles": [
+        {
+          "tool": "PythonFrameworksSearchTool",
+          "avg_time_ms": 1027.87,
+          "peak_mem_mb": 0.7089,
+          "grade": "critical",
+          "calls": 1
+        },
+        {
+          "tool": "PythonFrameworkSearchTool",
+          "avg_time_ms": 715.03,
+          "peak_mem_mb": 0.3934,
+          "grade": "slow",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-07_20-14-26",
+      "log_file": "IASCIS_2026-02-07_20-14-26.log",
+      "query": "search google for the best games in 2025",
+      "num_steps": 1,
+      "steps_completed": 1,
+      "tools": [
+        "PythonFrameworksSearchTool"
+      ],
+      "total_time_ms": 7534.0,
+      "total_time_s": 7.53,
+      "step_timings": {
+        "1": 5.39
+      },
+      "tool_profiles": [
+        {
+          "tool": "PythonFrameworksSearchTool",
+          "avg_time_ms": 1087.85,
+          "peak_mem_mb": 0.6753,
+          "grade": "critical",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-07_20-20-19",
+      "log_file": "IASCIS_2026-02-07_20-20-19.log",
+      "query": "Search Google for the best cuisines to eat in 2026",
+      "num_steps": 1,
+      "steps_completed": 1,
+      "tools": [
+        "SerpSearchTool"
+      ],
+      "total_time_ms": 5405.43,
+      "total_time_s": 5.41,
+      "step_timings": {
+        "1": 3.84
+      },
+      "tool_profiles": [
+        {
+          "tool": "SerpSearchTool",
+          "avg_time_ms": 0.12,
+          "peak_mem_mb": 0.0021,
+          "grade": "fast",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-07_20-31-33",
+      "log_file": "IASCIS_2026-02-07_20-31-33.log",
+      "query": "search google for the best places to go in summer",
+      "num_steps": 1,
+      "steps_completed": 1,
+      "tools": [
+        "SerpSearchTool"
+      ],
+      "total_time_ms": 7429.46,
+      "total_time_s": 7.43,
+      "step_timings": {
+        "1": 4.73
+      },
+      "tool_profiles": [
+        {
+          "tool": "SerpSearchTool",
+          "avg_time_ms": 192.9,
+          "peak_mem_mb": 0.7154,
+          "grade": "slow",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-07_20-40-54",
+      "log_file": "IASCIS_2026-02-07_20-40-54.log",
+      "query": "Create a bar chart showing the popularity of programming languages",
+      "num_steps": 2,
+      "steps_completed": 2,
+      "tools": [
+        "GetProgrammingLanguagePopularityTool",
+        "AdvancedGraphTool"
+      ],
+      "total_time_ms": 16856.18,
+      "total_time_s": 16.86,
+      "step_timings": {
+        "1": 2.74,
+        "2": 8.12
+      },
+      "tool_profiles": [],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-07_20-43-52",
+      "log_file": "IASCIS_2026-02-07_20-43-52.log",
+      "query": "Get the top 5 trending GitHub repositories and create a bar chart of their star counts",
+      "num_steps": 2,
+      "steps_completed": 2,
+      "tools": [
+        "GitHubTrendingTool",
+        "AdvancedGraphTool"
+      ],
+      "total_time_ms": 14406.92,
+      "total_time_s": 14.41,
+      "step_timings": {
+        "1": 4.0,
+        "2": 7.9
+      },
+      "tool_profiles": [],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-07_22-26-21",
+      "log_file": "IASCIS_2026-02-07_22-26-21.log",
+      "query": "search for placement stats of thadomal shahani engineering clg",
+      "num_steps": 1,
+      "steps_completed": 1,
+      "tools": [
+        "ThadomalShahaniPlacementStats"
+      ],
+      "total_time_ms": 12468.67,
+      "total_time_s": 12.47,
+      "step_timings": {
+        "1": 8.32
+      },
+      "tool_profiles": [
+        {
+          "tool": "ThadomalShahaniPlacementStats",
+          "avg_time_ms": 295.38,
+          "peak_mem_mb": 0.3926,
+          "grade": "slow",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-07_22-52-19",
+      "log_file": "IASCIS_2026-02-07_22-52-19.log",
+      "query": "get the top played brawlers in brawl stars and make a pie chart",
+      "num_steps": 2,
+      "steps_completed": 2,
+      "tools": [
+        "BrawlStarsTopBrawlersTool",
+        "AdvancedGraphTool"
+      ],
+      "total_time_ms": 28115.88,
+      "total_time_s": 28.12,
+      "step_timings": {
+        "1": 8.72,
+        "2": 15.33
+      },
+      "tool_profiles": [
+        {
+          "tool": "BrawlStarsTopBrawlersTool",
+          "avg_time_ms": 210.5,
+          "peak_mem_mb": 0.151,
+          "grade": "slow",
+          "calls": 1
+        },
+        {
+          "tool": "AdvancedGraphTool",
+          "avg_time_ms": 62.72,
+          "peak_mem_mb": 0.3718,
+          "grade": "moderate",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-07_22-56-54",
+      "log_file": "IASCIS_2026-02-07_22-56-54.log",
+      "query": "search the top played brawlers in brawl stars and make a pie chart",
+      "num_steps": 2,
+      "steps_completed": 2,
+      "tools": [
+        "SerpSearchTool",
+        "AdvancedGraphTool"
+      ],
+      "total_time_ms": 20633.32,
+      "total_time_s": 20.63,
+      "step_timings": {
+        "1": 10.37,
+        "2": 7.42
+      },
+      "tool_profiles": [
+        {
+          "tool": "SerpSearchTool",
+          "avg_time_ms": 7288.42,
+          "peak_mem_mb": 0.5358,
+          "grade": "critical",
+          "calls": 1
+        },
+        {
+          "tool": "AdvancedGraphTool",
+          "avg_time_ms": 165.24,
+          "peak_mem_mb": 0.8421,
+          "grade": "slow",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-08_18-46-29",
+      "log_file": "IASCIS_2026-02-08_18-46-29.log",
+      "query": "get an image of a dog",
+      "num_steps": 1,
+      "steps_completed": 1,
+      "tools": [
+        "SerpSearchTool"
+      ],
+      "total_time_ms": 13745.89,
+      "total_time_s": 13.75,
+      "step_timings": {
+        "1": 11.58
+      },
+      "tool_profiles": [
+        {
+          "tool": "SerpSearchTool",
+          "avg_time_ms": 7958.85,
+          "peak_mem_mb": 0.3295,
+          "grade": "critical",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-08_18-50-34",
+      "log_file": "IASCIS_2026-02-08_18-50-34.log",
+      "query": "get me info on the paper Toolformer",
+      "num_steps": 1,
+      "steps_completed": 1,
+      "tools": [
+        "SerpSearchTool"
+      ],
+      "total_time_ms": 8481.92,
+      "total_time_s": 8.48,
+      "step_timings": {
+        "1": 6.15
+      },
+      "tool_profiles": [
+        {
+          "tool": "SerpSearchTool",
+          "avg_time_ms": 2640.28,
+          "peak_mem_mb": 0.207,
+          "grade": "critical",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-08_18-57-35",
+      "log_file": "IASCIS_2026-02-08_18-57-35.log",
+      "query": "Extract Citations - Pull all citations from a paper and create a bibliography from attention is all u need paper",
+      "num_steps": 2,
+      "steps_completed": 2,
+      "tools": [
+        "ExtractCitationsTool",
+        "BibliographyCreator"
+      ],
+      "total_time_ms": 10361.56,
+      "total_time_s": 10.36,
+      "step_timings": {
+        "1": 3.36,
+        "2": 0.47
+      },
+      "tool_profiles": [
+        {
+          "tool": "ExtractCitationsTool",
+          "avg_time_ms": 149.69,
+          "peak_mem_mb": 1.1079,
+          "grade": "slow",
+          "calls": 1
+        },
+        {
+          "tool": "BibliographyCreator",
+          "avg_time_ms": 0.04,
+          "peak_mem_mb": 0.0013,
+          "grade": "fast",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-08_19-14-27",
+      "log_file": "IASCIS_2026-02-08_19-14-27.log",
+      "query": "============================================================",
+      "num_steps": 1,
+      "steps_completed": 1,
+      "tools": [
+        "SerpSearchTool"
+      ],
+      "total_time_ms": 10681.44,
+      "total_time_s": 10.68,
+      "step_timings": {
+        "1": 2.16
+      },
+      "tool_profiles": [
+        {
+          "tool": "SerpSearchTool",
+          "avg_time_ms": 1009.21,
+          "peak_mem_mb": 0.7488,
+          "grade": "critical",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-08_19-20-36",
+      "log_file": "IASCIS_2026-02-08_19-20-36.log",
+      "query": "Extract Tables Parse and structure tabular data from this paper",
+      "num_steps": 1,
+      "steps_completed": 1,
+      "tools": [
+        "TableParserTool"
+      ],
+      "total_time_ms": 12041.2,
+      "total_time_s": 12.04,
+      "step_timings": {
+        "1": 9.72
+      },
+      "tool_profiles": [
+        {
+          "tool": "TableParserTool",
+          "avg_time_ms": 0.49,
+          "peak_mem_mb": 0.0058,
+          "grade": "fast",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-08_19-22-08",
+      "log_file": "IASCIS_2026-02-08_19-22-08.log",
+      "query": "Extract Tables - Parse and structure tabular data from paper",
+      "num_steps": 1,
+      "steps_completed": 1,
+      "tools": [
+        "TableParserTool"
+      ],
+      "total_time_ms": 12195.01,
+      "total_time_s": 12.2,
+      "step_timings": {
+        "1": 9.92
+      },
+      "tool_profiles": [
+        {
+          "tool": "TableParserTool",
+          "avg_time_ms": 2.15,
+          "peak_mem_mb": 0.2246,
+          "grade": "fast",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-08_20-31-54",
+      "log_file": "IASCIS_2026-02-08_20-31-54.log",
+      "query": "make the image black and white",
+      "num_steps": 1,
+      "steps_completed": 1,
+      "tools": [
+        "ImageConverterTool"
+      ],
+      "total_time_ms": 5245.67,
+      "total_time_s": 5.25,
+      "step_timings": {
+        "1": 3.27
+      },
+      "tool_profiles": [
+        {
+          "tool": "ImageConverterTool",
+          "avg_time_ms": 55.06,
+          "peak_mem_mb": 0.8305,
+          "grade": "moderate",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-08_20-40-30",
+      "log_file": "IASCIS_2026-02-08_20-40-30.log",
+      "query": "get me an executive summary on the file",
+      "num_steps": 1,
+      "steps_completed": 1,
+      "tools": [
+        "SalesSummaryTool"
+      ],
+      "total_time_ms": 10393.8,
+      "total_time_s": 10.39,
+      "step_timings": {
+        "1": 7.05
+      },
+      "tool_profiles": [
+        {
+          "tool": "SalesSummaryTool",
+          "avg_time_ms": 44.28,
+          "peak_mem_mb": 0.2909,
+          "grade": "moderate",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-08_20-51-30",
+      "log_file": "IASCIS_2026-02-08_20-51-30.log",
+      "query": "Get info about sales data",
+      "num_steps": 1,
+      "steps_completed": 1,
+      "tools": [
+        "SalesSummaryTool"
+      ],
+      "total_time_ms": 10100.87,
+      "total_time_s": 10.1,
+      "step_timings": {
+        "1": 7.58
+      },
+      "tool_profiles": [
+        {
+          "tool": "SalesSummaryTool",
+          "avg_time_ms": 52.81,
+          "peak_mem_mb": 0.2908,
+          "grade": "moderate",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-08_20-52-40",
+      "log_file": "IASCIS_2026-02-08_20-52-40.log",
+      "query": "Plot revenue by quarter as a bar chart",
+      "num_steps": 1,
+      "steps_completed": 1,
+      "tools": [
+        "AdvancedGraphTool"
+      ],
+      "total_time_ms": 12948.34,
+      "total_time_s": 12.95,
+      "step_timings": {
+        "1": 10.78
+      },
+      "tool_profiles": [
+        {
+          "tool": "SalesSummaryTool",
+          "avg_time_ms": 52.81,
+          "peak_mem_mb": 0.2908,
+          "grade": "moderate",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-08_20-57-01",
+      "log_file": "IASCIS_2026-02-08_20-57-01.log",
+      "query": "Perform statistical analysis on this dataset: mean, median, std dev, and 95% confidence interval",
+      "num_steps": 1,
+      "steps_completed": 1,
+      "tools": [
+        "SalesDataAnalyzer"
+      ],
+      "total_time_ms": 16213.88,
+      "total_time_s": 16.21,
+      "step_timings": {
+        "1": 13.68
+      },
+      "tool_profiles": [
+        {
+          "tool": "SalesDataAnalyzer",
+          "avg_time_ms": 18.49,
+          "peak_mem_mb": 0.2884,
+          "grade": "moderate",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-08_21-03-01",
+      "log_file": "IASCIS_2026-02-08_21-03-01.log",
+      "query": "what is the weather in thane for the next 5 days",
+      "num_steps": 1,
+      "steps_completed": 1,
+      "tools": [
+        "WeatherForecastTool"
+      ],
+      "total_time_ms": 6837.55,
+      "total_time_s": 6.84,
+      "step_timings": {
+        "1": 4.74
+      },
+      "tool_profiles": [
+        {
+          "tool": "WeatherForecastTool",
+          "avg_time_ms": 2108.72,
+          "peak_mem_mb": 0.1646,
+          "grade": "critical",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-08_21-09-43",
+      "log_file": "IASCIS_2026-02-08_21-09-43.log",
+      "query": "Convert 500 USD to yen",
+      "num_steps": 1,
+      "steps_completed": 1,
+      "tools": [
+        "CurrencyConverterTool"
+      ],
+      "total_time_ms": 5171.24,
+      "total_time_s": 5.17,
+      "step_timings": {
+        "1": 3.82
+      },
+      "tool_profiles": [
+        {
+          "tool": "CurrencyConverterTool",
+          "avg_time_ms": 991.07,
+          "peak_mem_mb": 0.1352,
+          "grade": "slow",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-08_21-10-32",
+      "log_file": "IASCIS_2026-02-08_21-10-32.log",
+      "query": "convert 500 usd to inr",
+      "num_steps": 1,
+      "steps_completed": 1,
+      "tools": [
+        "CurrencyConverterTool"
+      ],
+      "total_time_ms": 4348.04,
+      "total_time_s": 4.35,
+      "step_timings": {
+        "1": 3.06
+      },
+      "tool_profiles": [
+        {
+          "tool": "CurrencyConverterTool",
+          "avg_time_ms": 991.07,
+          "peak_mem_mb": 0.1352,
+          "grade": "slow",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-08_21-15-31",
+      "log_file": "IASCIS_2026-02-08_21-15-31.log",
+      "query": "whats the distance between Mumbai and pune",
+      "num_steps": 1,
+      "steps_completed": 1,
+      "tools": [
+        "RoutePlannerTool"
+      ],
+      "total_time_ms": 8754.44,
+      "total_time_s": 8.75,
+      "step_timings": {
+        "1": 6.7
+      },
+      "tool_profiles": [
+        {
+          "tool": "RoutePlannerTool",
+          "avg_time_ms": 4143.61,
+          "peak_mem_mb": 0.1062,
+          "grade": "critical",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-08_21-17-11",
+      "log_file": "IASCIS_2026-02-08_21-17-11.log",
+      "query": "Fetch GitHub star counts for 10 repos over time and plot their growth as line graphs",
+      "num_steps": 2,
+      "steps_completed": 2,
+      "tools": [
+        "GitHubRepoTool",
+        "AdvancedGraphTool"
+      ],
+      "total_time_ms": 11086.42,
+      "total_time_s": 11.09,
+      "step_timings": {
+        "1": 2.9,
+        "2": 6.07
+      },
+      "tool_profiles": [
+        {
+          "tool": "GitHubRepoTool",
+          "avg_time_ms": 0.1,
+          "peak_mem_mb": 0.0015,
+          "grade": "fast",
+          "calls": 1
+        },
+        {
+          "tool": "AdvancedGraphTool",
+          "avg_time_ms": 20.56,
+          "peak_mem_mb": 0.3739,
+          "grade": "moderate",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-08_21-20-46",
+      "log_file": "IASCIS_2026-02-08_21-20-46.log",
+      "query": "Scrape stock prices for AAPL, GOOGL, MSFT for the past month and create a comparison line chart",
+      "num_steps": 2,
+      "steps_completed": 2,
+      "tools": [
+        "StockPriceTool",
+        "AdvancedGraphTool"
+      ],
+      "total_time_ms": 14261.06,
+      "total_time_s": 14.26,
+      "step_timings": {
+        "1": 3.32,
+        "2": 7.38
+      },
+      "tool_profiles": [
+        {
+          "tool": "StockPriceTool",
+          "avg_time_ms": 2195.4,
+          "peak_mem_mb": 0.1374,
+          "grade": "critical",
+          "calls": 1
+        },
+        {
+          "tool": "AdvancedGraphTool",
+          "avg_time_ms": 432.91,
+          "peak_mem_mb": 1.2181,
+          "grade": "slow",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-08_21-33-06",
+      "log_file": "IASCIS_2026-02-08_21-33-06.log",
+      "query": "turn this image black and white",
+      "num_steps": 1,
+      "steps_completed": 1,
+      "tools": [
+        "ImageProcessorTool"
+      ],
+      "total_time_ms": 5798.03,
+      "total_time_s": 5.8,
+      "step_timings": {
+        "1": 4.04
+      },
+      "tool_profiles": [
+        {
+          "tool": "ImageProcessorTool",
+          "avg_time_ms": 90.56,
+          "peak_mem_mb": 1.6022,
+          "grade": "moderate",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-08_21-49-57",
+      "log_file": "IASCIS_2026-02-08_21-49-57.log",
+      "query": "Scrape Reddit posts about AI replacing jobs from r/technology, r/artificial, and r/cscareerquestions, analyze sentiment, compare community opinions",
+      "num_steps": 3,
+      "steps_completed": 3,
+      "tools": [
+        "RedditTool",
+        "RedditSentimentAnalyzerTool",
+        "RedditSubredditComparator"
+      ],
+      "total_time_ms": 12486.48,
+      "total_time_s": 12.49,
+      "step_timings": {
+        "1": 3.96,
+        "2": 5.86,
+        "3": 0.5
+      },
+      "tool_profiles": [
+        {
+          "tool": "RedditTool",
+          "avg_time_ms": 1285.64,
+          "peak_mem_mb": 0.1532,
+          "grade": "critical",
+          "calls": 1
+        },
+        {
+          "tool": "RedditSentimentAnalyzerTool",
+          "avg_time_ms": 40.51,
+          "peak_mem_mb": 2.0575,
+          "grade": "moderate",
+          "calls": 1
+        },
+        {
+          "tool": "RedditSubredditComparator",
+          "avg_time_ms": 0.14,
+          "peak_mem_mb": 0.0019,
+          "grade": "fast",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    },
+    {
+      "timestamp": "2026-02-08_22-03-44",
+      "log_file": "IASCIS_2026-02-08_22-03-44.log",
+      "query": "Search for 'Python tutorials' and show the top 3 results",
+      "num_steps": 1,
+      "steps_completed": 1,
+      "tools": [
+        "SerpSearchTool"
+      ],
+      "total_time_ms": 11083.96,
+      "total_time_s": 11.08,
+      "step_timings": {
+        "1": 8.99
+      },
+      "tool_profiles": [
+        {
+          "tool": "SerpSearchTool",
+          "avg_time_ms": 6057.53,
+          "peak_mem_mb": 0.3191,
+          "grade": "critical",
+          "calls": 1
+        }
+      ],
+      "is_successful": true
+    }
+  ]
+}

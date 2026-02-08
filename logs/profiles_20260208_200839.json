@@ -1,0 +1,48 @@
+{
+  "exported_at": "2026-02-08T20:08:39.251171",
+  "summary": {
+    "ImageConverterTool": {
+      "call_count": 1,
+      "avg_time_ms": 0.395,
+      "max_time_ms": 0.395,
+      "min_time_ms": 0.395,
+      "avg_memory_mb": 0.0019,
+      "max_memory_mb": 0.0019,
+      "avg_memory_delta_mb": 0.0,
+      "avg_efficiency": 0.0,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 1,
+    "tools_profiled": [
+      "ImageConverterTool"
+    ],
+    "execution_time_ms": {
+      "min": 0.395,
+      "max": 0.395,
+      "mean": 0.395
+    },
+    "peak_memory_mb": {
+      "min": 0.0019,
+      "max": 0.0019,
+      "mean": 0.0019
+    },
+    "success_rate": 0.0
+  },
+  "raw_profiles": {
+    "ImageConverterTool": [
+      {
+        "tool_name": "ImageConverterTool",
+        "execution_time_ms": 0.395,
+        "peak_memory_mb": 0.0019,
+        "memory_delta_mb": 0,
+        "latency_grade": "critical",
+        "success": false,
+        "error_message": "[Errno 2] No such file or directory: '/tools/C:\\\\Users\\\\tejas\\\\Desktop\\\\Tests\\\\repo_to_tool\\\\agentic_system\\\\workspace\\\\inputs\\\\PFP.jpeg'"
+      }
+    ]
+  }
+}

@@ -46,13 +46,13 @@ class Toolsmith:
 
     def _write_json(self, path: Path, data: dict):
         """Write JSON to file."""
-        with open(path, "w") as f:
+        with open(path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2)
 
     def _read_json(self, path: Path) -> dict:
         """Read JSON from file."""
         try:
-            with open(path, "r") as f:
+            with open(path, "r", encoding="utf-8") as f:
                 return json.load(f)
         except Exception:
             return {}
@@ -89,7 +89,7 @@ class Toolsmith:
     def _log_metrics(self, event_type: str, details: dict):
         """Log usage metrics to JSONL file."""
         entry = {"timestamp": time.time(), "event": event_type, **details}
-        with open(self.metrics_path, "a") as f:
+        with open(self.metrics_path, "a", encoding="utf-8") as f:
             f.write(json.dumps(entry) + "\n")
 
     def _is_safe_code(self, code: str) -> bool:
@@ -176,7 +176,7 @@ Fix the code to resolve this error."""
 
                 # Write tool file
                 file_path = self.tools_dir / file_name
-                with open(file_path, "w") as f:
+                with open(file_path, "w", encoding="utf-8") as f:
                     f.write(tool_code)
                 logger.info(f"Tool saved: {file_path}")
 
@@ -331,7 +331,7 @@ Fix the code to resolve this error."""
         """Get last used timestamps for all tools."""
         result = {}
         try:
-            with open(self.metrics_path, "r") as f:
+            with open(self.metrics_path, "r", encoding="utf-8") as f:
                 for line in f:
                     entry = json.loads(line.strip())
                     if entry.get("event") in ("tool_created", "deduplication_hit"):
@@ -364,7 +364,7 @@ Fix the code to resolve this error."""
         tool_raw = {}
         for pf in profile_files:
             try:
-                with open(pf, "r") as f:
+                with open(pf, "r", encoding="utf-8") as f:
                     data = json.load(f)
                 for profile in data.get("raw_profiles", []):
                     tool_name = profile.get("tool_name")

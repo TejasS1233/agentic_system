@@ -1,0 +1,79 @@
+2026-02-08 20:52:44 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-08 20:52:56 | INFO | __main__:main:233 | Starting IASCIS with Sandbox and Profiling
+2026-02-08 20:52:56 | INFO | architecture.input_loader:__init__:26 | InputLoader initialized: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-08 20:52:56 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-08 20:52:56 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-08 20:52:56 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-08 20:52:56 | INFO | __main__:__init__:74 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-08 20:52:56 | INFO | architecture.sandbox:__init__:161 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs, inputs_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-08 20:52:56 | INFO | architecture.sandbox:start:258 | Sandbox container started: 1986b8fb33e2
+2026-02-08 20:52:56 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-08 20:52:56 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-08 20:52:56 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-08 20:52:56 | INFO | architecture.executor:load_registry:93 | Loaded 18 tool definitions
+2026-02-08 20:52:56 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-08 20:52:56 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-08 20:52:57 | INFO | architecture.sandbox:_install_deps:286 | Installing dependencies: beautifulsoup4 numpy pandas pydantic requests
+2026-02-08 20:52:59 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-08 20:52:59 | INFO | __main__:_initialize_runtime:98 | Runtime initialized with Sandbox
+2026-02-08 20:52:59 | INFO | architecture.input_loader:build_context:148 | Built context from 1 file(s) (4082 chars, 0 images)
+2026-02-08 20:52:59 | INFO | __main__:run:133 | Loaded input documents: ['sales_data.csv']
+2026-02-08 20:52:59 | INFO | __main__:run:141 | Task received: [CONTEXT: Working with local documents: ['sales_data.csv']]
+
+Plot revenue by quarter as a bar chart...
+2026-02-08 20:52:59 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-08 20:52:59 | INFO | __main__:run:145 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-08 20:52:59 | INFO | architecture.orchestrator:run:47 | Processing: [CONTEXT: Working with local documents: ['sales_data.csv']]
+
+Plot revenue by qua...
+2026-02-08 20:52:59 | INFO | architecture.orchestrator:run:52 | Document context available (4082 chars)
+2026-02-08 20:52:59 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-08_20-52-40
+2026-02-08 20:53:00 | INFO | architecture.llm_manager:generate:132 | Generation success in 657.69ms
+2026-02-08 20:53:00 | INFO | architecture.orchestrator:run:56 | Task Classification: COMPLEX_TASK
+2026-02-08 20:53:00 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-08_20-52-40
+2026-02-08 20:53:01 | INFO | architecture.llm_manager:generate:132 | Generation success in 366.48ms
+2026-02-08 20:53:01 | INFO | architecture.orchestrator:run:63 | Decomposed into 1 subtasks
+2026-02-08 20:53:01 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-08_20-52-40
+2026-02-08 20:53:01 | INFO | architecture.llm_manager:generate:132 | Generation success in 157.10ms
+2026-02-08 20:53:01 | INFO | architecture.orchestrator:_retrieve_tools:184 | st_1 → AdvancedGraphTool (LLM selected, semantic: 0.405, tags: +2, in-domain)
+2026-02-08 20:53:01 | INFO | architecture.orchestrator:_create_plan:313 | ============================================================
+2026-02-08 20:53:01 | INFO | architecture.orchestrator:_create_plan:314 | EXECUTION PLAN: 1 steps
+2026-02-08 20:53:01 | INFO | architecture.orchestrator:_create_plan:315 | ============================================================
+2026-02-08 20:53:01 | INFO | architecture.orchestrator:_create_plan:319 |   Step 1: Load sales_data.csv and plot revenue by quarter as...
+2026-02-08 20:53:01 | INFO | architecture.orchestrator:_create_plan:320 |     Tool: AdvancedGraphTool
+2026-02-08 20:53:01 | INFO | architecture.orchestrator:_create_plan:321 |     no dependencies, uses description
+2026-02-08 20:53:01 | INFO | architecture.orchestrator:_create_plan:322 | ============================================================
+2026-02-08 20:53:01 | INFO | architecture.executor:execute:115 | Executing plan: Plot revenue by quarter as a bar chart
+2026-02-08 20:53:01 | INFO | architecture.executor:execute:116 | Total steps: 1
+2026-02-08 20:53:01 | INFO | architecture.executor:execute:121 | Document context available for execution (4082 chars)
+2026-02-08 20:53:01 | INFO | architecture.executor:_execute_step:195 | Step 1: Load sales_data.csv and plot revenue by quarter as a bar chart using AdvancedGraphTool
+2026-02-08 20:53:01 | INFO | architecture.executor:load_registry:93 | Loaded 18 tool definitions
+2026-02-08 20:53:01 | INFO | architecture.executor:_execute_step:237 | Step 1: Using description as input
+2026-02-08 20:53:01 | INFO | architecture.executor:_infer_args:590 | Using document context for argument inference
+2026-02-08 20:53:01 | INFO | architecture.executor:_try_parse_csv_to_data:717 | Extracted CSV content from document context wrapper
+2026-02-08 20:53:01 | INFO | architecture.executor:_try_parse_csv_to_data:783 | CSV parsed: 50 rows, columns: ['product_id', 'product_name', 'category', 'units_sold', 'unit_price', 'cost_per_unit', 'revenue', 'profit', 'region', 'quarter'], using label=quarter, value=revenue
+2026-02-08 20:53:01 | INFO | architecture.executor:_infer_args:624 | Direct pass-through: Parsed CSV document context into structured data
+2026-02-08 20:53:01 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-08_20-52-40
+2026-02-08 20:53:01 | INFO | architecture.llm_manager:generate:132 | Generation success in 284.86ms
+2026-02-08 20:53:01 | INFO | architecture.executor:_infer_args_with_direct_data:693 | Direct data pass-through args: ['data', 'chart_type', 'title', 'xlabel', 'ylabel', 'output_path', 'theme', 'figsize', 'colors', 'legend_labels', 'show_values', 'grid']
+2026-02-08 20:53:01 | INFO | architecture.sandbox:translate_path_for_container:214 | Path translation (filename only): revenue_by_quarter.png -> /inputs/revenue_by_quarter.png
+2026-02-08 20:53:01 | INFO | architecture.executor:_execute_step:244 | DEBUG: Executor inferred args = {'data': {'labels': ['Q1', 'Q2', 'Q3', 'Q4'], 'values': [442681.36, 272374.87, 193948.84, 208459.47999999998]}, 'chart_type': 'bar', 'title': 'Revenue by Quarter', 'xlabel': 'Quarter', 'ylabel': 'Revenue', 'output_path': 'revenue_by_quarter.png', 'theme': 'seaborn', 'figsize': [10, 6], 'colors': ['blue'], 'legend_labels': ['Revenue'], 'show_values': True, 'grid': True}
+2026-02-08 20:53:01 | INFO | architecture.executor:_execute_step:245 | DEBUG: Translated args = {'data': {'labels': ['Q1', 'Q2', 'Q3', 'Q4'], 'values': [442681.36, 272374.87, 193948.84, 208459.47999999998]}, 'chart_type': 'bar', 'title': 'Revenue by Quarter', 'xlabel': 'Quarter', 'ylabel': 'Revenue', 'output_path': '/inputs/revenue_by_quarter.png', 'theme': 'seaborn', 'figsize': [10, 6], 'colors': ['blue'], 'legend_labels': ['Revenue'], 'show_values': True, 'grid': True}
+2026-02-08 20:53:01 | INFO | architecture.executor:_execute_step:246 | DEBUG: Args type = <class 'dict'>
+2026-02-08 20:53:01 | INFO | architecture.sandbox:_install_deps:286 | Installing dependencies: matplotlib numpy pydantic
+2026-02-08 20:53:09 | INFO | architecture.sandbox:_pre_install_essentials:226 | Essential packages pre-installed
+2026-02-08 20:53:10 | INFO | architecture.sandbox:execute_with_args:583 | DEBUG: sandbox received args = {'data': {'labels': ['Q1', 'Q2', 'Q3', 'Q4'], 'values': [442681.36, 272374.87, 193948.84, 208459.47999999998]}, 'chart_type': 'bar', 'title': 'Revenue by Quarter', 'xlabel': 'Quarter', 'ylabel': 'Revenue', 'output_path': '/inputs/revenue_by_quarter.png', 'theme': 'seaborn', 'figsize': [10, 6], 'colors': ['blue'], 'legend_labels': ['Revenue'], 'show_values': True, 'grid': True}
+2026-02-08 20:53:10 | INFO | architecture.sandbox:execute_with_args:584 | DEBUG: args_json = {"data": {"labels": ["Q1", "Q2", "Q3", "Q4"], "values": [442681.36, 272374.87, 193948.84, 208459.47999999998]}, "chart_type": "bar", "title": "Revenue by Quarter", "xlabel": "Quarter", "ylabel": "Revenue", "output_path": "/inputs/revenue_by_quarter.png", "theme": "seaborn", "figsize": [10, 6], "colors": ["blue"], "legend_labels": ["Revenue"], "show_values": true, "grid": true}
+2026-02-08 20:53:10 | INFO | architecture.sandbox:execute_with_args:585 | DEBUG: Runner script line: args = json.loads('{"data": {"labels": ["Q1", "Q2", "Q3", "Q4"], "values": [442681.36, 272374.87, 193948.84, 208459.47999999998]}, "chart_type": "bar", "title": "Revenue by Quarter", "xlabel": "Quarter", "ylabel": "Revenue", "output_path": "/inputs/revenue_by_quarter.png", "theme": "seaborn", "figsize": [10, 6], "colors": ["blue"], "legend_labels": ["Revenue"], "show_values": true, "grid": true}')
+2026-02-08 20:53:10 | INFO | architecture.sandbox:execute_with_args:590 | Executing tool with args: AdvancedGraphTool
+2026-02-08 20:53:10 | INFO | architecture.sandbox:execute_with_args:591 | Args JSON being passed: {"data": {"labels": ["Q1", "Q2", "Q3", "Q4"], "values": [442681.36, 272374.87, 193948.84, 208459.47999999998]}, "chart_type": "bar", "title": "Revenue by Quarter", "xlabel": "Quarter", "ylabel": "Revenue", "output_path": "/inputs/revenue_by_quarter.png", "theme": "seaborn", "figsize": [10, 6], "colors": ["blue"], "legend_labels": ["Revenue"], "show_values": true, "grid": true}
+2026-02-08 20:53:12 | INFO | architecture.executor:_execute_step:263 | Step 1 SANDBOX Profile: time=464.027ms, peak_mem=1.1569MB, delta_mem=1.0902MB, efficiency=76.34%, grade=slow
+2026-02-08 20:53:12 | INFO | architecture.executor:_execute_step:273 |    (Total round-trip: 10780.43ms)
+2026-02-08 20:53:12 | INFO | architecture.executor:_execute_step:278 | Step 1: Completed in 10.78s
+2026-02-08 20:53:12 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 500 | Temp: 0.3 | Session: 2026-02-08_20-52-40
+2026-02-08 20:53:12 | INFO | architecture.llm_manager:generate:132 | Generation success in 669.46ms
+2026-02-08 20:53:12 | INFO | __main__:main:244 | Completed in 12948.34ms
+2026-02-08 20:53:12 | INFO | __main__:main:245 | Zone: public
+2026-02-08 20:53:12 | INFO | architecture.executor:export_profiles:574 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260208_205312.json
+2026-02-08 20:53:17 | INFO | architecture.sandbox:stop:273 | Sandbox container stopped: 1986b8fb33e2
+2026-02-08 20:53:17 | INFO | __main__:_shutdown_runtime:107 | Runtime shutdown complete

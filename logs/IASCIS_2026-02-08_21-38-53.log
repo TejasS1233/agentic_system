@@ -1,0 +1,126 @@
+2026-02-08 21:38:57 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-08 21:39:04 | INFO | __main__:main:233 | Starting IASCIS with Sandbox and Profiling
+2026-02-08 21:39:04 | INFO | architecture.input_loader:__init__:26 | InputLoader initialized: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-08 21:39:04 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-08 21:39:04 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-08 21:39:04 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-08 21:39:04 | INFO | __main__:__init__:74 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-08 21:39:04 | INFO | architecture.sandbox:__init__:161 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs, inputs_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-08 21:39:05 | INFO | architecture.sandbox:start:258 | Sandbox container started: 1d4a2e37abf7
+2026-02-08 21:39:05 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-08 21:39:05 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-08 21:39:05 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-08 21:39:05 | INFO | architecture.executor:load_registry:93 | Loaded 24 tool definitions
+2026-02-08 21:39:05 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-08 21:39:05 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-08 21:39:06 | INFO | architecture.sandbox:_install_deps:286 | Installing dependencies: numpy pydantic requests beautifulsoup4 pandas
+2026-02-08 21:39:08 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-08 21:39:08 | INFO | __main__:_initialize_runtime:98 | Runtime initialized with Sandbox
+2026-02-08 21:39:08 | INFO | architecture.input_loader:build_context:148 | Built context from 1 file(s) (525 chars, 1 images)
+2026-02-08 21:39:08 | INFO | __main__:run:133 | Loaded input documents: ['Screenshot 2026-02-08 003400.png']
+2026-02-08 21:39:08 | INFO | __main__:run:141 | Task received: [CONTEXT: Working with local files: ['Screenshot 2026-02-08 003400.png']. IMAGE FILES TO PROCESS: Sc...
+2026-02-08 21:39:08 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-08 21:39:08 | INFO | __main__:run:145 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-08 21:39:08 | INFO | architecture.orchestrator:run:47 | Processing: [CONTEXT: Working with local files: ['Screenshot 2026-02-08 003400.png']. IMAGE ...
+2026-02-08 21:39:08 | INFO | architecture.orchestrator:run:52 | Document context available (525 chars)
+2026-02-08 21:39:08 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-08_21-38-53
+2026-02-08 21:39:09 | INFO | architecture.llm_manager:generate:132 | Generation success in 658.83ms
+2026-02-08 21:39:09 | INFO | architecture.orchestrator:run:56 | Task Classification: COMPLEX_TASK
+2026-02-08 21:39:09 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-08_21-38-53
+2026-02-08 21:39:10 | INFO | architecture.llm_manager:generate:132 | Generation success in 626.78ms
+2026-02-08 21:39:10 | INFO | architecture.orchestrator:run:63 | Decomposed into 3 subtasks
+2026-02-08 21:39:10 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-08_21-38-53
+2026-02-08 21:39:10 | INFO | architecture.llm_manager:generate:132 | Generation success in 163.24ms
+2026-02-08 21:39:10 | INFO | architecture.orchestrator:_retrieve_tools:184 | st_1 → RedditTool (LLM selected, semantic: 0.468, tags: +2, in-domain)
+2026-02-08 21:39:10 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-08_21-38-53
+2026-02-08 21:39:10 | INFO | architecture.llm_manager:generate:132 | Generation success in 160.64ms
+2026-02-08 21:39:10 | INFO | architecture.orchestrator:_retrieve_tools:184 | st_2 → SentimentAnalysisTool (LLM selected, semantic: 0.516, tags: +1, in-domain)
+2026-02-08 21:39:10 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-08_21-38-53
+2026-02-08 21:39:10 | INFO | architecture.llm_manager:generate:132 | Generation success in 142.95ms
+2026-02-08 21:39:10 | INFO | architecture.orchestrator:_retrieve_tools:184 | st_3 → SimilarPapersTool (LLM selected, semantic: 0.203, tags: +0, cross-domain)
+2026-02-08 21:39:10 | INFO | architecture.orchestrator:_ensure_tools:233 | Toolsmith creating: Compare community opinions across subreddits
+2026-02-08 21:39:10 | INFO | architecture.toolsmith:create_tool:114 | Request: 'Compare community opinions across subreddits'
+2026-02-08 21:39:10 | INFO | architecture.toolsmith:create_tool:126 | Generating tool with LLM (attempt 1/3)...
+2026-02-08 21:39:10 | INFO | architecture.toolsmith:create_tool:129 | Available APIs context length: 295
+2026-02-08 21:39:10 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-08_21-38-53
+2026-02-08 21:39:12 | INFO | architecture.llm_manager:generate:132 | Generation success in 1991.03ms
+2026-02-08 21:39:12 | INFO | architecture.toolsmith:create_tool:181 | Tool saved: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\reddit_subreddit_comparator.py
+2026-02-08 21:39:12 | INFO | architecture.toolsmith:_update_registry:266 | Registry updated: RedditSubredditComparator
+2026-02-08 21:39:12 | INFO | architecture.orchestrator:_ensure_tools:235 | Toolsmith: Created RedditSubredditComparator with tags ['Reddit', 'subreddits', 'community opinions']...
+2026-02-08 21:39:12 | INFO | architecture.orchestrator:_ensure_tools:256 | Tool assigned: RedditSubredditComparator
+2026-02-08 21:39:12 | INFO | architecture.orchestrator:_create_plan:313 | ============================================================
+2026-02-08 21:39:12 | INFO | architecture.orchestrator:_create_plan:314 | EXECUTION PLAN: 3 steps
+2026-02-08 21:39:12 | INFO | architecture.orchestrator:_create_plan:315 | ============================================================
+2026-02-08 21:39:12 | INFO | architecture.orchestrator:_create_plan:319 |   Step 1: Scrape Reddit posts about a topic from 3 subreddit...
+2026-02-08 21:39:12 | INFO | architecture.orchestrator:_create_plan:320 |     Tool: RedditTool
+2026-02-08 21:39:12 | INFO | architecture.orchestrator:_create_plan:321 |     no dependencies, uses description
+2026-02-08 21:39:12 | INFO | architecture.orchestrator:_create_plan:319 |   Step 2: Analyze sentiment of scraped posts...
+2026-02-08 21:39:12 | INFO | architecture.orchestrator:_create_plan:320 |     Tool: SentimentAnalysisTool
+2026-02-08 21:39:12 | INFO | architecture.orchestrator:_create_plan:321 |     depends_on=[1], input_from=step_1
+2026-02-08 21:39:12 | INFO | architecture.orchestrator:_create_plan:319 |   Step 3: Compare community opinions across subreddits...
+2026-02-08 21:39:12 | INFO | architecture.orchestrator:_create_plan:320 |     Tool: RedditSubredditComparator
+2026-02-08 21:39:12 | INFO | architecture.orchestrator:_create_plan:321 |     depends_on=[2], input_from=step_2
+2026-02-08 21:39:12 | INFO | architecture.orchestrator:_create_plan:322 | ============================================================
+2026-02-08 21:39:12 | INFO | architecture.executor:execute:115 | Executing plan: Scrape Reddit posts about a topic across 3 subreddits, analyze sentiment, compare community opinions
+2026-02-08 21:39:12 | INFO | architecture.executor:execute:116 | Total steps: 3
+2026-02-08 21:39:12 | INFO | architecture.executor:execute:121 | Document context available for execution (525 chars)
+2026-02-08 21:39:12 | INFO | architecture.executor:_execute_step:195 | Step 1: Scrape Reddit posts about a topic from 3 subreddits using RedditTool
+2026-02-08 21:39:12 | INFO | architecture.executor:load_registry:93 | Loaded 25 tool definitions
+2026-02-08 21:39:12 | INFO | architecture.executor:_execute_step:237 | Step 1: Using description as input
+2026-02-08 21:39:12 | INFO | architecture.executor:_infer_args:590 | Using document context for argument inference
+2026-02-08 21:39:12 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-08_21-38-53
+2026-02-08 21:39:12 | INFO | architecture.llm_manager:generate:132 | Generation success in 205.46ms
+2026-02-08 21:39:12 | INFO | architecture.executor:_infer_args:656 | LLM extracted args: {'subreddit': ['r/topic1', 'r/topic2', 'r/topic3'], 'sort': None, 'time_filter': None, 'limit': None}
+2026-02-08 21:39:12 | INFO | architecture.executor:_execute_step:244 | DEBUG: Executor inferred args = {'subreddit': ['r/topic1', 'r/topic2', 'r/topic3'], 'sort': None, 'time_filter': None, 'limit': None}
+2026-02-08 21:39:12 | INFO | architecture.executor:_execute_step:245 | DEBUG: Translated args = {'subreddit': ['r/topic1', 'r/topic2', 'r/topic3'], 'sort': None, 'time_filter': None, 'limit': None}
+2026-02-08 21:39:12 | INFO | architecture.executor:_execute_step:246 | DEBUG: Args type = <class 'dict'>
+2026-02-08 21:39:12 | INFO | architecture.sandbox:_install_deps:286 | Installing dependencies: pydantic requests
+2026-02-08 21:39:15 | INFO | architecture.sandbox:execute_with_args:583 | DEBUG: sandbox received args = {'subreddit': ['r/topic1', 'r/topic2', 'r/topic3'], 'sort': None, 'time_filter': None, 'limit': None}
+2026-02-08 21:39:15 | INFO | architecture.sandbox:execute_with_args:584 | DEBUG: args_json = {"subreddit": ["r/topic1", "r/topic2", "r/topic3"], "sort": null, "time_filter": null, "limit": null}
+2026-02-08 21:39:15 | INFO | architecture.sandbox:execute_with_args:585 | DEBUG: Runner script line: args = json.loads('{"subreddit": ["r/topic1", "r/topic2", "r/topic3"], "sort": null, "time_filter": null, "limit": null}')
+2026-02-08 21:39:15 | INFO | architecture.sandbox:execute_with_args:590 | Executing tool with args: RedditTool
+2026-02-08 21:39:15 | INFO | architecture.sandbox:execute_with_args:591 | Args JSON being passed: {"subreddit": ["r/topic1", "r/topic2", "r/topic3"], "sort": null, "time_filter": null, "limit": null}
+2026-02-08 21:39:15 | INFO | architecture.executor:_execute_step:263 | Step 1 SANDBOX Profile: time=0.062ms, peak_mem=0.0017MB, delta_mem=0.0000MB, efficiency=0.00%, grade=critical
+2026-02-08 21:39:15 | INFO | architecture.executor:_execute_step:273 |    (Total round-trip: 2942.90ms)
+2026-02-08 21:39:15 | ERROR | architecture.executor:_execute_step:282 | Step 1: Failed - '<' not supported between instances of 'int' and 'NoneType'
+2026-02-08 21:39:15 | INFO | architecture.reflector:reflect:295 | Reflected: unknown, retry=True, remaining=2
+2026-02-08 21:39:15 | INFO | architecture.executor:_handle_failure:319 | Step 1: Failure type=tool_code, retrying...
+2026-02-08 21:39:15 | INFO | architecture.executor:_retry_with_regenerated_tool:380 | Step 1: Regenerating tool with error context
+2026-02-08 21:39:15 | INFO | architecture.toolsmith:create_tool:114 | Request: 'Task: Scrape Reddit posts about a topic from 3 subreddits
+
+Input data sample:
+Scrape Reddit posts about a topic from 3 subreddits
+
+Previous implementation failed with error:
+'<' not supported between instances of 'int' and 'NoneType'
+
+Create a tool that correctly handles this input format and fixes the error.'
+2026-02-08 21:39:15 | INFO | architecture.toolsmith:create_tool:126 | Generating tool with LLM (attempt 1/3)...
+2026-02-08 21:39:15 | INFO | architecture.toolsmith:create_tool:129 | Available APIs context length: 770
+2026-02-08 21:39:15 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-08_21-38-53
+2026-02-08 21:39:17 | INFO | architecture.llm_manager:generate:132 | Generation success in 1257.24ms
+2026-02-08 21:39:17 | INFO | architecture.toolsmith:create_tool:181 | Tool saved: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\reddit_post_scraper.py
+2026-02-08 21:39:17 | INFO | architecture.toolsmith:_update_registry:266 | Registry updated: RedditPostScraperTool
+2026-02-08 21:39:17 | INFO | architecture.executor:_retry_with_regenerated_tool:391 | Step 1: Toolsmith result = Created RedditPostScraperTool with tags ['web scraping', 'reddit', 'posts']
+2026-02-08 21:39:17 | INFO | architecture.executor:load_registry:93 | Loaded 26 tool definitions
+2026-02-08 21:39:17 | INFO | architecture.executor:_retry_with_regenerated_tool:412 | Step 1: Using regenerated tool RedditPostScraperTool
+2026-02-08 21:39:17 | INFO | architecture.executor:_infer_args:590 | Using document context for argument inference
+2026-02-08 21:39:17 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-08_21-38-53
+2026-02-08 21:39:17 | INFO | architecture.llm_manager:generate:132 | Generation success in 173.80ms
+2026-02-08 21:39:17 | INFO | architecture.executor:_infer_args:656 | LLM extracted args: {'topic': 'Reddit posts', 'subreddits': 3}
+2026-02-08 21:39:17 | INFO | architecture.executor:_retry_with_regenerated_tool:419 | Step 1: Translated regenerated tool args: {'topic': 'Reddit posts', 'subreddits': 3}
+2026-02-08 21:39:17 | INFO | architecture.sandbox:_install_deps:286 | Installing dependencies: beautifulsoup4
+2026-02-08 21:39:17 | INFO | architecture.sandbox:execute_with_args:583 | DEBUG: sandbox received args = {'topic': 'Reddit posts', 'subreddits': 3}
+2026-02-08 21:39:17 | INFO | architecture.sandbox:execute_with_args:584 | DEBUG: args_json = {"topic": "Reddit posts", "subreddits": 3}
+2026-02-08 21:39:17 | INFO | architecture.sandbox:execute_with_args:585 | DEBUG: Runner script line: args = json.loads('{"topic": "Reddit posts", "subreddits": 3}')
+2026-02-08 21:39:17 | INFO | architecture.sandbox:execute_with_args:590 | Executing tool with args: RedditPostScraperTool
+2026-02-08 21:39:17 | INFO | architecture.sandbox:execute_with_args:591 | Args JSON being passed: {"topic": "Reddit posts", "subreddits": 3}
+2026-02-08 21:39:18 | INFO | architecture.sandbox:_pre_install_essentials:226 | Essential packages pre-installed
+2026-02-08 21:39:18 | WARNING | architecture.executor:_retry_with_regenerated_tool:431 | Step 1: Retry with RedditPostScraperTool failed - 'int' object is not iterable
+2026-02-08 21:39:18 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 500 | Temp: 0.3 | Session: 2026-02-08_21-38-53
+2026-02-08 21:39:19 | INFO | architecture.llm_manager:generate:132 | Generation success in 1204.70ms
+2026-02-08 21:39:19 | INFO | __main__:main:244 | Completed in 10864.12ms
+2026-02-08 21:39:19 | INFO | __main__:main:245 | Zone: public
+2026-02-08 21:39:19 | INFO | architecture.executor:export_profiles:574 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260208_213919.json
+2026-02-08 21:39:24 | INFO | architecture.sandbox:stop:273 | Sandbox container stopped: 1d4a2e37abf7
+2026-02-08 21:39:24 | INFO | __main__:_shutdown_runtime:107 | Runtime shutdown complete

@@ -1,0 +1,48 @@
+{
+  "exported_at": "2026-02-08T21:13:18.855358",
+  "summary": {
+    "CurrencyConverterTool": {
+      "call_count": 1,
+      "avg_time_ms": 852.315,
+      "max_time_ms": 852.315,
+      "min_time_ms": 852.315,
+      "avg_memory_mb": 0.1275,
+      "max_memory_mb": 0.1275,
+      "avg_memory_delta_mb": 0.0678,
+      "avg_efficiency": 0.5733,
+      "last_grade": "slow"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 1,
+    "tools_profiled": [
+      "CurrencyConverterTool"
+    ],
+    "execution_time_ms": {
+      "min": 852.315,
+      "max": 852.315,
+      "mean": 852.315
+    },
+    "peak_memory_mb": {
+      "min": 0.1275,
+      "max": 0.1275,
+      "mean": 0.1275
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "CurrencyConverterTool": [
+      {
+        "tool_name": "CurrencyConverterTool",
+        "execution_time_ms": 852.315,
+        "peak_memory_mb": 0.1275,
+        "memory_delta_mb": 0.0678,
+        "latency_grade": "slow",
+        "efficiency_score": 0.5733,
+        "success": true
+      }
+    ]
+  }
+}

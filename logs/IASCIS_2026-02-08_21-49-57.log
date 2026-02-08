@@ -1,0 +1,110 @@
+2026-02-08 21:50:00 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-08 21:50:12 | INFO | __main__:main:233 | Starting IASCIS with Sandbox and Profiling
+2026-02-08 21:50:12 | INFO | architecture.input_loader:__init__:26 | InputLoader initialized: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-08 21:50:12 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-08 21:50:12 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-08 21:50:12 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-08 21:50:12 | INFO | __main__:__init__:74 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-08 21:50:12 | INFO | architecture.sandbox:__init__:161 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs, inputs_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-08 21:50:13 | INFO | architecture.sandbox:start:258 | Sandbox container started: 5b1f06d07589
+2026-02-08 21:50:13 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-08 21:50:13 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-08 21:50:13 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-08 21:50:13 | INFO | architecture.executor:load_registry:93 | Loaded 26 tool definitions
+2026-02-08 21:50:13 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-08 21:50:13 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-08 21:50:14 | INFO | architecture.sandbox:_install_deps:286 | Installing dependencies: pandas pydantic requests beautifulsoup4 numpy
+2026-02-08 21:50:17 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-08 21:50:17 | INFO | __main__:_initialize_runtime:98 | Runtime initialized with Sandbox
+2026-02-08 21:50:17 | INFO | __main__:run:141 | Task received: Scrape Reddit posts about AI replacing jobs from r/technology, r/artificial, and r/cscareerquestions...
+2026-02-08 21:50:17 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-08 21:50:17 | INFO | __main__:run:145 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-08 21:50:17 | INFO | architecture.orchestrator:run:47 | Processing: Scrape Reddit posts about AI replacing jobs from r/technology, r/artificial, and...
+2026-02-08 21:50:17 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-08_21-49-57
+2026-02-08 21:50:17 | INFO | architecture.llm_manager:generate:132 | Generation success in 676.44ms
+2026-02-08 21:50:17 | INFO | architecture.orchestrator:run:56 | Task Classification: COMPLEX_TASK
+2026-02-08 21:50:17 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-08_21-49-57
+2026-02-08 21:50:18 | INFO | architecture.llm_manager:generate:132 | Generation success in 668.59ms
+2026-02-08 21:50:18 | INFO | architecture.orchestrator:run:63 | Decomposed into 3 subtasks
+2026-02-08 21:50:18 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-08_21-49-57
+2026-02-08 21:50:18 | INFO | architecture.llm_manager:generate:132 | Generation success in 146.39ms
+2026-02-08 21:50:18 | INFO | architecture.orchestrator:_retrieve_tools:184 | st_1 → RedditTool (LLM selected, semantic: 0.300, tags: +2, in-domain)
+2026-02-08 21:50:18 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-08_21-49-57
+2026-02-08 21:50:18 | INFO | architecture.llm_manager:generate:132 | Generation success in 162.02ms
+2026-02-08 21:50:18 | INFO | architecture.orchestrator:_retrieve_tools:184 | st_2 → RedditSentimentAnalyzerTool (LLM selected, semantic: 0.545, tags: +2, in-domain)
+2026-02-08 21:50:18 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-08_21-49-57
+2026-02-08 21:50:18 | INFO | architecture.llm_manager:generate:132 | Generation success in 164.04ms
+2026-02-08 21:50:18 | INFO | architecture.orchestrator:_retrieve_tools:184 | st_3 → RedditSubredditComparator (LLM selected, semantic: 0.588, tags: +1, cross-domain)
+2026-02-08 21:50:18 | INFO | architecture.orchestrator:_create_plan:313 | ============================================================
+2026-02-08 21:50:18 | INFO | architecture.orchestrator:_create_plan:314 | EXECUTION PLAN: 3 steps
+2026-02-08 21:50:18 | INFO | architecture.orchestrator:_create_plan:315 | ============================================================
+2026-02-08 21:50:18 | INFO | architecture.orchestrator:_create_plan:319 |   Step 1: Scrape Reddit posts from r/technology, r/artificia...
+2026-02-08 21:50:18 | INFO | architecture.orchestrator:_create_plan:320 |     Tool: RedditTool
+2026-02-08 21:50:18 | INFO | architecture.orchestrator:_create_plan:321 |     no dependencies, uses description
+2026-02-08 21:50:18 | INFO | architecture.orchestrator:_create_plan:319 |   Step 2: Analyze sentiment of scraped Reddit posts...
+2026-02-08 21:50:18 | INFO | architecture.orchestrator:_create_plan:320 |     Tool: RedditSentimentAnalyzerTool
+2026-02-08 21:50:18 | INFO | architecture.orchestrator:_create_plan:321 |     depends_on=[1], input_from=step_1
+2026-02-08 21:50:18 | INFO | architecture.orchestrator:_create_plan:319 |   Step 3: Compare community opinions across subreddits...
+2026-02-08 21:50:18 | INFO | architecture.orchestrator:_create_plan:320 |     Tool: RedditSubredditComparator
+2026-02-08 21:50:18 | INFO | architecture.orchestrator:_create_plan:321 |     depends_on=[2], input_from=step_2
+2026-02-08 21:50:18 | INFO | architecture.orchestrator:_create_plan:322 | ============================================================
+2026-02-08 21:50:18 | INFO | architecture.executor:execute:115 | Executing plan: Scrape Reddit posts about AI replacing jobs from r/technology, r/artificial, and r/cscareerquestions, analyze sentiment, compare community opinions
+2026-02-08 21:50:18 | INFO | architecture.executor:execute:116 | Total steps: 3
+2026-02-08 21:50:18 | INFO | architecture.executor:_execute_step:195 | Step 1: Scrape Reddit posts from r/technology, r/artificial, and r/cscareerquestions about AI replacing jobs using RedditTool
+2026-02-08 21:50:18 | INFO | architecture.executor:load_registry:93 | Loaded 26 tool definitions
+2026-02-08 21:50:18 | INFO | architecture.executor:_execute_step:237 | Step 1: Using description as input
+2026-02-08 21:50:18 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-08_21-49-57
+2026-02-08 21:50:19 | INFO | architecture.llm_manager:generate:132 | Generation success in 240.88ms
+2026-02-08 21:50:19 | INFO | architecture.executor:_infer_args:666 | LLM extracted args: {'subreddit': ['technology', 'artificial', 'cscareerquestions'], 'sort': 'relevance', 'time_filter': 'all', 'limit': 100}
+2026-02-08 21:50:19 | INFO | architecture.executor:_execute_step:244 | DEBUG: Executor inferred args = {'subreddit': ['technology', 'artificial', 'cscareerquestions'], 'sort': 'relevance', 'time_filter': 'all', 'limit': 100}
+2026-02-08 21:50:19 | INFO | architecture.executor:_execute_step:245 | DEBUG: Translated args = {'subreddit': ['technology', 'artificial', 'cscareerquestions'], 'sort': 'relevance', 'time_filter': 'all', 'limit': 100}
+2026-02-08 21:50:19 | INFO | architecture.executor:_execute_step:246 | DEBUG: Args type = <class 'dict'>
+2026-02-08 21:50:19 | INFO | architecture.sandbox:_install_deps:286 | Installing dependencies: requests pydantic
+2026-02-08 21:50:21 | INFO | architecture.sandbox:execute_with_args:583 | DEBUG: sandbox received args = {'subreddit': ['technology', 'artificial', 'cscareerquestions'], 'sort': 'relevance', 'time_filter': 'all', 'limit': 100}
+2026-02-08 21:50:21 | INFO | architecture.sandbox:execute_with_args:584 | DEBUG: args_json = {"subreddit": ["technology", "artificial", "cscareerquestions"], "sort": "relevance", "time_filter": "all", "limit": 100}
+2026-02-08 21:50:21 | INFO | architecture.sandbox:execute_with_args:585 | DEBUG: Runner script line: args = json.loads('{"subreddit": ["technology", "artificial", "cscareerquestions"], "sort": "relevance", "time_filter": "all", "limit": 100}')
+2026-02-08 21:50:21 | INFO | architecture.sandbox:execute_with_args:590 | Executing tool with args: RedditTool
+2026-02-08 21:50:21 | INFO | architecture.sandbox:execute_with_args:591 | Args JSON being passed: {"subreddit": ["technology", "artificial", "cscareerquestions"], "sort": "relevance", "time_filter": "all", "limit": 100}
+2026-02-08 21:50:23 | INFO | architecture.executor:_execute_step:263 | Step 1 SANDBOX Profile: time=1285.636ms, peak_mem=0.1532MB, delta_mem=0.0820MB, efficiency=49.94%, grade=critical
+2026-02-08 21:50:23 | INFO | architecture.executor:_execute_step:273 |    (Total round-trip: 3964.98ms)
+2026-02-08 21:50:23 | INFO | architecture.executor:_execute_step:278 | Step 1: Completed in 3.96s
+2026-02-08 21:50:23 | INFO | architecture.executor:_execute_step:195 | Step 2: Analyze sentiment of scraped Reddit posts using RedditSentimentAnalyzerTool
+2026-02-08 21:50:23 | INFO | architecture.executor:load_registry:93 | Loaded 26 tool definitions
+2026-02-08 21:50:23 | INFO | architecture.executor:_execute_step:227 | Step 2: Using input from step 1
+2026-02-08 21:50:23 | INFO | architecture.executor:_infer_args:625 | Direct pass-through: Using structured JSON for 'data' arg (keys: ['subreddits', 'total_posts', 'results'])
+2026-02-08 21:50:23 | INFO | architecture.executor:_infer_args_with_direct_data:742 | Direct data pass-through args: ['data']
+2026-02-08 21:50:23 | INFO | architecture.executor:_execute_step:244 | DEBUG: Executor inferred args = {'data': {'subreddits': ['', '', ''], 'total_posts': 0, 'results': [{'error': 'Subreddit r/technology not found'}, {'error': 'Subreddit r/artificial not found'}, {'error': 'Subreddit r/cscareerquestions not found'}]}}
+2026-02-08 21:50:23 | INFO | architecture.executor:_execute_step:245 | DEBUG: Translated args = {'data': {'subreddits': ['', '', ''], 'total_posts': 0, 'results': [{'error': 'Subreddit r/technology not found'}, {'error': 'Subreddit r/artificial not found'}, {'error': 'Subreddit r/cscareerquestions not found'}]}}
+2026-02-08 21:50:23 | INFO | architecture.executor:_execute_step:246 | DEBUG: Args type = <class 'dict'>
+2026-02-08 21:50:23 | INFO | architecture.sandbox:_install_deps:286 | Installing dependencies: nltk
+2026-02-08 21:50:25 | INFO | architecture.sandbox:_install_deps:296 | Downloading NLTK data...
+2026-02-08 21:50:26 | INFO | architecture.sandbox:_pre_install_essentials:226 | Essential packages pre-installed
+2026-02-08 21:50:28 | INFO | architecture.sandbox:execute_with_args:583 | DEBUG: sandbox received args = {'data': {'subreddits': ['', '', ''], 'total_posts': 0, 'results': [{'error': 'Subreddit r/technology not found'}, {'error': 'Subreddit r/artificial not found'}, {'error': 'Subreddit r/cscareerquestions not found'}]}}
+2026-02-08 21:50:28 | INFO | architecture.sandbox:execute_with_args:584 | DEBUG: args_json = {"data": {"subreddits": ["", "", ""], "total_posts": 0, "results": [{"error": "Subreddit r/technology not found"}, {"error": "Subreddit r/artificial not found"}, {"error": "Subreddit r/cscareerquestions not found"}]}}
+2026-02-08 21:50:28 | INFO | architecture.sandbox:execute_with_args:585 | DEBUG: Runner script line: args = json.loads('{"data": {"subreddits": ["", "", ""], "total_posts": 0, "results": [{"error": "Subreddit r/technology not found"}, {"error": "Subreddit r/artificial not found"}, {"error": "Subreddit r/cscareerquestions not found"}]}}')
+2026-02-08 21:50:28 | INFO | architecture.sandbox:execute_with_args:590 | Executing tool with args: RedditSentimentAnalyzerTool
+2026-02-08 21:50:28 | INFO | architecture.sandbox:execute_with_args:591 | Args JSON being passed: {"data": {"subreddits": ["", "", ""], "total_posts": 0, "results": [{"error": "Subreddit r/technology not found"}, {"error": "Subreddit r/artificial not found"}, {"error": "Subreddit r/cscareerquestions not found"}]}}
+2026-02-08 21:50:29 | INFO | architecture.executor:_execute_step:263 | Step 2 SANDBOX Profile: time=40.506ms, peak_mem=2.0575MB, delta_mem=1.2351MB, efficiency=97.15%, grade=moderate
+2026-02-08 21:50:29 | INFO | architecture.executor:_execute_step:273 |    (Total round-trip: 5856.60ms)
+2026-02-08 21:50:29 | INFO | architecture.executor:_execute_step:278 | Step 2: Completed in 5.86s
+2026-02-08 21:50:29 | INFO | architecture.executor:_execute_step:195 | Step 3: Compare community opinions across subreddits using RedditSubredditComparator
+2026-02-08 21:50:29 | INFO | architecture.executor:load_registry:93 | Loaded 26 tool definitions
+2026-02-08 21:50:29 | INFO | architecture.executor:_execute_step:227 | Step 3: Using input from step 2
+2026-02-08 21:50:29 | INFO | architecture.executor:_infer_args:625 | Direct pass-through: Using structured JSON for 'data' arg (keys: ['error', 'post_count', 'sentiments', 'aggregate'])
+2026-02-08 21:50:29 | INFO | architecture.executor:_infer_args_with_direct_data:742 | Direct data pass-through args: ['data']
+2026-02-08 21:50:29 | INFO | architecture.executor:_execute_step:244 | DEBUG: Executor inferred args = {'data': {'error': 'No text content found to analyze', 'post_count': 0, 'sentiments': [], 'aggregate': {'neg': 0, 'neu': 0, 'pos': 0, 'compound': 0}}}
+2026-02-08 21:50:29 | INFO | architecture.executor:_execute_step:245 | DEBUG: Translated args = {'data': {'error': 'No text content found to analyze', 'post_count': 0, 'sentiments': [], 'aggregate': {'neg': 0, 'neu': 0, 'pos': 0, 'compound': 0}}}
+2026-02-08 21:50:29 | INFO | architecture.executor:_execute_step:246 | DEBUG: Args type = <class 'dict'>
+2026-02-08 21:50:29 | INFO | architecture.sandbox:execute_with_args:583 | DEBUG: sandbox received args = {'data': {'error': 'No text content found to analyze', 'post_count': 0, 'sentiments': [], 'aggregate': {'neg': 0, 'neu': 0, 'pos': 0, 'compound': 0}}}
+2026-02-08 21:50:29 | INFO | architecture.sandbox:execute_with_args:584 | DEBUG: args_json = {"data": {"error": "No text content found to analyze", "post_count": 0, "sentiments": [], "aggregate": {"neg": 0, "neu": 0, "pos": 0, "compound": 0}}}
+2026-02-08 21:50:29 | INFO | architecture.sandbox:execute_with_args:585 | DEBUG: Runner script line: args = json.loads('{"data": {"error": "No text content found to analyze", "post_count": 0, "sentiments": [], "aggregate": {"neg": 0, "neu": 0, "pos": 0, "compound": 0}}}')
+2026-02-08 21:50:29 | INFO | architecture.sandbox:execute_with_args:590 | Executing tool with args: RedditSubredditComparator
+2026-02-08 21:50:29 | INFO | architecture.sandbox:execute_with_args:591 | Args JSON being passed: {"data": {"error": "No text content found to analyze", "post_count": 0, "sentiments": [], "aggregate": {"neg": 0, "neu": 0, "pos": 0, "compound": 0}}}
+2026-02-08 21:50:29 | INFO | architecture.executor:_execute_step:263 | Step 3 SANDBOX Profile: time=0.145ms, peak_mem=0.0019MB, delta_mem=0.0010MB, efficiency=99.99%, grade=fast
+2026-02-08 21:50:29 | INFO | architecture.executor:_execute_step:273 |    (Total round-trip: 495.35ms)
+2026-02-08 21:50:29 | INFO | architecture.executor:_execute_step:278 | Step 3: Completed in 0.50s
+2026-02-08 21:50:29 | INFO | __main__:main:244 | Completed in 12486.48ms
+2026-02-08 21:50:29 | INFO | __main__:main:245 | Zone: public
+2026-02-08 21:50:29 | INFO | architecture.executor:export_profiles:574 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260208_215029.json
+2026-02-08 21:50:34 | INFO | architecture.sandbox:stop:273 | Sandbox container stopped: 5b1f06d07589
+2026-02-08 21:50:34 | INFO | __main__:_shutdown_runtime:107 | Runtime shutdown complete

@@ -1,0 +1,210 @@
+2026-02-08 21:41:24 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-08 21:42:02 | INFO | __main__:main:233 | Starting IASCIS with Sandbox and Profiling
+2026-02-08 21:42:02 | INFO | architecture.input_loader:__init__:26 | InputLoader initialized: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-08 21:42:02 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-08 21:42:02 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-08 21:42:02 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-08 21:42:02 | INFO | __main__:__init__:74 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-08 21:42:02 | INFO | architecture.sandbox:__init__:161 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs, inputs_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-08 21:42:02 | INFO | architecture.sandbox:start:258 | Sandbox container started: 02f89d99fb36
+2026-02-08 21:42:02 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-08 21:42:02 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-08 21:42:02 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-08 21:42:02 | INFO | architecture.executor:load_registry:93 | Loaded 26 tool definitions
+2026-02-08 21:42:02 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-08 21:42:02 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-08 21:42:03 | INFO | architecture.sandbox:_install_deps:286 | Installing dependencies: pandas beautifulsoup4 numpy requests pydantic
+2026-02-08 21:42:06 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-08 21:42:06 | INFO | __main__:_initialize_runtime:98 | Runtime initialized with Sandbox
+2026-02-08 21:42:06 | INFO | architecture.input_loader:build_context:148 | Built context from 1 file(s) (525 chars, 1 images)
+2026-02-08 21:42:06 | INFO | __main__:run:133 | Loaded input documents: ['Screenshot 2026-02-08 003400.png']
+2026-02-08 21:42:06 | INFO | __main__:run:141 | Task received: [CONTEXT: Working with local files: ['Screenshot 2026-02-08 003400.png']. IMAGE FILES TO PROCESS: Sc...
+2026-02-08 21:42:06 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-08 21:42:06 | INFO | __main__:run:145 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-08 21:42:06 | INFO | architecture.orchestrator:run:47 | Processing: [CONTEXT: Working with local files: ['Screenshot 2026-02-08 003400.png']. IMAGE ...
+2026-02-08 21:42:06 | INFO | architecture.orchestrator:run:52 | Document context available (525 chars)
+2026-02-08 21:42:06 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-08_21-41-21
+2026-02-08 21:42:06 | INFO | architecture.llm_manager:generate:132 | Generation success in 592.12ms
+2026-02-08 21:42:06 | INFO | architecture.orchestrator:run:56 | Task Classification: COMPLEX_TASK
+2026-02-08 21:42:06 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-08_21-41-21
+2026-02-08 21:42:07 | INFO | architecture.llm_manager:generate:132 | Generation success in 727.47ms
+2026-02-08 21:42:07 | INFO | architecture.orchestrator:run:63 | Decomposed into 3 subtasks
+2026-02-08 21:42:07 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-08_21-41-21
+2026-02-08 21:42:07 | INFO | architecture.llm_manager:generate:132 | Generation success in 134.59ms
+2026-02-08 21:42:07 | INFO | architecture.orchestrator:_retrieve_tools:184 | st_1 → RedditPostScraperTool (LLM selected, semantic: 0.465, tags: +2, in-domain)
+2026-02-08 21:42:07 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-08_21-41-21
+2026-02-08 21:42:08 | INFO | architecture.llm_manager:generate:132 | Generation success in 167.56ms
+2026-02-08 21:42:08 | INFO | architecture.orchestrator:_retrieve_tools:184 | st_2 → SentimentAnalysisTool (LLM selected, semantic: 0.522, tags: +1, in-domain)
+2026-02-08 21:42:08 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-08_21-41-21
+2026-02-08 21:42:08 | INFO | architecture.llm_manager:generate:132 | Generation success in 151.81ms
+2026-02-08 21:42:08 | INFO | architecture.orchestrator:_retrieve_tools:184 | st_3 → RedditSubredditComparator (LLM selected, semantic: 0.516, tags: +0, cross-domain)
+2026-02-08 21:42:08 | INFO | architecture.orchestrator:_create_plan:313 | ============================================================
+2026-02-08 21:42:08 | INFO | architecture.orchestrator:_create_plan:314 | EXECUTION PLAN: 3 steps
+2026-02-08 21:42:08 | INFO | architecture.orchestrator:_create_plan:315 | ============================================================
+2026-02-08 21:42:08 | INFO | architecture.orchestrator:_create_plan:319 |   Step 1: Scrape Reddit posts from r/technology, r/artificia...
+2026-02-08 21:42:08 | INFO | architecture.orchestrator:_create_plan:320 |     Tool: RedditPostScraperTool
+2026-02-08 21:42:08 | INFO | architecture.orchestrator:_create_plan:321 |     no dependencies, uses description
+2026-02-08 21:42:08 | INFO | architecture.orchestrator:_create_plan:319 |   Step 2: Analyze sentiment of the scraped Reddit posts...
+2026-02-08 21:42:08 | INFO | architecture.orchestrator:_create_plan:320 |     Tool: SentimentAnalysisTool
+2026-02-08 21:42:08 | INFO | architecture.orchestrator:_create_plan:321 |     depends_on=[1], input_from=step_1
+2026-02-08 21:42:08 | INFO | architecture.orchestrator:_create_plan:319 |   Step 3: Compare community opinions from the sentiment anal...
+2026-02-08 21:42:08 | INFO | architecture.orchestrator:_create_plan:320 |     Tool: RedditSubredditComparator
+2026-02-08 21:42:08 | INFO | architecture.orchestrator:_create_plan:321 |     depends_on=[2], input_from=step_2
+2026-02-08 21:42:08 | INFO | architecture.orchestrator:_create_plan:322 | ============================================================
+2026-02-08 21:42:08 | INFO | architecture.executor:execute:115 | Executing plan: Scrape Reddit posts about AI replacing jobs from r/technology, r/artificial, and r/cscareerquestions, analyze sentiment, compare community opinions
+2026-02-08 21:42:08 | INFO | architecture.executor:execute:116 | Total steps: 3
+2026-02-08 21:42:08 | INFO | architecture.executor:execute:121 | Document context available for execution (525 chars)
+2026-02-08 21:42:08 | INFO | architecture.executor:_execute_step:195 | Step 1: Scrape Reddit posts from r/technology, r/artificial, and r/cscareerquestions about AI replacing jobs using RedditPostScraperTool
+2026-02-08 21:42:08 | INFO | architecture.executor:load_registry:93 | Loaded 26 tool definitions
+2026-02-08 21:42:08 | INFO | architecture.executor:_execute_step:237 | Step 1: Using description as input
+2026-02-08 21:42:08 | INFO | architecture.executor:_infer_args:590 | Using document context for argument inference
+2026-02-08 21:42:08 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-08_21-41-21
+2026-02-08 21:42:08 | INFO | architecture.llm_manager:generate:132 | Generation success in 210.92ms
+2026-02-08 21:42:08 | INFO | architecture.executor:_infer_args:656 | LLM extracted args: {'topic': 'AI replacing jobs', 'subreddits': ['technology', 'artificial', 'cscareerquestions']}
+2026-02-08 21:42:08 | INFO | architecture.executor:_execute_step:244 | DEBUG: Executor inferred args = {'topic': 'AI replacing jobs', 'subreddits': ['technology', 'artificial', 'cscareerquestions']}
+2026-02-08 21:42:08 | INFO | architecture.executor:_execute_step:245 | DEBUG: Translated args = {'topic': 'AI replacing jobs', 'subreddits': ['technology', 'artificial', 'cscareerquestions']}
+2026-02-08 21:42:08 | INFO | architecture.executor:_execute_step:246 | DEBUG: Args type = <class 'dict'>
+2026-02-08 21:42:08 | INFO | architecture.sandbox:_install_deps:286 | Installing dependencies: requests pydantic beautifulsoup4
+2026-02-08 21:42:11 | INFO | architecture.sandbox:execute_with_args:583 | DEBUG: sandbox received args = {'topic': 'AI replacing jobs', 'subreddits': ['technology', 'artificial', 'cscareerquestions']}
+2026-02-08 21:42:11 | INFO | architecture.sandbox:execute_with_args:584 | DEBUG: args_json = {"topic": "AI replacing jobs", "subreddits": ["technology", "artificial", "cscareerquestions"]}
+2026-02-08 21:42:11 | INFO | architecture.sandbox:execute_with_args:585 | DEBUG: Runner script line: args = json.loads('{"topic": "AI replacing jobs", "subreddits": ["technology", "artificial", "cscareerquestions"]}')
+2026-02-08 21:42:11 | INFO | architecture.sandbox:execute_with_args:590 | Executing tool with args: RedditPostScraperTool
+2026-02-08 21:42:11 | INFO | architecture.sandbox:execute_with_args:591 | Args JSON being passed: {"topic": "AI replacing jobs", "subreddits": ["technology", "artificial", "cscareerquestions"]}
+2026-02-08 21:42:15 | INFO | architecture.sandbox:_pre_install_essentials:226 | Essential packages pre-installed
+2026-02-08 21:42:17 | INFO | architecture.executor:_execute_step:263 | Step 1 SANDBOX Profile: time=6163.929ms, peak_mem=7.3479MB, delta_mem=6.6263MB, efficiency=47.06%, grade=critical
+2026-02-08 21:42:17 | INFO | architecture.executor:_execute_step:273 |    (Total round-trip: 9409.67ms)
+2026-02-08 21:42:17 | INFO | architecture.executor:_execute_step:278 | Step 1: Completed in 9.41s
+2026-02-08 21:42:17 | INFO | architecture.executor:_execute_step:195 | Step 2: Analyze sentiment of the scraped Reddit posts using SentimentAnalysisTool
+2026-02-08 21:42:17 | INFO | architecture.executor:load_registry:93 | Loaded 26 tool definitions
+2026-02-08 21:42:17 | INFO | architecture.executor:_execute_step:227 | Step 2: Using input from step 1
+2026-02-08 21:42:17 | INFO | architecture.executor:_infer_args:590 | Using document context for argument inference
+2026-02-08 21:42:17 | INFO | architecture.executor:_infer_args:597 | Direct mapping document context to 'text' argument
+2026-02-08 21:42:17 | WARNING | architecture.sandbox:translate_path_for_container:218 | No path translation found for: ============================================================
+INPUT DOCUMENTS
+============================================================
+
+--- IMAGE FILES AVAILABLE ---
+  - Screenshot 2026-02-08 003400.png: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs\Screenshot 2026-02-08 003400.png
+Use these paths with image processing tools.
+--- END IMAGE FILES ---
+
+============================================================
+END INPUT DOCUMENTS
+============================================================
+2026-02-08 21:42:17 | INFO | architecture.executor:_execute_step:244 | DEBUG: Executor inferred args = {'text': '============================================================\nINPUT DOCUMENTS\n============================================================\n\n--- IMAGE FILES AVAILABLE ---\n  - Screenshot 2026-02-08 003400.png: C:\\Users\\tejas\\Desktop\\Tests\\repo_to_tool\\agentic_system\\workspace\\inputs\\Screenshot 2026-02-08 003400.png\nUse these paths with image processing tools.\n--- END IMAGE FILES ---\n\n============================================================\nEND INPUT DOCUMENTS\n============================================================'}
+2026-02-08 21:42:17 | INFO | architecture.executor:_execute_step:245 | DEBUG: Translated args = {'text': '============================================================\nINPUT DOCUMENTS\n============================================================\n\n--- IMAGE FILES AVAILABLE ---\n  - Screenshot 2026-02-08 003400.png: C:\\Users\\tejas\\Desktop\\Tests\\repo_to_tool\\agentic_system\\workspace\\inputs\\Screenshot 2026-02-08 003400.png\nUse these paths with image processing tools.\n--- END IMAGE FILES ---\n\n============================================================\nEND INPUT DOCUMENTS\n============================================================'}
+2026-02-08 21:42:17 | INFO | architecture.executor:_execute_step:246 | DEBUG: Args type = <class 'dict'>
+2026-02-08 21:42:17 | INFO | architecture.sandbox:_install_deps:286 | Installing dependencies: nltk
+2026-02-08 21:42:20 | INFO | architecture.sandbox:_install_deps:296 | Downloading NLTK data...
+2026-02-08 21:42:22 | INFO | architecture.sandbox:execute_with_args:583 | DEBUG: sandbox received args = {'text': '============================================================\nINPUT DOCUMENTS\n============================================================\n\n--- IMAGE FILES AVAILABLE ---\n  - Screenshot 2026-02-08 003400.png: C:\\Users\\tejas\\Desktop\\Tests\\repo_to_tool\\agentic_system\\workspace\\inputs\\Screenshot 2026-02-08 003400.png\nUse these paths with image processing tools.\n--- END IMAGE FILES ---\n\n============================================================\nEND INPUT DOCUMENTS\n============================================================'}
+2026-02-08 21:42:22 | INFO | architecture.sandbox:execute_with_args:584 | DEBUG: args_json = {"text": "============================================================\nINPUT DOCUMENTS\n============================================================\n\n--- IMAGE FILES AVAILABLE ---\n  - Screenshot 2026-02-08 003400.png: C:\\Users\\tejas\\Desktop\\Tests\\repo_to_tool\\agentic_system\\workspace\\inputs\\Screenshot 2026-02-08 003400.png\nUse these paths with image processing tools.\n--- END IMAGE FILES ---\n\n============================================================\nEND INPUT DOCUMENTS\n============================================================"}
+2026-02-08 21:42:22 | INFO | architecture.sandbox:execute_with_args:585 | DEBUG: Runner script line: args = json.loads('{"text": "============================================================\nINPUT DOCUMENTS\n============================================================\n\n--- IMAGE FILES AVAILABLE ---\n  - Screenshot 2026-02-08 003400.png: C:\\Users\\tejas\\Desktop\\Tests\\repo_to_tool\\agentic_system\\workspace\\inputs\\Screenshot 2026-02-08 003400.png\nUse these paths with image processing tools.\n--- END IMAGE FILES ---\n\n============================================================\nEND INPUT DOCUMENTS\n============================================================"}')
+2026-02-08 21:42:22 | INFO | architecture.sandbox:execute_with_args:590 | Executing tool with args: SentimentAnalysisTool
+2026-02-08 21:42:22 | INFO | architecture.sandbox:execute_with_args:591 | Args JSON being passed: {"text": "============================================================\nINPUT DOCUMENTS\n============================================================\n\n--- IMAGE FILES AVAILABLE ---\n  - Screenshot 2026-02-08 003400.png: C:\\Users\\tejas\\Desktop\\Tests\\repo_to_tool\\agentic_system\\workspace\\inputs\\Screenshot 2026-02-08 003400.png\nUse these paths with image processing tools.\n--- END IMAGE FILES ---\n\n============================================================\nEND INPUT DOCUMENTS\n============================================================"}
+2026-02-08 21:42:23 | INFO | architecture.executor:_execute_step:263 | Step 2 SANDBOX Profile: time=1.419ms, peak_mem=0.0068MB, delta_mem=0.0000MB, efficiency=0.00%, grade=critical
+2026-02-08 21:42:23 | INFO | architecture.executor:_execute_step:273 |    (Total round-trip: 5463.40ms)
+2026-02-08 21:42:23 | ERROR | architecture.executor:_execute_step:282 | Step 2: Failed - 
+**********************************************************************
+  Resource [93mvader_lexicon[0m not found.
+  Please use the NLTK Downloader to obtain the resource:
+
+  [31m>>> import nltk
+  >>> nltk.download('vader_lexicon')
+  [0m
+  For more information see: https://www.nltk.org/data.html
+
+  Attempted to load [93msentiment/vader_lexicon.zip/vader_lexicon/vader_lexicon.txt[0m
+
+  Searched in:
+    - '/root/nltk_data'
+    - '/usr/local/nltk_data'
+    - '/usr/local/share/nltk_data'
+    - '/usr/local/lib/nltk_data'
+    - '/usr/share/nltk_data'
+    - '/usr/local/share/nltk_data'
+    - '/usr/lib/nltk_data'
+    - '/usr/local/lib/nltk_data'
+    - ''
+**********************************************************************
+
+2026-02-08 21:42:23 | INFO | architecture.reflector:reflect:295 | Reflected: unknown, retry=True, remaining=2
+2026-02-08 21:42:23 | INFO | architecture.executor:_handle_failure:319 | Step 2: Failure type=tool_code, retrying...
+2026-02-08 21:42:23 | INFO | architecture.executor:_retry_with_regenerated_tool:380 | Step 2: Regenerating tool with error context
+2026-02-08 21:42:23 | INFO | architecture.toolsmith:create_tool:114 | Request: 'Task: Analyze sentiment of the scraped Reddit posts
+
+Input data sample:
+[]
+
+Previous implementation failed with error:
+
+**********************************************************************
+  Resource [93mvader_lexicon[0m not found.
+  Please use the NLTK Downloader to obtain the resource:
+
+  [31m>>> import nltk
+  >>> nltk.download('vader_lexicon')
+  [0m
+  For more information see: https://www.nltk.org/data.html
+
+  Attempted to load [93msentiment/vader_lexicon.zip/vader_lexicon/vader_lexicon.txt[0m
+
+  Searched in:
+    - '/root/nltk_data'
+    - '/usr/local/nltk_data'
+    - '/usr/local/share/nltk_data'
+    - '/usr/local/lib/nltk_data'
+    - '/usr/share/nltk_data'
+    - '/usr/local/share/nltk_data'
+    - '/usr/lib/nltk_data'
+    - '/usr/local/lib/nltk_data'
+    - ''
+**********************************************************************
+
+
+Create a tool that correctly handles this input format and fixes the error.'
+2026-02-08 21:42:23 | INFO | architecture.toolsmith:create_tool:126 | Generating tool with LLM (attempt 1/3)...
+2026-02-08 21:42:23 | INFO | architecture.toolsmith:create_tool:129 | Available APIs context length: 686
+2026-02-08 21:42:23 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-08_21-41-21
+2026-02-08 21:42:24 | INFO | architecture.llm_manager:generate:132 | Generation success in 1103.11ms
+2026-02-08 21:42:24 | INFO | architecture.toolsmith:create_tool:181 | Tool saved: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\reddit_sentiment_analyzer.py
+2026-02-08 21:42:24 | INFO | architecture.toolsmith:_update_registry:266 | Registry updated: RedditSentimentAnalyzerTool
+2026-02-08 21:42:24 | INFO | architecture.executor:_retry_with_regenerated_tool:391 | Step 2: Toolsmith result = Created RedditSentimentAnalyzerTool with tags ['sentiment', 'reddit', 'nlp']
+2026-02-08 21:42:24 | INFO | architecture.executor:load_registry:93 | Loaded 27 tool definitions
+2026-02-08 21:42:24 | INFO | architecture.executor:_retry_with_regenerated_tool:412 | Step 2: Using regenerated tool RedditSentimentAnalyzerTool
+2026-02-08 21:42:24 | INFO | architecture.executor:_infer_args:590 | Using document context for argument inference
+2026-02-08 21:42:24 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-08_21-41-21
+2026-02-08 21:42:24 | INFO | architecture.llm_manager:generate:132 | Generation success in 164.81ms
+2026-02-08 21:42:24 | INFO | architecture.executor:_infer_args:656 | LLM extracted args: {'post_text': 'Screenshot 2026-02-08 003400.png'}
+2026-02-08 21:42:24 | INFO | architecture.sandbox:translate_path_for_container:214 | Path translation (filename only): Screenshot 2026-02-08 003400.png -> /inputs/Screenshot 2026-02-08 003400.png
+2026-02-08 21:42:24 | INFO | architecture.executor:_retry_with_regenerated_tool:419 | Step 2: Translated regenerated tool args: {'post_text': '/inputs/Screenshot 2026-02-08 003400.png'}
+2026-02-08 21:42:24 | INFO | architecture.sandbox:execute_with_args:583 | DEBUG: sandbox received args = {'post_text': '/inputs/Screenshot 2026-02-08 003400.png'}
+2026-02-08 21:42:24 | INFO | architecture.sandbox:execute_with_args:584 | DEBUG: args_json = {"post_text": "/inputs/Screenshot 2026-02-08 003400.png"}
+2026-02-08 21:42:24 | INFO | architecture.sandbox:execute_with_args:585 | DEBUG: Runner script line: args = json.loads('{"post_text": "/inputs/Screenshot 2026-02-08 003400.png"}')
+2026-02-08 21:42:24 | INFO | architecture.sandbox:execute_with_args:590 | Executing tool with args: RedditSentimentAnalyzerTool
+2026-02-08 21:42:24 | INFO | architecture.sandbox:execute_with_args:591 | Args JSON being passed: {"post_text": "/inputs/Screenshot 2026-02-08 003400.png"}
+2026-02-08 21:42:25 | INFO | architecture.executor:_retry_with_regenerated_tool:426 | Step 2: Retry succeeded with RedditSentimentAnalyzerTool
+2026-02-08 21:42:25 | INFO | architecture.executor:_execute_step:195 | Step 3: Compare community opinions from the sentiment analysis using RedditSubredditComparator
+2026-02-08 21:42:25 | INFO | architecture.executor:load_registry:93 | Loaded 27 tool definitions
+2026-02-08 21:42:25 | INFO | architecture.executor:_execute_step:227 | Step 3: Using input from step 2
+2026-02-08 21:42:25 | INFO | architecture.executor:_infer_args:590 | Using document context for argument inference
+2026-02-08 21:42:25 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-08_21-41-21
+2026-02-08 21:42:25 | INFO | architecture.llm_manager:generate:132 | Generation success in 202.51ms
+2026-02-08 21:42:25 | INFO | architecture.executor:_infer_args:656 | LLM extracted args: {'subreddits': ['r/AskScience', 'r/technology'], 'topic': 'Artificial Intelligence'}
+2026-02-08 21:42:26 | INFO | architecture.executor:_execute_step:244 | DEBUG: Executor inferred args = {'subreddits': ['r/AskScience', 'r/technology'], 'topic': 'Artificial Intelligence'}
+2026-02-08 21:42:26 | INFO | architecture.executor:_execute_step:245 | DEBUG: Translated args = {'subreddits': ['r/AskScience', 'r/technology'], 'topic': 'Artificial Intelligence'}
+2026-02-08 21:42:26 | INFO | architecture.executor:_execute_step:246 | DEBUG: Args type = <class 'dict'>
+2026-02-08 21:42:26 | INFO | architecture.sandbox:execute_with_args:583 | DEBUG: sandbox received args = {'subreddits': ['r/AskScience', 'r/technology'], 'topic': 'Artificial Intelligence'}
+2026-02-08 21:42:26 | INFO | architecture.sandbox:execute_with_args:584 | DEBUG: args_json = {"subreddits": ["r/AskScience", "r/technology"], "topic": "Artificial Intelligence"}
+2026-02-08 21:42:26 | INFO | architecture.sandbox:execute_with_args:585 | DEBUG: Runner script line: args = json.loads('{"subreddits": ["r/AskScience", "r/technology"], "topic": "Artificial Intelligence"}')
+2026-02-08 21:42:26 | INFO | architecture.sandbox:execute_with_args:590 | Executing tool with args: RedditSubredditComparator
+2026-02-08 21:42:26 | INFO | architecture.sandbox:execute_with_args:591 | Args JSON being passed: {"subreddits": ["r/AskScience", "r/technology"], "topic": "Artificial Intelligence"}
+2026-02-08 21:42:28 | INFO | architecture.executor:_execute_step:263 | Step 3 SANDBOX Profile: time=1652.728ms, peak_mem=0.2636MB, delta_mem=0.0809MB, efficiency=49.89%, grade=critical
+2026-02-08 21:42:28 | INFO | architecture.executor:_execute_step:273 |    (Total round-trip: 2163.55ms)
+2026-02-08 21:42:28 | INFO | architecture.executor:_execute_step:278 | Step 3: Completed in 2.16s
+2026-02-08 21:42:28 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 500 | Temp: 0.3 | Session: 2026-02-08_21-41-21
+2026-02-08 21:42:28 | INFO | architecture.llm_manager:generate:132 | Generation success in 760.47ms
+2026-02-08 21:42:28 | INFO | __main__:main:244 | Completed in 22556.57ms
+2026-02-08 21:42:28 | INFO | __main__:main:245 | Zone: public
+2026-02-08 21:42:28 | INFO | architecture.executor:export_profiles:574 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260208_214228.json
+2026-02-08 21:42:33 | INFO | architecture.sandbox:stop:273 | Sandbox container stopped: 02f89d99fb36
+2026-02-08 21:42:33 | INFO | __main__:_shutdown_runtime:107 | Runtime shutdown complete

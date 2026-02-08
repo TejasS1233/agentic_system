@@ -1,4 +1,112 @@
 {
+  "StockPriceTool": {
+    "file": "stock_price_tool.py",
+    "description": "Fetch historical stock prices for one or more ticker symbols from Yahoo Finance. Returns date, open, high, low, close, volume with configurable periods and intervals. No API key needed.",
+    "tags": [
+      "stock",
+      "price",
+      "finance",
+      "market",
+      "ticker",
+      "yahoo",
+      "historical",
+      "shares",
+      "equity",
+      "trading",
+      "portfolio",
+      "AAPL",
+      "GOOGL",
+      "MSFT",
+      "api"
+    ],
+    "domain": "web",
+    "pypi_package": "requests",
+    "status": "active",
+    "created_at": 1770566400.0,
+    "updated_at": 1770566400.0,
+    "use_count": 0,
+    "last_used": null,
+    "metrics": 0.0
+  },
+  "RoutePlannerTool": {
+    "file": "route_planner_tool.py",
+    "description": "Geocode addresses to coordinates, calculate distances between all location pairs, and find the shortest route using TSP nearest-neighbor. Supports 2-20 locations. Free OpenStreetMap API, no key needed.",
+    "tags": [
+      "geocode",
+      "coordinates",
+      "distance",
+      "route",
+      "shortest-path",
+      "tsp",
+      "travel",
+      "address",
+      "location",
+      "map",
+      "haversine",
+      "navigation",
+      "itinerary",
+      "directions"
+    ],
+    "domain": "web",
+    "pypi_package": "requests",
+    "status": "active",
+    "created_at": 1770566400.0,
+    "updated_at": 1770566400.0,
+    "use_count": 0,
+    "last_used": null,
+    "metrics": 0.0
+  },
+  "CurrencyConverterTool": {
+    "file": "currency_converter_tool.py",
+    "description": "Convert between any two currencies using live exchange rates. Supports 150+ currencies including USD, EUR, GBP, INR, JPY. Free API, no key needed.",
+    "tags": [
+      "currency",
+      "convert",
+      "exchange-rate",
+      "money",
+      "forex",
+      "usd",
+      "eur",
+      "inr",
+      "gbp",
+      "finance",
+      "api"
+    ],
+    "domain": "web",
+    "pypi_package": "requests",
+    "status": "active",
+    "created_at": 1770566400.0,
+    "updated_at": 1770566400.0,
+    "use_count": 0,
+    "last_used": null,
+    "metrics": 0.0
+  },
+  "WeatherForecastTool": {
+    "file": "weather_forecast_tool.py",
+    "description": "Get weather forecasts for any city worldwide. Returns daily temperature, precipitation, wind speed, weather conditions, and identifies rainy days. Uses free Open-Meteo API, no key needed.",
+    "tags": [
+      "weather",
+      "forecast",
+      "temperature",
+      "rain",
+      "precipitation",
+      "wind",
+      "climate",
+      "city",
+      "travel",
+      "itinerary",
+      "rainy-days",
+      "api"
+    ],
+    "domain": "web",
+    "pypi_package": "requests",
+    "status": "active",
+    "created_at": 1770566400.0,
+    "updated_at": 1770566400.0,
+    "use_count": 0,
+    "last_used": null,
+    "metrics": 0.0
+  },
   "SerpSearchTool": {
     "file": "serp_search_tool.py",
     "description": "Search Google using SERP API for web results, images, news, and shopping. Supports location, language, and safe search filters.",
@@ -201,7 +309,7 @@
   },
   "RedditTool": {
     "file": "reddit_tool.py",
-    "description": "Fetch posts from any subreddit. Get hot, new, top, or rising posts with scores, comments, and metadata.",
+    "description": "Fetch or search posts from any subreddit. Search for specific topics with a query, or browse hot/new/top/rising posts. Supports searching across multiple subreddits at once. Returns titles, text content, scores, authors, and comment counts. No authentication required.",
     "tags": [
       "reddit",
       "subreddit",
@@ -211,12 +319,18 @@
       "top",
       "new",
       "rising",
+      "search",
+      "query",
+      "topic",
       "upvotes",
       "comments",
       "community",
       "forum",
-      "discussion"
+      "discussion",
+      "scrape",
+      "sentiment"
     ],
+    "input_type": "subreddit name(s) and optional search query",
     "domain": "web",
     "pypi_package": "requests",
     "status": "active",
@@ -313,6 +427,248 @@
     "domain": "web",
     "status": "active",
     "created_at": 1770484994.1837044,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "SimilarPapersTool": {
+    "file": "similar_papers_tool.py",
+    "description": "Task: Search for similar papers to 'Attention Is All You Need'\n\nInput data sample:\nSearch for similar papers to 'Attention Is All You Need'\n\nPrevious implementation failed with error:\n'<' not supported between instances of 'int' and 'NoneType'\n\nCreate a tool that correctly handles this input format and fixes the error.",
+    "tags": [
+      "research",
+      "papers",
+      "similarity"
+    ],
+    "input_types": [
+      "string"
+    ],
+    "output_types": [
+      "json"
+    ],
+    "domain": "search",
+    "status": "active",
+    "created_at": 1770557090.6327844,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "ExtractCitationsTool": {
+    "file": "extract_citations_tool.py",
+    "description": "Extract citations from the paper 'Attention is All You Need'",
+    "tags": [
+      "citation",
+      "paper",
+      "nlp"
+    ],
+    "input_types": [
+      "string"
+    ],
+    "output_types": [
+      "json"
+    ],
+    "domain": "text",
+    "status": "active",
+    "created_at": 1770557288.728537,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "BibliographyCreator": {
+    "file": "bibliography_creator.py",
+    "description": "Create a bibliography from the extracted citations",
+    "tags": [
+      "citation",
+      "bibliography",
+      "references"
+    ],
+    "input_types": [
+      "list",
+      "dict"
+    ],
+    "output_types": [
+      "string"
+    ],
+    "domain": "text",
+    "status": "active",
+    "created_at": 1770557290.3303692,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "TableParserTool": {
+    "file": "table_parser_tool.py",
+    "description": "Parse and structure the extracted tables",
+    "tags": [
+      "table",
+      "parser",
+      "structure"
+    ],
+    "input_types": [
+      "string"
+    ],
+    "output_types": [
+      "json"
+    ],
+    "domain": "data",
+    "status": "active",
+    "created_at": 1770558037.1804116,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "ImageProcessorTool": {
+    "file": "image_processor_tool.py",
+    "description": "Comprehensive image utility. Use this for ALL image processing tasks. Can make image black and white (grayscale), resize, crop, rotate, flip, filter (blur, sharpen), adjust brightness/contrast, and convert formats.",
+    "tags": [
+      "image",
+      "processing",
+      "manipulation",
+      "convert",
+      "resize",
+      "crop",
+      "rotate",
+      "flip",
+      "filter",
+      "blur",
+      "sharpen",
+      "adjust",
+      "brightness",
+      "contrast",
+      "grayscale",
+      "black_and_white",
+      "monochrome",
+      "format",
+      "jpeg",
+      "png",
+      "pillow",
+      "photo",
+      "picture"
+    ],
+    "input_types": [
+      "string",
+      "string",
+      "json",
+      "string"
+    ],
+    "output_types": [
+      "image",
+      "file"
+    ],
+    "domain": "media",
+    "status": "active",
+    "created_at": 1770562000.0,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "SalesSummaryTool": {
+    "file": "sales_summary_tool.py",
+    "description": "Generate an executive summary of the sales_data.csv file",
+    "tags": [
+      "sales",
+      "summary",
+      "csv"
+    ],
+    "input_types": [
+      "file"
+    ],
+    "output_types": [
+      "string"
+    ],
+    "domain": "data",
+    "status": "active",
+    "created_at": 1770563493.3634968,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "SalesDataAnalyzer": {
+    "file": "sales_data_analyzer.py",
+    "description": "Perform statistical analysis on sales_data.csv",
+    "tags": [
+      "statistics",
+      "data analysis",
+      "sales"
+    ],
+    "input_types": [
+      "file"
+    ],
+    "output_types": [
+      "string"
+    ],
+    "domain": "data",
+    "status": "active",
+    "created_at": 1770564312.6209295,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "SentimentAnalysisTool": {
+    "file": "sentiment_analysis_tool.py",
+    "description": "Compare community opinions based on sentiment analysis",
+    "tags": [
+      "sentiment",
+      "analysis",
+      "opinion",
+      "community"
+    ],
+    "input_types": [
+      "string"
+    ],
+    "output_types": [
+      "string"
+    ],
+    "domain": "text",
+    "status": "active",
+    "created_at": 1770566801.9529865,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "RedditSubredditComparator": {
+    "file": "reddit_subreddit_comparator.py",
+    "description": "Compare community opinions across subreddits. Takes sentiment analysis data grouped by subreddit and produces a ranked comparison showing sentiment differences between communities.",
+    "tags": [
+      "Reddit",
+      "subreddits",
+      "community opinions",
+      "comparison",
+      "sentiment"
+    ],
+    "input_types": [
+      "string",
+      "dict"
+    ],
+    "output_types": [
+      "dict"
+    ],
+    "domain": "text",
+    "status": "active",
+    "created_at": 1770566952.756488,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "RedditSentimentAnalyzerTool": {
+    "file": "reddit_sentiment_analyzer.py",
+    "description": "Analyze sentiment of Reddit posts. Accepts raw text, list of texts, or structured Reddit post data from RedditTool. Returns per-post and aggregate sentiment scores with subreddit grouping.",
+    "tags": [
+      "sentiment",
+      "reddit",
+      "nlp",
+      "analysis"
+    ],
+    "input_types": [
+      "string",
+      "dict",
+      "list"
+    ],
+    "output_types": [
+      "dict"
+    ],
+    "domain": "text",
+    "status": "active",
+    "created_at": 1770567144.4101226,
     "last_used": null,
     "use_count": 0,
     "metrics": 0.0

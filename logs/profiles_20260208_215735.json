@@ -1,0 +1,94 @@
+{
+  "exported_at": "2026-02-08T21:57:35.403426",
+  "summary": {
+    "RedditTool": {
+      "call_count": 1,
+      "avg_time_ms": 6092.225,
+      "max_time_ms": 6092.225,
+      "min_time_ms": 6092.225,
+      "avg_memory_mb": 0.7979,
+      "max_memory_mb": 0.7979,
+      "avg_memory_delta_mb": 0.2307,
+      "avg_efficiency": 0.4968,
+      "last_grade": "critical"
+    },
+    "RedditSentimentAnalyzerTool": {
+      "call_count": 1,
+      "avg_time_ms": 190.282,
+      "max_time_ms": 190.282,
+      "min_time_ms": 190.282,
+      "avg_memory_mb": 2.1995,
+      "max_memory_mb": 2.1995,
+      "avg_memory_delta_mb": 1.417,
+      "avg_efficiency": 0.8961,
+      "last_grade": "slow"
+    },
+    "RedditSubredditComparator": {
+      "call_count": 1,
+      "avg_time_ms": 1.441,
+      "max_time_ms": 1.441,
+      "min_time_ms": 1.441,
+      "avg_memory_mb": 0.0468,
+      "max_memory_mb": 0.0468,
+      "avg_memory_delta_mb": 0.0356,
+      "avg_efficiency": 0.9991,
+      "last_grade": "fast"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 3,
+    "tools_profiled": [
+      "RedditTool",
+      "RedditSentimentAnalyzerTool",
+      "RedditSubredditComparator"
+    ],
+    "execution_time_ms": {
+      "min": 1.441,
+      "max": 6092.225,
+      "mean": 2094.6493333333333
+    },
+    "peak_memory_mb": {
+      "min": 0.0468,
+      "max": 2.1995,
+      "mean": 1.0147333333333333
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "RedditTool": [
+      {
+        "tool_name": "RedditTool",
+        "execution_time_ms": 6092.225,
+        "peak_memory_mb": 0.7979,
+        "memory_delta_mb": 0.2307,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4968,
+        "success": true
+      }
+    ],
+    "RedditSentimentAnalyzerTool": [
+      {
+        "tool_name": "RedditSentimentAnalyzerTool",
+        "execution_time_ms": 190.282,
+        "peak_memory_mb": 2.1995,
+        "memory_delta_mb": 1.417,
+        "latency_grade": "slow",
+        "efficiency_score": 0.8961,
+        "success": true
+      }
+    ],
+    "RedditSubredditComparator": [
+      {
+        "tool_name": "RedditSubredditComparator",
+        "execution_time_ms": 1.441,
+        "peak_memory_mb": 0.0468,
+        "memory_delta_mb": 0.0356,
+        "latency_grade": "fast",
+        "efficiency_score": 0.9991,
+        "success": true
+      }
+    ]
+  }
+}

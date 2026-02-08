@@ -1,0 +1,71 @@
+{
+  "exported_at": "2026-02-08T21:17:43.088252",
+  "summary": {
+    "GitHubRepoTool": {
+      "call_count": 1,
+      "avg_time_ms": 0.103,
+      "max_time_ms": 0.103,
+      "min_time_ms": 0.103,
+      "avg_memory_mb": 0.0015,
+      "max_memory_mb": 0.0015,
+      "avg_memory_delta_mb": 0.0008,
+      "avg_efficiency": 0.9999,
+      "last_grade": "fast"
+    },
+    "AdvancedGraphTool": {
+      "call_count": 1,
+      "avg_time_ms": 20.56,
+      "max_time_ms": 20.56,
+      "min_time_ms": 20.56,
+      "avg_memory_mb": 0.3739,
+      "max_memory_mb": 0.3739,
+      "avg_memory_delta_mb": 0.3698,
+      "avg_efficiency": 0.9882,
+      "last_grade": "moderate"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 2,
+    "tools_profiled": [
+      "GitHubRepoTool",
+      "AdvancedGraphTool"
+    ],
+    "execution_time_ms": {
+      "min": 0.103,
+      "max": 20.56,
+      "mean": 10.3315
+    },
+    "peak_memory_mb": {
+      "min": 0.0015,
+      "max": 0.3739,
+      "mean": 0.1877
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "GitHubRepoTool": [
+      {
+        "tool_name": "GitHubRepoTool",
+        "execution_time_ms": 0.103,
+        "peak_memory_mb": 0.0015,
+        "memory_delta_mb": 0.0008,
+        "latency_grade": "fast",
+        "efficiency_score": 0.9999,
+        "success": true
+      }
+    ],
+    "AdvancedGraphTool": [
+      {
+        "tool_name": "AdvancedGraphTool",
+        "execution_time_ms": 20.56,
+        "peak_memory_mb": 0.3739,
+        "memory_delta_mb": 0.3698,
+        "latency_grade": "moderate",
+        "efficiency_score": 0.9882,
+        "success": true
+      }
+    ]
+  }
+}

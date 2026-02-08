@@ -1,0 +1,48 @@
+{
+  "exported_at": "2026-02-08T19:22:39.223436",
+  "summary": {
+    "TableParserTool": {
+      "call_count": 1,
+      "avg_time_ms": 2.147,
+      "max_time_ms": 2.147,
+      "min_time_ms": 2.147,
+      "avg_memory_mb": 0.2246,
+      "max_memory_mb": 0.2246,
+      "avg_memory_delta_mb": 0.1826,
+      "avg_efficiency": 0.998,
+      "last_grade": "fast"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 1,
+    "tools_profiled": [
+      "TableParserTool"
+    ],
+    "execution_time_ms": {
+      "min": 2.147,
+      "max": 2.147,
+      "mean": 2.147
+    },
+    "peak_memory_mb": {
+      "min": 0.2246,
+      "max": 0.2246,
+      "mean": 0.2246
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "TableParserTool": [
+      {
+        "tool_name": "TableParserTool",
+        "execution_time_ms": 2.147,
+        "peak_memory_mb": 0.2246,
+        "memory_delta_mb": 0.1826,
+        "latency_grade": "fast",
+        "efficiency_score": 0.998,
+        "success": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,247 @@
+# IASCIS - Accomplished Tasks & Performance Stats
+
+> Auto-compiled from 134 log files | 86 successful runs | 34 curated tasks
+> Scan date: 2026-02-08
+
+---
+
+## Aggregate Performance
+
+| Metric         | Value                         |
+| -------------- | ----------------------------- |
+| Avg total time | 10.95s                        |
+| Min time       | 4.35s (currency conversion)   |
+| Max time       | 22.17s (top 10 games of 2026) |
+| 1-step tasks   | 17                            |
+| 2-step tasks   | 15                            |
+| 3-step tasks   | 2                             |
+
+---
+
+## Most Used Tools
+
+| Tool                        | Tasks |
+| --------------------------- | ----- |
+| AdvancedGraphTool           | 6     |
+| SerpSearchTool              | 5     |
+| CurrencyConverterTool       | 2     |
+| SalesSummaryTool            | 2     |
+| RoyalRumble2026Participants | 2     |
+| PythonFrameworksSearchTool  | 2     |
+
+---
+
+## All Successful Task Runs
+
+### 1. GitHub Profile Stats + Language Plot
+
+- **Query:** fetch stats from github profile "rakheOmar" and plot language preference graph
+- **Time:** 22.1s | Steps: 2 | Tools: GithubProfileSearch, LanguagePreferencePlotter
+- **Perf:** GithubProfileSearch 313ms (slow) | LanguagePreferencePlotter 170ms/1.07MB (slow)
+- **Pipeline:** S1:5.8s → S2:15.4s
+
+### 2. Fibonacci Generator
+
+- **Query:** give me a code for fibonacci series upto n numbers
+- **Time:** 4.93s | Steps: 2 | Tools: FibonacciGenerator
+- **Perf:** FibonacciGenerator 0.07ms/0.002MB (fast)
+
+### 3. Top 10 Games of 2026
+
+- **Query:** gimme top 10 games of 2026
+- **Time:** 22.17s | Steps: 2
+
+### 4. GitHub Stats for TejasS1233
+
+- **Query:** plot my github stats for user TejasS1233
+- **Time:** 10.98s | Steps: 2 | Tools: GitHubProfileSearchTool
+- **Perf:** GitHubProfileSearchTool 252ms (slow)
+
+### 5. Dev.to Top Posts
+
+- **Query:** fetch all the top dev.to posts of the week
+- **Time:** 7.47s | Steps: 3 | Tools: DevToTopPostsTool
+- **Perf:** DevToTopPostsTool 302ms/4.58MB (slow)
+
+### 6. Random Dog Image
+
+- **Query:** get me a dog image
+- **Time:** 9.43s | Steps: 2 | Tools: DuckDuckGoDogImageSearchTool, RandomDogImageTool
+- **Perf:** DuckDuckGo 1313ms (critical) | RandomDog 1004ms (critical)
+
+### 7. Product Hunt Launches
+
+- **Query:** get top 10 product launches today in product hunt
+- **Time:** 9.74s | Steps: 2 | Tools: ProductHuntSearchTool, ProductLaunchScraper
+
+### 8. Royal Rumble 2026 Entries
+
+- **Query:** all 30 entries of royal rumble in 2026
+- **Time:** 11.75s | Steps: 2 | Tools: RoyalRumble2026ParticipantsTool, RoyalRumble2026Scraper
+
+### 9. Royal Rumble 2026 Winner
+
+- **Query:** who is the winner of royal rumble 2026
+- **Time:** 12.54s | Steps: 2 | Tools: RoyalRumble2026ParticipantsTool, SearchWinnerExtractor
+- **Perf:** Participants 1003ms (critical) | SearchWinner 1511ms (critical)
+
+### 10. Google Search: Python Frameworks
+
+- **Query:** Search Google for the best Python frameworks in 2024
+- **Time:** 10.88s | Steps: 2 | Tools: PythonFrameworksSearchTool, PythonFrameworkSearchTool
+- **Perf:** Search 1028ms (critical) | Filter 715ms (slow)
+
+### 11. Google Search: Best Games 2025
+
+- **Query:** search google for the best games in 2025
+- **Time:** 7.53s | Steps: 1 | Tools: PythonFrameworksSearchTool
+
+### 12. Google Search: Cuisines 2026
+
+- **Query:** Search Google for the best cuisines to eat in 2026
+- **Time:** 5.41s | Steps: 1 | Tools: SerpSearchTool
+- **Perf:** SerpSearchTool 0.12ms (fast)
+
+### 13. Google Search: Summer Travel
+
+- **Query:** search google for the best places to go in summer
+- **Time:** 7.43s | Steps: 1 | Tools: SerpSearchTool
+- **Perf:** SerpSearchTool 193ms (slow)
+
+### 14. Programming Language Popularity Chart
+
+- **Query:** Create a bar chart showing the popularity of programming languages
+- **Time:** 16.86s | Steps: 2 | Tools: GetProgrammingLanguagePopularityTool, AdvancedGraphTool
+
+### 15. GitHub Trending Repos Bar Chart
+
+- **Query:** Get the top 5 trending GitHub repositories and create a bar chart of their star counts
+- **Time:** 14.41s | Steps: 2 | Tools: GitHubTrendingTool, AdvancedGraphTool
+
+### 16. College Placement Stats
+
+- **Query:** search for placement stats of thadomal shahani engineering clg
+- **Time:** 12.47s | Steps: 1 | Tools: ThadomalShahaniPlacementStats
+- **Perf:** 295ms (slow)
+
+### 17. Brawl Stars Pie Chart (via SERP)
+
+- **Query:** search the top played brawlers in brawl stars and make a pie chart
+- **Time:** 20.63s | Steps: 2 | Tools: SerpSearchTool, AdvancedGraphTool
+- **Perf:** SERP 7288ms (critical) | Graph 165ms (slow)
+
+### 18. Toolformer Paper Search
+
+- **Query:** get me info on the paper Toolformer
+- **Time:** 8.48s | Steps: 1 | Tools: SerpSearchTool
+- **Perf:** SerpSearchTool 2640ms (critical)
+
+### 19. Citations → Bibliography (Attention Is All You Need)
+
+- **Query:** Extract Citations - Pull all citations from a paper and create a bibliography
+- **Time:** 10.36s | Steps: 2 | Tools: ExtractCitationsTool, BibliographyCreator
+- **Perf:** ExtractCitations 150ms (slow) | BibliographyCreator 0.04ms (fast)
+
+### 20. Table Extraction from Paper
+
+- **Query:** Extract Tables - Parse and structure tabular data from paper
+- **Time:** 12.04s | Steps: 1 | Tools: TableParserTool
+- **Perf:** TableParserTool 0.49ms (fast)
+
+### 21. Image → Black & White
+
+- **Query:** make the image black and white
+- **Time:** 5.25s | Steps: 1 | Tools: ImageConverterTool
+- **Perf:** ImageConverterTool 55ms/0.83MB (moderate)
+
+### 22. Image Processing (B&W)
+
+- **Query:** turn this image black and white
+- **Time:** 5.8s | Steps: 1 | Tools: ImageProcessorTool
+- **Perf:** ImageProcessorTool 91ms/1.6MB (moderate)
+
+### 23. Excel Executive Summary
+
+- **Query:** get me an executive summary on the file
+- **Time:** 10.39s | Steps: 1 | Tools: SalesSummaryTool
+- **Perf:** SalesSummaryTool 44ms/0.29MB (moderate)
+
+### 24. Sales Data Info
+
+- **Query:** Get info about sales data
+- **Time:** 10.1s | Steps: 1 | Tools: SalesSummaryTool
+- **Perf:** SalesSummaryTool 53ms (moderate)
+
+### 25. Revenue by Quarter Bar Chart (from CSV)
+
+- **Query:** Plot revenue by quarter as a bar chart
+- **Time:** 12.95s | Steps: 1 | Tools: AdvancedGraphTool
+
+### 26. Statistical Analysis (mean, median, std dev, CI)
+
+- **Query:** Perform statistical analysis on this dataset: mean, median, std dev, and 95% confidence interval
+- **Time:** 16.21s | Steps: 1 | Tools: SalesDataAnalyzer
+- **Perf:** SalesDataAnalyzer 18ms/0.29MB (moderate)
+
+### 27. Weather Forecast (Thane, 5 days)
+
+- **Query:** what is the weather in thane for the next 5 days
+- **Time:** 6.84s | Steps: 1 | Tools: WeatherForecastTool
+- **Perf:** WeatherForecastTool 2109ms (critical)
+
+### 28. Currency Conversion (USD → JPY)
+
+- **Query:** Convert 500 USD to yen
+- **Time:** 5.17s | Steps: 1 | Tools: CurrencyConverterTool
+- **Perf:** CurrencyConverterTool 991ms (slow)
+
+### 29. Currency Conversion (USD → INR)
+
+- **Query:** convert 500 usd to inr
+- **Time:** 4.35s | Steps: 1 | Tools: CurrencyConverterTool
+- **Perf:** CurrencyConverterTool 991ms (slow)
+
+### 30. Route Distance (Mumbai → Pune)
+
+- **Query:** whats the distance between Mumbai and pune
+- **Time:** 8.75s | Steps: 1 | Tools: RoutePlannerTool
+- **Perf:** RoutePlannerTool 4144ms (critical)
+
+### 31. GitHub Repo Star Counts Line Graph (10 repos)
+
+- **Query:** Fetch GitHub star counts for 10 repos over time and plot their growth as line graphs
+- **Time:** 11.09s | Steps: 2 | Tools: GitHubRepoTool, AdvancedGraphTool
+- **Perf:** GitHubRepoTool 0.1ms (fast) | AdvancedGraphTool 21ms (moderate)
+
+### 32. Stock Price Comparison Chart (AAPL, GOOGL, MSFT)
+
+- **Query:** Scrape stock prices for AAPL, GOOGL, MSFT for the past month and create a comparison line chart
+- **Time:** 14.26s | Steps: 2 | Tools: StockPriceTool, AdvancedGraphTool
+- **Perf:** StockPriceTool 2195ms (critical) | AdvancedGraphTool 433ms (slow)
+- **Pipeline:** S1:3.3s → S2:7.4s
+
+### 33. Reddit Sentiment Analysis (3 subreddits)
+
+- **Query:** Scrape Reddit posts about AI replacing jobs from r/technology, r/artificial, r/cscareerquestions, analyze sentiment, compare community opinions
+- **Time:** 12.49s | Steps: 3 | Tools: RedditTool, RedditSentimentAnalyzerTool, RedditSubredditComparator
+- **Perf:** RedditTool 1286ms (critical) | SentimentAnalyzer 41ms (moderate) | Comparator 0.14ms (fast)
+- **Pipeline:** S1:4.0s → S2:5.9s → S3:0.5s
+
+### 34. Search: Python Tutorials
+
+- **Query:** Search for 'Python tutorials' and show the top 3 results
+- **Time:** 11.08s | Steps: 1 | Tools: SerpSearchTool
+- **Perf:** SerpSearchTool 6058ms (critical)
+
+---
+
+## Performance Grade Distribution
+
+| Grade             | Meaning    | Count    |
+| ----------------- | ---------- | -------- |
+| **fast** (++)     | < 10ms     | 7 tools  |
+| **moderate** (+)  | 10-100ms   | 7 tools  |
+| **slow** (-)      | 100-1000ms | 12 tools |
+| **critical** (--) | > 1000ms   | 12 tools |
+
+> Full JSON data: `logs/successful_runs_summary.json`

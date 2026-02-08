@@ -1,0 +1,51 @@
+product_id,product_name,category,units_sold,unit_price,cost_per_unit,revenue,profit,region,quarter
+101,Laptop Pro,Electronics,150,1299.99,850.00,194998.50,67498.50,North,Q1
+102,Wireless Mouse,Electronics,520,29.99,12.50,15594.80,9094.80,North,Q1
+103,Office Chair,Furniture,85,249.99,120.00,21249.15,11049.15,East,Q1
+104,Standing Desk,Furniture,62,599.99,310.00,37199.38,17979.38,West,Q1
+105,Monitor 27inch,Electronics,210,399.99,220.00,83997.90,37797.90,South,Q1
+106,Keyboard Mech,Electronics,340,89.99,35.00,30596.60,18696.60,North,Q2
+107,Webcam HD,Electronics,275,79.99,28.00,21997.25,14297.25,East,Q2
+108,Desk Lamp,Furniture,190,45.99,18.00,8738.10,5318.10,West,Q2
+109,Filing Cabinet,Furniture,48,179.99,95.00,8639.52,4079.52,South,Q2
+110,USB Hub,Electronics,680,24.99,8.50,16993.20,11213.20,North,Q2
+111,Noise Cancel Headphones,Electronics,125,299.99,150.00,37498.75,18748.75,East,Q3
+112,Ergonomic Mouse,Electronics,310,59.99,22.00,18596.90,11776.90,West,Q3
+113,Monitor Arm,Furniture,95,129.99,55.00,12349.05,7124.05,South,Q3
+114,Cable Management Kit,Furniture,420,19.99,6.50,8395.80,5665.80,North,Q3
+115,Docking Station,Electronics,88,189.99,95.00,16719.12,8359.12,East,Q3
+116,Laptop Stand,Furniture,230,69.99,28.00,16097.70,9657.70,West,Q4
+117,External SSD 1TB,Electronics,165,109.99,55.00,18148.35,9123.35,South,Q4
+118,Wireless Charger,Electronics,390,34.99,12.00,13646.10,8966.10,North,Q4
+119,Desk Organizer,Furniture,285,29.99,10.00,8547.15,5697.15,East,Q4
+120,Portable Monitor,Electronics,72,249.99,130.00,17999.28,8639.28,West,Q4
+121,Bluetooth Speaker,Electronics,445,49.99,18.00,22245.55,14235.55,North,Q1
+122,Printer Laser,Electronics,67,349.99,200.00,23449.33,10149.33,East,Q1
+123,Whiteboard 6ft,Furniture,38,159.99,70.00,6079.62,3419.62,South,Q1
+124,Surge Protector,Electronics,580,19.99,6.00,11594.20,8114.20,West,Q1
+125,Bookshelf,Furniture,52,219.99,110.00,11439.48,5719.48,North,Q2
+126,Tablet 10inch,Electronics,198,449.99,260.00,89098.02,37498.02,East,Q2
+127,Wireless Earbuds,Electronics,365,69.99,25.00,25546.35,16421.35,South,Q2
+128,Paper Shredder,Furniture,74,129.99,65.00,9619.26,4809.26,West,Q2
+129,Ethernet Switch,Electronics,290,39.99,15.00,11597.10,7347.10,North,Q3
+130,Footrest Ergonomic,Furniture,155,54.99,20.00,8523.45,5273.45,East,Q3
+131,Smart Pen,Electronics,210,99.99,40.00,20997.90,12597.90,South,Q3
+132,Conference Phone,Electronics,32,599.99,350.00,19199.68,11999.68,West,Q3
+133,Desk Mat XL,Furniture,475,22.99,7.00,10920.25,7595.25,North,Q3
+134,Power Bank 20000mAh,Electronics,330,44.99,16.00,14846.70,9566.70,East,Q4
+135,Adjustable Monitor Riser,Furniture,140,79.99,30.00,11198.60,6998.60,South,Q4
+136,Graphic Tablet,Electronics,88,199.99,100.00,17599.12,8799.12,West,Q4
+137,Mesh Office Chair,Furniture,105,349.99,175.00,36749.95,18374.95,North,Q4
+138,USB Microphone,Electronics,260,64.99,22.00,16897.40,11177.40,East,Q4
+139,LED Desk Strip Light,Furniture,510,14.99,4.50,7644.90,5339.90,South,Q4
+140,Mechanical Numpad,Electronics,185,34.99,12.00,6473.15,4253.15,West,Q1
+141,Server Rack Mini,Electronics,22,899.99,550.00,19799.78,7699.78,North,Q1
+142,Acoustic Panel Set,Furniture,68,89.99,35.00,6119.32,3739.32,East,Q2
+143,Webcam 4K,Electronics,145,149.99,65.00,21748.55,12323.55,South,Q2
+144,Sit-Stand Converter,Furniture,78,279.99,140.00,21839.22,10919.22,West,Q2
+145,HDMI Splitter,Electronics,620,17.99,5.00,11153.80,8053.80,North,Q3
+146,Laptop Cooling Pad,Electronics,240,39.99,14.00,9597.60,6237.60,East,Q3
+147,Rolling File Cart,Furniture,56,149.99,70.00,8399.44,4479.44,South,Q3
+148,Smart Power Strip,Electronics,310,29.99,10.00,9296.90,6196.90,West,Q4
+149,Privacy Screen Filter,Electronics,175,49.99,18.00,8748.25,5598.25,North,Q4
+150,Wobble Stool,Furniture,92,119.99,50.00,11039.08,6439.08,East,Q4

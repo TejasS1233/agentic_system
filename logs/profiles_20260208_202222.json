@@ -1,0 +1,48 @@
+{
+  "exported_at": "2026-02-08T20:22:22.239423",
+  "summary": {
+    "ImageConverterTool": {
+      "call_count": 1,
+      "avg_time_ms": 97.314,
+      "max_time_ms": 97.314,
+      "min_time_ms": 97.314,
+      "avg_memory_mb": 0.8305,
+      "max_memory_mb": 0.8305,
+      "avg_memory_delta_mb": 0.6988,
+      "avg_efficiency": 0.948,
+      "last_grade": "moderate"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 1,
+    "tools_profiled": [
+      "ImageConverterTool"
+    ],
+    "execution_time_ms": {
+      "min": 97.314,
+      "max": 97.314,
+      "mean": 97.314
+    },
+    "peak_memory_mb": {
+      "min": 0.8305,
+      "max": 0.8305,
+      "mean": 0.8305
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "ImageConverterTool": [
+      {
+        "tool_name": "ImageConverterTool",
+        "execution_time_ms": 97.314,
+        "peak_memory_mb": 0.8305,
+        "memory_delta_mb": 0.6988,
+        "latency_grade": "moderate",
+        "efficiency_score": 0.948,
+        "success": true
+      }
+    ]
+  }
+}

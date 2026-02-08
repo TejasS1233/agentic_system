@@ -1,0 +1,58 @@
+2026-02-08 21:35:20 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-08 21:35:29 | INFO | __main__:main:233 | Starting IASCIS with Sandbox and Profiling
+2026-02-08 21:35:29 | INFO | architecture.input_loader:__init__:26 | InputLoader initialized: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-08 21:35:29 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-08 21:35:29 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-08 21:35:29 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-08 21:35:29 | INFO | __main__:__init__:74 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-08 21:35:29 | INFO | architecture.sandbox:__init__:161 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs, inputs_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-08 21:35:29 | INFO | architecture.sandbox:start:258 | Sandbox container started: 9732c8e17600
+2026-02-08 21:35:29 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-08 21:35:29 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-08 21:35:29 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-08 21:35:29 | INFO | architecture.executor:load_registry:93 | Loaded 23 tool definitions
+2026-02-08 21:35:29 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-08 21:35:29 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-08 21:35:30 | INFO | architecture.sandbox:_install_deps:286 | Installing dependencies: pydantic beautifulsoup4 requests pandas numpy
+2026-02-08 21:35:33 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-08 21:35:33 | INFO | __main__:_initialize_runtime:98 | Runtime initialized with Sandbox
+2026-02-08 21:35:33 | INFO | architecture.input_loader:build_context:148 | Built context from 1 file(s) (525 chars, 1 images)
+2026-02-08 21:35:33 | INFO | __main__:run:133 | Loaded input documents: ['Screenshot 2026-02-08 003400.png']
+2026-02-08 21:35:33 | INFO | __main__:run:141 | Task received: [CONTEXT: Working with local files: ['Screenshot 2026-02-08 003400.png']. IMAGE FILES TO PROCESS: Sc...
+2026-02-08 21:35:33 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-08 21:35:33 | INFO | __main__:run:145 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-08 21:35:33 | INFO | architecture.orchestrator:run:47 | Processing: [CONTEXT: Working with local files: ['Screenshot 2026-02-08 003400.png']. IMAGE ...
+2026-02-08 21:35:33 | INFO | architecture.orchestrator:run:52 | Document context available (525 chars)
+2026-02-08 21:35:33 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-08_21-35-16
+2026-02-08 21:35:34 | INFO | architecture.llm_manager:generate:132 | Generation success in 653.76ms
+2026-02-08 21:35:34 | INFO | architecture.orchestrator:run:56 | Task Classification: COMPLEX_TASK
+2026-02-08 21:35:34 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-08_21-35-16
+2026-02-08 21:35:34 | INFO | architecture.llm_manager:generate:132 | Generation success in 571.56ms
+2026-02-08 21:35:34 | INFO | architecture.orchestrator:run:63 | Decomposed into 3 subtasks
+2026-02-08 21:35:34 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-08_21-35-16
+2026-02-08 21:35:34 | INFO | architecture.llm_manager:generate:132 | Generation success in 140.13ms
+2026-02-08 21:35:34 | INFO | architecture.orchestrator:_retrieve_tools:184 | st_1 → RedditTool (LLM selected, semantic: 0.457, tags: +2, in-domain)
+2026-02-08 21:35:34 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-08_21-35-16
+2026-02-08 21:35:35 | INFO | architecture.llm_manager:generate:132 | Generation success in 130.38ms
+2026-02-08 21:35:35 | INFO | architecture.orchestrator:_retrieve_tools:184 | st_2 → WebScraperTool (LLM selected, semantic: 0.442, tags: +0, cross-domain)
+2026-02-08 21:35:35 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-08_21-35-16
+2026-02-08 21:35:35 | INFO | architecture.llm_manager:generate:132 | Generation success in 131.95ms
+2026-02-08 21:35:35 | INFO | architecture.orchestrator:_retrieve_tools:184 | st_3 → GitHubTrendingTool (LLM selected, semantic: 0.171, tags: +0, cross-domain)
+2026-02-08 21:35:35 | INFO | architecture.orchestrator:_ensure_tools:233 | Toolsmith creating: Compare community opinions across subreddits
+2026-02-08 21:35:35 | INFO | architecture.toolsmith:create_tool:114 | Request: 'Compare community opinions across subreddits'
+2026-02-08 21:35:35 | INFO | architecture.toolsmith:create_tool:126 | Generating tool with LLM (attempt 1/3)...
+2026-02-08 21:35:35 | INFO | architecture.toolsmith:create_tool:129 | Available APIs context length: 295
+2026-02-08 21:35:35 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-08_21-35-16
+2026-02-08 21:35:35 | WARNING | architecture.llm_manager:generate:139 | Attempt 1/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kgwfv8s8ekjankffm9b5pef3` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98923, Requested 3158. Please try again in 29m57.984s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-08 21:35:36 | WARNING | architecture.llm_manager:generate:139 | Attempt 2/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kgwfv8s8ekjankffm9b5pef3` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98922, Requested 3158. Please try again in 29m57.12s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-08 21:35:38 | WARNING | architecture.llm_manager:generate:139 | Attempt 3/3 failed using key 1: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kgwfv8s8ekjankffm9b5pef3` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98920, Requested 3158. Please try again in 29m55.392s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-08 21:35:38 | ERROR | architecture.llm_manager:generate:157 | All keys failed. Last error: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kgwfv8s8ekjankffm9b5pef3` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98920, Requested 3158. Please try again in 29m55.392s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-08 21:35:38 | WARNING | architecture.toolsmith:create_tool:153 | LLM generation error: litellm.RateLimitError: RateLimitError: GroqException - {"error":{"message":"Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kgwfv8s8ekjankffm9b5pef3` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98920, Requested 3158. Please try again in 29m55.392s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}}
+
+2026-02-08 21:35:38 | WARNING | architecture.toolsmith:create_tool:157 | Rate limit hit. Sleeping for 5 seconds...
+2026-02-08 21:35:47 | WARNING | architecture.sandbox:_install_deps:291 | pip install failed: 
+2026-02-08 21:35:47 | INFO | architecture.sandbox:_pre_install_essentials:226 | Essential packages pre-installed

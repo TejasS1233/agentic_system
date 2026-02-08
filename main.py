@@ -22,6 +22,7 @@ from architecture.executor import ExecutorAgent
 from architecture.sandbox import Sandbox
 from architecture.toolsmith import Toolsmith
 from architecture.reflector import ExecutionResult, Reflector
+from architecture.input_loader import InputLoader
 from utils.logger import get_logger
 
 load_dotenv()
@@ -46,8 +47,13 @@ class IASCIS:
     ):
         self.workspace_path = Path(workspace_path) if workspace_path else WORKSPACE_PATH
         self.tools_dir = self.workspace_path / "tools"
+        self.inputs_dir = self.workspace_path / "inputs"
         self.workspace_path.mkdir(parents=True, exist_ok=True)
         self.tools_dir.mkdir(parents=True, exist_ok=True)
+        self.inputs_dir.mkdir(parents=True, exist_ok=True)
+
+        # Input loader for document context
+        self.input_loader = InputLoader(self.inputs_dir)
 
         self.public_model = public_model
         self.private_model = private_model
@@ -118,6 +124,20 @@ class IASCIS:
         file_context = file_context or []
         start_time = time.perf_counter()
 
+        # Check for input documents - store context separately
+        document_context = None
+        image_paths = []
+        if self.input_loader.has_files():
+            document_context, image_paths = self.input_loader.build_context()
+            input_files = [f.name for f in self.input_loader.get_files()]
+            logger.info(f"Loaded input documents: {input_files}")
+            # Add a note to the task that documents are available, but don't include full content
+            if image_paths:
+                image_list = ", ".join([p.name for p in image_paths])
+                task = f"[CONTEXT: Working with local files: {input_files}. IMAGE FILES TO PROCESS: {image_list}]\n\n{task}"
+            else:
+                task = f"[CONTEXT: Working with local documents: {input_files}]\n\n{task}"
+
         logger.info(f"Task received: {task[:100]}...")
 
         zone = self.dispatcher.route(task, file_context)
@@ -125,7 +145,7 @@ class IASCIS:
         logger.info(f"Routed to {zone} zone, model: {model}")
 
         try:
-            result = self.orchestrator.run(task)
+            result = self.orchestrator.run(task, document_context=document_context)
         except Exception as e:
             logger.error(f"Execution failed: {e}")
             result = f"Error: {e}"
@@ -213,6 +233,12 @@ def main():
     logger.info("Starting IASCIS with Sandbox and Profiling")
 
     with IASCIS(enable_profiling=True) as system:
+        # Show input files if any
+        if system.input_loader.has_files():
+            files = system.input_loader.get_files()
+            print(f"\n📄 Found {len(files)} input document(s): {[f.name for f in files]}")
+            print("   These will be injected as context for your query.\n")
+
         result = system.run(task)
 
         logger.info(f"Completed in {result['duration_ms']:.2f}ms")

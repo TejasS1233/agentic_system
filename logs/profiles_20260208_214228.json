@@ -1,0 +1,94 @@
+{
+  "exported_at": "2026-02-08T21:42:28.929220",
+  "summary": {
+    "RedditPostScraperTool": {
+      "call_count": 1,
+      "avg_time_ms": 6163.929,
+      "max_time_ms": 6163.929,
+      "min_time_ms": 6163.929,
+      "avg_memory_mb": 7.3479,
+      "max_memory_mb": 7.3479,
+      "avg_memory_delta_mb": 6.6263,
+      "avg_efficiency": 0.4706,
+      "last_grade": "critical"
+    },
+    "SentimentAnalysisTool": {
+      "call_count": 1,
+      "avg_time_ms": 1.419,
+      "max_time_ms": 1.419,
+      "min_time_ms": 1.419,
+      "avg_memory_mb": 0.0068,
+      "max_memory_mb": 0.0068,
+      "avg_memory_delta_mb": 0.0,
+      "avg_efficiency": 0.0,
+      "last_grade": "critical"
+    },
+    "RedditSubredditComparator": {
+      "call_count": 1,
+      "avg_time_ms": 1652.728,
+      "max_time_ms": 1652.728,
+      "min_time_ms": 1652.728,
+      "avg_memory_mb": 0.2636,
+      "max_memory_mb": 0.2636,
+      "avg_memory_delta_mb": 0.0809,
+      "avg_efficiency": 0.4989,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 3,
+    "tools_profiled": [
+      "RedditPostScraperTool",
+      "SentimentAnalysisTool",
+      "RedditSubredditComparator"
+    ],
+    "execution_time_ms": {
+      "min": 1.419,
+      "max": 6163.929,
+      "mean": 2606.0253333333335
+    },
+    "peak_memory_mb": {
+      "min": 0.0068,
+      "max": 7.3479,
+      "mean": 2.5394333333333337
+    },
+    "success_rate": 0.6666666666666666
+  },
+  "raw_profiles": {
+    "RedditPostScraperTool": [
+      {
+        "tool_name": "RedditPostScraperTool",
+        "execution_time_ms": 6163.929,
+        "peak_memory_mb": 7.3479,
+        "memory_delta_mb": 6.6263,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4706,
+        "success": true
+      }
+    ],
+    "SentimentAnalysisTool": [
+      {
+        "tool_name": "SentimentAnalysisTool",
+        "execution_time_ms": 1.419,
+        "peak_memory_mb": 0.0068,
+        "memory_delta_mb": 0,
+        "latency_grade": "critical",
+        "success": false,
+        "error_message": "\n**********************************************************************\n  Resource \u001b[93mvader_lexicon\u001b[0m not found.\n  Please use the NLTK Downloader to obtain the resource:\n\n  \u001b[31m>>> import nltk\n  >>> nltk.download('vader_lexicon')\n  \u001b[0m\n  For more information see: https://www.nltk.org/data.html\n\n  Attempted to load \u001b[93msentiment/vader_lexicon.zip/vader_lexicon/vader_lexicon.txt\u001b[0m\n\n  Searched in:\n    - '/root/nltk_data'\n    - '/usr/local/nltk_data'\n    - '/usr/local/share/nltk_data'\n    - '/usr/local/lib/nltk_data'\n    - '/usr/share/nltk_data'\n    - '/usr/local/share/nltk_data'\n    - '/usr/lib/nltk_data'\n    - '/usr/local/lib/nltk_data'\n    - ''\n**********************************************************************\n"
+      }
+    ],
+    "RedditSubredditComparator": [
+      {
+        "tool_name": "RedditSubredditComparator",
+        "execution_time_ms": 1652.728,
+        "peak_memory_mb": 0.2636,
+        "memory_delta_mb": 0.0809,
+        "latency_grade": "critical",
+        "efficiency_score": 0.4989,
+        "success": true
+      }
+    ]
+  }
+}

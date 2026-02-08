@@ -1,0 +1,66 @@
+2026-02-08 21:00:04 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-08 21:00:32 | INFO | __main__:main:233 | Starting IASCIS with Sandbox and Profiling
+2026-02-08 21:00:32 | INFO | architecture.input_loader:__init__:26 | InputLoader initialized: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-08 21:00:32 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-08 21:00:32 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-08 21:00:32 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-08 21:00:32 | INFO | __main__:__init__:74 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-08 21:00:32 | INFO | architecture.sandbox:__init__:161 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs, inputs_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-08 21:00:32 | INFO | architecture.sandbox:start:258 | Sandbox container started: db7bbd51f295
+2026-02-08 21:00:32 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-08 21:00:32 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-08 21:00:32 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-08 21:00:32 | INFO | architecture.executor:load_registry:93 | Loaded 20 tool definitions
+2026-02-08 21:00:32 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-08 21:00:32 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-08 21:00:33 | INFO | architecture.sandbox:_install_deps:286 | Installing dependencies: numpy pydantic beautifulsoup4 requests pandas
+2026-02-08 21:00:36 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-08 21:00:36 | INFO | __main__:_initialize_runtime:98 | Runtime initialized with Sandbox
+2026-02-08 21:00:36 | INFO | architecture.input_loader:build_context:148 | Built context from 1 file(s) (4082 chars, 0 images)
+2026-02-08 21:00:36 | INFO | __main__:run:133 | Loaded input documents: ['sales_data.csv']
+2026-02-08 21:00:36 | INFO | __main__:run:141 | Task received: [CONTEXT: Working with local documents: ['sales_data.csv']]
+
+whats the weather in thane for the next...
+2026-02-08 21:00:36 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-08 21:00:36 | INFO | __main__:run:145 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-08 21:00:36 | INFO | architecture.orchestrator:run:47 | Processing: [CONTEXT: Working with local documents: ['sales_data.csv']]
+
+whats the weather i...
+2026-02-08 21:00:36 | INFO | architecture.orchestrator:run:52 | Document context available (4082 chars)
+2026-02-08 21:00:36 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-08_21-00-01
+2026-02-08 21:00:37 | INFO | architecture.llm_manager:generate:132 | Generation success in 698.79ms
+2026-02-08 21:00:37 | INFO | architecture.orchestrator:run:56 | Task Classification: COMPLEX_TASK
+2026-02-08 21:00:37 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-08_21-00-01
+2026-02-08 21:00:37 | INFO | architecture.llm_manager:generate:132 | Generation success in 369.83ms
+2026-02-08 21:00:37 | INFO | architecture.orchestrator:run:63 | Decomposed into 1 subtasks
+2026-02-08 21:00:37 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-08_21-00-01
+2026-02-08 21:00:37 | INFO | architecture.llm_manager:generate:132 | Generation success in 271.19ms
+2026-02-08 21:00:37 | INFO | architecture.orchestrator:_retrieve_tools:184 | st_1 → WeatherForecastTool (LLM selected, semantic: 0.471, tags: +2, cross-domain)
+2026-02-08 21:00:37 | INFO | architecture.orchestrator:_create_plan:313 | ============================================================
+2026-02-08 21:00:37 | INFO | architecture.orchestrator:_create_plan:314 | EXECUTION PLAN: 1 steps
+2026-02-08 21:00:37 | INFO | architecture.orchestrator:_create_plan:315 | ============================================================
+2026-02-08 21:00:37 | INFO | architecture.orchestrator:_create_plan:319 |   Step 1: Get the weather forecast for Thane for the next 5 ...
+2026-02-08 21:00:37 | INFO | architecture.orchestrator:_create_plan:320 |     Tool: WeatherForecastTool
+2026-02-08 21:00:37 | INFO | architecture.orchestrator:_create_plan:321 |     no dependencies, uses description
+2026-02-08 21:00:37 | INFO | architecture.orchestrator:_create_plan:322 | ============================================================
+2026-02-08 21:00:37 | INFO | architecture.executor:execute:115 | Executing plan: whats the weather in thane for the next 5 days
+2026-02-08 21:00:37 | INFO | architecture.executor:execute:116 | Total steps: 1
+2026-02-08 21:00:37 | INFO | architecture.executor:execute:121 | Document context available for execution (4082 chars)
+2026-02-08 21:00:37 | INFO | architecture.executor:_execute_step:195 | Step 1: Get the weather forecast for Thane for the next 5 days using WeatherForecastTool
+2026-02-08 21:00:37 | INFO | architecture.executor:load_registry:93 | Loaded 20 tool definitions
+2026-02-08 21:00:37 | INFO | architecture.executor:_execute_step:237 | Step 1: Using description as input
+2026-02-08 21:00:37 | INFO | architecture.executor:_infer_args:590 | Using document context for argument inference
+2026-02-08 21:00:37 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-08_21-00-01
+2026-02-08 21:00:38 | INFO | architecture.llm_manager:generate:132 | Generation success in 228.28ms
+2026-02-08 21:00:38 | INFO | architecture.executor:_infer_args:656 | LLM extracted args: {'city': 'Thane', 'days': 5}
+2026-02-08 21:00:38 | INFO | architecture.executor:_execute_step:244 | DEBUG: Executor inferred args = {'city': 'Thane', 'days': 5}
+2026-02-08 21:00:38 | INFO | architecture.executor:_execute_step:245 | DEBUG: Translated args = {'city': 'Thane', 'days': 5}
+2026-02-08 21:00:38 | INFO | architecture.executor:_execute_step:246 | DEBUG: Args type = <class 'dict'>
+2026-02-08 21:00:38 | ERROR | __main__:run:150 | Execution failed: 'charmap' codec can't decode byte 0x8f in position 4730: character maps to <undefined>
+2026-02-08 21:00:38 | INFO | __main__:main:244 | Completed in 1634.22ms
+2026-02-08 21:00:38 | INFO | __main__:main:245 | Zone: public
+2026-02-08 21:00:38 | INFO | architecture.executor:export_profiles:574 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260208_210038.json
+2026-02-08 21:00:42 | WARNING | architecture.sandbox:_install_deps:291 | pip install failed: 
+2026-02-08 21:00:42 | INFO | architecture.sandbox:_pre_install_essentials:226 | Essential packages pre-installed
+2026-02-08 21:00:43 | INFO | architecture.sandbox:stop:273 | Sandbox container stopped: db7bbd51f295
+2026-02-08 21:00:43 | INFO | __main__:_shutdown_runtime:107 | Runtime shutdown complete

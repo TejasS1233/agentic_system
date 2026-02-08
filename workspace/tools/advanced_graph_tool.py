@@ -112,6 +112,49 @@ class AdvancedGraphTool:
             if "x" in data and "y" in data:
                 return data
             
+            # Handle comparison/time-series format:
+            # {"comparison": {"dates": [...], "AAPL": [...], "GOOGL": [...], ...}}
+            # or {"dates": [...], "AAPL": [...], "GOOGL": [...], ...}
+            comparison = data.get("comparison", None)
+            if comparison and isinstance(comparison, dict) and "dates" in comparison:
+                dates = comparison["dates"]
+                series_keys = [k for k in comparison if k != "dates"]
+                if dates and series_keys:
+                    result = {"x": dates}
+                    for i, key in enumerate(series_keys):
+                        y_key = "y" if i == 0 else f"y{i + 1}"
+                        result[y_key] = comparison[key]
+                        result[f"_label_{y_key}"] = key  # Store series name for legend
+                    return result
+            
+            # Handle flat time-series: {"dates": [...], "AAPL": [...], "MSFT": [...]}
+            if "dates" in data:
+                dates = data["dates"]
+                series_keys = [k for k in data if k != "dates" and isinstance(data[k], list)
+                               and data[k] and isinstance(data[k][0], (int, float))]
+                if dates and series_keys:
+                    result = {"x": dates}
+                    for i, key in enumerate(series_keys):
+                        y_key = "y" if i == 0 else f"y{i + 1}"
+                        result[y_key] = data[key]
+                        result[f"_label_{y_key}"] = key
+                    return result
+            
+            # Handle nested stock data format:
+            # {"data": {"AAPL": {"dates": [...], "close": [...]}, ...}}
+            if "data" in data and isinstance(data["data"], dict):
+                nested = data["data"]
+                first_key = next(iter(nested), None)
+                if first_key and isinstance(nested[first_key], dict) and "dates" in nested[first_key]:
+                    result = {"x": nested[first_key]["dates"]}
+                    for i, (symbol, info) in enumerate(nested.items()):
+                        if isinstance(info, dict) and "close" in info:
+                            y_key = "y" if i == 0 else f"y{i + 1}"
+                            result[y_key] = info["close"]
+                            result[f"_label_{y_key}"] = symbol
+                    if len([k for k in result if k.startswith("y")]) > 0:
+                        return result
+            
             # Handle GitHub trending format: {"repos": [{"name": ..., "stars": ...}]}
             if "repos" in data and isinstance(data["repos"], list):
                 repos = data["repos"][:10]  # Limit to 10
@@ -141,6 +184,34 @@ class AdvancedGraphTool:
         # If it's a list of numbers, use indices as labels
         if isinstance(data, list) and data and isinstance(data[0], (int, float)):
             return data  # For histogram
+        
+        # Handle list of dicts (e.g., from CSV parsing) — aggregate by first string column
+        if isinstance(data, list) and data and isinstance(data[0], dict):
+            items = data
+            # Identify string (label) columns and numeric (value) columns
+            str_cols = [k for k, v in items[0].items() if isinstance(v, str)]
+            num_cols = [k for k, v in items[0].items() if isinstance(v, (int, float))]
+            
+            if str_cols and num_cols:
+                # Use first string column as grouping key and first numeric column as values
+                label_col = str_cols[0]
+                value_col = num_cols[0]
+                
+                # Aggregate: sum values by label
+                aggregated = {}
+                for row in items:
+                    key = str(row.get(label_col, ""))
+                    val = row.get(value_col, 0)
+                    if isinstance(val, (int, float)):
+                        aggregated[key] = aggregated.get(key, 0) + val
+                
+                return {
+                    "labels": list(aggregated.keys()),
+                    "values": list(aggregated.values())
+                }
+            elif num_cols:
+                # No string cols — use first numeric column as values
+                return [row.get(num_cols[0], 0) for row in items]
         
         # Fallback: return as-is and let chart methods handle it
         return data
@@ -295,15 +366,39 @@ class AdvancedGraphTool:
         """Create line chart with optional multiple series."""
         x = data.get("x", data.get("labels", list(range(len(data.get("y", []))))))
         
-        # Find all y series (y, y1, y2, y3, etc.)
-        y_keys = [k for k in data.keys() if k.startswith("y")]
+        # Find all y series (y, y1, y2, y3, etc.) - exclude internal _label_ keys
+        y_keys = [k for k in data.keys() if k.startswith("y") and not k.startswith("_")]
         if not y_keys:
             y_keys = ["values"] if "values" in data else []
         
+        # Determine marker style based on data density
+        num_points = len(x) if isinstance(x, list) else 0
+        marker = "o" if num_points <= 30 else None
+        markersize = 4 if num_points > 15 else 5
+        
         for i, key in enumerate(sorted(y_keys)):
             y = data[key]
-            label = legend_labels[i] if legend_labels and i < len(legend_labels) else key
-            ax.plot(x, y, marker="o", color=colors[i % len(colors)], label=label, linewidth=2, markersize=5)
+            # Use embedded _label_ metadata, then legend_labels, then key as fallback
+            label_key = f"_label_{key}"
+            if label_key in data:
+                label = data[label_key]
+            elif legend_labels and i < len(legend_labels):
+                label = legend_labels[i]
+            else:
+                label = key
+            ax.plot(x, y, marker=marker, color=colors[i % len(colors)], label=label,
+                    linewidth=2, markersize=markersize)
+        
+        # Rotate x-axis labels if they look like dates or are numerous
+        if isinstance(x, list) and len(x) > 5 and isinstance(x[0], str):
+            ax.tick_params(axis='x', rotation=45)
+            for label in ax.get_xticklabels():
+                label.set_ha('right')
+            # Show fewer ticks if too many dates
+            if len(x) > 15:
+                step = max(1, len(x) // 8)
+                ax.set_xticks(range(0, len(x), step))
+                ax.set_xticklabels([x[i] for i in range(0, len(x), step)])
         
         if len(y_keys) > 1 or legend_labels:
             ax.legend()

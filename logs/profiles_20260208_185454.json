@@ -1,0 +1,48 @@
+{
+  "exported_at": "2026-02-08T18:54:54.805094",
+  "summary": {
+    "SerpSearchTool": {
+      "call_count": 1,
+      "avg_time_ms": 0.082,
+      "max_time_ms": 0.082,
+      "min_time_ms": 0.082,
+      "avg_memory_mb": 0.002,
+      "max_memory_mb": 0.002,
+      "avg_memory_delta_mb": 0.0,
+      "avg_efficiency": 0.0,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 1,
+    "tools_profiled": [
+      "SerpSearchTool"
+    ],
+    "execution_time_ms": {
+      "min": 0.082,
+      "max": 0.082,
+      "mean": 0.082
+    },
+    "peak_memory_mb": {
+      "min": 0.002,
+      "max": 0.002,
+      "mean": 0.002
+    },
+    "success_rate": 0.0
+  },
+  "raw_profiles": {
+    "SerpSearchTool": [
+      {
+        "tool_name": "SerpSearchTool",
+        "execution_time_ms": 0.082,
+        "peak_memory_mb": 0.002,
+        "memory_delta_mb": 0,
+        "latency_grade": "critical",
+        "success": false,
+        "error_message": "'<' not supported between instances of 'int' and 'NoneType'"
+      }
+    ]
+  }
+}
