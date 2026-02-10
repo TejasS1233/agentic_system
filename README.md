@@ -32,20 +32,20 @@ An autonomous, self-correcting multi-agent system that **dynamically creates, pr
 
 **38 registered tools** across 42 Python files in `workspace/tools/`, spanning:
 
-| Category | Example Tools |
-|---|---|
-| **Search / Web** | SerpSearchTool, WebScraperTool, HackerNewsTool |
-| **GitHub** | GitHubProfileSearchTool, GitHubTrendingTool, GitHubRepoTool |
-| **Social** | RedditTool, RedditSentimentAnalyzerTool, ProductHuntSearchTool |
-| **Finance** | StockPriceTool, CurrencyConverterTool |
-| **Data / Viz** | AdvancedGraphTool, SalesDataAnalyzer, TableParserTool |
-| **Visualization** | MermaidDiagramTool, MarkdownMindmapTool, QRCodeGeneratorTool |
-| **Documents** | SlideDeckGeneratorTool, DocumentConverterTool (PDF↔LaTeX↔Markdown) |
-| **Math / Science** | LatexEquationRendererTool (LLM-powered LaTeX conversion) |
-| **Audio** | AudioSummaryTool (gTTS text-to-speech) |
-| **System** | CronReminderTool (NL→cron + .ics generation) |
-| **Academic** | BibliographyCreator, ExtractCitationsTool, SimilarPapersTool |
-| **Weather / Geo** | WeatherForecastTool, RoutePlannerTool |
+| Category           | Example Tools                                                      |
+| ------------------ | ------------------------------------------------------------------ |
+| **Search / Web**   | SerpSearchTool, WebScraperTool, HackerNewsTool                     |
+| **GitHub**         | GitHubProfileSearchTool, GitHubTrendingTool, GitHubRepoTool        |
+| **Social**         | RedditTool, RedditSentimentAnalyzerTool, ProductHuntSearchTool     |
+| **Finance**        | StockPriceTool, CurrencyConverterTool                              |
+| **Data / Viz**     | AdvancedGraphTool, SalesDataAnalyzer, TableParserTool              |
+| **Visualization**  | MermaidDiagramTool, MarkdownMindmapTool, QRCodeGeneratorTool       |
+| **Documents**      | SlideDeckGeneratorTool, DocumentConverterTool (PDF↔LaTeX↔Markdown) |
+| **Math / Science** | LatexEquationRendererTool (LLM-powered LaTeX conversion)           |
+| **Audio**          | AudioSummaryTool (gTTS text-to-speech)                             |
+| **System**         | CronReminderTool (NL→cron + .ics generation)                       |
+| **Academic**       | BibliographyCreator, ExtractCitationsTool, SimilarPapersTool       |
+| **Weather / Geo**  | WeatherForecastTool, RoutePlannerTool                              |
 
 New tools are generated on-the-fly when the system encounters a task with no matching tool.
 
@@ -176,17 +176,17 @@ uv run python -m benchmark.visualize              # Generate charts
 
 ## Key Design Patterns
 
-| Pattern | Implementation |
-|---|---|
-| **Docker Sandboxing** | Every tool runs in an isolated container. The Sandbox auto-detects PyPI imports (filtering stdlib), maps aliases (`PIL`→`Pillow`, `cv2`→`opencv-python`, `fitz`→`pymupdf`), and installs deps at startup. |
-| **Embedding-Based Retrieval** | Tool metadata is embedded with `all-MiniLM-L6-v2` into a FAISS index. Queries are matched by cosine similarity with graph-based expansion. |
-| **Knowledge Graph** | A NetworkX `DiGraph` encodes tool relationships — Jaccard tag similarity edges and output→input type composability edges enable multi-tool pipeline discovery. |
-| **On-the-Fly Tool Generation** | When no tool matches a subtask, Toolsmith LLM-generates one, Gatekeeper validates it (3-layer: AST + SAST + risk scoring), and it's registered immediately. |
-| **Self-Correction Loop** | Reflector classifies errors, diagnoses root causes, and generates corrective prompts for automatic retries (up to 3 attempts). |
-| **Multi-Mode Profiling** | Five tiers (OFF → LIGHTWEIGHT → STANDARD → FULL → GPU) capturing wall time, peak memory, CPU, I/O, and cProfile bottlenecks. Feeds tool decay scoring. |
-| **Privacy-Aware Routing** | Dispatcher inspects queries for sensitive patterns (API keys, credentials, PII) and routes to private or public execution zones. |
-| **Multi-Provider LLM** | LiteLLM abstraction over Groq, Gemini, OpenAI, Anthropic with round-robin API key rotation (up to 15 keys per provider). |
-| **Priority Routing** | Known task types (search, slides, equations, QR codes, TTS, cron, diagrams, document conversion) are shortcut-routed before falling back to semantic retrieval. |
+| Pattern                        | Implementation                                                                                                                                                                                            |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Docker Sandboxing**          | Every tool runs in an isolated container. The Sandbox auto-detects PyPI imports (filtering stdlib), maps aliases (`PIL`→`Pillow`, `cv2`→`opencv-python`, `fitz`→`pymupdf`), and installs deps at startup. |
+| **Embedding-Based Retrieval**  | Tool metadata is embedded with `all-MiniLM-L6-v2` into a FAISS index. Queries are matched by cosine similarity with graph-based expansion.                                                                |
+| **Knowledge Graph**            | A NetworkX `DiGraph` encodes tool relationships — Jaccard tag similarity edges and output→input type composability edges enable multi-tool pipeline discovery.                                            |
+| **On-the-Fly Tool Generation** | When no tool matches a subtask, Toolsmith LLM-generates one, Gatekeeper validates it (3-layer: AST + SAST + risk scoring), and it's registered immediately.                                               |
+| **Self-Correction Loop**       | Reflector classifies errors, diagnoses root causes, and generates corrective prompts for automatic retries (up to 3 attempts).                                                                            |
+| **Multi-Mode Profiling**       | Five tiers (OFF → LIGHTWEIGHT → STANDARD → FULL → GPU) capturing wall time, peak memory, CPU, I/O, and cProfile bottlenecks. Feeds tool decay scoring.                                                    |
+| **Privacy-Aware Routing**      | Dispatcher inspects queries for sensitive patterns (API keys, credentials, PII) and routes to private or public execution zones.                                                                          |
+| **Multi-Provider LLM**         | LiteLLM abstraction over Groq, Gemini, OpenAI, Anthropic with round-robin API key rotation (up to 15 keys per provider).                                                                                  |
+| **Priority Routing**           | Known task types (search, slides, equations, QR codes, TTS, cron, diagrams, document conversion) are shortcut-routed before falling back to semantic retrieval.                                           |
 
 ---
 
@@ -194,12 +194,12 @@ uv run python -m benchmark.visualize              # Generate charts
 
 > From 91 successful runs across 39 curated tasks (see [`docs/accomplished_tasks`](docs/accomplished_tasks))
 
-| Metric | Value |
-|---|---|
-| Avg total time | ~10.5s |
-| Min time | 4.35s (currency conversion) |
-| Max time | 22.17s (multi-step web scraping) |
-| Tool grades | 7 fast (<10ms) · 7 moderate · 15 slow · 14 critical (>1s) |
+| Metric         | Value                                                     |
+| -------------- | --------------------------------------------------------- |
+| Avg total time | ~10.5s                                                    |
+| Min time       | 4.35s (currency conversion)                               |
+| Max time       | 22.17s (multi-step web scraping)                          |
+| Tool grades    | 7 fast (<10ms) · 7 moderate · 15 slow · 14 critical (>1s) |
 
 ---
 
