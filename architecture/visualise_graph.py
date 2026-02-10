@@ -6,15 +6,15 @@ from tool_graph import load_registry, build_tool_graph
 
 def visualize_graph(graph: nx.DiGraph, output_path: str = None):
     """Visualize the knowledge graph."""
-    plt.figure(figsize=(12, 8))
+    plt.figure(figsize=(20, 14))
 
-    # Position nodes using spring layout
-    pos = nx.spring_layout(graph, k=2, iterations=50)
+    # Position nodes — higher k pushes nodes apart, more iterations settles layout
+    pos = nx.spring_layout(graph, k=3.5, iterations=120, seed=42)
 
     # Color nodes by type
     node_colors = []
     for node in graph.nodes():
-        if graph.nodes[node].get("node_type") == "domain":
+        if graph.nodes[node].get("node_type") == "domain" or str(node).startswith("domain:"):
             node_colors.append("#FF6B6B")  # Red for domains
         else:
             node_colors.append("#4ECDC4")  # Teal for tools
@@ -23,7 +23,7 @@ def visualize_graph(graph: nx.DiGraph, output_path: str = None):
     nx.draw_networkx_nodes(
         graph, pos, node_color=node_colors, node_size=2000, alpha=0.9
     )
-    nx.draw_networkx_labels(graph, pos, font_size=8, font_weight="bold")
+    nx.draw_networkx_labels(graph, pos, font_size=7, font_weight="bold")
 
     # Color edges by relation type
     edge_colors = []
@@ -42,7 +42,7 @@ def visualize_graph(graph: nx.DiGraph, output_path: str = None):
         edge_color=edge_colors,
         arrows=True,
         arrowsize=20,
-        alpha=0.7,
+        alpha=0.5,
         connectionstyle="arc3,rad=0.1",
     )
 
@@ -72,5 +72,7 @@ if __name__ == "__main__":
     registry = load_registry(registry_path)
     graph = build_tool_graph(registry)
 
-    output_path = Path(__file__).parent.parent / ".research" / "tool_graph.png"
+    output_path = Path(__file__).parent.parent / "docs" / "tool_graph.png"
+    output_path.parent.mkdir(parents=True, exist_ok=True)
     visualize_graph(graph, output_path=str(output_path))
+
