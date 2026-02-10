@@ -63,14 +63,14 @@ ALLOWED_DOMAINS = {
         "examples": ["run command", "environment variable", "process info"],
     },
     "visualization": {
-        "description": "Charts, plots, graphs, image generation",
-        "aliases": ["chart", "plot", "graph", "image", "visual", "drawing"],
-        "examples": ["bar chart", "line plot", "histogram", "render image"],
+        "description": "Charts, plots, graphs, diagrams, image generation, mermaid diagrams",
+        "aliases": ["chart", "plot", "graph", "image", "visual", "drawing", "diagram", "mermaid", "flowchart", "uml", "mindmap", "sequence diagram", "er diagram"],
+        "examples": ["bar chart", "line plot", "histogram", "render image", "create a flowchart", "sequence diagram", "mermaid diagram", "class diagram", "ER diagram"],
     },
     "conversion": {
-        "description": "Format or type conversions between data types",
-        "aliases": ["convert", "transform", "format", "encode", "decode"],
-        "examples": ["PDF to Word", "image format", "unit conversion"],
+        "description": "Format or type conversions between data types, document format conversions",
+        "aliases": ["convert", "transform", "format", "encode", "decode", "pdf", "latex", "tex", "markdown", "docx", "export"],
+        "examples": ["PDF to Word", "image format", "unit conversion", "convert PDF to markdown", "transform paper to LaTeX", "export as PDF"],
     },
     "search": {
         "description": "Search operations across web or documents",

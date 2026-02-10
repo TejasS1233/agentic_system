@@ -1,0 +1,169 @@
+2026-02-10 22:49:45 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-10 22:50:30 | INFO | __main__:main:233 | Starting IASCIS with Sandbox and Profiling
+2026-02-10 22:50:30 | INFO | architecture.input_loader:__init__:26 | InputLoader initialized: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-10 22:50:30 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-10 22:50:30 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-10 22:50:30 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-10 22:50:30 | INFO | __main__:__init__:74 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-10 22:50:30 | INFO | architecture.sandbox:__init__:164 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs, inputs_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-10 22:50:30 | INFO | architecture.sandbox:start:261 | Sandbox container started: b534b2eb79dd
+2026-02-10 22:50:30 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-10 22:50:30 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-10 22:50:30 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-10 22:50:30 | INFO | architecture.executor:load_registry:93 | Loaded 36 tool definitions
+2026-02-10 22:50:30 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-10 22:50:30 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-10 22:50:31 | INFO | architecture.sandbox:_install_deps:289 | Installing dependencies: pydantic requests numpy pandas beautifulsoup4
+2026-02-10 22:50:34 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-10 22:50:34 | INFO | __main__:_initialize_runtime:98 | Runtime initialized with Sandbox
+2026-02-10 22:50:34 | INFO | __main__:run:141 | Task received: Render the quadratic formula as an image...
+2026-02-10 22:50:34 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-10 22:50:34 | INFO | __main__:run:145 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-10 22:50:34 | INFO | architecture.orchestrator:run:47 | Processing: Render the quadratic formula as an image...
+2026-02-10 22:50:34 | INFO | architecture.orchestrator:_classify_request:563 | Forcing COMPLEX_TASK: diagram keywords detected in query
+2026-02-10 22:50:34 | INFO | architecture.orchestrator:run:56 | Task Classification: COMPLEX_TASK
+2026-02-10 22:50:34 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-10_22-49-42
+2026-02-10 22:50:35 | INFO | architecture.llm_manager:generate:132 | Generation success in 930.77ms
+2026-02-10 22:50:35 | INFO | architecture.orchestrator:run:63 | Decomposed into 2 subtasks
+2026-02-10 22:50:35 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 50 | Temp: 0.0 | Session: 2026-02-10_22-49-42
+2026-02-10 22:50:36 | INFO | architecture.llm_manager:generate:132 | Generation success in 153.42ms
+2026-02-10 22:50:36 | INFO | architecture.orchestrator:_retrieve_tools:385 | st_1 → LatexEquationRendererTool (LLM selected, semantic: 0.310, tags: +1, cross-domain)
+2026-02-10 22:50:36 | INFO | architecture.orchestrator:_retrieve_tools:210 | st_2 -> LatexEquationRendererTool (Forced by equation keywords)
+2026-02-10 22:50:36 | INFO | architecture.orchestrator:_ensure_tools:413 | Tool LatexEquationRendererTool already used by previous step. Invalidating match.
+2026-02-10 22:50:36 | INFO | architecture.orchestrator:_ensure_tools:434 | Toolsmith creating: Render the quadratic formula string as an image
+2026-02-10 22:50:36 | INFO | architecture.toolsmith:create_tool:114 | Request: 'Render the quadratic formula string as an image'
+2026-02-10 22:50:36 | INFO | architecture.toolsmith:create_tool:126 | Generating tool with LLM (attempt 1/3)...
+2026-02-10 22:50:36 | INFO | architecture.toolsmith:create_tool:129 | Available APIs context length: 651
+2026-02-10 22:50:36 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-10_22-49-42
+2026-02-10 22:50:37 | INFO | architecture.llm_manager:generate:132 | Generation success in 1477.05ms
+2026-02-10 22:50:37 | INFO | architecture.toolsmith:create_tool:181 | Tool saved: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\quadratic_formula_renderer.py
+2026-02-10 22:50:37 | INFO | architecture.toolsmith:_update_registry:266 | Registry updated: QuadraticFormulaRenderer
+2026-02-10 22:50:37 | INFO | architecture.orchestrator:_ensure_tools:436 | Toolsmith: Created QuadraticFormulaRenderer with tags ['quadratic', 'formula', 'rendering']...
+2026-02-10 22:50:37 | INFO | architecture.orchestrator:_ensure_tools:457 | Tool assigned: QuadraticFormulaRenderer
+2026-02-10 22:50:37 | INFO | architecture.orchestrator:_create_plan:514 | ============================================================
+2026-02-10 22:50:37 | INFO | architecture.orchestrator:_create_plan:515 | EXECUTION PLAN: 2 steps
+2026-02-10 22:50:37 | INFO | architecture.orchestrator:_create_plan:516 | ============================================================
+2026-02-10 22:50:37 | INFO | architecture.orchestrator:_create_plan:520 |   Step 1: Generate the quadratic formula as a string...
+2026-02-10 22:50:37 | INFO | architecture.orchestrator:_create_plan:521 |     Tool: LatexEquationRendererTool
+2026-02-10 22:50:37 | INFO | architecture.orchestrator:_create_plan:522 |     no dependencies, uses description
+2026-02-10 22:50:37 | INFO | architecture.orchestrator:_create_plan:520 |   Step 2: Render the quadratic formula string as an image...
+2026-02-10 22:50:37 | INFO | architecture.orchestrator:_create_plan:521 |     Tool: QuadraticFormulaRenderer
+2026-02-10 22:50:37 | INFO | architecture.orchestrator:_create_plan:522 |     depends_on=[1], input_from=step_1
+2026-02-10 22:50:37 | INFO | architecture.orchestrator:_create_plan:523 | ============================================================
+2026-02-10 22:50:37 | INFO | architecture.executor:execute:115 | Executing plan: Render the quadratic formula as an image
+2026-02-10 22:50:37 | INFO | architecture.executor:execute:116 | Total steps: 2
+2026-02-10 22:50:37 | INFO | architecture.executor:_execute_step:195 | Step 1: Generate the quadratic formula as a string using LatexEquationRendererTool
+2026-02-10 22:50:37 | INFO | architecture.executor:load_registry:93 | Loaded 37 tool definitions
+2026-02-10 22:50:37 | INFO | architecture.executor:_execute_step:237 | Step 1: Using description as input
+2026-02-10 22:50:37 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-10_22-49-42
+2026-02-10 22:50:37 | INFO | architecture.llm_manager:generate:132 | Generation success in 217.05ms
+2026-02-10 22:50:37 | INFO | architecture.executor:_infer_args:666 | LLM extracted args: {'equation': 'x = (-b ± √(b² - 4ac)) / 2a'}
+2026-02-10 22:50:37 | WARNING | architecture.sandbox:translate_path_for_container:221 | No path translation found for: x = (-b ± √(b² - 4ac)) / 2a
+2026-02-10 22:50:37 | INFO | architecture.executor:_execute_step:244 | DEBUG: Executor inferred args = {'equation': 'x = (-b ± √(b² - 4ac)) / 2a'}
+2026-02-10 22:50:37 | INFO | architecture.executor:_execute_step:245 | DEBUG: Translated args = {'equation': 'x = (-b ± √(b² - 4ac)) / 2a'}
+2026-02-10 22:50:37 | INFO | architecture.executor:_execute_step:246 | DEBUG: Args type = <class 'dict'>
+2026-02-10 22:50:37 | INFO | architecture.sandbox:_install_deps:289 | Installing dependencies: pydantic requests matplotlib
+2026-02-10 22:50:44 | INFO | architecture.sandbox:_pre_install_essentials:229 | Essential packages pre-installed
+2026-02-10 22:50:47 | INFO | architecture.sandbox:execute_with_args:586 | DEBUG: sandbox received args = {'equation': 'x = (-b ± √(b² - 4ac)) / 2a'}
+2026-02-10 22:50:47 | INFO | architecture.sandbox:execute_with_args:587 | DEBUG: args_json = {"equation": "x = (-b \u00b1 \u221a(b\u00b2 - 4ac)) / 2a"}
+2026-02-10 22:50:47 | INFO | architecture.sandbox:execute_with_args:588 | DEBUG: Runner script line: args = json.loads('{"equation": "x = (-b \u00b1 \u221a(b\u00b2 - 4ac)) / 2a"}')
+2026-02-10 22:50:47 | INFO | architecture.sandbox:execute_with_args:593 | Executing tool with args: LatexEquationRendererTool
+2026-02-10 22:50:47 | INFO | architecture.sandbox:execute_with_args:594 | Args JSON being passed: {"equation": "x = (-b \u00b1 \u221a(b\u00b2 - 4ac)) / 2a"}
+2026-02-10 22:50:51 | INFO | architecture.executor:_execute_step:263 | Step 1 SANDBOX Profile: time=3470.964ms, peak_mem=33.0598MB, delta_mem=32.9825MB, efficiency=36.78%, grade=critical
+2026-02-10 22:50:51 | INFO | architecture.executor:_execute_step:273 |    (Total round-trip: 13941.86ms)
+2026-02-10 22:50:51 | INFO | architecture.executor:_execute_step:278 | Step 1: Completed in 13.94s
+2026-02-10 22:50:51 | INFO | architecture.executor:_execute_step:195 | Step 2: Render the quadratic formula string as an image using QuadraticFormulaRenderer
+2026-02-10 22:50:51 | INFO | architecture.executor:load_registry:93 | Loaded 37 tool definitions
+2026-02-10 22:50:51 | INFO | architecture.executor:_execute_step:227 | Step 2: Using input from step 1
+2026-02-10 22:50:51 | ERROR | architecture.executor:_get_arg_names_from_file:872 | Failed to parse args from C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\quadratic_formula_renderer.py: unmatched ')' (<unknown>, line 16)
+2026-02-10 22:50:51 | WARNING | architecture.sandbox:translate_path_for_container:221 | No path translation found for: {
+  "success": true,
+  "equation_input": "x = (-b \u00b1 \u221a(b\u00b2 - 4ac)) / 2a",
+  "equation_latex": "x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}",
+  "output_path": "/output/equation_1.png",
+  "dpi": 200,
+  "file_size_bytes": 7501,
+  "message": "Equation rendered and saved to /output/equation_1.png"
+}
+2026-02-10 22:50:51 | INFO | architecture.executor:_execute_step:244 | DEBUG: Executor inferred args = {'input': '{\n  "success": true,\n  "equation_input": "x = (-b \\u00b1 \\u221a(b\\u00b2 - 4ac)) / 2a",\n  "equation_latex": "x = \\\\frac{-b \\\\pm \\\\sqrt{b^2 - 4ac}}{2a}",\n  "output_path": "/output/equation_1.png",\n  "dpi": 200,\n  "file_size_bytes": 7501,\n  "message": "Equation rendered and saved to /output/equation_1.png"\n}'}
+2026-02-10 22:50:51 | INFO | architecture.executor:_execute_step:245 | DEBUG: Translated args = {'input': '{\n  "success": true,\n  "equation_input": "x = (-b \\u00b1 \\u221a(b\\u00b2 - 4ac)) / 2a",\n  "equation_latex": "x = \\\\frac{-b \\\\pm \\\\sqrt{b^2 - 4ac}}{2a}",\n  "output_path": "/output/equation_1.png",\n  "dpi": 200,\n  "file_size_bytes": 7501,\n  "message": "Equation rendered and saved to /output/equation_1.png"\n}'}
+2026-02-10 22:50:51 | INFO | architecture.executor:_execute_step:246 | DEBUG: Args type = <class 'dict'>
+2026-02-10 22:50:51 | ERROR | architecture.sandbox:extract_dependencies:113 | Syntax error parsing C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\quadratic_formula_renderer.py: unmatched ')' (<unknown>, line 16)
+2026-02-10 22:50:51 | INFO | architecture.sandbox:execute_with_args:586 | DEBUG: sandbox received args = {'input': '{\n  "success": true,\n  "equation_input": "x = (-b \\u00b1 \\u221a(b\\u00b2 - 4ac)) / 2a",\n  "equation_latex": "x = \\\\frac{-b \\\\pm \\\\sqrt{b^2 - 4ac}}{2a}",\n  "output_path": "/output/equation_1.png",\n  "dpi": 200,\n  "file_size_bytes": 7501,\n  "message": "Equation rendered and saved to /output/equation_1.png"\n}'}
+2026-02-10 22:50:51 | INFO | architecture.sandbox:execute_with_args:587 | DEBUG: args_json = {"input": "{\n  \"success\": true,\n  \"equation_input\": \"x = (-b \\u00b1 \\u221a(b\\u00b2 - 4ac)) / 2a\",\n  \"equation_latex\": \"x = \\\\frac{-b \\\\pm \\\\sqrt{b^2 - 4ac}}{2a}\",\n  \"output_path\": \"/output/equation_1.png\",\n  \"dpi\": 200,\n  \"file_size_bytes\": 7501,\n  \"message\": \"Equation rendered and saved to /output/equation_1.png\"\n}"}
+2026-02-10 22:50:51 | INFO | architecture.sandbox:execute_with_args:588 | DEBUG: Runner script line: args = json.loads('{"input": "{\n  \"success\": true,\n  \"equation_input\": \"x = (-b \\u00b1 \\u221a(b\\u00b2 - 4ac)) / 2a\",\n  \"equation_latex\": \"x = \\\\frac{-b \\\\pm \\\\sqrt{b^2 - 4ac}}{2a}\",\n  \"output_path\": \"/output/equation_1.png\",\n  \"dpi\": 200,\n  \"file_size_bytes\": 7501,\n  \"message\": \"Equation rendered and saved to /output/equation_1.png\"\n}"}')
+2026-02-10 22:50:51 | INFO | architecture.sandbox:execute_with_args:593 | Executing tool with args: QuadraticFormulaRenderer
+2026-02-10 22:50:51 | INFO | architecture.sandbox:execute_with_args:594 | Args JSON being passed: {"input": "{\n  \"success\": true,\n  \"equation_input\": \"x = (-b \\u00b1 \\u221a(b\\u00b2 - 4ac)) / 2a\",\n  \"equation_latex\": \"x = \\\\frac{-b \\\\pm \\\\sqrt{b^2 - 4ac}}{2a}\",\n  \"output_path\": \"/output/equation_1.png\",\n  \"dpi\": 200,\n  \"file_size_bytes\": 7501,\n  \"message\": \"Equation rendered and saved to /output/equation_1.png\"\n}"}
+2026-02-10 22:50:51 | WARNING | architecture.sandbox:execute_with_args:666 | Failed to parse sandbox output: No valid JSON output found, Raw output: Traceback (most recent call last):
+  File "/tools/_runner_QuadraticFormulaRenderer.py", line 21, in <module>
+    from quadratic_formula_renderer import *
+  File "/tools/quadratic_formula_renderer.py", line 16
+    a, b, c = map(sp.sympify, equation.replace('^2', '**2').replace('=', '-(') + ')').as_coefficients_dict()[x**2], equation.replace('^2', '**2').replace('=', '-(') + ')').as_coefficients_dict()[x], equation.replace('^2', '**2').replace('=', '-(') + ')').as_coefficients_dict()[1]
+                                                                                                                                                                          ^
+SyntaxError: unmatched ')'
+
+2026-02-10 22:50:51 | ERROR | architecture.executor:_execute_step:282 | Step 2: Failed - Traceback (most recent call last):
+  File "/tools/_runner_QuadraticFormulaRenderer.py", line 21, in <module>
+    from quadratic_formula_renderer import *
+  File "/tools/quadratic_formula_renderer.py", line 16
+    a, b, c = map(sp.sympify, equation.replace('^2', '**2').replace('=', '-(') + ')').as_coefficients_dict()[x**2], equation.replace('^2', '**2').replace('=', '-(') + ')').as_coefficients_dict()[x], equation.replace('^2', '**2').replace('=', '-(') + ')').as_coefficients_dict()[1]
+                                                                                                                                                                          ^
+SyntaxError: unmatched ')'
+
+2026-02-10 22:50:51 | INFO | architecture.reflector:reflect:295 | Reflected: syntax, retry=True, remaining=2
+2026-02-10 22:50:51 | INFO | architecture.executor:_handle_failure:319 | Step 2: Failure type=tool_code, retrying...
+2026-02-10 22:50:51 | INFO | architecture.executor:_retry_with_regenerated_tool:380 | Step 2: Regenerating tool with error context
+2026-02-10 22:50:51 | INFO | architecture.toolsmith:create_tool:114 | Request: 'Task: Render the quadratic formula string as an image
+
+Input data sample:
+{
+  "success": true,
+  "equation_input": "x = (-b \u00b1 \u221a(b\u00b2 - 4ac)) / 2a",
+  "equation_latex": "x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}",
+  "output_path": "/output/equation_1.png",
+  "dpi": 200,
+  "file_size_bytes": 7501,
+  "message": "Equation rendered and saved to /output/equation_1.png"
+}
+
+Previous implementation failed with error:
+Traceback (most recent call last):
+  File "/tools/_runner_QuadraticFormulaRenderer.py", line 21, in <module>
+    from quadratic_formula_renderer import *
+  File "/tools/quadratic_formula_renderer.py", line 16
+    a, b, c = map(sp.sympify, equation.replace('^2', '**2').replace('=', '-(') + ')').as_coefficients_dict()[x**2], equation.replace('^2', '**2').replace('=', '-(') + ')').as_coefficients_dict()[x], equation.replace('^2', '**2').replace('=', '-(') + ')').as_coefficients_dict()[1]
+                                                                                                                                                                          ^
+SyntaxError: unmatched ')'
+
+
+Create a tool that correctly handles this input format and fixes the error.'
+2026-02-10 22:50:51 | INFO | architecture.toolsmith:create_tool:126 | Generating tool with LLM (attempt 1/3)...
+2026-02-10 22:50:51 | INFO | architecture.toolsmith:create_tool:129 | Available APIs context length: 700
+2026-02-10 22:50:51 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-10_22-49-42
+2026-02-10 22:50:53 | INFO | architecture.llm_manager:generate:132 | Generation success in 1791.22ms
+2026-02-10 22:50:53 | INFO | architecture.toolsmith:create_tool:181 | Tool saved: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\quadratic_formula_renderer.py
+2026-02-10 22:50:53 | INFO | architecture.toolsmith:_update_registry:266 | Registry updated: QuadraticFormulaRenderer
+2026-02-10 22:50:53 | INFO | architecture.executor:_retry_with_regenerated_tool:391 | Step 2: Toolsmith result = Created QuadraticFormulaRenderer with tags ['quadratic', 'formula', 'renderer']
+2026-02-10 22:50:53 | INFO | architecture.executor:load_registry:93 | Loaded 37 tool definitions
+2026-02-10 22:50:53 | INFO | architecture.executor:_retry_with_regenerated_tool:412 | Step 2: Using regenerated tool QuadraticFormulaRenderer
+2026-02-10 22:50:53 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-10_22-49-42
+2026-02-10 22:50:54 | INFO | architecture.llm_manager:generate:132 | Generation success in 263.25ms
+2026-02-10 22:50:54 | INFO | architecture.executor:_infer_args:666 | LLM extracted args: {'equation_input': 'x = (-b ± √(b² - 4ac)) / 2a', 'equation_latex': 'x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}', 'output_path': '/output/equation_1.png', 'dpi': 200}
+2026-02-10 22:50:54 | WARNING | architecture.sandbox:translate_path_for_container:221 | No path translation found for: x = (-b ± √(b² - 4ac)) / 2a
+2026-02-10 22:50:54 | WARNING | architecture.sandbox:translate_path_for_container:221 | No path translation found for: x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+2026-02-10 22:50:54 | WARNING | architecture.sandbox:translate_path_for_container:221 | No path translation found for: /output/equation_1.png
+2026-02-10 22:50:54 | INFO | architecture.executor:_retry_with_regenerated_tool:419 | Step 2: Translated regenerated tool args: {'equation_input': 'x = (-b ± √(b² - 4ac)) / 2a', 'equation_latex': 'x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}', 'output_path': '/output/equation_1.png', 'dpi': 200}
+2026-02-10 22:50:54 | INFO | architecture.sandbox:_install_deps:289 | Installing dependencies: sympy
+2026-02-10 22:50:59 | INFO | architecture.sandbox:execute_with_args:586 | DEBUG: sandbox received args = {'equation_input': 'x = (-b ± √(b² - 4ac)) / 2a', 'equation_latex': 'x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}', 'output_path': '/output/equation_1.png', 'dpi': 200}
+2026-02-10 22:50:59 | INFO | architecture.sandbox:execute_with_args:587 | DEBUG: args_json = {"equation_input": "x = (-b \u00b1 \u221a(b\u00b2 - 4ac)) / 2a", "equation_latex": "x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}", "output_path": "/output/equation_1.png", "dpi": 200}
+2026-02-10 22:50:59 | INFO | architecture.sandbox:execute_with_args:588 | DEBUG: Runner script line: args = json.loads('{"equation_input": "x = (-b \u00b1 \u221a(b\u00b2 - 4ac)) / 2a", "equation_latex": "x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}", "output_path": "/output/equation_1.png", "dpi": 200}')
+2026-02-10 22:50:59 | INFO | architecture.sandbox:execute_with_args:593 | Executing tool with args: QuadraticFormulaRenderer
+2026-02-10 22:50:59 | INFO | architecture.sandbox:execute_with_args:594 | Args JSON being passed: {"equation_input": "x = (-b \u00b1 \u221a(b\u00b2 - 4ac)) / 2a", "equation_latex": "x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}", "output_path": "/output/equation_1.png", "dpi": 200}
+2026-02-10 22:51:00 | INFO | architecture.executor:_retry_with_regenerated_tool:426 | Step 2: Retry succeeded with QuadraticFormulaRenderer
+2026-02-10 22:51:00 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 500 | Temp: 0.3 | Session: 2026-02-10_22-49-42
+2026-02-10 22:51:01 | INFO | architecture.llm_manager:generate:132 | Generation success in 793.85ms
+2026-02-10 22:51:01 | INFO | __main__:main:244 | Completed in 26782.98ms
+2026-02-10 22:51:01 | INFO | __main__:main:245 | Zone: public
+2026-02-10 22:51:01 | INFO | architecture.executor:export_profiles:574 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260210_225101.json
+2026-02-10 22:51:07 | INFO | architecture.sandbox:stop:276 | Sandbox container stopped: b534b2eb79dd
+2026-02-10 22:51:07 | INFO | __main__:_shutdown_runtime:107 | Runtime shutdown complete

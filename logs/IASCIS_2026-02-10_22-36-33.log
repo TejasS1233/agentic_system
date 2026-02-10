@@ -1,0 +1,181 @@
+2026-02-10 22:36:36 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-10 22:36:57 | INFO | __main__:main:233 | Starting IASCIS with Sandbox and Profiling
+2026-02-10 22:36:57 | INFO | architecture.input_loader:__init__:26 | InputLoader initialized: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-10 22:36:57 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-10 22:36:57 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-10 22:36:57 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-10 22:36:57 | INFO | __main__:__init__:74 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-10 22:36:57 | INFO | architecture.sandbox:__init__:164 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs, inputs_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-10 22:36:57 | INFO | architecture.sandbox:start:261 | Sandbox container started: 7d2b82e1d9e0
+2026-02-10 22:36:57 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-10 22:36:57 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-10 22:36:57 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-10 22:36:57 | INFO | architecture.executor:load_registry:93 | Loaded 35 tool definitions
+2026-02-10 22:36:57 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-10 22:36:57 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-10 22:36:58 | INFO | architecture.sandbox:_install_deps:289 | Installing dependencies: numpy beautifulsoup4 requests pydantic pandas
+2026-02-10 22:37:01 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-10 22:37:01 | INFO | __main__:_initialize_runtime:98 | Runtime initialized with Sandbox
+2026-02-10 22:37:01 | INFO | __main__:run:141 | Task received: Create a presentation on transformer architecture...
+2026-02-10 22:37:01 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-10 22:37:01 | INFO | __main__:run:145 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-10 22:37:01 | INFO | architecture.orchestrator:run:47 | Processing: Create a presentation on transformer architecture...
+2026-02-10 22:37:01 | INFO | architecture.orchestrator:_classify_request:557 | Forcing COMPLEX_TASK: diagram keywords detected in query
+2026-02-10 22:37:01 | INFO | architecture.orchestrator:run:56 | Task Classification: COMPLEX_TASK
+2026-02-10 22:37:01 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-10_22-36-33
+2026-02-10 22:37:03 | INFO | architecture.llm_manager:generate:132 | Generation success in 1101.42ms
+2026-02-10 22:37:03 | INFO | architecture.orchestrator:run:63 | Decomposed into 3 subtasks
+2026-02-10 22:37:03 | INFO | architecture.orchestrator:_retrieve_tools:117 | st_1 -> SerpSearchTool (Forced by Domain.SEARCH)
+2026-02-10 22:37:03 | INFO | architecture.orchestrator:_retrieve_tools:177 | st_2 -> SlideDeckGeneratorTool (Forced by slide keywords)
+2026-02-10 22:37:03 | INFO | architecture.orchestrator:_retrieve_tools:177 | st_3 -> SlideDeckGeneratorTool (Forced by slide keywords)
+2026-02-10 22:37:03 | INFO | architecture.orchestrator:_ensure_tools:408 | Tool SlideDeckGeneratorTool already used by previous step. Invalidating match.
+2026-02-10 22:37:03 | INFO | architecture.orchestrator:_ensure_tools:429 | Toolsmith creating: Create the presentation slides based on the outline
+2026-02-10 22:37:03 | INFO | architecture.toolsmith:create_tool:114 | Request: 'Create the presentation slides based on the outline'
+2026-02-10 22:37:03 | INFO | architecture.toolsmith:create_tool:126 | Generating tool with LLM (attempt 1/3)...
+2026-02-10 22:37:03 | INFO | architecture.toolsmith:create_tool:129 | Available APIs context length: 818
+2026-02-10 22:37:03 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-10_22-36-33
+2026-02-10 22:37:04 | INFO | architecture.llm_manager:generate:132 | Generation success in 1129.57ms
+2026-02-10 22:37:04 | INFO | architecture.toolsmith:create_tool:181 | Tool saved: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\create_presentation_slides.py
+2026-02-10 22:37:04 | INFO | architecture.toolsmith:_update_registry:266 | Registry updated: CreatePresentationSlidesTool
+2026-02-10 22:37:04 | INFO | architecture.orchestrator:_ensure_tools:431 | Toolsmith: Created CreatePresentationSlidesTool with tags ['presentation', 'slides', 'outline']...
+2026-02-10 22:37:04 | INFO | architecture.orchestrator:_ensure_tools:452 | Tool assigned: CreatePresentationSlidesTool
+2026-02-10 22:37:04 | INFO | architecture.orchestrator:_create_plan:509 | ============================================================
+2026-02-10 22:37:04 | INFO | architecture.orchestrator:_create_plan:510 | EXECUTION PLAN: 3 steps
+2026-02-10 22:37:04 | INFO | architecture.orchestrator:_create_plan:511 | ============================================================
+2026-02-10 22:37:04 | INFO | architecture.orchestrator:_create_plan:515 |   Step 1: Gather information on transformer architecture...
+2026-02-10 22:37:04 | INFO | architecture.orchestrator:_create_plan:516 |     Tool: SerpSearchTool
+2026-02-10 22:37:04 | INFO | architecture.orchestrator:_create_plan:517 |     no dependencies, uses description
+2026-02-10 22:37:04 | INFO | architecture.orchestrator:_create_plan:515 |   Step 2: Organize the information into a presentation outli...
+2026-02-10 22:37:04 | INFO | architecture.orchestrator:_create_plan:516 |     Tool: SlideDeckGeneratorTool
+2026-02-10 22:37:04 | INFO | architecture.orchestrator:_create_plan:517 |     depends_on=[1], input_from=step_1
+2026-02-10 22:37:04 | INFO | architecture.orchestrator:_create_plan:515 |   Step 3: Create the presentation slides based on the outlin...
+2026-02-10 22:37:04 | INFO | architecture.orchestrator:_create_plan:516 |     Tool: CreatePresentationSlidesTool
+2026-02-10 22:37:04 | INFO | architecture.orchestrator:_create_plan:517 |     depends_on=[2], input_from=step_2
+2026-02-10 22:37:04 | INFO | architecture.orchestrator:_create_plan:518 | ============================================================
+2026-02-10 22:37:04 | INFO | architecture.executor:execute:115 | Executing plan: Create a presentation on transformer architecture
+2026-02-10 22:37:04 | INFO | architecture.executor:execute:116 | Total steps: 3
+2026-02-10 22:37:04 | INFO | architecture.executor:_execute_step:195 | Step 1: Gather information on transformer architecture using SerpSearchTool
+2026-02-10 22:37:04 | INFO | architecture.executor:load_registry:93 | Loaded 36 tool definitions
+2026-02-10 22:37:04 | INFO | architecture.executor:_execute_step:237 | Step 1: Using description as input
+2026-02-10 22:37:04 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-10_22-36-33
+2026-02-10 22:37:04 | INFO | architecture.llm_manager:generate:132 | Generation success in 228.31ms
+2026-02-10 22:37:04 | INFO | architecture.executor:_infer_args:666 | LLM extracted args: {'query': 'transformer architecture', 'search_type': 'information', 'num_results': 10, 'location': 'global', 'language': 'english', 'safe_search': 'moderate'}
+2026-02-10 22:37:04 | INFO | architecture.executor:_execute_step:244 | DEBUG: Executor inferred args = {'query': 'transformer architecture', 'search_type': 'information', 'num_results': 10, 'location': 'global', 'language': 'english', 'safe_search': 'moderate'}
+2026-02-10 22:37:04 | INFO | architecture.executor:_execute_step:245 | DEBUG: Translated args = {'query': 'transformer architecture', 'search_type': 'information', 'num_results': 10, 'location': 'global', 'language': 'english', 'safe_search': 'moderate'}
+2026-02-10 22:37:04 | INFO | architecture.executor:_execute_step:246 | DEBUG: Args type = <class 'dict'>
+2026-02-10 22:37:04 | INFO | architecture.sandbox:_install_deps:289 | Installing dependencies: requests pydantic
+2026-02-10 22:37:09 | INFO | architecture.sandbox:execute_with_args:586 | DEBUG: sandbox received args = {'query': 'transformer architecture', 'search_type': 'information', 'num_results': 10, 'location': 'global', 'language': 'english', 'safe_search': 'moderate'}
+2026-02-10 22:37:09 | INFO | architecture.sandbox:execute_with_args:587 | DEBUG: args_json = {"query": "transformer architecture", "search_type": "information", "num_results": 10, "location": "global", "language": "english", "safe_search": "moderate"}
+2026-02-10 22:37:09 | INFO | architecture.sandbox:execute_with_args:588 | DEBUG: Runner script line: args = json.loads('{"query": "transformer architecture", "search_type": "information", "num_results": 10, "location": "global", "language": "english", "safe_search": "moderate"}')
+2026-02-10 22:37:09 | INFO | architecture.sandbox:execute_with_args:593 | Executing tool with args: SerpSearchTool
+2026-02-10 22:37:09 | INFO | architecture.sandbox:execute_with_args:594 | Args JSON being passed: {"query": "transformer architecture", "search_type": "information", "num_results": 10, "location": "global", "language": "english", "safe_search": "moderate"}
+2026-02-10 22:37:09 | INFO | architecture.executor:_execute_step:263 | Step 1 SANDBOX Profile: time=372.093ms, peak_mem=0.1084MB, delta_mem=0.0684MB, efficiency=81.35%, grade=slow
+2026-02-10 22:37:09 | INFO | architecture.executor:_execute_step:273 |    (Total round-trip: 5523.19ms)
+2026-02-10 22:37:09 | INFO | architecture.executor:_execute_step:278 | Step 1: Completed in 5.52s
+2026-02-10 22:37:09 | INFO | architecture.executor:_execute_step:195 | Step 2: Organize the information into a presentation outline using SlideDeckGeneratorTool
+2026-02-10 22:37:09 | INFO | architecture.executor:load_registry:93 | Loaded 36 tool definitions
+2026-02-10 22:37:09 | INFO | architecture.executor:_execute_step:227 | Step 2: Using input from step 1
+2026-02-10 22:37:09 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-10_22-36-33
+2026-02-10 22:37:10 | INFO | architecture.llm_manager:generate:132 | Generation success in 291.83ms
+2026-02-10 22:37:10 | INFO | architecture.executor:_infer_args:666 | LLM extracted args: {'topic': 'transformer architecture'}
+2026-02-10 22:37:10 | INFO | architecture.executor:_execute_step:244 | DEBUG: Executor inferred args = {'topic': 'transformer architecture'}
+2026-02-10 22:37:10 | INFO | architecture.executor:_execute_step:245 | DEBUG: Translated args = {'topic': 'transformer architecture'}
+2026-02-10 22:37:10 | INFO | architecture.executor:_execute_step:246 | DEBUG: Args type = <class 'dict'>
+2026-02-10 22:37:10 | INFO | architecture.sandbox:execute_with_args:586 | DEBUG: sandbox received args = {'topic': 'transformer architecture'}
+2026-02-10 22:37:10 | INFO | architecture.sandbox:execute_with_args:587 | DEBUG: args_json = {"topic": "transformer architecture"}
+2026-02-10 22:37:10 | INFO | architecture.sandbox:execute_with_args:588 | DEBUG: Runner script line: args = json.loads('{"topic": "transformer architecture"}')
+2026-02-10 22:37:10 | INFO | architecture.sandbox:execute_with_args:593 | Executing tool with args: SlideDeckGeneratorTool
+2026-02-10 22:37:10 | INFO | architecture.sandbox:execute_with_args:594 | Args JSON being passed: {"topic": "transformer architecture"}
+2026-02-10 22:37:13 | INFO | architecture.executor:_execute_step:263 | Step 2 SANDBOX Profile: time=2284.436ms, peak_mem=3.4510MB, delta_mem=3.3807MB, efficiency=48.62%, grade=critical
+2026-02-10 22:37:13 | INFO | architecture.executor:_execute_step:273 |    (Total round-trip: 2941.13ms)
+2026-02-10 22:37:13 | INFO | architecture.executor:_execute_step:278 | Step 2: Completed in 2.94s
+2026-02-10 22:37:13 | INFO | architecture.executor:_execute_step:195 | Step 3: Create the presentation slides based on the outline using CreatePresentationSlidesTool
+2026-02-10 22:37:13 | INFO | architecture.executor:load_registry:93 | Loaded 36 tool definitions
+2026-02-10 22:37:13 | INFO | architecture.executor:_execute_step:227 | Step 3: Using input from step 2
+2026-02-10 22:37:13 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-10_22-36-33
+2026-02-10 22:37:13 | INFO | architecture.llm_manager:generate:132 | Generation success in 156.52ms
+2026-02-10 22:37:13 | INFO | architecture.executor:_infer_args:666 | LLM extracted args: {'outline': '/output/presentation_1.html'}
+2026-02-10 22:37:13 | WARNING | architecture.sandbox:translate_path_for_container:221 | No path translation found for: /output/presentation_1.html
+2026-02-10 22:37:13 | INFO | architecture.executor:_execute_step:244 | DEBUG: Executor inferred args = {'outline': '/output/presentation_1.html'}
+2026-02-10 22:37:13 | INFO | architecture.executor:_execute_step:245 | DEBUG: Translated args = {'outline': '/output/presentation_1.html'}
+2026-02-10 22:37:13 | INFO | architecture.executor:_execute_step:246 | DEBUG: Args type = <class 'dict'>
+2026-02-10 22:37:13 | INFO | architecture.sandbox:_install_deps:289 | Installing dependencies: pptx
+2026-02-10 22:37:14 | WARNING | architecture.sandbox:_install_deps:294 | pip install failed: ERROR: Could not find a version that satisfies the requirement pptx (from versions: none)
+ERROR: No matching distribution found for pptx
+
+[notice] A new release of pip is available: 24.0 -> 26.0.1
+[notice] To update, run: pip install --upgrade pip
+
+2026-02-10 22:37:14 | INFO | architecture.sandbox:execute_with_args:586 | DEBUG: sandbox received args = {'outline': '/output/presentation_1.html'}
+2026-02-10 22:37:14 | INFO | architecture.sandbox:execute_with_args:587 | DEBUG: args_json = {"outline": "/output/presentation_1.html"}
+2026-02-10 22:37:14 | INFO | architecture.sandbox:execute_with_args:588 | DEBUG: Runner script line: args = json.loads('{"outline": "/output/presentation_1.html"}')
+2026-02-10 22:37:14 | INFO | architecture.sandbox:execute_with_args:593 | Executing tool with args: CreatePresentationSlidesTool
+2026-02-10 22:37:14 | INFO | architecture.sandbox:execute_with_args:594 | Args JSON being passed: {"outline": "/output/presentation_1.html"}
+2026-02-10 22:37:14 | WARNING | architecture.sandbox:execute_with_args:666 | Failed to parse sandbox output: No valid JSON output found, Raw output: Traceback (most recent call last):
+  File "/tools/_runner_CreatePresentationSlidesTool.py", line 21, in <module>
+    from create_presentation_slides import *
+  File "/tools/create_presentation_slides.py", line 1, in <module>
+    import pptx
+ModuleNotFoundError: No module named 'pptx'
+
+2026-02-10 22:37:14 | ERROR | architecture.executor:_execute_step:282 | Step 3: Failed - Traceback (most recent call last):
+  File "/tools/_runner_CreatePresentationSlidesTool.py", line 21, in <module>
+    from create_presentation_slides import *
+  File "/tools/create_presentation_slides.py", line 1, in <module>
+    import pptx
+ModuleNotFoundError: No module named 'pptx'
+
+2026-02-10 22:37:14 | INFO | architecture.reflector:reflect:295 | Reflected: import, retry=True, remaining=2
+2026-02-10 22:37:14 | INFO | architecture.executor:_handle_failure:319 | Step 3: Failure type=tool_code, retrying...
+2026-02-10 22:37:14 | INFO | architecture.executor:_retry_with_regenerated_tool:380 | Step 3: Regenerating tool with error context
+2026-02-10 22:37:14 | INFO | architecture.toolsmith:create_tool:114 | Request: 'Task: Create the presentation slides based on the outline
+
+Input data sample:
+{
+  "success": true,
+  "output_path": "/output/presentation_1.html",
+  "num_slides": 8,
+  "theme": "black",
+  "title": "Transformer Architecture",
+  "file_size_bytes": 4864,
+  "message": "Presentation with 8 slides saved to /output/presentation_1.html. Open in a browser to present."
+}
+
+Previous implementation failed with error:
+Traceback (most recent call last):
+  File "/tools/_runner_CreatePresentationSlidesTool.py", line 21, in <module>
+    from create_presentation_slides import *
+  File "/tools/create_presentation_slides.py", line 1, in <module>
+    import pptx
+ModuleNotFoundError: No module named 'pptx'
+
+
+Create a tool that correctly handles this input format and fixes the error.'
+2026-02-10 22:37:14 | INFO | architecture.toolsmith:create_tool:126 | Generating tool with LLM (attempt 1/3)...
+2026-02-10 22:37:14 | INFO | architecture.toolsmith:create_tool:129 | Available APIs context length: 736
+2026-02-10 22:37:14 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 4096 | Temp: 0.7 | Session: 2026-02-10_22-36-33
+2026-02-10 22:37:15 | INFO | architecture.llm_manager:generate:132 | Generation success in 1508.63ms
+2026-02-10 22:37:15 | INFO | architecture.toolsmith:create_tool:181 | Tool saved: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\create_presentation_slides.py
+2026-02-10 22:37:15 | INFO | architecture.toolsmith:_update_registry:266 | Registry updated: CreatePresentationSlidesTool
+2026-02-10 22:37:15 | INFO | architecture.executor:_retry_with_regenerated_tool:391 | Step 3: Toolsmith result = Created CreatePresentationSlidesTool with tags ['presentation', 'slides', 'html']
+2026-02-10 22:37:15 | INFO | architecture.executor:load_registry:93 | Loaded 36 tool definitions
+2026-02-10 22:37:15 | INFO | architecture.executor:_retry_with_regenerated_tool:412 | Step 3: Using regenerated tool CreatePresentationSlidesTool
+2026-02-10 22:37:15 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-10_22-36-33
+2026-02-10 22:37:15 | INFO | architecture.sandbox:_pre_install_essentials:229 | Essential packages pre-installed
+2026-02-10 22:37:16 | INFO | architecture.llm_manager:generate:132 | Generation success in 167.99ms
+2026-02-10 22:37:16 | INFO | architecture.executor:_infer_args:666 | LLM extracted args: {'num_slides': 8, 'theme': 'black', 'title': 'Transformer Architecture'}
+2026-02-10 22:37:16 | INFO | architecture.executor:_retry_with_regenerated_tool:419 | Step 3: Translated regenerated tool args: {'num_slides': 8, 'theme': 'black', 'title': 'Transformer Architecture'}
+2026-02-10 22:37:16 | INFO | architecture.sandbox:_install_deps:289 | Installing dependencies: yattag
+2026-02-10 22:37:17 | INFO | architecture.sandbox:execute_with_args:586 | DEBUG: sandbox received args = {'num_slides': 8, 'theme': 'black', 'title': 'Transformer Architecture'}
+2026-02-10 22:37:17 | INFO | architecture.sandbox:execute_with_args:587 | DEBUG: args_json = {"num_slides": 8, "theme": "black", "title": "Transformer Architecture"}
+2026-02-10 22:37:17 | INFO | architecture.sandbox:execute_with_args:588 | DEBUG: Runner script line: args = json.loads('{"num_slides": 8, "theme": "black", "title": "Transformer Architecture"}')
+2026-02-10 22:37:17 | INFO | architecture.sandbox:execute_with_args:593 | Executing tool with args: CreatePresentationSlidesTool
+2026-02-10 22:37:17 | INFO | architecture.sandbox:execute_with_args:594 | Args JSON being passed: {"num_slides": 8, "theme": "black", "title": "Transformer Architecture"}
+2026-02-10 22:37:17 | INFO | architecture.executor:_retry_with_regenerated_tool:426 | Step 3: Retry succeeded with CreatePresentationSlidesTool
+2026-02-10 22:37:17 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 500 | Temp: 0.3 | Session: 2026-02-10_22-36-33
+2026-02-10 22:37:18 | INFO | architecture.llm_manager:generate:132 | Generation success in 889.04ms
+2026-02-10 22:37:18 | INFO | __main__:main:244 | Completed in 16901.48ms
+2026-02-10 22:37:18 | INFO | __main__:main:245 | Zone: public
+2026-02-10 22:37:18 | INFO | architecture.executor:export_profiles:574 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260210_223718.json
+2026-02-10 22:37:24 | INFO | architecture.sandbox:stop:276 | Sandbox container stopped: 7d2b82e1d9e0
+2026-02-10 22:37:24 | INFO | __main__:_shutdown_runtime:107 | Runtime shutdown complete

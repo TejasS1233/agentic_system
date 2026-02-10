@@ -1,0 +1,61 @@
+2026-02-10 21:58:30 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-10 22:01:01 | INFO | __main__:main:233 | Starting IASCIS with Sandbox and Profiling
+2026-02-10 22:01:01 | INFO | architecture.input_loader:__init__:26 | InputLoader initialized: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-10 22:01:01 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-10 22:01:02 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-10 22:01:02 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-10 22:01:02 | INFO | __main__:__init__:74 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-10 22:01:02 | INFO | architecture.sandbox:__init__:161 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs, inputs_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-10 22:01:02 | INFO | architecture.sandbox:start:258 | Sandbox container started: 83688aaf33f1
+2026-02-10 22:01:02 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-10 22:01:02 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-10 22:01:02 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-10 22:01:02 | INFO | architecture.executor:load_registry:93 | Loaded 27 tool definitions
+2026-02-10 22:01:02 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-10 22:01:02 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-10 22:01:03 | INFO | architecture.sandbox:_install_deps:286 | Installing dependencies: beautifulsoup4 requests numpy pandas pydantic
+2026-02-10 22:01:06 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-10 22:01:06 | INFO | __main__:_initialize_runtime:98 | Runtime initialized with Sandbox
+2026-02-10 22:01:06 | INFO | __main__:run:141 | Task received: Draw a sequence diagram of a REST API request going from the browser to a load balancer, then to an ...
+2026-02-10 22:01:06 | INFO | architecture.dispatcher:route:64 | Routing decision: private (Sensitive keyword in task)
+2026-02-10 22:01:06 | INFO | __main__:run:145 | Routed to private zone, model: groq/llama-3.3-70b-versatile
+2026-02-10 22:01:06 | INFO | architecture.orchestrator:run:47 | Processing: Draw a sequence diagram of a REST API request going from the browser to a load b...
+2026-02-10 22:01:06 | INFO | architecture.orchestrator:_classify_request:370 | Forcing COMPLEX_TASK: diagram keywords detected in query
+2026-02-10 22:01:06 | INFO | architecture.orchestrator:run:56 | Task Classification: COMPLEX_TASK
+2026-02-10 22:01:06 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-10_21-58-24
+2026-02-10 22:01:07 | INFO | architecture.llm_manager:generate:132 | Generation success in 1402.56ms
+2026-02-10 22:01:07 | INFO | architecture.orchestrator:run:63 | Decomposed into 1 subtasks
+2026-02-10 22:01:07 | INFO | architecture.orchestrator:_retrieve_tools:147 | st_1 -> MermaidDiagramTool (Forced by diagram keywords)
+2026-02-10 22:01:07 | INFO | architecture.orchestrator:_create_plan:343 | ============================================================
+2026-02-10 22:01:07 | INFO | architecture.orchestrator:_create_plan:344 | EXECUTION PLAN: 1 steps
+2026-02-10 22:01:07 | INFO | architecture.orchestrator:_create_plan:345 | ============================================================
+2026-02-10 22:01:07 | INFO | architecture.orchestrator:_create_plan:349 |   Step 1: Create a sequence diagram of a REST API request...
+2026-02-10 22:01:07 | INFO | architecture.orchestrator:_create_plan:350 |     Tool: MermaidDiagramTool
+2026-02-10 22:01:07 | INFO | architecture.orchestrator:_create_plan:351 |     no dependencies, uses description
+2026-02-10 22:01:07 | INFO | architecture.orchestrator:_create_plan:352 | ============================================================
+2026-02-10 22:01:07 | INFO | architecture.executor:execute:115 | Executing plan: Draw a sequence diagram of a REST API request going from the browser to a load balancer, then to an auth service, then to the database, with error handling for 401 and 500 responses
+2026-02-10 22:01:07 | INFO | architecture.executor:execute:116 | Total steps: 1
+2026-02-10 22:01:07 | INFO | architecture.executor:_execute_step:195 | Step 1: Create a sequence diagram of a REST API request using MermaidDiagramTool
+2026-02-10 22:01:07 | INFO | architecture.executor:load_registry:93 | Loaded 27 tool definitions
+2026-02-10 22:01:07 | INFO | architecture.executor:_execute_step:237 | Step 1: Using description as input
+2026-02-10 22:01:07 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-10_21-58-24
+2026-02-10 22:01:08 | INFO | architecture.llm_manager:generate:132 | Generation success in 278.20ms
+2026-02-10 22:01:08 | INFO | architecture.executor:_infer_args:666 | LLM extracted args: {'description': 'REST API request', 'diagram_type': 'sequence', 'output_format': 'image'}
+2026-02-10 22:01:08 | INFO | architecture.executor:_execute_step:244 | DEBUG: Executor inferred args = {'description': 'REST API request', 'diagram_type': 'sequence', 'output_format': 'image'}
+2026-02-10 22:01:08 | INFO | architecture.executor:_execute_step:245 | DEBUG: Translated args = {'description': 'REST API request', 'diagram_type': 'sequence', 'output_format': 'image'}
+2026-02-10 22:01:08 | INFO | architecture.executor:_execute_step:246 | DEBUG: Args type = <class 'dict'>
+2026-02-10 22:01:08 | INFO | architecture.sandbox:_install_deps:286 | Installing dependencies: llm_manager pydantic
+2026-02-10 22:01:16 | INFO | architecture.sandbox:_pre_install_essentials:226 | Essential packages pre-installed
+2026-02-10 22:01:25 | INFO | architecture.sandbox:execute_with_args:583 | DEBUG: sandbox received args = {'description': 'REST API request', 'diagram_type': 'sequence', 'output_format': 'image'}
+2026-02-10 22:01:25 | INFO | architecture.sandbox:execute_with_args:584 | DEBUG: args_json = {"description": "REST API request", "diagram_type": "sequence", "output_format": "image"}
+2026-02-10 22:01:25 | INFO | architecture.sandbox:execute_with_args:585 | DEBUG: Runner script line: args = json.loads('{"description": "REST API request", "diagram_type": "sequence", "output_format": "image"}')
+2026-02-10 22:01:25 | INFO | architecture.sandbox:execute_with_args:590 | Executing tool with args: MermaidDiagramTool
+2026-02-10 22:01:25 | INFO | architecture.sandbox:execute_with_args:591 | Args JSON being passed: {"description": "REST API request", "diagram_type": "sequence", "output_format": "image"}
+2026-02-10 22:01:25 | INFO | architecture.executor:_execute_step:263 | Step 1 SANDBOX Profile: time=316.376ms, peak_mem=0.8587MB, delta_mem=0.7398MB, efficiency=83.84%, grade=slow
+2026-02-10 22:01:25 | INFO | architecture.executor:_execute_step:273 |    (Total round-trip: 17722.76ms)
+2026-02-10 22:01:25 | INFO | architecture.executor:_execute_step:278 | Step 1: Completed in 17.72s
+2026-02-10 22:01:25 | INFO | __main__:main:244 | Completed in 19431.43ms
+2026-02-10 22:01:25 | INFO | __main__:main:245 | Zone: private
+2026-02-10 22:01:25 | INFO | architecture.executor:export_profiles:574 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260210_220125.json
+2026-02-10 22:01:33 | INFO | architecture.sandbox:stop:273 | Sandbox container stopped: 83688aaf33f1
+2026-02-10 22:01:33 | INFO | __main__:_shutdown_runtime:107 | Runtime shutdown complete

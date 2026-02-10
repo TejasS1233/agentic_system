@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant Client as "Client Application"
+    participant API as "REST API"
+    participant DB as "Database"
+    Note over Client,API: REST API Request
+    Client->>API: Send HTTP Request
+    API->>API: Validate Request
+    API->>DB: Query Database
+    DB->>API: Return Data
+    API->>API: Process Data
+    API->>Client: Return HTTP Response
+    Note over Client,API: Response Received
+    Client->>Client: Parse Response
+    Client->>Client: Update Application State

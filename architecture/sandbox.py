@@ -90,10 +90,15 @@ IMPORT_TO_PYPI = {
     "sklearn": "scikit-learn",
     "yaml": "pyyaml",
     "dotenv": "python-dotenv",
+    "fpdf": "fpdf2",
+    "fitz": "pymupdf",
+    "gtts": "gTTS",
+    "qrcode": "qrcode[pil]",
 }
 
 ESSENTIAL_PACKAGES = {
     "pydantic",
+    "typing_inspection",
     "numpy",
     "requests",
     "pandas",

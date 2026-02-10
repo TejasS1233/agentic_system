@@ -1,0 +1,48 @@
+{
+  "exported_at": "2026-02-10T22:52:06.218207",
+  "summary": {
+    "DocumentConverterTool": {
+      "call_count": 1,
+      "avg_time_ms": 2.921,
+      "max_time_ms": 2.921,
+      "min_time_ms": 2.921,
+      "avg_memory_mb": 0.0048,
+      "max_memory_mb": 0.0048,
+      "avg_memory_delta_mb": 0.0034,
+      "avg_efficiency": 0.9985,
+      "last_grade": "fast"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 1,
+    "tools_profiled": [
+      "DocumentConverterTool"
+    ],
+    "execution_time_ms": {
+      "min": 2.921,
+      "max": 2.921,
+      "mean": 2.921
+    },
+    "peak_memory_mb": {
+      "min": 0.0048,
+      "max": 0.0048,
+      "mean": 0.0048
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "DocumentConverterTool": [
+      {
+        "tool_name": "DocumentConverterTool",
+        "execution_time_ms": 2.921,
+        "peak_memory_mb": 0.0048,
+        "memory_delta_mb": 0.0034,
+        "latency_grade": "fast",
+        "efficiency_score": 0.9985,
+        "success": true
+      }
+    ]
+  }
+}

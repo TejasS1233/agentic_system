@@ -1,7 +1,7 @@
 # IASCIS - Accomplished Tasks & Performance Stats
 
-> Auto-compiled from 134 log files | 86 successful runs | 34 curated tasks
-> Scan date: 2026-02-08
+> Auto-compiled from 151 log files | 91 successful runs | 39 curated tasks
+> Scan date: 2026-02-10
 
 ---
 
@@ -9,11 +9,11 @@
 
 | Metric         | Value                         |
 | -------------- | ----------------------------- |
-| Avg total time | 10.95s                        |
+| Avg total time | 10.52s                        |
 | Min time       | 4.35s (currency conversion)   |
 | Max time       | 22.17s (top 10 games of 2026) |
-| 1-step tasks   | 17                            |
-| 2-step tasks   | 15                            |
+| 1-step tasks   | 21                            |
+| 2-step tasks   | 16                            |
 | 3-step tasks   | 2                             |
 
 ---
@@ -23,11 +23,16 @@
 | Tool                        | Tasks |
 | --------------------------- | ----- |
 | AdvancedGraphTool           | 6     |
-| SerpSearchTool              | 5     |
+| SerpSearchTool              | 6     |
 | CurrencyConverterTool       | 2     |
 | SalesSummaryTool            | 2     |
 | RoyalRumble2026Participants | 2     |
 | PythonFrameworksSearchTool  | 2     |
+| LatexEquationRendererTool   | 1     |
+| QRCodeGeneratorTool         | 1     |
+| AudioSummaryTool            | 1     |
+| CronReminderTool            | 1     |
+| SlideDeckGeneratorTool      | 1     |
 
 ---
 
@@ -233,6 +238,41 @@
 - **Time:** 11.08s | Steps: 1 | Tools: SerpSearchTool
 - **Perf:** SerpSearchTool 6058ms (critical)
 
+### 35. LaTeX Equation Render (Quadratic Formula)
+
+- **Query:** Render the quadratic formula as an image
+- **Time:** ~6.5s | Steps: 1 | Tools: LatexEquationRendererTool
+- **Perf:** LatexEquationRendererTool 3002ms/29.51MB (critical)
+- **Notes:** LLM-powered LaTeX conversion (natural language → proper LaTeX via Groq). Output: PNG via matplotlib mathtext.
+
+### 36. QR Code Generation (GitHub URL)
+
+- **Query:** Generate a QR code for https://github.com
+- **Time:** ~5.0s | Steps: 1 | Tools: QRCodeGeneratorTool
+- **Perf:** QRCodeGeneratorTool 162ms/1.97MB (slow)
+- **Notes:** qrcode[pil] lib with ERROR_CORRECT_H. Output: PNG to /output/.
+
+### 37. Text-to-Speech Audio (Attention Paper)
+
+- **Query:** Convert this to audio: Attention is all you need
+- **Time:** ~5.5s | Steps: 1 | Tools: AudioSummaryTool
+- **Perf:** AudioSummaryTool 872ms/3.61MB (slow)
+- **Notes:** gTTS (free, no API key). Language auto-normalized (english→en). Output: MP3.
+
+### 38. Cron/Reminder Schedule (Weekly arXiv)
+
+- **Query:** Remind me to check arXiv every Monday at 9am
+- **Time:** ~5.2s | Steps: 1 | Tools: CronReminderTool
+- **Perf:** CronReminderTool 529ms/3.40MB (slow)
+- **Notes:** LLM NL→cron expression + .ics calendar file generation. Output: JSON + ICS.
+
+### 39. Slide Deck Presentation (Transformers)
+
+- **Query:** Create a presentation about transformer architecture
+- **Time:** ~7.0s | Steps: 2 | Tools: SerpSearchTool, SlideDeckGeneratorTool
+- **Perf:** SerpSearchTool 372ms (slow) | SlideDeckGeneratorTool 2284ms/3.45MB (critical)
+- **Notes:** LLM-generated slide JSON → reveal.js HTML presentation. Output: HTML to /output/.
+
 ---
 
 ## Performance Grade Distribution
@@ -241,7 +281,7 @@
 | ----------------- | ---------- | -------- |
 | **fast** (++)     | < 10ms     | 7 tools  |
 | **moderate** (+)  | 10-100ms   | 7 tools  |
-| **slow** (-)      | 100-1000ms | 12 tools |
-| **critical** (--) | > 1000ms   | 12 tools |
+| **slow** (-)      | 100-1000ms | 15 tools |
+| **critical** (--) | > 1000ms   | 14 tools |
 
 > Full JSON data: `logs/successful_runs_summary.json`

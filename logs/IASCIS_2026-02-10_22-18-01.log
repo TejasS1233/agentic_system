@@ -1,0 +1,73 @@
+2026-02-10 22:18:04 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-10 22:18:29 | INFO | __main__:main:233 | Starting IASCIS with Sandbox and Profiling
+2026-02-10 22:18:29 | INFO | architecture.input_loader:__init__:26 | InputLoader initialized: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-10 22:18:29 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-10 22:18:29 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-10 22:18:29 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-10 22:18:29 | INFO | __main__:__init__:74 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-10 22:18:29 | INFO | architecture.sandbox:__init__:163 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs, inputs_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-10 22:18:30 | INFO | architecture.sandbox:start:260 | Sandbox container started: be642a8b4c41
+2026-02-10 22:18:30 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-10 22:18:30 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-10 22:18:30 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-10 22:18:30 | INFO | architecture.executor:load_registry:93 | Loaded 28 tool definitions
+2026-02-10 22:18:30 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-10 22:18:30 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-10 22:18:31 | INFO | architecture.sandbox:_install_deps:288 | Installing dependencies: numpy requests pandas pydantic beautifulsoup4
+2026-02-10 22:18:34 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-10 22:18:34 | INFO | __main__:_initialize_runtime:98 | Runtime initialized with Sandbox
+2026-02-10 22:18:35 | INFO | architecture.input_loader:build_context:148 | Built context from 1 file(s) (39859 chars, 0 images)
+2026-02-10 22:18:35 | INFO | __main__:run:133 | Loaded input documents: ['research_paper.pdf']
+2026-02-10 22:18:35 | INFO | __main__:run:141 | Task received: [CONTEXT: Working with local documents: ['research_paper.pdf']]
+
+convert pdf to markdown...
+2026-02-10 22:18:35 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-10 22:18:35 | INFO | __main__:run:145 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-10 22:18:35 | INFO | architecture.orchestrator:run:47 | Processing: [CONTEXT: Working with local documents: ['research_paper.pdf']]
+
+convert pdf to ...
+2026-02-10 22:18:35 | INFO | architecture.orchestrator:run:52 | Document context available (39859 chars)
+2026-02-10 22:18:35 | INFO | architecture.orchestrator:_classify_request:409 | Forcing COMPLEX_TASK: diagram keywords detected in query
+2026-02-10 22:18:35 | INFO | architecture.orchestrator:run:56 | Task Classification: COMPLEX_TASK
+2026-02-10 22:18:35 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-10_22-18-01
+2026-02-10 22:18:36 | INFO | architecture.llm_manager:generate:132 | Generation success in 988.18ms
+2026-02-10 22:18:36 | INFO | architecture.orchestrator:run:63 | Decomposed into 1 subtasks
+2026-02-10 22:18:36 | INFO | architecture.orchestrator:_retrieve_tools:149 | st_1 -> DocumentConverterTool (Forced by conversion keywords)
+2026-02-10 22:18:36 | INFO | architecture.orchestrator:_create_plan:375 | ============================================================
+2026-02-10 22:18:36 | INFO | architecture.orchestrator:_create_plan:376 | EXECUTION PLAN: 1 steps
+2026-02-10 22:18:36 | INFO | architecture.orchestrator:_create_plan:377 | ============================================================
+2026-02-10 22:18:36 | INFO | architecture.orchestrator:_create_plan:381 |   Step 1: Convert research_paper.pdf to markdown...
+2026-02-10 22:18:36 | INFO | architecture.orchestrator:_create_plan:382 |     Tool: DocumentConverterTool
+2026-02-10 22:18:36 | INFO | architecture.orchestrator:_create_plan:383 |     no dependencies, uses description
+2026-02-10 22:18:36 | INFO | architecture.orchestrator:_create_plan:384 | ============================================================
+2026-02-10 22:18:36 | INFO | architecture.executor:execute:115 | Executing plan: convert pdf to markdown
+2026-02-10 22:18:36 | INFO | architecture.executor:execute:116 | Total steps: 1
+2026-02-10 22:18:36 | INFO | architecture.executor:execute:121 | Document context available for execution (39859 chars)
+2026-02-10 22:18:36 | INFO | architecture.executor:_execute_step:195 | Step 1: Convert research_paper.pdf to markdown using DocumentConverterTool
+2026-02-10 22:18:36 | INFO | architecture.executor:load_registry:93 | Loaded 28 tool definitions
+2026-02-10 22:18:36 | INFO | architecture.executor:_execute_step:237 | Step 1: Using description as input
+2026-02-10 22:18:36 | INFO | architecture.executor:_infer_args:590 | Using document context for argument inference
+2026-02-10 22:18:36 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-10_22-18-01
+2026-02-10 22:18:36 | INFO | architecture.llm_manager:generate:132 | Generation success in 210.49ms
+2026-02-10 22:18:36 | INFO | architecture.executor:_infer_args:666 | LLM extracted args: {'input_path': 'research_paper.pdf', 'output_format': 'markdown'}
+2026-02-10 22:18:36 | INFO | architecture.sandbox:translate_path_for_container:216 | Path translation (filename only): research_paper.pdf -> /inputs/research_paper.pdf
+2026-02-10 22:18:36 | INFO | architecture.executor:_execute_step:244 | DEBUG: Executor inferred args = {'input_path': 'research_paper.pdf', 'output_format': 'markdown'}
+2026-02-10 22:18:36 | INFO | architecture.executor:_execute_step:245 | DEBUG: Translated args = {'input_path': '/inputs/research_paper.pdf', 'output_format': 'markdown'}
+2026-02-10 22:18:36 | INFO | architecture.executor:_execute_step:246 | DEBUG: Args type = <class 'dict'>
+2026-02-10 22:18:36 | INFO | architecture.sandbox:_install_deps:288 | Installing dependencies: fpdf2 pymupdf pydantic
+2026-02-10 22:18:45 | INFO | architecture.sandbox:_pre_install_essentials:228 | Essential packages pre-installed
+2026-02-10 22:18:45 | INFO | architecture.sandbox:execute_with_args:585 | DEBUG: sandbox received args = {'input_path': '/inputs/research_paper.pdf', 'output_format': 'markdown'}
+2026-02-10 22:18:45 | INFO | architecture.sandbox:execute_with_args:586 | DEBUG: args_json = {"input_path": "/inputs/research_paper.pdf", "output_format": "markdown"}
+2026-02-10 22:18:45 | INFO | architecture.sandbox:execute_with_args:587 | DEBUG: Runner script line: args = json.loads('{"input_path": "/inputs/research_paper.pdf", "output_format": "markdown"}')
+2026-02-10 22:18:45 | INFO | architecture.sandbox:execute_with_args:592 | Executing tool with args: DocumentConverterTool
+2026-02-10 22:18:45 | INFO | architecture.sandbox:execute_with_args:593 | Args JSON being passed: {"input_path": "/inputs/research_paper.pdf", "output_format": "markdown"}
+2026-02-10 22:18:55 | INFO | architecture.executor:_execute_step:263 | Step 1 SANDBOX Profile: time=9366.509ms, peak_mem=14.9192MB, delta_mem=14.4807MB, efficiency=44.03%, grade=critical
+2026-02-10 22:18:55 | INFO | architecture.executor:_execute_step:273 |    (Total round-trip: 19268.13ms)
+2026-02-10 22:18:55 | INFO | architecture.executor:_execute_step:278 | Step 1: Completed in 19.27s
+2026-02-10 22:18:55 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 500 | Temp: 0.3 | Session: 2026-02-10_22-18-01
+2026-02-10 22:18:56 | INFO | architecture.llm_manager:generate:132 | Generation success in 637.77ms
+2026-02-10 22:18:56 | INFO | __main__:main:244 | Completed in 21878.68ms
+2026-02-10 22:18:56 | INFO | __main__:main:245 | Zone: public
+2026-02-10 22:18:56 | INFO | architecture.executor:export_profiles:574 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260210_221856.json
+2026-02-10 22:19:01 | INFO | architecture.sandbox:stop:275 | Sandbox container stopped: be642a8b4c41
+2026-02-10 22:19:01 | INFO | __main__:_shutdown_runtime:107 | Runtime shutdown complete

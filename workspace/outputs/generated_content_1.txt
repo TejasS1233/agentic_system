@@ -1,0 +1,23 @@
+sequenceDiagram
+    participant Browser as "Browser"
+    participant LoadBalancer as "Load Balancer"
+    participant AuthService as "Auth Service"
+    participant Database as "Database"
+
+    Note over Browser,LoadBalancer: REST API Request
+    Browser->>LoadBalancer: HTTP Request
+    LoadBalancer->>AuthService: Forward Request
+    AuthService->>AuthService: Authenticate Request
+    alt Authentication Successful
+        AuthService->>Database: Query Database
+        Database->>AuthService: Return Data
+        AuthService->>LoadBalancer: Return Response (200 OK)
+        LoadBalancer->>Browser: Return Response (200 OK)
+    else Authentication Failed (401)
+        AuthService->>LoadBalancer: Return 401 Error
+        LoadBalancer->>Browser: Return 401 Error
+    else Server Error (500)
+        Database->>AuthService: Return Error
+        AuthService->>LoadBalancer: Return 500 Error
+        LoadBalancer->>Browser: Return 500 Error
+    end

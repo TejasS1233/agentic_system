@@ -1,0 +1,48 @@
+{
+  "exported_at": "2026-02-10T22:58:07.792780",
+  "summary": {
+    "CronReminderTool": {
+      "call_count": 1,
+      "avg_time_ms": 529.331,
+      "max_time_ms": 529.331,
+      "min_time_ms": 529.331,
+      "avg_memory_mb": 3.4025,
+      "max_memory_mb": 3.4025,
+      "avg_memory_delta_mb": 3.3358,
+      "avg_efficiency": 0.7217,
+      "last_grade": "slow"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 1,
+    "tools_profiled": [
+      "CronReminderTool"
+    ],
+    "execution_time_ms": {
+      "min": 529.331,
+      "max": 529.331,
+      "mean": 529.331
+    },
+    "peak_memory_mb": {
+      "min": 3.4025,
+      "max": 3.4025,
+      "mean": 3.4025
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "CronReminderTool": [
+      {
+        "tool_name": "CronReminderTool",
+        "execution_time_ms": 529.331,
+        "peak_memory_mb": 3.4025,
+        "memory_delta_mb": 3.3358,
+        "latency_grade": "slow",
+        "efficiency_score": 0.7217,
+        "success": true
+      }
+    ]
+  }
+}

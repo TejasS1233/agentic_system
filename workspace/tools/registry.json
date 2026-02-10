@@ -672,5 +672,315 @@
     "last_used": null,
     "use_count": 0,
     "metrics": 0.0
+  },
+  "MermaidDiagramTool": {
+    "file": "mermaid_diagram_tool.py",
+    "description": "Generate Mermaid diagrams from natural language descriptions and render as PNG/SVG images. Supports flowcharts, sequence diagrams, class diagrams, state diagrams, ER diagrams, gantt charts, pie charts, mindmaps, timelines, and git graphs. Provide a description like 'flowchart of user authentication with OAuth' and get rendered diagram image.",
+    "tags": [
+      "mermaid",
+      "diagram",
+      "flowchart",
+      "sequence",
+      "class-diagram",
+      "state-diagram",
+      "er-diagram",
+      "gantt",
+      "pie-chart",
+      "mindmap",
+      "timeline",
+      "gitgraph",
+      "visualization",
+      "chart",
+      "graph",
+      "render",
+      "image",
+      "uml",
+      "architecture",
+      "visual"
+    ],
+    "input_types": [
+      "string"
+    ],
+    "output_types": [
+      "image",
+      "json"
+    ],
+    "domain": "visualization",
+    "status": "active",
+    "created_at": 1770681600.0,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "DocumentConverterTool": {
+    "file": "document_converter_tool.py",
+    "description": "Convert documents between PDF, LaTeX, and Markdown formats. Reads input files from the inputs folder. Supports PDF to Markdown, PDF to LaTeX, Markdown to PDF, Markdown to LaTeX, LaTeX to PDF, LaTeX to Markdown. Outputs saved to the output folder.",
+    "tags": [
+      "pdf",
+      "latex",
+      "markdown",
+      "convert",
+      "transform",
+      "document",
+      "paper",
+      "tex",
+      "md",
+      "format",
+      "conversion",
+      "export",
+      "import",
+      "academic",
+      "report",
+      "article"
+    ],
+    "input_types": [
+      "string"
+    ],
+    "output_types": [
+      "file",
+      "json"
+    ],
+    "domain": "conversion",
+    "status": "active",
+    "created_at": 1770681600.0,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "TextToMarkdownTool": {
+    "file": "text_to_markdown.py",
+    "description": "Convert extracted text to Markdown format",
+    "tags": [
+      "text",
+      "markdown",
+      "formatting"
+    ],
+    "input_types": [
+      "string"
+    ],
+    "output_types": [
+      "string"
+    ],
+    "domain": "text",
+    "status": "active",
+    "created_at": 1770742334.9775622,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "MarkdownMindmapTool": {
+    "file": "markdown_mindmap_tool.py",
+    "description": "Task: Generate mindmap from Markdown section structure\n\nInput data sample:\n============================================================\nINPUT DOCUMENTS\n============================================================\n\n--- FILE: research_paper.pdf ---\nProvided proper attribution is provided, Google hereby grants permission to\nreproduce the tables and figures in this paper solely for use in journalistic or\nscholarly works.\nAttention Is All You Need\nAshish Vaswani\u2217\nGoogle Brain\navaswani@google.com\nNoam Shazeer\u2217\nGoogle Brain\nnoam@google.com\nNiki Parmar\u2217\nGoogle Research\nnikip@g\n\nPrevious implementation failed with error:\n[Errno 30] Read-only file system: 'research_paper'\n\nCreate a tool that correctly handles this input format and fixes the error.",
+    "tags": [
+      "markdown",
+      "mindmap",
+      "graph"
+    ],
+    "input_types": [
+      "string"
+    ],
+    "output_types": [
+      "image"
+    ],
+    "domain": "visualization",
+    "status": "active",
+    "created_at": 1770742350.6033611,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "SlideDeckGeneratorTool": {
+    "file": "slide_deck_generator_tool.py",
+    "description": "Generate professional HTML slide deck presentations from topics or paper content using reveal.js. Uses LLM to distill content into structured slides with bullet points and speaker notes.",
+    "tags": [
+      "presentation",
+      "slides",
+      "html",
+      "reveal.js",
+      "deck",
+      "powerpoint",
+      "talk"
+    ],
+    "input_types": [
+      "string"
+    ],
+    "output_types": [
+      "file"
+    ],
+    "domain": "text",
+    "status": "active",
+    "created_at": 1770830000.0,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "LatexEquationRendererTool": {
+    "file": "latex_equation_renderer_tool.py",
+    "description": "Render LaTeX mathematical equations as clean PNG images using matplotlib. Supports fractions, integrals, Greek letters, sums, and more. No system TeX installation needed.",
+    "tags": [
+      "latex",
+      "equation",
+      "math",
+      "render",
+      "formula",
+      "notation",
+      "png"
+    ],
+    "input_types": [
+      "string"
+    ],
+    "output_types": [
+      "image"
+    ],
+    "domain": "visualization",
+    "status": "active",
+    "created_at": 1770830001.0,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "QRCodeGeneratorTool": {
+    "file": "qr_code_generator_tool.py",
+    "description": "Generate QR code images from text, URLs, or any data. Customizable size, border, and colors. Outputs PNG.",
+    "tags": [
+      "qr",
+      "qrcode",
+      "barcode",
+      "encode",
+      "url",
+      "link",
+      "png"
+    ],
+    "input_types": [
+      "string"
+    ],
+    "output_types": [
+      "image"
+    ],
+    "domain": "visualization",
+    "status": "active",
+    "created_at": 1770830002.0,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "AudioSummaryTool": {
+    "file": "audio_summary_tool.py",
+    "description": "Convert text to speech audio (MP3) using Google Text-to-Speech. Supports 50+ languages, adjustable speed. Great for paper abstracts, summaries, notes. No API key required.",
+    "tags": [
+      "tts",
+      "audio",
+      "speech",
+      "mp3",
+      "voice",
+      "text-to-speech",
+      "read aloud"
+    ],
+    "input_types": [
+      "string"
+    ],
+    "output_types": [
+      "file"
+    ],
+    "domain": "text",
+    "status": "active",
+    "created_at": 1770830003.0,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "CronReminderTool": {
+    "file": "cron_reminder_tool.py",
+    "description": "Generate cron schedules and iCalendar (.ics) reminder files from natural language descriptions. Converts 'every Monday at 9am' into cron expressions and downloadable calendar files.",
+    "tags": [
+      "cron",
+      "reminder",
+      "schedule",
+      "calendar",
+      "ics",
+      "timer",
+      "recurring"
+    ],
+    "input_types": [
+      "string"
+    ],
+    "output_types": [
+      "string",
+      "file"
+    ],
+    "domain": "system",
+    "status": "active",
+    "created_at": 1770830004.0,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "CreatePresentationSlidesTool": {
+    "file": "create_presentation_slides.py",
+    "description": "Task: Create the presentation slides based on the outline\n\nInput data sample:\n{\n  \"success\": true,\n  \"output_path\": \"/output/presentation_1.html\",\n  \"num_slides\": 8,\n  \"theme\": \"black\",\n  \"title\": \"Transformer Architecture\",\n  \"file_size_bytes\": 4864,\n  \"message\": \"Presentation with 8 slides saved to /output/presentation_1.html. Open in a browser to present.\"\n}\n\nPrevious implementation failed with error:\nTraceback (most recent call last):\n  File \"/tools/_runner_CreatePresentationSlidesTool.py\", line 21, in <module>\n    from create_presentation_slides import *\n  File \"/tools/create_presentation_slides.py\", line 1, in <module>\n    import pptx\nModuleNotFoundError: No module named 'pptx'\n\n\nCreate a tool that correctly handles this input format and fixes the error.",
+    "tags": [
+      "presentation",
+      "slides",
+      "html"
+    ],
+    "input_types": [
+      "dict"
+    ],
+    "output_types": [
+      "string",
+      "file"
+    ],
+    "domain": "file",
+    "status": "active",
+    "created_at": 1770743224.1792567,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "QuadraticFormulaRenderer": {
+    "file": "quadratic_formula_renderer.py",
+    "description": "Task: Render the quadratic formula string as an image\n\nInput data sample:\n{\n  \"success\": true,\n  \"equation_input\": \"x = (-b \\u00b1 \\u221a(b\\u00b2 - 4ac)) / 2a\",\n  \"equation_latex\": \"x = \\\\frac{-b \\\\pm \\\\sqrt{b^2 - 4ac}}{2a}\",\n  \"output_path\": \"/output/equation_1.png\",\n  \"dpi\": 200,\n  \"file_size_bytes\": 7501,\n  \"message\": \"Equation rendered and saved to /output/equation_1.png\"\n}\n\nPrevious implementation failed with error:\nTraceback (most recent call last):\n  File \"/tools/_runner_QuadraticFormulaRenderer.py\", line 21, in <module>\n    from quadratic_formula_renderer import *\n  File \"/tools/quadratic_formula_renderer.py\", line 16\n    a, b, c = map(sp.sympify, equation.replace('^2', '**2').replace('=', '-(') + ')').as_coefficients_dict()[x**2], equation.replace('^2', '**2').replace('=', '-(') + ')').as_coefficients_dict()[x], equation.replace('^2', '**2').replace('=', '-(') + ')').as_coefficients_dict()[1]\n                                                                                                                                                                          ^\nSyntaxError: unmatched ')'\n\n\nCreate a tool that correctly handles this input format and fixes the error.",
+    "tags": [
+      "quadratic",
+      "formula",
+      "renderer"
+    ],
+    "input_types": [
+      "string",
+      "string",
+      "string",
+      "integer"
+    ],
+    "output_types": [
+      "string",
+      "file"
+    ],
+    "domain": "math",
+    "status": "active",
+    "created_at": 1770744037.5050468,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
+  },
+  "TextToAudioTool": {
+    "file": "text_to_audio_tool.py",
+    "description": "Task: Convert text to audio\n\nInput data sample:\nConvert text to audio\n\nPrevious implementation failed with error:\nTraceback (most recent call last):\n  File \"/tools/_runner_AudioSummaryTool.py\", line 21, in <module>\n    from audio_summary_tool import *\n  File \"/tools/audio_summary_tool.py\", line 11, in <module>\n    from pydantic import BaseModel, Field\n  File \"/usr/local/lib/python3.11/site-packages/pydantic/__init__.py\", line 422, in <module>\n    _getattr_migration = getattr_migration(__name__)\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/pydantic/_migration.py\", line 262, in getattr_migration\n    from .errors import PydanticImportError\n  File \"/usr/local/lib/python3.11/site-packages/pydantic/errors.py\", line 9, in <module>\n    from typing_inspection.introspection import Qualifier\n  File \"/usr/local/lib/python3.11/site-packages/typing_inspection/introspection.py\", line 14, in <module>\n    from . import typing_objects\nImportError: cannot import name 'typing_objects' from 'typing_inspection' (/usr/local/lib/python3.11/site-packages/typing_inspection/__init__.py)\n\n\nCreate a tool that correctly handles this input format and fixes the error.",
+    "tags": [
+      "text",
+      "audio",
+      "conversion"
+    ],
+    "input_types": [
+      "string"
+    ],
+    "output_types": [
+      "audio"
+    ],
+    "domain": "conversion",
+    "status": "active",
+    "created_at": 1770744562.510984,
+    "last_used": null,
+    "use_count": 0,
+    "metrics": 0.0
   }
 }

@@ -129,6 +129,208 @@ class Orchestrator:
                 except Exception:
                     pass  # Fall back to normal retrieval if tool not found
             # -------------------------------------------
+
+            # --- FORCE SLIDE DECK GENERATOR FOR PRESENTATION REQUESTS ---
+            slide_keywords = [
+                "slide deck", "slides", "presentation", "make slides",
+                "create slides", "generate slides", "slide show",
+                "powerpoint", "ppt",
+            ]
+            desc_lower_slide = st.description.lower()
+            if any(kw in desc_lower_slide for kw in slide_keywords):
+                slide_tool_name = "SlideDeckGeneratorTool"
+                try:
+                    tool_file = self._get_tool_file(slide_tool_name)
+                    if tool_file:
+                        logger.info(f"{st.id} -> {slide_tool_name} (Forced by slide keywords)")
+                        matches.append(
+                            ToolMatch(
+                                subtask_id=st.id,
+                                tool_name=slide_tool_name,
+                                tool_file=tool_file,
+                                matched=True,
+                                confidence=1.0,
+                            )
+                        )
+                        used_tools.add(slide_tool_name)
+                        continue
+                except Exception:
+                    pass
+            # -------------------------------------------
+
+            # --- FORCE LATEX EQUATION RENDERER ---
+            equation_phrases = [
+                "render equation", "latex equation", "render latex",
+                "render formula", "math equation", "equation image",
+                "render math",
+            ]
+            equation_nouns = ["equation", "formula", "quadratic", "integral", "derivative"]
+            equation_verbs = ["render", "typeset", "display"]
+            desc_lower_eq = st.description.lower()
+            desc_words_eq = set(desc_lower_eq.split())
+            _has_eq_phrase = any(kw in desc_lower_eq for kw in equation_phrases)
+            _has_eq_combo = bool(desc_words_eq & set(equation_nouns)) and bool(desc_words_eq & set(equation_verbs))
+            if _has_eq_phrase or _has_eq_combo:
+                eq_tool_name = "LatexEquationRendererTool"
+                try:
+                    tool_file = self._get_tool_file(eq_tool_name)
+                    if tool_file:
+                        logger.info(f"{st.id} -> {eq_tool_name} (Forced by equation keywords)")
+                        matches.append(
+                            ToolMatch(
+                                subtask_id=st.id,
+                                tool_name=eq_tool_name,
+                                tool_file=tool_file,
+                                matched=True,
+                                confidence=1.0,
+                            )
+                        )
+                        used_tools.add(eq_tool_name)
+                        continue
+                except Exception:
+                    pass
+            # -------------------------------------------
+
+            # --- FORCE QR CODE GENERATOR ---
+            qr_keywords = ["qr code", "qr", "generate qr", "create qr", "qrcode"]
+            desc_lower_qr = st.description.lower()
+            if any(kw in desc_lower_qr for kw in qr_keywords):
+                qr_tool_name = "QRCodeGeneratorTool"
+                try:
+                    tool_file = self._get_tool_file(qr_tool_name)
+                    if tool_file:
+                        logger.info(f"{st.id} -> {qr_tool_name} (Forced by QR keywords)")
+                        matches.append(
+                            ToolMatch(
+                                subtask_id=st.id,
+                                tool_name=qr_tool_name,
+                                tool_file=tool_file,
+                                matched=True,
+                                confidence=1.0,
+                            )
+                        )
+                        used_tools.add(qr_tool_name)
+                        continue
+                except Exception:
+                    pass
+            # -------------------------------------------
+
+            # --- FORCE AUDIO SUMMARY TTS ---
+            tts_keywords = [
+                "text to speech", "tts", "read aloud", "audio summary",
+                "convert to audio", "speak this", "generate audio",
+            ]
+            desc_lower_tts = st.description.lower()
+            if any(kw in desc_lower_tts for kw in tts_keywords):
+                tts_tool_name = "AudioSummaryTool"
+                try:
+                    tool_file = self._get_tool_file(tts_tool_name)
+                    if tool_file:
+                        logger.info(f"{st.id} -> {tts_tool_name} (Forced by TTS keywords)")
+                        matches.append(
+                            ToolMatch(
+                                subtask_id=st.id,
+                                tool_name=tts_tool_name,
+                                tool_file=tool_file,
+                                matched=True,
+                                confidence=1.0,
+                            )
+                        )
+                        used_tools.add(tts_tool_name)
+                        continue
+                except Exception:
+                    pass
+            # -------------------------------------------
+
+            # --- FORCE CRON REMINDER TOOL ---
+            cron_keywords = [
+                "cron", "remind me", "reminder", "set reminder",
+                "calendar event", "schedule reminder", "recurring",
+            ]
+            desc_lower_cron = st.description.lower()
+            if any(kw in desc_lower_cron for kw in cron_keywords):
+                cron_tool_name = "CronReminderTool"
+                try:
+                    tool_file = self._get_tool_file(cron_tool_name)
+                    if tool_file:
+                        logger.info(f"{st.id} -> {cron_tool_name} (Forced by cron/reminder keywords)")
+                        matches.append(
+                            ToolMatch(
+                                subtask_id=st.id,
+                                tool_name=cron_tool_name,
+                                tool_file=tool_file,
+                                matched=True,
+                                confidence=1.0,
+                            )
+                        )
+                        used_tools.add(cron_tool_name)
+                        continue
+                except Exception:
+                    pass
+            # -------------------------------------------
+
+            # --- FORCE MERMAID DIAGRAM TOOL FOR DIAGRAM REQUESTS ---
+            diagram_keywords = [
+                "diagram", "flowchart", "sequence diagram", "class diagram",
+                "state diagram", "er diagram", "entity relationship",
+                "gantt", "mindmap", "mind map", "mermaid", "gitgraph",
+                "architecture diagram", "uml", "draw a diagram", "visualize flow",
+                "process flow", "data flow diagram",
+            ]
+            desc_lower = st.description.lower()
+            if domain == "visualization" or any(kw in desc_lower for kw in diagram_keywords):
+                mermaid_tool_name = "MermaidDiagramTool"
+                try:
+                    tool_file = self._get_tool_file(mermaid_tool_name)
+                    if tool_file:
+                        logger.info(f"{st.id} -> {mermaid_tool_name} (Forced by diagram keywords)")
+                        matches.append(
+                            ToolMatch(
+                                subtask_id=st.id,
+                                tool_name=mermaid_tool_name,
+                                tool_file=tool_file,
+                                matched=True,
+                                confidence=1.0,
+                            )
+                        )
+                        used_tools.add(mermaid_tool_name)
+                        continue
+                except Exception:
+                    pass  # Fall back to normal retrieval
+            # -------------------------------------------
+
+            # --- FORCE DOCUMENT CONVERTER FOR CONVERSION REQUESTS ---
+            # Placed AFTER specific tools (QR, TTS, slides, etc.) so they match first
+            conversion_keywords = [
+                "convert pdf", "convert to pdf", "convert to markdown", "convert to latex",
+                "pdf to markdown", "pdf to latex", "pdf to md", "pdf to tex",
+                "markdown to pdf", "markdown to latex", "md to pdf", "md to tex",
+                "latex to pdf", "latex to markdown", "tex to pdf", "tex to md",
+                "transform paper", "transform document", "transform to pdf",
+                "convert document", "convert paper", "export as pdf",
+                "export as markdown", "export as latex",
+            ]
+            desc_lower_conv = st.description.lower()
+            if any(kw in desc_lower_conv for kw in conversion_keywords):
+                converter_tool_name = "DocumentConverterTool"
+                try:
+                    tool_file = self._get_tool_file(converter_tool_name)
+                    if tool_file:
+                        logger.info(f"{st.id} -> {converter_tool_name} (Forced by conversion keywords)")
+                        matches.append(
+                            ToolMatch(
+                                subtask_id=st.id,
+                                tool_name=converter_tool_name,
+                                tool_file=tool_file,
+                                matched=True,
+                                confidence=1.0,
+                            )
+                        )
+                        used_tools.add(converter_tool_name)
+                        continue
+                except Exception:
+                    pass
+            # -------------------------------------------
             
             # Get candidates with hybrid scoring
             scored_results = self.retriever.retrieve_with_scoring(
@@ -323,8 +525,45 @@ class Orchestrator:
         
         return ExecutionPlan(original_query=decomposition.original_query, steps=steps)
 
+    # Keywords that MUST route through tool execution, never direct response
+    _FORCE_COMPLEX_KEYWORDS = [
+        # Diagram keywords
+        "diagram", "flowchart", "sequence diagram", "class diagram",
+        "state diagram", "er diagram", "entity relationship",
+        "gantt", "mindmap", "mind map", "mermaid", "gitgraph",
+        "architecture diagram", "uml", "draw a diagram", "visualize flow",
+        "process flow", "data flow diagram",
+        # Document conversion keywords
+        "convert pdf", "convert to pdf", "convert to markdown", "convert to latex",
+        "pdf to markdown", "pdf to latex", "pdf to md", "pdf to tex",
+        "markdown to pdf", "markdown to latex", "md to pdf", "md to tex",
+        "latex to pdf", "latex to markdown", "tex to pdf", "tex to md",
+        "transform paper", "transform document", "convert document", "convert paper",
+        # Presentation / slide keywords
+        "slide deck", "slides", "presentation", "make slides", "create slides",
+        "generate slides", "slide show", "powerpoint", "ppt",
+        # LaTeX equation keywords
+        "render equation", "latex equation", "render latex", "render formula",
+        "math equation", "equation image", "render math",
+        "formula", "equation",
+        # QR code keywords
+        "qr code", "qr", "generate qr", "create qr", "qrcode",
+        # TTS / audio keywords
+        "text to speech", "tts", "read aloud", "audio summary",
+        "convert to audio", "speak this", "generate audio",
+        # Cron / reminder keywords
+        "cron", "remind me", "reminder", "schedule", "recurring",
+        "set reminder", "calendar event", "ics",
+    ]
+
     def _classify_request(self, query: str) -> str:
         """Determine if request is direct response or complex task."""
+        # Force diagram-related queries to COMPLEX_TASK so they use MermaidDiagramTool
+        query_lower = query.lower()
+        if any(kw in query_lower for kw in self._FORCE_COMPLEX_KEYWORDS):
+            logger.info("Forcing COMPLEX_TASK: diagram keywords detected in query")
+            return "COMPLEX_TASK"
+
         try:
             prompt = ROUTING_PROMPT.format(query=query)
             response = self.llm.generate_json(

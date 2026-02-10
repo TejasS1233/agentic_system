@@ -1,0 +1,48 @@
+{
+  "exported_at": "2026-02-10T22:56:00.345864",
+  "summary": {
+    "QRCodeGeneratorTool": {
+      "call_count": 1,
+      "avg_time_ms": 34.435,
+      "max_time_ms": 34.435,
+      "min_time_ms": 34.435,
+      "avg_memory_mb": 0.2467,
+      "max_memory_mb": 0.2467,
+      "avg_memory_delta_mb": 0.2301,
+      "avg_efficiency": 0.9818,
+      "last_grade": "moderate"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 1,
+    "tools_profiled": [
+      "QRCodeGeneratorTool"
+    ],
+    "execution_time_ms": {
+      "min": 34.435,
+      "max": 34.435,
+      "mean": 34.435
+    },
+    "peak_memory_mb": {
+      "min": 0.2467,
+      "max": 0.2467,
+      "mean": 0.2467
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "QRCodeGeneratorTool": [
+      {
+        "tool_name": "QRCodeGeneratorTool",
+        "execution_time_ms": 34.435,
+        "peak_memory_mb": 0.2467,
+        "memory_delta_mb": 0.2301,
+        "latency_grade": "moderate",
+        "efficiency_score": 0.9818,
+        "success": true
+      }
+    ]
+  }
+}

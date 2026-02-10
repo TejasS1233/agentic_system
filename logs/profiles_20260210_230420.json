@@ -1,0 +1,48 @@
+{
+  "exported_at": "2026-02-10T23:04:20.998803",
+  "summary": {
+    "AudioSummaryTool": {
+      "call_count": 1,
+      "avg_time_ms": 872.252,
+      "max_time_ms": 872.252,
+      "min_time_ms": 872.252,
+      "avg_memory_mb": 3.6063,
+      "max_memory_mb": 3.6063,
+      "avg_memory_delta_mb": 3.4707,
+      "avg_efficiency": 0.5494,
+      "last_grade": "slow"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 1,
+    "tools_profiled": [
+      "AudioSummaryTool"
+    ],
+    "execution_time_ms": {
+      "min": 872.252,
+      "max": 872.252,
+      "mean": 872.252
+    },
+    "peak_memory_mb": {
+      "min": 3.6063,
+      "max": 3.6063,
+      "mean": 3.6063
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "AudioSummaryTool": [
+      {
+        "tool_name": "AudioSummaryTool",
+        "execution_time_ms": 872.252,
+        "peak_memory_mb": 3.6063,
+        "memory_delta_mb": 3.4707,
+        "latency_grade": "slow",
+        "efficiency_score": 0.5494,
+        "success": true
+      }
+    ]
+  }
+}

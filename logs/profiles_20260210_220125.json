@@ -1,0 +1,48 @@
+{
+  "exported_at": "2026-02-10T22:01:25.838973",
+  "summary": {
+    "MermaidDiagramTool": {
+      "call_count": 1,
+      "avg_time_ms": 316.376,
+      "max_time_ms": 316.376,
+      "min_time_ms": 316.376,
+      "avg_memory_mb": 0.8587,
+      "max_memory_mb": 0.8587,
+      "avg_memory_delta_mb": 0.7398,
+      "avg_efficiency": 0.8384,
+      "last_grade": "slow"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 1,
+    "tools_profiled": [
+      "MermaidDiagramTool"
+    ],
+    "execution_time_ms": {
+      "min": 316.376,
+      "max": 316.376,
+      "mean": 316.376
+    },
+    "peak_memory_mb": {
+      "min": 0.8587,
+      "max": 0.8587,
+      "mean": 0.8587
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "MermaidDiagramTool": [
+      {
+        "tool_name": "MermaidDiagramTool",
+        "execution_time_ms": 316.376,
+        "peak_memory_mb": 0.8587,
+        "memory_delta_mb": 0.7398,
+        "latency_grade": "slow",
+        "efficiency_score": 0.8384,
+        "success": true
+      }
+    ]
+  }
+}

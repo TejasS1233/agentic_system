@@ -1,0 +1,63 @@
+2026-02-10 22:38:41 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-10 22:38:51 | INFO | __main__:main:233 | Starting IASCIS with Sandbox and Profiling
+2026-02-10 22:38:51 | INFO | architecture.input_loader:__init__:26 | InputLoader initialized: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-10 22:38:51 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-10 22:38:51 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-10 22:38:51 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-10 22:38:51 | INFO | __main__:__init__:74 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-10 22:38:51 | INFO | architecture.sandbox:__init__:164 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs, inputs_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-10 22:38:51 | INFO | architecture.sandbox:start:261 | Sandbox container started: 60d9150bb86f
+2026-02-10 22:38:51 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-10 22:38:51 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-10 22:38:51 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-10 22:38:51 | INFO | architecture.executor:load_registry:93 | Loaded 36 tool definitions
+2026-02-10 22:38:51 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-10 22:38:51 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-10 22:38:52 | INFO | architecture.sandbox:_install_deps:289 | Installing dependencies: requests numpy pydantic pandas beautifulsoup4
+2026-02-10 22:38:56 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-10 22:38:56 | INFO | __main__:_initialize_runtime:98 | Runtime initialized with Sandbox
+2026-02-10 22:38:56 | INFO | __main__:run:141 | Task received: Render the quadratic formula as an image...
+2026-02-10 22:38:56 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-10 22:38:56 | INFO | __main__:run:145 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-10 22:38:56 | INFO | architecture.orchestrator:run:47 | Processing: Render the quadratic formula as an image...
+2026-02-10 22:38:56 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-10_22-38-38
+2026-02-10 22:38:57 | INFO | architecture.llm_manager:generate:132 | Generation success in 714.11ms
+2026-02-10 22:38:57 | INFO | architecture.orchestrator:run:56 | Task Classification: COMPLEX_TASK
+2026-02-10 22:38:57 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-10_22-38-38
+2026-02-10 22:38:57 | INFO | architecture.llm_manager:generate:132 | Generation success in 288.35ms
+2026-02-10 22:38:57 | INFO | architecture.orchestrator:run:63 | Decomposed into 1 subtasks
+2026-02-10 22:38:57 | INFO | architecture.orchestrator:_retrieve_tools:313 | st_1 -> MermaidDiagramTool (Forced by diagram keywords)
+2026-02-10 22:38:57 | INFO | architecture.orchestrator:_create_plan:509 | ============================================================
+2026-02-10 22:38:57 | INFO | architecture.orchestrator:_create_plan:510 | EXECUTION PLAN: 1 steps
+2026-02-10 22:38:57 | INFO | architecture.orchestrator:_create_plan:511 | ============================================================
+2026-02-10 22:38:57 | INFO | architecture.orchestrator:_create_plan:515 |   Step 1: Render the quadratic formula as an image...
+2026-02-10 22:38:57 | INFO | architecture.orchestrator:_create_plan:516 |     Tool: MermaidDiagramTool
+2026-02-10 22:38:57 | INFO | architecture.orchestrator:_create_plan:517 |     no dependencies, uses description
+2026-02-10 22:38:57 | INFO | architecture.orchestrator:_create_plan:518 | ============================================================
+2026-02-10 22:38:57 | INFO | architecture.executor:execute:115 | Executing plan: Render the quadratic formula as an image
+2026-02-10 22:38:57 | INFO | architecture.executor:execute:116 | Total steps: 1
+2026-02-10 22:38:57 | INFO | architecture.executor:_execute_step:195 | Step 1: Render the quadratic formula as an image using MermaidDiagramTool
+2026-02-10 22:38:57 | INFO | architecture.executor:load_registry:93 | Loaded 36 tool definitions
+2026-02-10 22:38:57 | INFO | architecture.executor:_execute_step:237 | Step 1: Using description as input
+2026-02-10 22:38:57 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-10_22-38-38
+2026-02-10 22:38:57 | INFO | architecture.llm_manager:generate:132 | Generation success in 248.07ms
+2026-02-10 22:38:57 | INFO | architecture.executor:_infer_args:666 | LLM extracted args: {'description': 'quadratic formula', 'diagram_type': 'formula', 'output_path': 'image.png', 'output_format': 'png', 'theme': 'default'}
+2026-02-10 22:38:57 | INFO | architecture.sandbox:translate_path_for_container:217 | Path translation (filename only): image.png -> /inputs/image.png
+2026-02-10 22:38:57 | INFO | architecture.executor:_execute_step:244 | DEBUG: Executor inferred args = {'description': 'quadratic formula', 'diagram_type': 'formula', 'output_path': 'image.png', 'output_format': 'png', 'theme': 'default'}
+2026-02-10 22:38:57 | INFO | architecture.executor:_execute_step:245 | DEBUG: Translated args = {'description': 'quadratic formula', 'diagram_type': 'formula', 'output_path': '/inputs/image.png', 'output_format': 'png', 'theme': 'default'}
+2026-02-10 22:38:57 | INFO | architecture.executor:_execute_step:246 | DEBUG: Args type = <class 'dict'>
+2026-02-10 22:38:57 | INFO | architecture.sandbox:_install_deps:289 | Installing dependencies: requests pydantic
+2026-02-10 22:39:00 | INFO | architecture.sandbox:execute_with_args:586 | DEBUG: sandbox received args = {'description': 'quadratic formula', 'diagram_type': 'formula', 'output_path': '/inputs/image.png', 'output_format': 'png', 'theme': 'default'}
+2026-02-10 22:39:00 | INFO | architecture.sandbox:execute_with_args:587 | DEBUG: args_json = {"description": "quadratic formula", "diagram_type": "formula", "output_path": "/inputs/image.png", "output_format": "png", "theme": "default"}
+2026-02-10 22:39:00 | INFO | architecture.sandbox:execute_with_args:588 | DEBUG: Runner script line: args = json.loads('{"description": "quadratic formula", "diagram_type": "formula", "output_path": "/inputs/image.png", "output_format": "png", "theme": "default"}')
+2026-02-10 22:39:00 | INFO | architecture.sandbox:execute_with_args:593 | Executing tool with args: MermaidDiagramTool
+2026-02-10 22:39:00 | INFO | architecture.sandbox:execute_with_args:594 | Args JSON being passed: {"description": "quadratic formula", "diagram_type": "formula", "output_path": "/inputs/image.png", "output_format": "png", "theme": "default"}
+2026-02-10 22:39:05 | INFO | architecture.sandbox:_pre_install_essentials:229 | Essential packages pre-installed
+2026-02-10 22:39:10 | INFO | architecture.executor:_execute_step:263 | Step 1 SANDBOX Profile: time=8300.617ms, peak_mem=3.5922MB, delta_mem=3.3968MB, efficiency=48.56%, grade=critical
+2026-02-10 22:39:10 | INFO | architecture.executor:_execute_step:273 |    (Total round-trip: 12251.71ms)
+2026-02-10 22:39:10 | INFO | architecture.executor:_execute_step:278 | Step 1: Completed in 12.25s
+2026-02-10 22:39:10 | INFO | __main__:main:244 | Completed in 13517.43ms
+2026-02-10 22:39:10 | INFO | __main__:main:245 | Zone: public
+2026-02-10 22:39:10 | INFO | architecture.executor:export_profiles:574 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260210_223910.json
+2026-02-10 22:39:15 | INFO | architecture.sandbox:stop:276 | Sandbox container stopped: 60d9150bb86f
+2026-02-10 22:39:15 | INFO | __main__:_shutdown_runtime:107 | Runtime shutdown complete

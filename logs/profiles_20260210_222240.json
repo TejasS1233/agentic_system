@@ -1,0 +1,94 @@
+{
+  "exported_at": "2026-02-10T22:22:40.553121",
+  "summary": {
+    "DocumentConverterTool": {
+      "call_count": 1,
+      "avg_time_ms": 1.777,
+      "max_time_ms": 1.777,
+      "min_time_ms": 1.777,
+      "avg_memory_mb": 0.0049,
+      "max_memory_mb": 0.0049,
+      "avg_memory_delta_mb": 0.0035,
+      "avg_efficiency": 0.9991,
+      "last_grade": "fast"
+    },
+    "TextToMarkdownTool": {
+      "call_count": 1,
+      "avg_time_ms": 1.794,
+      "max_time_ms": 1.794,
+      "min_time_ms": 1.794,
+      "avg_memory_mb": 0.2304,
+      "max_memory_mb": 0.2304,
+      "avg_memory_delta_mb": 0.1548,
+      "avg_efficiency": 0.9982,
+      "last_grade": "fast"
+    },
+    "MermaidDiagramTool": {
+      "call_count": 1,
+      "avg_time_ms": 3140.94,
+      "max_time_ms": 3140.94,
+      "min_time_ms": 3140.94,
+      "avg_memory_mb": 3.4471,
+      "max_memory_mb": 3.4471,
+      "avg_memory_delta_mb": 0.0,
+      "avg_efficiency": 0.0,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 3,
+    "tools_profiled": [
+      "DocumentConverterTool",
+      "TextToMarkdownTool",
+      "MermaidDiagramTool"
+    ],
+    "execution_time_ms": {
+      "min": 1.777,
+      "max": 3140.94,
+      "mean": 1048.1703333333332
+    },
+    "peak_memory_mb": {
+      "min": 0.0049,
+      "max": 3.4471,
+      "mean": 1.2274666666666667
+    },
+    "success_rate": 0.6666666666666666
+  },
+  "raw_profiles": {
+    "DocumentConverterTool": [
+      {
+        "tool_name": "DocumentConverterTool",
+        "execution_time_ms": 1.777,
+        "peak_memory_mb": 0.0049,
+        "memory_delta_mb": 0.0035,
+        "latency_grade": "fast",
+        "efficiency_score": 0.9991,
+        "success": true
+      }
+    ],
+    "TextToMarkdownTool": [
+      {
+        "tool_name": "TextToMarkdownTool",
+        "execution_time_ms": 1.794,
+        "peak_memory_mb": 0.2304,
+        "memory_delta_mb": 0.1548,
+        "latency_grade": "fast",
+        "efficiency_score": 0.9982,
+        "success": true
+      }
+    ],
+    "MermaidDiagramTool": [
+      {
+        "tool_name": "MermaidDiagramTool",
+        "execution_time_ms": 3140.94,
+        "peak_memory_mb": 3.4471,
+        "memory_delta_mb": 0,
+        "latency_grade": "critical",
+        "success": false,
+        "error_message": "[Errno 30] Read-only file system: 'research_paper'"
+      }
+    ]
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "exported_at": "2026-02-10T22:41:21.629045",
+  "summary": {
+    "LatexEquationRendererTool": {
+      "call_count": 1,
+      "avg_time_ms": 3002.485,
+      "max_time_ms": 3002.485,
+      "min_time_ms": 3002.485,
+      "avg_memory_mb": 29.512,
+      "max_memory_mb": 29.512,
+      "avg_memory_delta_mb": 29.4341,
+      "avg_efficiency": 0.382,
+      "last_grade": "critical"
+    }
+  },
+  "statistics": {
+    "profiling_enabled": true,
+    "source": "sandbox",
+    "count": 1,
+    "tools_profiled": [
+      "LatexEquationRendererTool"
+    ],
+    "execution_time_ms": {
+      "min": 3002.485,
+      "max": 3002.485,
+      "mean": 3002.485
+    },
+    "peak_memory_mb": {
+      "min": 29.512,
+      "max": 29.512,
+      "mean": 29.512
+    },
+    "success_rate": 1.0
+  },
+  "raw_profiles": {
+    "LatexEquationRendererTool": [
+      {
+        "tool_name": "LatexEquationRendererTool",
+        "execution_time_ms": 3002.485,
+        "peak_memory_mb": 29.512,
+        "memory_delta_mb": 29.4341,
+        "latency_grade": "critical",
+        "efficiency_score": 0.382,
+        "success": true
+      }
+    ]
+  }
+}
