@@ -58,20 +58,40 @@ class CronReminderTool:
 
     # Common schedule patterns for fallback parsing
     DAY_MAP = {
-        "monday": 1, "tuesday": 2, "wednesday": 3, "thursday": 4,
-        "friday": 5, "saturday": 6, "sunday": 0,
-        "mon": 1, "tue": 2, "wed": 3, "thu": 4,
-        "fri": 5, "sat": 6, "sun": 0,
+        "monday": 1,
+        "tuesday": 2,
+        "wednesday": 3,
+        "thursday": 4,
+        "friday": 5,
+        "saturday": 6,
+        "sunday": 0,
+        "mon": 1,
+        "tue": 2,
+        "wed": 3,
+        "thu": 4,
+        "fri": 5,
+        "sat": 6,
+        "sun": 0,
     }
 
     CRON_DAY_MAP = {
-        0: "SUN", 1: "MON", 2: "TUE", 3: "WED",
-        4: "THU", 5: "FRI", 6: "SAT",
+        0: "SUN",
+        1: "MON",
+        2: "TUE",
+        3: "WED",
+        4: "THU",
+        5: "FRI",
+        6: "SAT",
     }
 
     ICAL_DAY_MAP = {
-        0: "SU", 1: "MO", 2: "TU", 3: "WE",
-        4: "TH", 5: "FR", 6: "SA",
+        0: "SU",
+        1: "MO",
+        2: "TU",
+        3: "WE",
+        4: "TH",
+        5: "FR",
+        6: "SA",
     }
 
     def __init__(self, output_dir: str = "/output"):
@@ -148,6 +168,7 @@ JSON:"""
     def _fallback_parse(self, description: str) -> dict:
         """Basic regex-based schedule parsing."""
         import re
+
         desc_lower = description.lower()
 
         hour, minute = 9, 0  # default 9:00 AM
@@ -190,7 +211,14 @@ JSON:"""
 
         # Extract task
         task = description
-        for word in ["remind me to", "reminder to", "remind me", "alert me to", "every ", "at "]:
+        for word in [
+            "remind me to",
+            "reminder to",
+            "remind me",
+            "alert me to",
+            "every ",
+            "at ",
+        ]:
             task = re.sub(rf"(?i){word}", "", task).strip()
         task = task[:100] if task else description[:100]
 
@@ -302,13 +330,22 @@ END:VCALENDAR"""
 
             # Always under /output/ so it persists on host volume
             if output_path and not output_path.startswith(self.output_dir):
-                output_path = os.path.join(self.output_dir, os.path.basename(output_path))
+                output_path = os.path.join(
+                    self.output_dir, os.path.basename(output_path)
+                )
             if not output_path:
-                existing = [f for f in os.listdir(self.output_dir) if f.startswith("reminder_") and f.endswith(".ics")]
+                existing = [
+                    f
+                    for f in os.listdir(self.output_dir)
+                    if f.startswith("reminder_") and f.endswith(".ics")
+                ]
                 idx = len(existing) + 1
                 output_path = os.path.join(self.output_dir, f"reminder_{idx}.ics")
 
-            os.makedirs(os.path.dirname(output_path) if os.path.dirname(output_path) else ".", exist_ok=True)
+            os.makedirs(
+                os.path.dirname(output_path) if os.path.dirname(output_path) else ".",
+                exist_ok=True,
+            )
 
             with open(output_path, "w", encoding="utf-8") as f:
                 f.write(ics_content)
@@ -319,7 +356,11 @@ END:VCALENDAR"""
         result["message"] = (
             f"Schedule: {schedule.get('frequency', '')}. "
             f"Cron: {schedule.get('cron', '')}. "
-            + (f"Calendar file saved to {output_path}." if output_format in ("ics", "both") else "")
+            + (
+                f"Calendar file saved to {output_path}."
+                if output_format in ("ics", "both")
+                else ""
+            )
         )
 
         return json.dumps(result, indent=2)

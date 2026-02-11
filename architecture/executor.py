@@ -102,23 +102,25 @@ class ExecutorAgent:
                 # Only try to translate if it looks like a path or filename
                 # (contains separators or extension)
                 if "/" in value or "\\" in value or "." in value:
-                     translated[key] = self.sandbox.translate_path_for_container(value)
+                    translated[key] = self.sandbox.translate_path_for_container(value)
         return translated
 
     def execute(self, plan: ExecutionPlan, document_context: str = None) -> str:
         """Execute the ExecutionPlan respecting dependencies.
-        
+
         Args:
             plan: The execution plan to execute
             document_context: Optional pre-loaded document content to use as context
         """
         logger.info(f"Executing plan: {plan.original_query}")
         logger.info(f"Total steps: {len(plan.steps)}")
-        
+
         # Store document context for use in argument inference
         self._document_context = document_context
         if document_context:
-            logger.info(f"Document context available for execution ({len(document_context)} chars)")
+            logger.info(
+                f"Document context available for execution ({len(document_context)} chars)"
+            )
 
         results = {}
 
@@ -134,7 +136,7 @@ class ExecutorAgent:
                 results[step.step_number] = result
 
         final_step = max(plan.steps, key=lambda s: s.step_number)
-        
+
         # Synthesize human-readable response from raw results
         synthesized = self._synthesize_response(plan.original_query, final_step.result)
 
@@ -154,14 +156,18 @@ class ExecutorAgent:
         try:
             # Try to parse as JSON for structured data
             try:
-                data = json.loads(raw_result) if isinstance(raw_result, str) else raw_result
+                data = (
+                    json.loads(raw_result)
+                    if isinstance(raw_result, str)
+                    else raw_result
+                )
             except json.JSONDecodeError:
                 data = raw_result
-            
+
             # If it's an error, just return it
             if isinstance(data, dict) and "error" in data:
                 return f"Error: {data['error']}"
-            
+
             prompt = f"""You are a helpful assistant. The user asked: "{query}"
 
 Here is the raw data retrieved:
@@ -179,13 +185,13 @@ Based on this data, write a clear, concise, and helpful response that directly a
                 max_tokens=500,
                 temperature=0.3,
             )
-            
+
             if response.get("error"):
                 logger.warning(f"Synthesis failed: {response['error']}")
                 return raw_result
-            
+
             return response.get("content", raw_result)
-            
+
         except Exception as e:
             logger.warning(f"Response synthesis error: {e}")
             return raw_result
@@ -237,17 +243,19 @@ Based on this data, write a clear, concise, and helpful response that directly a
             logger.info(f"Step {step.step_number}: Using description as input")
 
         args = self._infer_args(step, input_data, definition)
-        
+
         # Translate paths for container
         translated_args = self._translate_args(args)
-        
+
         logger.info(f"DEBUG: Executor inferred args = {args}")
         logger.info(f"DEBUG: Translated args = {translated_args}")
         logger.info(f"DEBUG: Args type = {type(args)}")
 
         # Execute tool in sandbox (profiling happens inside container)
         start_time = time.time()
-        result = self.sandbox.execute_with_args(step.tool_name, tool_file, translated_args)
+        result = self.sandbox.execute_with_args(
+            step.tool_name, tool_file, translated_args
+        )
         host_latency = time.time() - start_time
 
         # Extract profile from sandbox result (profiling done inside container)
@@ -349,9 +357,13 @@ Based on this data, write a clear, concise, and helpful response that directly a
         enhanced_input = f"{input_data}\n\nPrevious error: {error}\n{corrective_prompt}"
         new_args = self._infer_args(step, enhanced_input, definition)
         translated_args = self._translate_args(new_args)
-        logger.info(f"Step {step.step_number}: New args = {new_args} (Translated: {translated_args})")
+        logger.info(
+            f"Step {step.step_number}: New args = {new_args} (Translated: {translated_args})"
+        )
 
-        result = self.sandbox.execute_with_args(step.tool_name, tool_file, translated_args)
+        result = self.sandbox.execute_with_args(
+            step.tool_name, tool_file, translated_args
+        )
 
         if result["success"]:
             step.result = result["output"]
@@ -416,9 +428,13 @@ Based on this data, write a clear, concise, and helpful response that directly a
         tool_file = definition["file"]
         new_args = self._infer_args(step, input_data, definition)
         translated_args = self._translate_args(new_args)
-        logger.info(f"Step {step.step_number}: Translated regenerated tool args: {translated_args}")
+        logger.info(
+            f"Step {step.step_number}: Translated regenerated tool args: {translated_args}"
+        )
 
-        result = self.sandbox.execute_with_args(new_tool_name, tool_file, translated_args)
+        result = self.sandbox.execute_with_args(
+            new_tool_name, tool_file, translated_args
+        )
 
         if result["success"]:
             step.result = result["output"]
@@ -578,23 +594,34 @@ Based on this data, write a clear, concise, and helpful response that directly a
         self, step: ExecutionStep, input_data: str, definition: dict
     ) -> dict:
         """Use LLM to extract argument values from task description.
-        
+
         When document context is available (from InputLoader), it takes priority
         over attempting online searches.
         """
         tool_file = self.tools_dir / definition.get("file", "")
         arg_names = self._get_arg_names_from_file(tool_file)
-        
+
         # Prioritize document context if available
-        if hasattr(self, '_document_context') and self._document_context:
+        if hasattr(self, "_document_context") and self._document_context:
             logger.info("Using document context for argument inference")
             input_data = self._document_context
-            
+
             # Direct mapping: if tool has a content-type arg, assign document context directly
-            content_arg_names = ['html_content', 'content', 'text', 'text_content', 'input', 'document', 'raw_text', 'source_text']
+            content_arg_names = [
+                "html_content",
+                "content",
+                "text",
+                "text_content",
+                "input",
+                "document",
+                "raw_text",
+                "source_text",
+            ]
             for content_arg in content_arg_names:
                 if content_arg in arg_names:
-                    logger.info(f"Direct mapping document context to '{content_arg}' argument")
+                    logger.info(
+                        f"Direct mapping document context to '{content_arg}' argument"
+                    )
                     # Return with all other args as defaults or inferred
                     result = {content_arg: self._document_context}
                     # Set other required args to sensible defaults
@@ -605,25 +632,45 @@ Based on this data, write a clear, concise, and helpful response that directly a
 
         if not arg_names:
             return {"input": input_data}
-        
+
         # If 'data' arg is needed and input_data looks like structured JSON, pass it directly
         if "data" in arg_names and input_data and input_data != step.description:
             # Try JSON first
             try:
-                parsed = json.loads(input_data) if isinstance(input_data, str) else input_data
+                parsed = (
+                    json.loads(input_data)
+                    if isinstance(input_data, str)
+                    else input_data
+                )
                 if isinstance(parsed, dict) and len(parsed) > 0:
                     # Check for known structured data patterns
                     structured_keys = [
-                        "repos", "results", "items", "data", "labels",  # generic
-                        "posts", "subreddit", "subreddits",             # reddit
-                        "sentiments", "by_subreddit", "aggregate",      # sentiment
-                        "comparison", "ranking",                        # comparison
-                        "symbols", "dates", "values",                   # financial/chart
-                        "post_count", "total_posts",                    # counts
+                        "repos",
+                        "results",
+                        "items",
+                        "data",
+                        "labels",  # generic
+                        "posts",
+                        "subreddit",
+                        "subreddits",  # reddit
+                        "sentiments",
+                        "by_subreddit",
+                        "aggregate",  # sentiment
+                        "comparison",
+                        "ranking",  # comparison
+                        "symbols",
+                        "dates",
+                        "values",  # financial/chart
+                        "post_count",
+                        "total_posts",  # counts
                     ]
                     if any(k in parsed for k in structured_keys):
-                        logger.info(f"Direct pass-through: Using structured JSON for 'data' arg (keys: {list(parsed.keys())[:5]})")
-                        return self._infer_args_with_direct_data(step, parsed, arg_names, definition)
+                        logger.info(
+                            f"Direct pass-through: Using structured JSON for 'data' arg (keys: {list(parsed.keys())[:5]})"
+                        )
+                        return self._infer_args_with_direct_data(
+                            step, parsed, arg_names, definition
+                        )
             except (json.JSONDecodeError, TypeError):
                 pass
 
@@ -631,8 +678,12 @@ Based on this data, write a clear, concise, and helpful response that directly a
             if isinstance(input_data, str) and "," in input_data:
                 csv_parsed = self._try_parse_csv_to_data(input_data, step.description)
                 if csv_parsed is not None:
-                    logger.info("Direct pass-through: Parsed CSV document context into structured data")
-                    return self._infer_args_with_direct_data(step, csv_parsed, arg_names, definition)
+                    logger.info(
+                        "Direct pass-through: Parsed CSV document context into structured data"
+                    )
+                    return self._infer_args_with_direct_data(
+                        step, csv_parsed, arg_names, definition
+                    )
 
         # Check if URL arguments are needed - if so, search for relevant URLs
         available_urls = ""
@@ -640,18 +691,21 @@ Based on this data, write a clear, concise, and helpful response that directly a
         if any(arg in url_args for arg in arg_names):
             try:
                 from architecture.api_registry import search_urls
+
                 urls = search_urls(step.description, limit=3)
                 if urls:
-                    available_urls = "\n".join([
-                        f"- {u['name']}: {u['url']}" for u in urls
-                    ])
+                    available_urls = "\n".join(
+                        [f"- {u['name']}: {u['url']}" for u in urls]
+                    )
             except Exception as e:
                 logger.warning(f"Could not search for URLs: {e}")
 
         # Always use LLM to extract actual values (not raw description)
         from architecture.prompts import get_arg_extraction_prompt
 
-        prompt = get_arg_extraction_prompt(arg_names, step.description, input_data, available_urls)
+        prompt = get_arg_extraction_prompt(
+            arg_names, step.description, input_data, available_urls
+        )
 
         response = self.llm.generate_json(
             messages=[{"role": "user", "content": prompt}], max_tokens=256
@@ -676,7 +730,7 @@ Based on this data, write a clear, concise, and helpful response that directly a
         """Build args with direct data pass-through, using LLM only for other args."""
         # Start with direct data
         args = {"data": parsed_data}
-        
+
         # Build a compact data summary so the LLM can generate contextual labels
         data_summary = ""
         try:
@@ -689,26 +743,40 @@ Based on this data, write a clear, concise, and helpful response that directly a
                     summary_parts = []
                     if "symbols" in parsed_data:
                         summary_parts.append(f"Symbols: {parsed_data['symbols']}")
-                    if "comparison" in parsed_data and isinstance(parsed_data["comparison"], dict):
-                        keys = [k for k in parsed_data["comparison"].keys() if k != "dates"]
+                    if "comparison" in parsed_data and isinstance(
+                        parsed_data["comparison"], dict
+                    ):
+                        keys = [
+                            k for k in parsed_data["comparison"].keys() if k != "dates"
+                        ]
                         if keys:
                             summary_parts.append(f"Series: {keys}")
                     # Fallback: show top-level keys
                     if not summary_parts:
-                        summary_parts.append(f"Data keys: {list(parsed_data.keys())[:10]}")
+                        summary_parts.append(
+                            f"Data keys: {list(parsed_data.keys())[:10]}"
+                        )
                     data_summary = "; ".join(summary_parts)
         except Exception:
             data_summary = ""
-        
+
         # Get other args from LLM (title, xlabel, ylabel, etc.) but with much simpler prompt
         other_args = [a for a in arg_names if a != "data"]
         if other_args:
             # Detect if this is a chart/visualization tool
-            chart_args = {"chart_type", "xlabel", "ylabel", "figsize", "colors", "legend_labels", "theme"}
+            chart_args = {
+                "chart_type",
+                "xlabel",
+                "ylabel",
+                "figsize",
+                "colors",
+                "legend_labels",
+                "theme",
+            }
             is_chart = bool(chart_args.intersection(set(other_args)))
-            
+
             data_context = f"\nData context: {data_summary}\n" if data_summary else ""
-            
+
             if is_chart:
                 prompt = f"""For a chart visualization, provide values for these arguments:
 {other_args}
@@ -725,11 +793,11 @@ Use sensible defaults for any optional args (empty string is fine)."""
 Task: {step.description}
 {data_context}
 Return ONLY a JSON object. Omit any argument you cannot determine a value for."""
-            
+
             response = self.llm.generate_json(
                 messages=[{"role": "user", "content": prompt}], max_tokens=256
             )
-            
+
             if not response.get("error"):
                 try:
                     other_values = json.loads(response["content"])
@@ -738,13 +806,13 @@ Return ONLY a JSON object. Omit any argument you cannot determine a value for.""
                             args[k] = v
                 except Exception:
                     pass
-        
+
         logger.info(f"Direct data pass-through args: {list(args.keys())}")
         return args
 
     def _try_parse_csv_to_data(self, text: str, description: str) -> Optional[dict]:
         """Try to parse CSV text into a structured dict suitable for chart tools.
-        
+
         Handles both raw CSV and CSV wrapped in document context markers
         (e.g., --- FILE: data.csv --- ... --- END: data.csv ---).
         Uses task description to pick the right columns, then aggregates.
@@ -758,8 +826,7 @@ Return ONLY a JSON object. Omit any argument you cannot determine a value for.""
             # Extract CSV content from document context wrapper if present
             csv_text = text
             csv_match = re.search(
-                r'--- FILE: .+\.csv ---\n(.*?)\n--- END: .+\.csv ---',
-                text, re.DOTALL
+                r"--- FILE: .+\.csv ---\n(.*?)\n--- END: .+\.csv ---", text, re.DOTALL
             )
             if csv_match:
                 csv_text = csv_match.group(1).strip()
@@ -791,7 +858,9 @@ Return ONLY a JSON object. Omit any argument you cannot determine a value for.""
 
             # Identify column types
             str_cols = [k for k in fieldnames if isinstance(rows[0].get(k), str)]
-            num_cols = [k for k in fieldnames if isinstance(rows[0].get(k), (int, float))]
+            num_cols = [
+                k for k in fieldnames if isinstance(rows[0].get(k), (int, float))
+            ]
 
             if not num_cols:
                 return None
@@ -825,12 +894,17 @@ Return ONLY a JSON object. Omit any argument you cannot determine a value for.""
                     val = row.get(value_col, 0)
                     if isinstance(val, (int, float)):
                         aggregated[key] = aggregated.get(key, 0) + val
-                result = {"labels": list(aggregated.keys()), "values": list(aggregated.values())}
+                result = {
+                    "labels": list(aggregated.keys()),
+                    "values": list(aggregated.values()),
+                }
             else:
                 result = {"values": [row.get(value_col, 0) for row in rows]}
 
-            logger.info(f"CSV parsed: {len(rows)} rows, columns: {fieldnames}, "
-                       f"using label={label_col}, value={value_col}")
+            logger.info(
+                f"CSV parsed: {len(rows)} rows, columns: {fieldnames}, "
+                f"using label={label_col}, value={value_col}"
+            )
             return result
         except Exception as e:
             logger.debug(f"CSV parse failed: {e}")

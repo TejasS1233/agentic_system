@@ -10,7 +10,6 @@ Calls Groq LLM API directly via requests for code generation inside Docker.
 import os
 import json
 import base64
-import zlib
 from typing import Optional
 from pydantic import BaseModel, Field
 
@@ -72,13 +71,64 @@ class MermaidDiagramTool:
 
     # Map of keywords to diagram types for auto-detection
     TYPE_KEYWORDS = {
-        "flowchart": ["flowchart", "flow", "process", "workflow", "pipeline", "steps", "decision"],
-        "sequence": ["sequence", "interaction", "message", "request", "response", "api call", "communication"],
-        "classDiagram": ["class", "inheritance", "interface", "oop", "object", "uml class"],
-        "stateDiagram-v2": ["state", "transition", "finite", "machine", "lifecycle", "status"],
-        "erDiagram": ["er ", "entity", "relationship", "database schema", "tables", "foreign key"],
-        "gantt": ["gantt", "timeline", "schedule", "project plan", "milestones", "sprint"],
-        "pie": ["pie", "distribution", "percentage", "proportion", "share", "breakdown"],
+        "flowchart": [
+            "flowchart",
+            "flow",
+            "process",
+            "workflow",
+            "pipeline",
+            "steps",
+            "decision",
+        ],
+        "sequence": [
+            "sequence",
+            "interaction",
+            "message",
+            "request",
+            "response",
+            "api call",
+            "communication",
+        ],
+        "classDiagram": [
+            "class",
+            "inheritance",
+            "interface",
+            "oop",
+            "object",
+            "uml class",
+        ],
+        "stateDiagram-v2": [
+            "state",
+            "transition",
+            "finite",
+            "machine",
+            "lifecycle",
+            "status",
+        ],
+        "erDiagram": [
+            "er ",
+            "entity",
+            "relationship",
+            "database schema",
+            "tables",
+            "foreign key",
+        ],
+        "gantt": [
+            "gantt",
+            "timeline",
+            "schedule",
+            "project plan",
+            "milestones",
+            "sprint",
+        ],
+        "pie": [
+            "pie",
+            "distribution",
+            "percentage",
+            "proportion",
+            "share",
+            "breakdown",
+        ],
         "mindmap": ["mindmap", "mind map", "brainstorm", "concept map", "idea map"],
         "timeline": ["timeline", "chronolog", "history", "events over time"],
         "gitGraph": ["git", "branch", "commit", "merge", "gitflow"],
@@ -131,10 +181,12 @@ class MermaidDiagramTool:
             resp.raise_for_status()
             data = resp.json()
             return data["choices"][0]["message"]["content"].strip()
-        except Exception as e:
+        except Exception:
             return ""
 
-    def _generate_mermaid_code(self, description: str, diagram_type: str, theme: str) -> str:
+    def _generate_mermaid_code(
+        self, description: str, diagram_type: str, theme: str
+    ) -> str:
         """Use LLM to generate Mermaid markup from a natural language description."""
 
         prompt = f"""You are a Mermaid diagram expert. Generate ONLY valid Mermaid markup code.
@@ -196,14 +248,16 @@ Generate the Mermaid code now:"""
                 f"    C --> D[End]"
             )
 
-    def _render_with_mermaid_ink(self, mermaid_code: str, output_format: str = "png") -> bytes:
+    def _render_with_mermaid_ink(
+        self, mermaid_code: str, output_format: str = "png"
+    ) -> bytes:
         """Render Mermaid code to image using mermaid.ink (free, no auth, no Cloudflare)."""
         import urllib.request
         import urllib.error
 
         # mermaid.ink expects base64-encoded mermaid code in the URL
         encoded = base64.urlsafe_b64encode(mermaid_code.encode("utf-8")).decode("utf-8")
-        
+
         if output_format == "svg":
             url = f"https://mermaid.ink/svg/{encoded}"
         else:
@@ -226,7 +280,9 @@ Generate the Mermaid code now:"""
         except urllib.error.URLError as e:
             raise RuntimeError(f"Cannot reach mermaid.ink: {e.reason}")
 
-    def _render_with_kroki(self, mermaid_code: str, output_format: str = "png") -> bytes:
+    def _render_with_kroki(
+        self, mermaid_code: str, output_format: str = "png"
+    ) -> bytes:
         """Fallback: Render via Kroki.io API with proper headers."""
         import urllib.request
         import urllib.error
@@ -343,9 +399,14 @@ Generate the Mermaid code now:"""
                 if f.startswith("diagram_") and f.endswith(f".{output_format}")
             ]
             idx = len(existing) + 1
-            output_path = os.path.join(self.output_dir, f"diagram_{idx}.{output_format}")
+            output_path = os.path.join(
+                self.output_dir, f"diagram_{idx}.{output_format}"
+            )
 
-        os.makedirs(os.path.dirname(output_path) if os.path.dirname(output_path) else ".", exist_ok=True)
+        os.makedirs(
+            os.path.dirname(output_path) if os.path.dirname(output_path) else ".",
+            exist_ok=True,
+        )
 
         with open(output_path, "wb") as f:
             f.write(image_data)

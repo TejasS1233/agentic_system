@@ -151,14 +151,14 @@ class Sandbox:
         else:
             self.output_dir = Path(output_dir).resolve()
         self.output_dir.mkdir(parents=True, exist_ok=True)
-        
+
         # Default inputs_dir to workspace/inputs if not specified
         if inputs_dir is None:
             self.inputs_dir = self.tools_dir.parent / "inputs"
         else:
             self.inputs_dir = Path(inputs_dir).resolve()
         self.inputs_dir.mkdir(parents=True, exist_ok=True)
-        
+
         self.image = image
         self.client = None
         self.container = None
@@ -169,23 +169,22 @@ class Sandbox:
 
     def translate_path_for_container(self, host_path: str) -> str:
         """Translate a Windows host path to a Linux container path.
-        
+
         Maps:
         - inputs_dir -> /inputs
         - output_dir -> /output
         - tools_dir -> /tools
         """
-        from pathlib import PureWindowsPath, PurePosixPath
-        
+
         # Normalize the host path
         host_path_str = str(host_path)
-        
+
         # Try to resolve the path to check against our known directories
         try:
             host_path_resolved = Path(host_path_str).resolve()
         except Exception:
             host_path_resolved = Path(host_path_str)
-        
+
         # Check if path is under inputs_dir
         try:
             relative = host_path_resolved.relative_to(self.inputs_dir)
@@ -194,7 +193,7 @@ class Sandbox:
             return container_path
         except ValueError:
             pass
-        
+
         # Check if path is under output_dir
         try:
             relative = host_path_resolved.relative_to(self.output_dir)
@@ -203,7 +202,7 @@ class Sandbox:
             return container_path
         except ValueError:
             pass
-        
+
         # Check if path is under tools_dir
         try:
             relative = host_path_resolved.relative_to(self.tools_dir)
@@ -212,13 +211,15 @@ class Sandbox:
             return container_path
         except ValueError:
             pass
-        
+
         # If just a filename, assume it's in inputs
-        if not '/' in host_path_str and not '\\' in host_path_str:
+        if "/" not in host_path_str and "\\" not in host_path_str:
             container_path = f"/inputs/{host_path_str}"
-            logger.info(f"Path translation (filename only): {host_path} -> {container_path}")
+            logger.info(
+                f"Path translation (filename only): {host_path} -> {container_path}"
+            )
             return container_path
-        
+
         # Return original if no mapping found
         logger.warning(f"No path translation found for: {host_path}")
         return host_path_str
@@ -343,11 +344,11 @@ class Sandbox:
 
     def run_tool_test(self, tool_file: str) -> dict:
         """Run the test_tool() function of a generated tool to verify it works.
-        
+
         This executes `python tool_file.py` which should trigger:
         if __name__ == "__main__":
             test_tool()
-        
+
         Returns:
             {"success": bool, "output": str, "error": str}
         """
@@ -594,14 +595,21 @@ except Exception as e:
 
         logger.info(f"Executing tool with args: {tool_name}")
         logger.info(f"Args JSON being passed: {args_json}")
-        
+
         # Pass API keys from host environment to container
         import os as host_os
+
         container_env = {}
-        for key in ["SERP_API_KEY", "HF_TOKEN", "GROQ_API_KEY", "GEMINI_API_KEY", "OPENAI_API_KEY"]:
+        for key in [
+            "SERP_API_KEY",
+            "HF_TOKEN",
+            "GROQ_API_KEY",
+            "GEMINI_API_KEY",
+            "OPENAI_API_KEY",
+        ]:
             if val := host_os.environ.get(key):
                 container_env[key] = val
-        
+
         try:
             exit_code, output = self.container.exec_run(
                 f"python /tools/{runner_name}",

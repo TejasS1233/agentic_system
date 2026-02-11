@@ -1,10 +1,6 @@
 import os
-import re
 import json
 import time
-import ast
-import subprocess
-import tempfile
 from pathlib import Path
 from architecture.llm_manager import get_llm_manager
 from architecture.gatekeeper import Gatekeeper
@@ -19,7 +15,13 @@ logger = get_logger(__name__)
 class Toolsmith:
     """Generates, validates, and manages tools with domain-aware deduplication."""
 
-    def __init__(self, safe_mode: bool = False, gatekeeper: Gatekeeper = None, sandbox: Sandbox = None, max_retries: int = 2):
+    def __init__(
+        self,
+        safe_mode: bool = False,
+        gatekeeper: Gatekeeper = None,
+        sandbox: Sandbox = None,
+        max_retries: int = 2,
+    ):
         self.safe_mode = safe_mode
         self.gatekeeper = gatekeeper or Gatekeeper(strict_mode=safe_mode)
         self.max_retries = max_retries
@@ -29,11 +31,9 @@ class Toolsmith:
         self.registry_path = self.tools_dir / "registry.json"
         self.metrics_path = self.tools_dir / "metrics.json"
         self.tools_source_path = Path.cwd() / "execution" / "tools.py"
-        
+
         # Sandbox for verification
         self.sandbox = sandbox
-
-
 
         self.tools_dir.mkdir(parents=True, exist_ok=True)
 
@@ -84,8 +84,6 @@ class Toolsmith:
             self._write_json(self.registry_path, data)
             # logger.debug("Registry migrated to include status fields")
 
-
-
     def _log_metrics(self, event_type: str, details: dict):
         """Log usage metrics to JSONL file."""
         entry = {"timestamp": time.time(), "event": event_type, **details}
@@ -115,18 +113,24 @@ class Toolsmith:
 
         llm = get_llm_manager()
         existing_code = self._get_existing_tools_context()
-        
+
         # Search for relevant free APIs and scrapable URLs based on the requirement
-        available_apis = format_all_sources_for_prompt(requirement, api_limit=4, url_limit=2)
-        system_prompt = get_tool_generator_prompt(existing_code, available_apis=available_apis)
-        
+        available_apis = format_all_sources_for_prompt(
+            requirement, api_limit=4, url_limit=2
+        )
+        system_prompt = get_tool_generator_prompt(
+            existing_code, available_apis=available_apis
+        )
+
         last_error = None
-        
+
         for attempt in range(self.max_retries + 1):
-            logger.info(f"Generating tool with LLM (attempt {attempt + 1}/{self.max_retries + 1})...")
+            logger.info(
+                f"Generating tool with LLM (attempt {attempt + 1}/{self.max_retries + 1})..."
+            )
             # Log APIs for debug
             if attempt == 0:
-                 logger.info(f"Available APIs context length: {len(available_apis)}")
+                logger.info(f"Available APIs context length: {len(available_apis)}")
 
             try:
                 # Build user message with error feedback if retrying
@@ -149,14 +153,14 @@ Fix the code to resolve this error."""
                 )
 
                 if response.get("error"):
-                    err_msg = response['error']
+                    err_msg = response["error"]
                     logger.warning(f"LLM generation error: {err_msg}")
-                    
+
                     # Rate limit backoff
                     if "429" in str(err_msg) or "Rate limit" in str(err_msg):
                         logger.warning("Rate limit hit. Sleeping for 5 seconds...")
                         time.sleep(5)
-                        
+
                     last_error = err_msg
                     continue
 
@@ -185,13 +189,18 @@ Fix the code to resolve this error."""
                     test_result = self.sandbox.run_tool_test(file_name)
                     if not test_result["success"]:
                         last_error = test_result["error"]
-                        logger.warning(f"Tool test failed (attempt {attempt + 1}): {last_error}")
-                        self._log_metrics("tool_test_failed", {
-                            "request": requirement,
-                            "tool_name": class_name,
-                            "attempt": attempt + 1,
-                            "error": last_error[:500],
-                        })
+                        logger.warning(
+                            f"Tool test failed (attempt {attempt + 1}): {last_error}"
+                        )
+                        self._log_metrics(
+                            "tool_test_failed",
+                            {
+                                "request": requirement,
+                                "tool_name": class_name,
+                                "attempt": attempt + 1,
+                                "error": last_error[:500],
+                            },
+                        )
                         continue  # Retry
                     logger.info(f"Tool test passed: {class_name}")
 
@@ -223,15 +232,17 @@ Fix the code to resolve this error."""
                 logger.error(f"Tool creation failed: {e}", exc_info=True)
                 last_error = str(e)
                 if "429" in str(e) or "Rate limit" in str(e):
-                     logger.warning("Rate limit exception. Sleeping for 5 seconds...")
-                     time.sleep(5)
+                    logger.warning("Rate limit exception. Sleeping for 5 seconds...")
+                    time.sleep(5)
                 continue
 
         # All retries exhausted
         self._log_metrics(
             "generation_failed", {"request": requirement, "error": str(last_error)}
         )
-        return f"Tool creation failed after {self.max_retries + 1} attempts: {last_error}"
+        return (
+            f"Tool creation failed after {self.max_retries + 1} attempts: {last_error}"
+        )
 
     def _update_registry(
         self,
@@ -301,8 +312,6 @@ Fix the code to resolve this error."""
         """Get all tools with a specific status."""
         data = self._read_json(self.registry_path)
         return [name for name, meta in data.items() if meta.get("status") == status]
-
-
 
     def list_available_tools(self) -> list:
         """List all tools in registry."""

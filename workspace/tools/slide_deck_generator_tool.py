@@ -133,11 +133,31 @@ Generate the JSON array now:"""
     def _fallback_slides(self, topic: str, num_slides: int) -> list:
         """Generate basic fallback slides."""
         slides = [
-            {"title": topic[:60], "bullets": ["A comprehensive overview"], "notes": "Welcome to this presentation."},
-            {"title": "Background", "bullets": ["Context and motivation", "Prior work", "Key challenges"], "notes": "Let's start with the background."},
-            {"title": "Key Concepts", "bullets": ["Core idea", "Main components", "How it works"], "notes": "These are the fundamental concepts."},
-            {"title": "Results", "bullets": ["Key findings", "Performance metrics", "Comparison"], "notes": "Here are the main results."},
-            {"title": "Conclusion", "bullets": ["Summary of key points", "Future directions", "Questions?"], "notes": "Thank you for your attention."},
+            {
+                "title": topic[:60],
+                "bullets": ["A comprehensive overview"],
+                "notes": "Welcome to this presentation.",
+            },
+            {
+                "title": "Background",
+                "bullets": ["Context and motivation", "Prior work", "Key challenges"],
+                "notes": "Let's start with the background.",
+            },
+            {
+                "title": "Key Concepts",
+                "bullets": ["Core idea", "Main components", "How it works"],
+                "notes": "These are the fundamental concepts.",
+            },
+            {
+                "title": "Results",
+                "bullets": ["Key findings", "Performance metrics", "Comparison"],
+                "notes": "Here are the main results.",
+            },
+            {
+                "title": "Conclusion",
+                "bullets": ["Summary of key points", "Future directions", "Questions?"],
+                "notes": "Thank you for your attention.",
+            },
         ]
         return slides[:num_slides]
 
@@ -219,7 +239,17 @@ Generate the JSON array now:"""
         """
         num_slides = max(3, min(20, num_slides or 8))
 
-        valid_themes = {"black", "white", "league", "beige", "moon", "night", "serif", "simple", "solarized"}
+        valid_themes = {
+            "black",
+            "white",
+            "league",
+            "beige",
+            "moon",
+            "night",
+            "serif",
+            "simple",
+            "solarized",
+        }
         if theme not in valid_themes:
             theme = "black"
 
@@ -234,21 +264,31 @@ Generate the JSON array now:"""
         if output_path and not output_path.startswith(self.output_dir):
             output_path = os.path.join(self.output_dir, os.path.basename(output_path))
         if not output_path:
-            existing = [f for f in os.listdir(self.output_dir) if f.startswith("presentation_") and f.endswith(".html")]
+            existing = [
+                f
+                for f in os.listdir(self.output_dir)
+                if f.startswith("presentation_") and f.endswith(".html")
+            ]
             idx = len(existing) + 1
             output_path = os.path.join(self.output_dir, f"presentation_{idx}.html")
 
-        os.makedirs(os.path.dirname(output_path) if os.path.dirname(output_path) else ".", exist_ok=True)
+        os.makedirs(
+            os.path.dirname(output_path) if os.path.dirname(output_path) else ".",
+            exist_ok=True,
+        )
 
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(html)
 
-        return json.dumps({
-            "success": True,
-            "output_path": output_path,
-            "num_slides": len(slides),
-            "theme": theme,
-            "title": title,
-            "file_size_bytes": len(html.encode("utf-8")),
-            "message": f"Presentation with {len(slides)} slides saved to {output_path}. Open in a browser to present.",
-        }, indent=2)
+        return json.dumps(
+            {
+                "success": True,
+                "output_path": output_path,
+                "num_slides": len(slides),
+                "theme": theme,
+                "title": title,
+                "file_size_bytes": len(html.encode("utf-8")),
+                "message": f"Presentation with {len(slides)} slides saved to {output_path}. Open in a browser to present.",
+            },
+            indent=2,
+        )

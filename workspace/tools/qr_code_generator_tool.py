@@ -86,19 +86,25 @@ class QRCodeGeneratorTool:
             JSON with success status and output path.
         """
         if not data or not data.strip():
-            return json.dumps({
-                "success": False,
-                "error": "No data provided to encode.",
-            }, indent=2)
+            return json.dumps(
+                {
+                    "success": False,
+                    "error": "No data provided to encode.",
+                },
+                indent=2,
+            )
 
         try:
             import qrcode
             from qrcode.constants import ERROR_CORRECT_H
         except ImportError:
-            return json.dumps({
-                "success": False,
-                "error": "qrcode library not available. Install with: pip install qrcode[pil]",
-            }, indent=2)
+            return json.dumps(
+                {
+                    "success": False,
+                    "error": "qrcode library not available. Install with: pip install qrcode[pil]",
+                },
+                indent=2,
+            )
 
         size = max(1, min(40, size or 10))
         border = max(0, min(10, border or 4))
@@ -117,29 +123,44 @@ class QRCodeGeneratorTool:
 
             # Save — always under /output/ so it persists on host volume
             if output_path and not output_path.startswith(self.output_dir):
-                output_path = os.path.join(self.output_dir, os.path.basename(output_path))
+                output_path = os.path.join(
+                    self.output_dir, os.path.basename(output_path)
+                )
             if not output_path:
-                existing = [f for f in os.listdir(self.output_dir) if f.startswith("qrcode_") and f.endswith(".png")]
+                existing = [
+                    f
+                    for f in os.listdir(self.output_dir)
+                    if f.startswith("qrcode_") and f.endswith(".png")
+                ]
                 idx = len(existing) + 1
                 output_path = os.path.join(self.output_dir, f"qrcode_{idx}.png")
 
-            os.makedirs(os.path.dirname(output_path) if os.path.dirname(output_path) else ".", exist_ok=True)
+            os.makedirs(
+                os.path.dirname(output_path) if os.path.dirname(output_path) else ".",
+                exist_ok=True,
+            )
 
             img.save(output_path)
             file_size = os.path.getsize(output_path)
 
-            return json.dumps({
-                "success": True,
-                "data_encoded": data[:100] + ("..." if len(data) > 100 else ""),
-                "data_length": len(data),
-                "output_path": output_path,
-                "image_size": f"{img.size[0]}x{img.size[1]}",
-                "file_size_bytes": file_size,
-                "message": f"QR code generated and saved to {output_path}",
-            }, indent=2)
+            return json.dumps(
+                {
+                    "success": True,
+                    "data_encoded": data[:100] + ("..." if len(data) > 100 else ""),
+                    "data_length": len(data),
+                    "output_path": output_path,
+                    "image_size": f"{img.size[0]}x{img.size[1]}",
+                    "file_size_bytes": file_size,
+                    "message": f"QR code generated and saved to {output_path}",
+                },
+                indent=2,
+            )
 
         except Exception as e:
-            return json.dumps({
-                "success": False,
-                "error": str(e),
-            }, indent=2)
+            return json.dumps(
+                {
+                    "success": False,
+                    "error": str(e),
+                },
+                indent=2,
+            )

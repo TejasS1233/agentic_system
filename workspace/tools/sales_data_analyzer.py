@@ -3,8 +3,10 @@ from pydantic import BaseModel, Field
 import numpy as np
 from scipy import stats
 
+
 class SalesDataAnalyzerArgs(BaseModel):
     filepath: str = Field(..., description="Path to the sales data CSV file")
+
 
 class SalesDataAnalyzer:
     name = "sales_data_analyzer"
@@ -15,12 +17,12 @@ class SalesDataAnalyzer:
         try:
             # Load the sales data CSV file
             df = pd.read_csv(filepath)
-            
+
             # Auto-detect numeric columns
             numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
             if not numeric_cols:
                 return "Error: No numeric columns found in the dataset"
-            
+
             results = {}
             for col in numeric_cols:
                 data = df[col].dropna()
@@ -29,8 +31,8 @@ class SalesDataAnalyzer:
                 median = np.median(data)
                 std_dev = np.std(data, ddof=1)  # sample std dev
                 se = std_dev / np.sqrt(n)
-                ci_95 = stats.t.interval(0.95, df=n-1, loc=mean, scale=se)
-                
+                ci_95 = stats.t.interval(0.95, df=n - 1, loc=mean, scale=se)
+
                 results[col] = {
                     "count": int(n),
                     "mean": round(float(mean), 2),
@@ -38,9 +40,9 @@ class SalesDataAnalyzer:
                     "std_dev": round(float(std_dev), 2),
                     "min": round(float(data.min()), 2),
                     "max": round(float(data.max()), 2),
-                    "95%_CI": [round(float(ci_95[0]), 2), round(float(ci_95[1]), 2)]
+                    "95%_CI": [round(float(ci_95[0]), 2), round(float(ci_95[1]), 2)],
                 }
-            
+
             # Build readable output
             lines = ["=== Statistical Analysis ===\n"]
             for col, s in results.items():
@@ -53,15 +55,17 @@ class SalesDataAnalyzer:
                 lines.append(f"  Max:      {s['max']}")
                 lines.append(f"  95% CI:   [{s['95%_CI'][0]}, {s['95%_CI'][1]}]")
                 lines.append("")
-            
+
             return "\n".join(lines)
         except Exception as e:
             return f"Error: {str(e)}"
 
+
 def test_tool():
     analyzer = SalesDataAnalyzer()
-    result = analyzer.run('sales_data.csv')
+    result = analyzer.run("sales_data.csv")
     print(result)
+
 
 if __name__ == "__main__":
     test_tool()

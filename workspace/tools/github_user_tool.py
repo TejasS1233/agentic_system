@@ -1,7 +1,7 @@
 """GitHub User Profile Tool - Get user info via GitHub API."""
 
 import requests
-from typing import Literal, Optional, Dict, List, Any
+from typing import Literal, Optional, Dict, Any
 from pydantic import BaseModel, Field
 
 
@@ -10,7 +10,7 @@ class GitHubUserArgs(BaseModel):
     info_type: Literal["profile", "repos", "starred", "gists", "events"] = Field(
         "profile",
         description="Type of info: 'profile' (user details), 'repos' (public repos), "
-                    "'starred' (starred repos), 'gists', or 'events' (recent activity)"
+        "'starred' (starred repos), 'gists', or 'events' (recent activity)",
     )
     limit: int = Field(10, description="Number of items to fetch (for lists)")
     sort: Literal["updated", "created", "pushed", "stars"] = Field(
@@ -21,7 +21,7 @@ class GitHubUserArgs(BaseModel):
 class GitHubUserTool:
     """
     GitHub User Profile Tool.
-    
+
     Fetch information about any GitHub user:
     - Profile info (bio, company, location, followers, etc.)
     - Public repositories
@@ -29,31 +29,31 @@ class GitHubUserTool:
     - Public gists
     - Recent activity/events
     """
-    
+
     name = "github_user"
     description = """Fetch information about any GitHub user. Get profile details, public repos, 
     starred repos, gists, and recent activity. No authentication required for public profiles."""
     args_schema = GitHubUserArgs
-    
+
     BASE_URL = "https://api.github.com"
-    
+
     def __init__(self, token: Optional[str] = None):
         self.headers = {
             "Accept": "application/vnd.github+json",
-            "User-Agent": "AgenticSystem-GitHubTool/1.0"
+            "User-Agent": "AgenticSystem-GitHubTool/1.0",
         }
         if token:
             self.headers["Authorization"] = f"Bearer {token}"
-    
+
     def run(
         self,
         username: str,
         info_type: str = "profile",
         limit: int = 10,
-        sort: str = "updated"
+        sort: str = "updated",
     ) -> Dict[str, Any]:
         """Fetch user information from GitHub."""
-        
+
         try:
             if info_type == "profile":
                 return self._get_profile(username)
@@ -69,24 +69,24 @@ class GitHubUserTool:
                 return {"error": f"Unknown info_type: {info_type}"}
         except Exception as e:
             return {"error": f"Failed to fetch user info: {str(e)}"}
-    
+
     def _request(self, endpoint: str) -> Any:
         """Make a request to GitHub API."""
         url = f"{self.BASE_URL}{endpoint}"
         response = requests.get(url, headers=self.headers, timeout=15)
-        
+
         if response.status_code == 404:
             raise ValueError("User not found")
         elif response.status_code == 403:
             raise ValueError("Rate limit exceeded. Try again later.")
-        
+
         response.raise_for_status()
         return response.json()
-    
+
     def _get_profile(self, username: str) -> Dict[str, Any]:
         """Get user profile."""
         data = self._request(f"/users/{username}")
-        
+
         return {
             "username": data.get("login"),
             "name": data.get("name"),
@@ -107,11 +107,11 @@ class GitHubUserTool:
             "type": data.get("type"),  # User or Organization
             "url": data.get("html_url"),
         }
-    
+
     def _get_repos(self, username: str, limit: int, sort: str) -> Dict[str, Any]:
         """Get user's public repositories."""
         data = self._request(f"/users/{username}/repos?per_page={limit}&sort={sort}")
-        
+
         repos = [
             {
                 "name": r.get("name"),
@@ -126,17 +126,13 @@ class GitHubUserTool:
             }
             for r in data
         ]
-        
-        return {
-            "username": username,
-            "count": len(repos),
-            "repos": repos
-        }
-    
+
+        return {"username": username, "count": len(repos), "repos": repos}
+
     def _get_starred(self, username: str, limit: int) -> Dict[str, Any]:
         """Get repos starred by user."""
         data = self._request(f"/users/{username}/starred?per_page={limit}")
-        
+
         starred = [
             {
                 "name": r.get("full_name"),
@@ -147,17 +143,13 @@ class GitHubUserTool:
             }
             for r in data
         ]
-        
-        return {
-            "username": username,
-            "count": len(starred),
-            "starred": starred
-        }
-    
+
+        return {"username": username, "count": len(starred), "starred": starred}
+
     def _get_gists(self, username: str, limit: int) -> Dict[str, Any]:
         """Get user's public gists."""
         data = self._request(f"/users/{username}/gists?per_page={limit}")
-        
+
         gists = [
             {
                 "id": g.get("id"),
@@ -170,17 +162,13 @@ class GitHubUserTool:
             }
             for g in data
         ]
-        
-        return {
-            "username": username,
-            "count": len(gists),
-            "gists": gists
-        }
-    
+
+        return {"username": username, "count": len(gists), "gists": gists}
+
     def _get_events(self, username: str, limit: int) -> Dict[str, Any]:
         """Get user's recent public events."""
         data = self._request(f"/users/{username}/events/public?per_page={limit}")
-        
+
         events = []
         for e in data:
             event = {
@@ -188,7 +176,7 @@ class GitHubUserTool:
                 "repo": e.get("repo", {}).get("name"),
                 "created_at": e.get("created_at"),
             }
-            
+
             # Add type-specific details
             payload = e.get("payload", {})
             if e.get("type") == "PushEvent":
@@ -205,14 +193,10 @@ class GitHubUserTool:
             elif e.get("type") == "CreateEvent":
                 event["ref_type"] = payload.get("ref_type")  # repository, branch, tag
                 event["ref"] = payload.get("ref")
-            
+
             events.append(event)
-        
-        return {
-            "username": username,
-            "count": len(events),
-            "events": events
-        }
+
+        return {"username": username, "count": len(events), "events": events}
 
 
 # For direct testing

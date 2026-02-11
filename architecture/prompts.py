@@ -79,13 +79,15 @@ def get_arg_extraction_prompt(
 ) -> str:
     """Generate prompt for extracting argument values from task description."""
     url_section = ""
-    if available_urls and any(arg in ["url", "target_url", "source_url", "webpage"] for arg in arg_names):
+    if available_urls and any(
+        arg in ["url", "target_url", "source_url", "webpage"] for arg in arg_names
+    ):
         url_section = f"""
 AVAILABLE URLS (USE THESE INSTEAD OF GUESSING):
 {available_urls}
 If a URL argument is needed, PREFER one from the above list that matches the task.
 """
-    
+
     return f"""Extract the actual values for these arguments from the task context.
 
 Arguments needed: {arg_names}
@@ -125,10 +127,12 @@ ALLOWED_DOMAINS_STR = ", ".join(ALLOWED_DOMAINS)
 
 
 def get_tool_generator_prompt(
-    existing_code: str, domain_options: str = ALLOWED_DOMAINS_STR, available_apis: str = ""
+    existing_code: str,
+    domain_options: str = ALLOWED_DOMAINS_STR,
+    available_apis: str = "",
 ) -> str:
     """Generate prompt for creating new tools.
-    
+
     Args:
         existing_code: Reference code style from existing tools
         domain_options: Allowed domain categories
@@ -151,7 +155,7 @@ These are curated, working API endpoints that require NO authentication. PREFER 
 
 IMPORTANT: If one of these APIs matches your task requirements, USE IT directly in your code with `requests.get()`.
 """
-    
+
     return f"""You are an expert Python Tool Generator. 
 You MUST generate a JSON object containing the tool code and metadata.
 

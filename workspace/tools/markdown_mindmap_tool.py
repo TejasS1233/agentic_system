@@ -4,7 +4,9 @@ from pydantic import BaseModel, Field
 
 
 class MarkdownMindmapArgs(BaseModel):
-    markdown_string: str = Field(..., description="Markdown string to generate mindmap from")
+    markdown_string: str = Field(
+        ..., description="Markdown string to generate mindmap from"
+    )
 
 
 class MarkdownMindmapTool:
@@ -28,7 +30,7 @@ class MarkdownMindmapTool:
                     graph.add_edge(section_title, line.strip())
         # Generate mindmap
         pos = nx.spring_layout(graph)
-        nx.draw_networkx(graph, pos, with_labels=True, node_color='lightblue')
+        nx.draw_networkx(graph, pos, with_labels=True, node_color="lightblue")
         plt.savefig("/output/mindmap.png")
         return "/output/mindmap.png"
 
@@ -38,6 +40,7 @@ def test_tool():
     markdown_string = "\n--- FILE: research_paper.pdf ---\nProvided proper attribution is provided, Google hereby grants permission to reproduce the tables and figures in this paper solely for use in journalistic or scholarly works.\nAttention Is All You Need\nAshish Vaswani\nGoogle Brain\navaswani@google.com\nNoam Shazeer\nGoogle Brain\nnoam@google.com\nNiki Parmar\nGoogle Research\nnikip@g"
     output = tool.run(markdown_string)
     print(output)
+
 
 if __name__ == "__main__":
     test_tool()

@@ -10,28 +10,30 @@ from itertools import combinations
 
 class RoutePlannerArgs(BaseModel):
     addresses: List[str] = Field(
-        ..., description="List of addresses or place names to route between (2-20 locations)"
+        ...,
+        description="List of addresses or place names to route between (2-20 locations)",
     )
     return_to_start: bool = Field(
-        False, description="Whether the route should return to the starting point (round trip)"
+        False,
+        description="Whether the route should return to the starting point (round trip)",
     )
 
 
 class RoutePlannerTool:
     """
     Route planner: geocode addresses, compute pairwise distances, find shortest route.
-    
+
     Features:
     - Geocode any address/place name to lat/lon (via OpenStreetMap Nominatim)
     - Haversine distance between all location pairs
     - Shortest route via nearest-neighbor TSP heuristic
     - Optional round-trip mode
     - Distance matrix output
-    
+
     No API key required. Uses free OpenStreetMap Nominatim API.
     Rate-limited to 1 request/second per Nominatim policy.
     """
-    
+
     name = "route_planner"
     description = """Geocode addresses to coordinates, calculate distances between all pairs, 
     and find the shortest route. Supports 2-20 locations. Free, no API key needed."""
@@ -40,7 +42,9 @@ class RoutePlannerTool:
     GEOCODE_URL = "https://nominatim.openstreetmap.org/search"
     HEADERS = {"User-Agent": "AgenticSystem-RoutePlanner/1.0"}
 
-    def run(self, addresses: List[str], return_to_start: bool = False) -> Dict[str, Any]:
+    def run(
+        self, addresses: List[str], return_to_start: bool = False
+    ) -> Dict[str, Any]:
         """Geocode addresses, compute distances, find shortest route."""
 
         if len(addresses) < 2:
@@ -54,12 +58,14 @@ class RoutePlannerTool:
         for addr in addresses:
             coords = self._geocode(addr)
             if coords:
-                locations.append({
-                    "address": addr,
-                    "resolved": coords["display_name"],
-                    "lat": coords["lat"],
-                    "lon": coords["lon"],
-                })
+                locations.append(
+                    {
+                        "address": addr,
+                        "resolved": coords["display_name"],
+                        "lat": coords["lat"],
+                        "lon": coords["lon"],
+                    }
+                )
             else:
                 failed.append(addr)
             time.sleep(1.1)  # Nominatim rate limit: 1 req/sec
@@ -79,21 +85,27 @@ class RoutePlannerTool:
 
         for i, j in combinations(range(n), 2):
             d = self._haversine(
-                locations[i]["lat"], locations[i]["lon"],
-                locations[j]["lat"], locations[j]["lon"],
+                locations[i]["lat"],
+                locations[i]["lon"],
+                locations[j]["lat"],
+                locations[j]["lon"],
             )
             dist_matrix[i][j] = d
             dist_matrix[j][i] = d
-            pair_distances.append({
-                "from": locations[i]["address"],
-                "to": locations[j]["address"],
-                "distance_km": round(d, 2),
-            })
+            pair_distances.append(
+                {
+                    "from": locations[i]["address"],
+                    "to": locations[j]["address"],
+                    "distance_km": round(d, 2),
+                }
+            )
 
         pair_distances.sort(key=lambda x: x["distance_km"])
 
         # Step 3: Shortest route (nearest-neighbor TSP)
-        route_indices, route_distance = self._nearest_neighbor_tsp(dist_matrix, return_to_start)
+        route_indices, route_distance = self._nearest_neighbor_tsp(
+            dist_matrix, return_to_start
+        )
 
         route_steps = []
         for idx, ri in enumerate(route_indices):
@@ -128,16 +140,24 @@ class RoutePlannerTool:
         lines.append("")
         lines.append(f"--- Shortest Route (total: {round(route_distance, 2)} km) ---")
         for step in route_steps:
-            dist_str = f" [{step['distance_from_prev_km']} km]" if "distance_from_prev_km" in step else " [START]"
+            dist_str = (
+                f" [{step['distance_from_prev_km']} km]"
+                if "distance_from_prev_km" in step
+                else " [START]"
+            )
             lines.append(f"  {step['order']}. {step['address']}{dist_str}")
 
         closest = pair_distances[0] if pair_distances else None
         farthest = pair_distances[-1] if pair_distances else None
         if closest:
             lines.append("")
-            lines.append(f"Closest pair: {closest['from']} <-> {closest['to']} ({closest['distance_km']} km)")
+            lines.append(
+                f"Closest pair: {closest['from']} <-> {closest['to']} ({closest['distance_km']} km)"
+            )
         if farthest:
-            lines.append(f"Farthest pair: {farthest['from']} <-> {farthest['to']} ({farthest['distance_km']} km)")
+            lines.append(
+                f"Farthest pair: {farthest['from']} <-> {farthest['to']} ({farthest['distance_km']} km)"
+            )
 
         return {
             "success": True,
@@ -180,11 +200,16 @@ class RoutePlannerTool:
         lat1, lon1, lat2, lon2 = map(math.radians, [lat1, lon1, lat2, lon2])
         dlat = lat2 - lat1
         dlon = lon2 - lon1
-        a = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
+        a = (
+            math.sin(dlat / 2) ** 2
+            + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
+        )
         return R * 2 * math.asin(math.sqrt(a))
 
     @staticmethod
-    def _nearest_neighbor_tsp(dist_matrix: List[List[float]], return_to_start: bool) -> Tuple[List[int], float]:
+    def _nearest_neighbor_tsp(
+        dist_matrix: List[List[float]], return_to_start: bool
+    ) -> Tuple[List[int], float]:
         """Nearest-neighbor heuristic for TSP. Tries all starting points, picks best."""
         n = len(dist_matrix)
         best_route = None
@@ -215,13 +240,15 @@ class RoutePlannerTool:
 
 def test_tool():
     tool = RoutePlannerTool()
-    result = tool.run([
-        "Mumbai, India",
-        "Pune, India",
-        "Nashik, India",
-        "Goa, India",
-        "Bangalore, India",
-    ])
+    result = tool.run(
+        [
+            "Mumbai, India",
+            "Pune, India",
+            "Nashik, India",
+            "Goa, India",
+            "Bangalore, India",
+        ]
+    )
     if result.get("summary"):
         print(result["summary"])
     else:

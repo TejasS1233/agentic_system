@@ -7,19 +7,23 @@ from pydantic import BaseModel, Field
 
 class CurrencyConverterArgs(BaseModel):
     amount: float = Field(..., description="Amount to convert")
-    from_currency: str = Field(..., description="Source currency code (e.g., 'USD', 'EUR', 'INR')")
-    to_currency: str = Field(..., description="Target currency code (e.g., 'INR', 'GBP', 'JPY')")
+    from_currency: str = Field(
+        ..., description="Source currency code (e.g., 'USD', 'EUR', 'INR')"
+    )
+    to_currency: str = Field(
+        ..., description="Target currency code (e.g., 'INR', 'GBP', 'JPY')"
+    )
 
 
 class CurrencyConverterTool:
     """
     Currency converter using free exchange rate APIs.
-    
+
     Converts between any two currencies using live exchange rates.
     Supports 150+ currencies including USD, EUR, GBP, INR, JPY, etc.
     No API key required.
     """
-    
+
     name = "currency_converter"
     description = """Convert between any two currencies using live exchange rates. 
     Supports 150+ currencies. No API key needed."""
@@ -30,7 +34,9 @@ class CurrencyConverterTool:
     # Fallback: open.er-api.com
     FALLBACK_URL = "https://open.er-api.com/v6/latest"
 
-    def run(self, amount: float, from_currency: str, to_currency: str) -> Dict[str, Any]:
+    def run(
+        self, amount: float, from_currency: str, to_currency: str
+    ) -> Dict[str, Any]:
         """Convert amount from one currency to another."""
         from_currency = from_currency.upper().strip()
         to_currency = to_currency.upper().strip()
@@ -59,10 +65,12 @@ class CurrencyConverterTool:
         return {
             "success": False,
             "error": f"Could not fetch exchange rate for {from_currency} -> {to_currency}. "
-                     "Check that both currency codes are valid (e.g., USD, EUR, INR, GBP, JPY).",
+            "Check that both currency codes are valid (e.g., USD, EUR, INR, GBP, JPY).",
         }
 
-    def _fetch_frankfurter(self, amount: float, from_curr: str, to_curr: str) -> Optional[Dict]:
+    def _fetch_frankfurter(
+        self, amount: float, from_curr: str, to_curr: str
+    ) -> Optional[Dict]:
         """Fetch rate from frankfurter.app (free, no key)."""
         try:
             resp = requests.get(
@@ -94,7 +102,9 @@ class CurrencyConverterTool:
         except Exception:
             return None
 
-    def _fetch_open_er(self, amount: float, from_curr: str, to_curr: str) -> Optional[Dict]:
+    def _fetch_open_er(
+        self, amount: float, from_curr: str, to_curr: str
+    ) -> Optional[Dict]:
         """Fallback: fetch rate from open.er-api.com (free, no key)."""
         try:
             resp = requests.get(

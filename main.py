@@ -136,7 +136,9 @@ class IASCIS:
                 image_list = ", ".join([p.name for p in image_paths])
                 task = f"[CONTEXT: Working with local files: {input_files}. IMAGE FILES TO PROCESS: {image_list}]\n\n{task}"
             else:
-                task = f"[CONTEXT: Working with local documents: {input_files}]\n\n{task}"
+                task = (
+                    f"[CONTEXT: Working with local documents: {input_files}]\n\n{task}"
+                )
 
         logger.info(f"Task received: {task[:100]}...")
 
@@ -236,7 +238,9 @@ def main():
         # Show input files if any
         if system.input_loader.has_files():
             files = system.input_loader.get_files()
-            print(f"\n📄 Found {len(files)} input document(s): {[f.name for f in files]}")
+            print(
+                f"\n📄 Found {len(files)} input document(s): {[f.name for f in files]}"
+            )
             print("   These will be injected as context for your query.\n")
 
         result = system.run(task)

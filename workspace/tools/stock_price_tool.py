@@ -2,7 +2,7 @@
 
 import requests
 import time
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any
 from pydantic import BaseModel, Field
 
 
@@ -12,28 +12,27 @@ class StockPriceArgs(BaseModel):
     )
     period: str = Field(
         "1mo",
-        description="Time period: '1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', 'max'"
+        description="Time period: '1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', 'max'",
     )
     interval: str = Field(
-        "1d",
-        description="Data interval: '1d' (daily), '1wk' (weekly), '1mo' (monthly)"
+        "1d", description="Data interval: '1d' (daily), '1wk' (weekly), '1mo' (monthly)"
     )
 
 
 class StockPriceTool:
     """
     Fetch historical stock prices from Yahoo Finance.
-    
+
     Features:
     - Multiple stock symbols in one call
     - Configurable time periods (1 day to max history)
     - Daily, weekly, or monthly intervals
     - Returns date, open, high, low, close, volume
     - Structured output ready for charting
-    
+
     No API key required. Uses Yahoo Finance public API.
     """
-    
+
     name = "stock_price"
     description = """Fetch historical stock prices for one or more ticker symbols. 
     Returns date, open, high, low, close, volume. Supports configurable periods and intervals. 
@@ -43,10 +42,38 @@ class StockPriceTool:
     BASE_URL = "https://query1.finance.yahoo.com/v8/finance/chart"
     HEADERS = {"User-Agent": "AgenticSystem-StockTool/1.0"}
 
-    VALID_PERIODS = {"1d", "5d", "1mo", "3mo", "6mo", "1y", "2y", "5y", "10y", "ytd", "max"}
-    VALID_INTERVALS = {"1m", "2m", "5m", "15m", "30m", "60m", "90m", "1h", "1d", "5d", "1wk", "1mo", "3mo"}
+    VALID_PERIODS = {
+        "1d",
+        "5d",
+        "1mo",
+        "3mo",
+        "6mo",
+        "1y",
+        "2y",
+        "5y",
+        "10y",
+        "ytd",
+        "max",
+    }
+    VALID_INTERVALS = {
+        "1m",
+        "2m",
+        "5m",
+        "15m",
+        "30m",
+        "60m",
+        "90m",
+        "1h",
+        "1d",
+        "5d",
+        "1wk",
+        "1mo",
+        "3mo",
+    }
 
-    def run(self, symbols: List[str], period: str = "1mo", interval: str = "1d") -> Dict[str, Any]:
+    def run(
+        self, symbols: List[str], period: str = "1mo", interval: str = "1d"
+    ) -> Dict[str, Any]:
         """Fetch stock prices for given symbols."""
 
         if not symbols:
@@ -70,7 +97,10 @@ class StockPriceTool:
             time.sleep(0.5)  # Rate limiting
 
         if not all_data:
-            return {"success": False, "error": f"Failed to fetch all symbols. {'; '.join(errors)}"}
+            return {
+                "success": False,
+                "error": f"Failed to fetch all symbols. {'; '.join(errors)}",
+            }
 
         # Build comparison data (aligned dates with close prices)
         comparison = self._build_comparison(all_data)
@@ -118,7 +148,11 @@ class StockPriceTool:
         try:
             resp = requests.get(
                 f"{self.BASE_URL}/{symbol}",
-                params={"range": period, "interval": interval, "includePrePost": "false"},
+                params={
+                    "range": period,
+                    "interval": interval,
+                    "includePrePost": "false",
+                },
                 headers=self.HEADERS,
                 timeout=15,
             )
@@ -128,7 +162,9 @@ class StockPriceTool:
             chart = data.get("chart", {})
             result = chart.get("result")
             if not result:
-                error_msg = chart.get("error", {}).get("description", "No data returned")
+                error_msg = chart.get("error", {}).get(
+                    "description", "No data returned"
+                )
                 return {"error": error_msg}
 
             r = result[0]

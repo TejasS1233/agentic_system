@@ -4,7 +4,6 @@ Input Loader - Loads files from the inputs directory and injects them as context
 Supports: .txt, .md, .pdf, .json, .py, .csv, and images (.jpg, .jpeg, .png, .gif, .bmp, .webp)
 """
 
-import os
 from pathlib import Path
 from typing import Optional, List, Tuple
 
@@ -39,7 +38,8 @@ class InputLoader:
         if not self.input_dir.exists():
             return []
         return [
-            f for f in self.input_dir.iterdir()
+            f
+            for f in self.input_dir.iterdir()
             if f.is_file() and f.suffix.lower() in self.SUPPORTED_EXTENSIONS
         ]
 
@@ -48,7 +48,8 @@ class InputLoader:
         if not self.input_dir.exists():
             return []
         return [
-            f for f in self.input_dir.iterdir()
+            f
+            for f in self.input_dir.iterdir()
             if f.is_file() and f.suffix.lower() in self.TEXT_EXTENSIONS
         ]
 
@@ -57,7 +58,8 @@ class InputLoader:
         if not self.input_dir.exists():
             return []
         return [
-            f for f in self.input_dir.iterdir()
+            f
+            for f in self.input_dir.iterdir()
             if f.is_file() and f.suffix.lower() in self.IMAGE_EXTENSIONS
         ]
 
@@ -98,20 +100,22 @@ class InputLoader:
             logger.warning(f"PDF extraction failed: {e}")
             return None
 
-    def build_context(self, max_chars_per_file: int = None, truncate: bool = False) -> Tuple[str, List[Path]]:
+    def build_context(
+        self, max_chars_per_file: int = None, truncate: bool = False
+    ) -> Tuple[str, List[Path]]:
         """
         Build context string from all input files.
-        
+
         Args:
             max_chars_per_file: Maximum characters per file (default: no limit)
             truncate: If True, truncate files exceeding max_chars_per_file
-        
+
         Returns:
             Tuple of (context_string, list_of_image_paths)
         """
         files = self.get_files()
         image_files = self.get_image_files()
-        
+
         if not files:
             return "", []
 
@@ -119,7 +123,7 @@ class InputLoader:
         context_parts.append("=" * 60)
         context_parts.append("INPUT DOCUMENTS")
         context_parts.append("=" * 60)
-        
+
         # Add image file info prominently at the top
         if image_files:
             context_parts.append("\n--- IMAGE FILES AVAILABLE ---")
@@ -133,7 +137,11 @@ class InputLoader:
             content = self.load_file(file_path)
             if content:
                 # Only truncate if explicitly requested
-                if truncate and max_chars_per_file and len(content) > max_chars_per_file:
+                if (
+                    truncate
+                    and max_chars_per_file
+                    and len(content) > max_chars_per_file
+                ):
                     content = content[:max_chars_per_file] + "\n... [TRUNCATED]"
 
                 context_parts.append(f"\n--- FILE: {file_path.name} ---")
@@ -145,7 +153,9 @@ class InputLoader:
         context_parts.append("=" * 60)
 
         full_context = "\n".join(context_parts)
-        logger.info(f"Built context from {len(files)} file(s) ({len(full_context)} chars, {len(image_files)} images)")
+        logger.info(
+            f"Built context from {len(files)} file(s) ({len(full_context)} chars, {len(image_files)} images)"
+        )
         return full_context, image_files
 
     def clear_inputs(self):

@@ -106,12 +106,32 @@ class LatexEquationRendererTool:
     def _is_proper_latex(self, eq: str) -> bool:
         """Check if the equation already contains LaTeX commands."""
         latex_indicators = [
-            "\\frac", "\\sqrt", "\\int", "\\sum", "\\prod",
-            "\\alpha", "\\beta", "\\gamma", "\\theta", "\\pi",
-            "\\pm", "\\cdot", "\\times", "\\infty", "\\partial",
-            "\\lim", "\\log", "\\sin", "\\cos", "\\tan",
-            "\\left", "\\right", "\\begin", "\\end",
-            "^{", "_{",
+            "\\frac",
+            "\\sqrt",
+            "\\int",
+            "\\sum",
+            "\\prod",
+            "\\alpha",
+            "\\beta",
+            "\\gamma",
+            "\\theta",
+            "\\pi",
+            "\\pm",
+            "\\cdot",
+            "\\times",
+            "\\infty",
+            "\\partial",
+            "\\lim",
+            "\\log",
+            "\\sin",
+            "\\cos",
+            "\\tan",
+            "\\left",
+            "\\right",
+            "\\begin",
+            "\\end",
+            "^{",
+            "_{",
         ]
         return any(cmd in eq for cmd in latex_indicators)
 
@@ -159,15 +179,33 @@ LaTeX:"""
     def _unicode_to_latex(self, eq: str) -> str:
         """Basic Unicode math → LaTeX substitution as fallback."""
         replacements = [
-            ("±", "\\pm"), ("×", "\\times"), ("÷", "\\div"),
-            ("√", "\\sqrt"), ("∞", "\\infty"), ("≠", "\\neq"),
-            ("≤", "\\leq"), ("≥", "\\geq"), ("≈", "\\approx"),
-            ("∑", "\\sum"), ("∏", "\\prod"), ("∫", "\\int"),
-            ("α", "\\alpha"), ("β", "\\beta"), ("γ", "\\gamma"),
-            ("δ", "\\delta"), ("θ", "\\theta"), ("λ", "\\lambda"),
-            ("π", "\\pi"), ("σ", "\\sigma"), ("φ", "\\phi"),
-            ("ω", "\\omega"), ("∂", "\\partial"), ("→", "\\rightarrow"),
-            ("²", "^{2}"), ("³", "^{3}"), ("⁴", "^{4}"),
+            ("±", "\\pm"),
+            ("×", "\\times"),
+            ("÷", "\\div"),
+            ("√", "\\sqrt"),
+            ("∞", "\\infty"),
+            ("≠", "\\neq"),
+            ("≤", "\\leq"),
+            ("≥", "\\geq"),
+            ("≈", "\\approx"),
+            ("∑", "\\sum"),
+            ("∏", "\\prod"),
+            ("∫", "\\int"),
+            ("α", "\\alpha"),
+            ("β", "\\beta"),
+            ("γ", "\\gamma"),
+            ("δ", "\\delta"),
+            ("θ", "\\theta"),
+            ("λ", "\\lambda"),
+            ("π", "\\pi"),
+            ("σ", "\\sigma"),
+            ("φ", "\\phi"),
+            ("ω", "\\omega"),
+            ("∂", "\\partial"),
+            ("→", "\\rightarrow"),
+            ("²", "^{2}"),
+            ("³", "^{3}"),
+            ("⁴", "^{4}"),
         ]
         for old, new in replacements:
             eq = eq.replace(old, new)
@@ -201,13 +239,17 @@ LaTeX:"""
         """
         try:
             import matplotlib
+
             matplotlib.use("Agg")
             import matplotlib.pyplot as plt
         except ImportError:
-            return json.dumps({
-                "success": False,
-                "error": "matplotlib not available. Install with: pip install matplotlib",
-            }, indent=2)
+            return json.dumps(
+                {
+                    "success": False,
+                    "error": "matplotlib not available. Install with: pip install matplotlib",
+                },
+                indent=2,
+            )
 
         font_size = max(10, min(60, font_size or 20))
         dpi = max(72, min(600, dpi or 200))
@@ -228,7 +270,9 @@ LaTeX:"""
 
             # Render the equation
             text = fig.text(
-                0.5, 0.5, eq,
+                0.5,
+                0.5,
+                eq,
                 fontsize=font_size,
                 color=color,
                 ha="center",
@@ -252,13 +296,22 @@ LaTeX:"""
 
             # Save — always under /output/ so it persists on host volume
             if output_path and not output_path.startswith(self.output_dir):
-                output_path = os.path.join(self.output_dir, os.path.basename(output_path))
+                output_path = os.path.join(
+                    self.output_dir, os.path.basename(output_path)
+                )
             if not output_path:
-                existing = [f for f in os.listdir(self.output_dir) if f.startswith("equation_") and f.endswith(".png")]
+                existing = [
+                    f
+                    for f in os.listdir(self.output_dir)
+                    if f.startswith("equation_") and f.endswith(".png")
+                ]
                 idx = len(existing) + 1
                 output_path = os.path.join(self.output_dir, f"equation_{idx}.png")
 
-            os.makedirs(os.path.dirname(output_path) if os.path.dirname(output_path) else ".", exist_ok=True)
+            os.makedirs(
+                os.path.dirname(output_path) if os.path.dirname(output_path) else ".",
+                exist_ok=True,
+            )
 
             fig.savefig(
                 output_path,
@@ -272,22 +325,28 @@ LaTeX:"""
 
             file_size = os.path.getsize(output_path)
 
-            return json.dumps({
-                "success": True,
-                "equation_input": equation,
-                "equation_latex": latex_eq,
-                "output_path": output_path,
-                "dpi": dpi,
-                "file_size_bytes": file_size,
-                "message": f"Equation rendered and saved to {output_path}",
-            }, indent=2)
+            return json.dumps(
+                {
+                    "success": True,
+                    "equation_input": equation,
+                    "equation_latex": latex_eq,
+                    "output_path": output_path,
+                    "dpi": dpi,
+                    "file_size_bytes": file_size,
+                    "message": f"Equation rendered and saved to {output_path}",
+                },
+                indent=2,
+            )
 
         except Exception as e:
             plt.close("all")
-            return json.dumps({
-                "success": False,
-                "error": str(e),
-                "equation_input": equation,
-                "equation_latex": latex_eq if 'latex_eq' in dir() else equation,
-                "hint": "If the equation fails, try providing raw LaTeX like: \\frac{a}{b}",
-            }, indent=2)
+            return json.dumps(
+                {
+                    "success": False,
+                    "error": str(e),
+                    "equation_input": equation,
+                    "equation_latex": latex_eq if "latex_eq" in dir() else equation,
+                    "hint": "If the equation fails, try providing raw LaTeX like: \\frac{a}{b}",
+                },
+                indent=2,
+            )

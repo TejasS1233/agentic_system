@@ -14,7 +14,9 @@ def visualize_graph(graph: nx.DiGraph, output_path: str = None):
     # Color nodes by type
     node_colors = []
     for node in graph.nodes():
-        if graph.nodes[node].get("node_type") == "domain" or str(node).startswith("domain:"):
+        if graph.nodes[node].get("node_type") == "domain" or str(node).startswith(
+            "domain:"
+        ):
             node_colors.append("#FF6B6B")  # Red for domains
         else:
             node_colors.append("#4ECDC4")  # Teal for tools
@@ -75,4 +77,3 @@ if __name__ == "__main__":
     output_path = Path(__file__).parent.parent / "docs" / "tool_graph.png"
     output_path.parent.mkdir(parents=True, exist_ok=True)
     visualize_graph(graph, output_path=str(output_path))
-

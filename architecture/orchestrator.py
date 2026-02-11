@@ -39,13 +39,13 @@ class Orchestrator:
 
     def run(self, user_query: str, document_context: str = None) -> str:
         """Execute request, routing between direct generation and tool execution.
-        
+
         Args:
             user_query: The user's query/task
             document_context: Optional pre-loaded document content to use as context
         """
         logger.info(f"Processing: {user_query[:80]}...")
-        
+
         # Store document context for use by executor
         self._document_context = document_context
         if document_context:
@@ -101,20 +101,24 @@ class Orchestrator:
         """Use hybrid retrieval (semantic + tags + LLM) for better tool matching."""
         matches = []
         used_tools = set()
-        
+
         for st in subtasks:
-            domain = st.domain.value if hasattr(st.domain, 'value') else str(st.domain)
+            domain = st.domain.value if hasattr(st.domain, "value") else str(st.domain)
 
             # --- FORCE SERP SEARCH FOR SEARCH DOMAIN ---
             # Skip online search if we have local document context
             # If the domain is SEARCH or the description explicitly asks for a search, use SerpSearchTool.
-            if not self._document_context and (domain == "search" or "search" in st.description.lower()):
+            if not self._document_context and (
+                domain == "search" or "search" in st.description.lower()
+            ):
                 # Check if SerpSearchTool exists in registry
                 serp_tool_name = "SerpSearchTool"
                 try:
                     tool_file = self._get_tool_file(serp_tool_name)
                     if tool_file:
-                        logger.info(f"{st.id} -> {serp_tool_name} (Forced by Domain.SEARCH)")
+                        logger.info(
+                            f"{st.id} -> {serp_tool_name} (Forced by Domain.SEARCH)"
+                        )
                         matches.append(
                             ToolMatch(
                                 subtask_id=st.id,
@@ -132,9 +136,15 @@ class Orchestrator:
 
             # --- FORCE SLIDE DECK GENERATOR FOR PRESENTATION REQUESTS ---
             slide_keywords = [
-                "slide deck", "slides", "presentation", "make slides",
-                "create slides", "generate slides", "slide show",
-                "powerpoint", "ppt",
+                "slide deck",
+                "slides",
+                "presentation",
+                "make slides",
+                "create slides",
+                "generate slides",
+                "slide show",
+                "powerpoint",
+                "ppt",
             ]
             desc_lower_slide = st.description.lower()
             if any(kw in desc_lower_slide for kw in slide_keywords):
@@ -142,7 +152,9 @@ class Orchestrator:
                 try:
                     tool_file = self._get_tool_file(slide_tool_name)
                     if tool_file:
-                        logger.info(f"{st.id} -> {slide_tool_name} (Forced by slide keywords)")
+                        logger.info(
+                            f"{st.id} -> {slide_tool_name} (Forced by slide keywords)"
+                        )
                         matches.append(
                             ToolMatch(
                                 subtask_id=st.id,
@@ -160,22 +172,36 @@ class Orchestrator:
 
             # --- FORCE LATEX EQUATION RENDERER ---
             equation_phrases = [
-                "render equation", "latex equation", "render latex",
-                "render formula", "math equation", "equation image",
+                "render equation",
+                "latex equation",
+                "render latex",
+                "render formula",
+                "math equation",
+                "equation image",
                 "render math",
             ]
-            equation_nouns = ["equation", "formula", "quadratic", "integral", "derivative"]
+            equation_nouns = [
+                "equation",
+                "formula",
+                "quadratic",
+                "integral",
+                "derivative",
+            ]
             equation_verbs = ["render", "typeset", "display"]
             desc_lower_eq = st.description.lower()
             desc_words_eq = set(desc_lower_eq.split())
             _has_eq_phrase = any(kw in desc_lower_eq for kw in equation_phrases)
-            _has_eq_combo = bool(desc_words_eq & set(equation_nouns)) and bool(desc_words_eq & set(equation_verbs))
+            _has_eq_combo = bool(desc_words_eq & set(equation_nouns)) and bool(
+                desc_words_eq & set(equation_verbs)
+            )
             if _has_eq_phrase or _has_eq_combo:
                 eq_tool_name = "LatexEquationRendererTool"
                 try:
                     tool_file = self._get_tool_file(eq_tool_name)
                     if tool_file:
-                        logger.info(f"{st.id} -> {eq_tool_name} (Forced by equation keywords)")
+                        logger.info(
+                            f"{st.id} -> {eq_tool_name} (Forced by equation keywords)"
+                        )
                         matches.append(
                             ToolMatch(
                                 subtask_id=st.id,
@@ -199,7 +225,9 @@ class Orchestrator:
                 try:
                     tool_file = self._get_tool_file(qr_tool_name)
                     if tool_file:
-                        logger.info(f"{st.id} -> {qr_tool_name} (Forced by QR keywords)")
+                        logger.info(
+                            f"{st.id} -> {qr_tool_name} (Forced by QR keywords)"
+                        )
                         matches.append(
                             ToolMatch(
                                 subtask_id=st.id,
@@ -217,8 +245,13 @@ class Orchestrator:
 
             # --- FORCE AUDIO SUMMARY TTS ---
             tts_keywords = [
-                "text to speech", "tts", "read aloud", "audio summary",
-                "convert to audio", "speak this", "generate audio",
+                "text to speech",
+                "tts",
+                "read aloud",
+                "audio summary",
+                "convert to audio",
+                "speak this",
+                "generate audio",
             ]
             desc_lower_tts = st.description.lower()
             if any(kw in desc_lower_tts for kw in tts_keywords):
@@ -226,7 +259,9 @@ class Orchestrator:
                 try:
                     tool_file = self._get_tool_file(tts_tool_name)
                     if tool_file:
-                        logger.info(f"{st.id} -> {tts_tool_name} (Forced by TTS keywords)")
+                        logger.info(
+                            f"{st.id} -> {tts_tool_name} (Forced by TTS keywords)"
+                        )
                         matches.append(
                             ToolMatch(
                                 subtask_id=st.id,
@@ -244,8 +279,13 @@ class Orchestrator:
 
             # --- FORCE CRON REMINDER TOOL ---
             cron_keywords = [
-                "cron", "remind me", "reminder", "set reminder",
-                "calendar event", "schedule reminder", "recurring",
+                "cron",
+                "remind me",
+                "reminder",
+                "set reminder",
+                "calendar event",
+                "schedule reminder",
+                "recurring",
             ]
             desc_lower_cron = st.description.lower()
             if any(kw in desc_lower_cron for kw in cron_keywords):
@@ -253,7 +293,9 @@ class Orchestrator:
                 try:
                     tool_file = self._get_tool_file(cron_tool_name)
                     if tool_file:
-                        logger.info(f"{st.id} -> {cron_tool_name} (Forced by cron/reminder keywords)")
+                        logger.info(
+                            f"{st.id} -> {cron_tool_name} (Forced by cron/reminder keywords)"
+                        )
                         matches.append(
                             ToolMatch(
                                 subtask_id=st.id,
@@ -271,19 +313,36 @@ class Orchestrator:
 
             # --- FORCE MERMAID DIAGRAM TOOL FOR DIAGRAM REQUESTS ---
             diagram_keywords = [
-                "diagram", "flowchart", "sequence diagram", "class diagram",
-                "state diagram", "er diagram", "entity relationship",
-                "gantt", "mindmap", "mind map", "mermaid", "gitgraph",
-                "architecture diagram", "uml", "draw a diagram", "visualize flow",
-                "process flow", "data flow diagram",
+                "diagram",
+                "flowchart",
+                "sequence diagram",
+                "class diagram",
+                "state diagram",
+                "er diagram",
+                "entity relationship",
+                "gantt",
+                "mindmap",
+                "mind map",
+                "mermaid",
+                "gitgraph",
+                "architecture diagram",
+                "uml",
+                "draw a diagram",
+                "visualize flow",
+                "process flow",
+                "data flow diagram",
             ]
             desc_lower = st.description.lower()
-            if domain == "visualization" or any(kw in desc_lower for kw in diagram_keywords):
+            if domain == "visualization" or any(
+                kw in desc_lower for kw in diagram_keywords
+            ):
                 mermaid_tool_name = "MermaidDiagramTool"
                 try:
                     tool_file = self._get_tool_file(mermaid_tool_name)
                     if tool_file:
-                        logger.info(f"{st.id} -> {mermaid_tool_name} (Forced by diagram keywords)")
+                        logger.info(
+                            f"{st.id} -> {mermaid_tool_name} (Forced by diagram keywords)"
+                        )
                         matches.append(
                             ToolMatch(
                                 subtask_id=st.id,
@@ -302,13 +361,30 @@ class Orchestrator:
             # --- FORCE DOCUMENT CONVERTER FOR CONVERSION REQUESTS ---
             # Placed AFTER specific tools (QR, TTS, slides, etc.) so they match first
             conversion_keywords = [
-                "convert pdf", "convert to pdf", "convert to markdown", "convert to latex",
-                "pdf to markdown", "pdf to latex", "pdf to md", "pdf to tex",
-                "markdown to pdf", "markdown to latex", "md to pdf", "md to tex",
-                "latex to pdf", "latex to markdown", "tex to pdf", "tex to md",
-                "transform paper", "transform document", "transform to pdf",
-                "convert document", "convert paper", "export as pdf",
-                "export as markdown", "export as latex",
+                "convert pdf",
+                "convert to pdf",
+                "convert to markdown",
+                "convert to latex",
+                "pdf to markdown",
+                "pdf to latex",
+                "pdf to md",
+                "pdf to tex",
+                "markdown to pdf",
+                "markdown to latex",
+                "md to pdf",
+                "md to tex",
+                "latex to pdf",
+                "latex to markdown",
+                "tex to pdf",
+                "tex to md",
+                "transform paper",
+                "transform document",
+                "transform to pdf",
+                "convert document",
+                "convert paper",
+                "export as pdf",
+                "export as markdown",
+                "export as latex",
             ]
             desc_lower_conv = st.description.lower()
             if any(kw in desc_lower_conv for kw in conversion_keywords):
@@ -316,7 +392,9 @@ class Orchestrator:
                 try:
                     tool_file = self._get_tool_file(converter_tool_name)
                     if tool_file:
-                        logger.info(f"{st.id} -> {converter_tool_name} (Forced by conversion keywords)")
+                        logger.info(
+                            f"{st.id} -> {converter_tool_name} (Forced by conversion keywords)"
+                        )
                         matches.append(
                             ToolMatch(
                                 subtask_id=st.id,
@@ -331,31 +409,41 @@ class Orchestrator:
                 except Exception:
                     pass
             # -------------------------------------------
-            
+
             # Get candidates with hybrid scoring
             scored_results = self.retriever.retrieve_with_scoring(
                 query=st.description,
                 top_k=5,
             )
-            
+
             # Filter out used tools
             available = [c for c in scored_results if c["tool"] not in used_tools]
-            
+
             if not available:
-                matches.append(ToolMatch(subtask_id=st.id, tool_name="", tool_file="", matched=False, confidence=0.0))
+                matches.append(
+                    ToolMatch(
+                        subtask_id=st.id,
+                        tool_name="",
+                        tool_file="",
+                        matched=False,
+                        confidence=0.0,
+                    )
+                )
                 logger.info(f"{st.id} → NO MATCH (all tools used)")
                 continue
-            
+
             # Use LLM to select the best tool from candidates
             selected_name = self.retriever.llm_select_tool(
                 query=st.description,
                 candidates=available,
                 llm_manager=self.llm,
             )
-            
+
             # Find the selected candidate's data
-            best_match = next((c for c in available if c["tool"] == selected_name), available[0])
-            
+            best_match = next(
+                (c for c in available if c["tool"] == selected_name), available[0]
+            )
+
             tool_name = best_match["tool"]
             similarity = best_match.get("similarity", 0)
             combined_score = best_match.get("combined_score", 0)
@@ -365,12 +453,14 @@ class Orchestrator:
                 query_lower = st.description.lower()
                 image_terms = ["image", "photo", "picture", "png", "jpg", "jpeg"]
                 if any(term in query_lower for term in image_terms):
-                    logger.info(f"Overriding threshold for ImageProcessorTool due to image prompt: {st.description}")
+                    logger.info(
+                        f"Overriding threshold for ImageProcessorTool due to image prompt: {st.description}"
+                    )
                     combined_score = 1.0
 
             matched = combined_score >= SIMILARITY_THRESHOLD
             used_tools.add(tool_name)
-            
+
             matches.append(
                 ToolMatch(
                     subtask_id=st.id,
@@ -380,13 +470,13 @@ class Orchestrator:
                     confidence=max(0, combined_score),
                 )
             )
-            
+
             domain_tools = set(self.retriever.get_tools_by_domain(domain))
             in_domain = "in-domain" if tool_name in domain_tools else "cross-domain"
             logger.info(
                 f"{st.id} → {tool_name} (LLM selected, semantic: {similarity:.3f}, tags: +{tag_matches}, {in_domain})"
             )
-        
+
         return matches
 
     def _get_tool_file(self, tool_name: str) -> str:
@@ -403,35 +493,39 @@ class Orchestrator:
     ) -> list[ToolMatch]:
         """Route to Toolsmith for any unmatched subtasks."""
         subtask_map = {st.id: st for st in subtasks}
-        
+
         # Build used_tools incrementally as we process
         used_tools = set()
-        
+
         for match in matches:
             # First, record already-matched tools from retrieval
             if match.matched and match.tool_name:
                 if match.tool_name in used_tools:
-                     logger.info(f"Tool {match.tool_name} already used by previous step. Invalidating match.")
-                     match.matched = False
-                     match.tool_name = None
-                     match.confidence = 0.0
+                    logger.info(
+                        f"Tool {match.tool_name} already used by previous step. Invalidating match."
+                    )
+                    match.matched = False
+                    match.tool_name = None
+                    match.confidence = 0.0
                 else:
                     used_tools.add(match.tool_name)
                     continue
-                
+
             # Process unmatched subtask
             if not match.matched:
                 st = subtask_map[match.subtask_id]
                 description = st.description
-                
+
                 # Try up to 2 times to get a unique tool
                 for attempt in range(2):
                     if attempt > 0:
-                        logger.info(f"Retrying tool creation to avoid duplicates (attempt {attempt+1})...")
+                        logger.info(
+                            f"Retrying tool creation to avoid duplicates (attempt {attempt + 1})..."
+                        )
                         # Add constraint to avoid used tools
                         avoid_str = ", ".join(list(used_tools))
                         description = f"{st.description} (Create a NEW tool, do not use: {avoid_str})"
-                    
+
                     logger.info(f"Toolsmith creating: {description}")
                     result = self.toolsmith.create_tool(description)
                     logger.info(f"Toolsmith: {result[:100]}...")
@@ -439,6 +533,7 @@ class Orchestrator:
                     # Parse tool name from Toolsmith response
                     tool_name = None
                     import re
+
                     # Match both "Created X" and "Successfully created X"
                     m = re.search(r"(?:Successfully created|Created) (\w+)", result)
                     if m:
@@ -456,11 +551,11 @@ class Orchestrator:
                         match.confidence = 1.0
                         used_tools.add(tool_name)
                         logger.info(f"Tool assigned: {tool_name}")
-                        break # Success, exit retry loop
-                    
+                        break  # Success, exit retry loop
+
                     if tool_name in used_tools:
-                         logger.info(f"Tool {tool_name} is a duplicate.")
-                
+                        logger.info(f"Tool {tool_name} is a duplicate.")
+
                 # If still no match after retries, try fallback retrieval for UNUSED tools
                 if not match.matched:
                     # Fallback: Rebuild retriever and search for unused tool
@@ -479,12 +574,16 @@ class Orchestrator:
                                 match.matched = True
                                 match.confidence = max(0, similarity)
                                 used_tools.add(candidate_name)
-                                logger.info(f"Fallback assigned: {candidate_name} (similarity: {similarity:.3f})")
+                                logger.info(
+                                    f"Fallback assigned: {candidate_name} (similarity: {similarity:.3f})"
+                                )
                                 break
                             else:
-                                logger.info(f"Fallback candidate {candidate_name} rejected (similarity {similarity:.3f} < {SIMILARITY_THRESHOLD})")
+                                logger.info(
+                                    f"Fallback candidate {candidate_name} rejected (similarity {similarity:.3f} < {SIMILARITY_THRESHOLD})"
+                                )
                             # END FIX
-                            
+
         return matches
 
     def _create_plan(
@@ -510,50 +609,114 @@ class Orchestrator:
                     input_from=input_from_step,
                 )
             )
-        
+
         # Log the complete plan
         logger.info("=" * 60)
         logger.info(f"EXECUTION PLAN: {len(steps)} steps")
         logger.info("=" * 60)
         for step in steps:
-            deps_str = f"depends_on={step.depends_on}" if step.depends_on else "no dependencies"
-            input_str = f"input_from=step_{step.input_from}" if step.input_from else "uses description"
+            deps_str = (
+                f"depends_on={step.depends_on}"
+                if step.depends_on
+                else "no dependencies"
+            )
+            input_str = (
+                f"input_from=step_{step.input_from}"
+                if step.input_from
+                else "uses description"
+            )
             logger.info(f"  Step {step.step_number}: {step.description[:50]}...")
             logger.info(f"    Tool: {step.tool_name}")
             logger.info(f"    {deps_str}, {input_str}")
         logger.info("=" * 60)
-        
+
         return ExecutionPlan(original_query=decomposition.original_query, steps=steps)
 
     # Keywords that MUST route through tool execution, never direct response
     _FORCE_COMPLEX_KEYWORDS = [
         # Diagram keywords
-        "diagram", "flowchart", "sequence diagram", "class diagram",
-        "state diagram", "er diagram", "entity relationship",
-        "gantt", "mindmap", "mind map", "mermaid", "gitgraph",
-        "architecture diagram", "uml", "draw a diagram", "visualize flow",
-        "process flow", "data flow diagram",
+        "diagram",
+        "flowchart",
+        "sequence diagram",
+        "class diagram",
+        "state diagram",
+        "er diagram",
+        "entity relationship",
+        "gantt",
+        "mindmap",
+        "mind map",
+        "mermaid",
+        "gitgraph",
+        "architecture diagram",
+        "uml",
+        "draw a diagram",
+        "visualize flow",
+        "process flow",
+        "data flow diagram",
         # Document conversion keywords
-        "convert pdf", "convert to pdf", "convert to markdown", "convert to latex",
-        "pdf to markdown", "pdf to latex", "pdf to md", "pdf to tex",
-        "markdown to pdf", "markdown to latex", "md to pdf", "md to tex",
-        "latex to pdf", "latex to markdown", "tex to pdf", "tex to md",
-        "transform paper", "transform document", "convert document", "convert paper",
+        "convert pdf",
+        "convert to pdf",
+        "convert to markdown",
+        "convert to latex",
+        "pdf to markdown",
+        "pdf to latex",
+        "pdf to md",
+        "pdf to tex",
+        "markdown to pdf",
+        "markdown to latex",
+        "md to pdf",
+        "md to tex",
+        "latex to pdf",
+        "latex to markdown",
+        "tex to pdf",
+        "tex to md",
+        "transform paper",
+        "transform document",
+        "convert document",
+        "convert paper",
         # Presentation / slide keywords
-        "slide deck", "slides", "presentation", "make slides", "create slides",
-        "generate slides", "slide show", "powerpoint", "ppt",
+        "slide deck",
+        "slides",
+        "presentation",
+        "make slides",
+        "create slides",
+        "generate slides",
+        "slide show",
+        "powerpoint",
+        "ppt",
         # LaTeX equation keywords
-        "render equation", "latex equation", "render latex", "render formula",
-        "math equation", "equation image", "render math",
-        "formula", "equation",
+        "render equation",
+        "latex equation",
+        "render latex",
+        "render formula",
+        "math equation",
+        "equation image",
+        "render math",
+        "formula",
+        "equation",
         # QR code keywords
-        "qr code", "qr", "generate qr", "create qr", "qrcode",
+        "qr code",
+        "qr",
+        "generate qr",
+        "create qr",
+        "qrcode",
         # TTS / audio keywords
-        "text to speech", "tts", "read aloud", "audio summary",
-        "convert to audio", "speak this", "generate audio",
+        "text to speech",
+        "tts",
+        "read aloud",
+        "audio summary",
+        "convert to audio",
+        "speak this",
+        "generate audio",
         # Cron / reminder keywords
-        "cron", "remind me", "reminder", "schedule", "recurring",
-        "set reminder", "calendar event", "ics",
+        "cron",
+        "remind me",
+        "reminder",
+        "schedule",
+        "recurring",
+        "set reminder",
+        "calendar event",
+        "ics",
     ]
 
     def _classify_request(self, query: str) -> str:

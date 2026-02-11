@@ -207,13 +207,19 @@ class DocumentConverterTool:
 
             # Headings
             if line.startswith("### "):
-                latex_lines.append(f"\\subsubsection{{{self._escape_latex(line[4:].strip())}}}")
+                latex_lines.append(
+                    f"\\subsubsection{{{self._escape_latex(line[4:].strip())}}}"
+                )
                 continue
             elif line.startswith("## "):
-                latex_lines.append(f"\\subsection{{{self._escape_latex(line[3:].strip())}}}")
+                latex_lines.append(
+                    f"\\subsection{{{self._escape_latex(line[3:].strip())}}}"
+                )
                 continue
             elif line.startswith("# "):
-                latex_lines.append(f"\\section{{{self._escape_latex(line[2:].strip())}}}")
+                latex_lines.append(
+                    f"\\section{{{self._escape_latex(line[2:].strip())}}}"
+                )
                 continue
 
             # Horizontal rule
@@ -326,7 +332,7 @@ class DocumentConverterTool:
         # Remove preamble (everything before \begin{document})
         doc_match = re.search(r"\\begin\{document\}", text)
         if doc_match:
-            text = text[doc_match.end():]
+            text = text[doc_match.end() :]
 
         # Remove \end{document}
         text = re.sub(r"\\end\{document\}", "", text)
@@ -383,8 +389,13 @@ class DocumentConverterTool:
 
         # Unescape LaTeX specials
         for escaped, char in [
-            ("\\&", "&"), ("\\%", "%"), ("\\$", "$"),
-            ("\\#", "#"), ("\\_", "_"), ("\\{", "{"), ("\\}", "}"),
+            ("\\&", "&"),
+            ("\\%", "%"),
+            ("\\$", "$"),
+            ("\\#", "#"),
+            ("\\_", "_"),
+            ("\\{", "{"),
+            ("\\}", "}"),
         ]:
             text = text.replace(escaped, char)
 
@@ -502,31 +513,43 @@ class DocumentConverterTool:
                     input_path = candidate
                     break
             else:
-                return json.dumps({
-                    "success": False,
-                    "error": f"Input file not found: {input_path}",
-                }, indent=2)
+                return json.dumps(
+                    {
+                        "success": False,
+                        "error": f"Input file not found: {input_path}",
+                    },
+                    indent=2,
+                )
 
         input_format = self._detect_input_format(input_path)
         output_format = self._normalize_format(output_format)
 
         if input_format == "unknown":
-            return json.dumps({
-                "success": False,
-                "error": f"Cannot detect format of: {input_path}. Supported: .pdf, .md, .tex",
-            }, indent=2)
+            return json.dumps(
+                {
+                    "success": False,
+                    "error": f"Cannot detect format of: {input_path}. Supported: .pdf, .md, .tex",
+                },
+                indent=2,
+            )
 
         if output_format not in ("pdf", "markdown", "latex"):
-            return json.dumps({
-                "success": False,
-                "error": f"Unsupported output format: {output_format}. Use 'pdf', 'markdown', or 'latex'.",
-            }, indent=2)
+            return json.dumps(
+                {
+                    "success": False,
+                    "error": f"Unsupported output format: {output_format}. Use 'pdf', 'markdown', or 'latex'.",
+                },
+                indent=2,
+            )
 
         if input_format == output_format:
-            return json.dumps({
-                "success": False,
-                "error": f"Input and output formats are the same: {input_format}",
-            }, indent=2)
+            return json.dumps(
+                {
+                    "success": False,
+                    "error": f"Input and output formats are the same: {input_format}",
+                },
+                indent=2,
+            )
 
         # Determine output path
         ext_map = {"pdf": ".pdf", "markdown": ".md", "latex": ".tex"}
@@ -536,7 +559,10 @@ class DocumentConverterTool:
                 self.output_dir, f"{stem}_converted{ext_map[output_format]}"
             )
 
-        os.makedirs(os.path.dirname(output_path) if os.path.dirname(output_path) else ".", exist_ok=True)
+        os.makedirs(
+            os.path.dirname(output_path) if os.path.dirname(output_path) else ".",
+            exist_ok=True,
+        )
 
         try:
             # Read input content (for text formats)
@@ -574,33 +600,45 @@ class DocumentConverterTool:
                 self._latex_to_pdf(content, output_path)
 
             else:
-                return json.dumps({
-                    "success": False,
-                    "error": f"Unsupported conversion: {conversion}",
-                }, indent=2)
+                return json.dumps(
+                    {
+                        "success": False,
+                        "error": f"Unsupported conversion: {conversion}",
+                    },
+                    indent=2,
+                )
 
             # Get output file size
             file_size = os.path.getsize(output_path)
 
-            return json.dumps({
-                "success": True,
-                "conversion": conversion,
-                "input_path": input_path,
-                "input_format": input_format,
-                "output_format": output_format,
-                "output_path": output_path,
-                "file_size_bytes": file_size,
-                "message": f"Successfully converted {input_format} to {output_format}. Saved to {output_path}",
-            }, indent=2)
+            return json.dumps(
+                {
+                    "success": True,
+                    "conversion": conversion,
+                    "input_path": input_path,
+                    "input_format": input_format,
+                    "output_format": output_format,
+                    "output_path": output_path,
+                    "file_size_bytes": file_size,
+                    "message": f"Successfully converted {input_format} to {output_format}. Saved to {output_path}",
+                },
+                indent=2,
+            )
 
         except ImportError as e:
             pkg = str(e).split("'")[-2] if "'" in str(e) else str(e)
-            return json.dumps({
-                "success": False,
-                "error": f"Missing dependency: {pkg}. Install with: pip install {pkg}",
-            }, indent=2)
+            return json.dumps(
+                {
+                    "success": False,
+                    "error": f"Missing dependency: {pkg}. Install with: pip install {pkg}",
+                },
+                indent=2,
+            )
         except Exception as e:
-            return json.dumps({
-                "success": False,
-                "error": f"Conversion failed: {str(e)}",
-            }, indent=2)
+            return json.dumps(
+                {
+                    "success": False,
+                    "error": f"Conversion failed: {str(e)}",
+                },
+                indent=2,
+            )

@@ -81,10 +81,13 @@ class AudioSummaryTool:
             JSON with success status, output path, and audio info.
         """
         if not text or not text.strip():
-            return json.dumps({
-                "success": False,
-                "error": "No text provided for speech synthesis.",
-            }, indent=2)
+            return json.dumps(
+                {
+                    "success": False,
+                    "error": "No text provided for speech synthesis.",
+                },
+                indent=2,
+            )
 
         # Trim to reasonable length for TTS
         max_chars = 5000
@@ -93,34 +96,58 @@ class AudioSummaryTool:
 
         # Normalize language names to codes
         lang_map = {
-            "english": "en", "spanish": "es", "french": "fr", "german": "de",
-            "italian": "it", "portuguese": "pt", "russian": "ru", "japanese": "ja",
-            "korean": "ko", "chinese": "zh-CN", "mandarin": "zh-CN",
-            "hindi": "hi", "arabic": "ar", "dutch": "nl", "swedish": "sv",
-            "polish": "pl", "turkish": "tr",
+            "english": "en",
+            "spanish": "es",
+            "french": "fr",
+            "german": "de",
+            "italian": "it",
+            "portuguese": "pt",
+            "russian": "ru",
+            "japanese": "ja",
+            "korean": "ko",
+            "chinese": "zh-CN",
+            "mandarin": "zh-CN",
+            "hindi": "hi",
+            "arabic": "ar",
+            "dutch": "nl",
+            "swedish": "sv",
+            "polish": "pl",
+            "turkish": "tr",
         }
         language = lang_map.get(language.lower().strip(), language.strip())
 
         try:
             from gtts import gTTS
         except ImportError:
-            return json.dumps({
-                "success": False,
-                "error": "gTTS library not available. Install with: pip install gTTS",
-            }, indent=2)
+            return json.dumps(
+                {
+                    "success": False,
+                    "error": "gTTS library not available. Install with: pip install gTTS",
+                },
+                indent=2,
+            )
 
         try:
             tts = gTTS(text=text, lang=language, slow=slow)
 
             # Save — always under /output/ so it persists on host volume
             if output_path and not output_path.startswith(self.output_dir):
-                output_path = os.path.join(self.output_dir, os.path.basename(output_path))
+                output_path = os.path.join(
+                    self.output_dir, os.path.basename(output_path)
+                )
             if not output_path:
-                existing = [f for f in os.listdir(self.output_dir) if f.startswith("audio_") and f.endswith(".mp3")]
+                existing = [
+                    f
+                    for f in os.listdir(self.output_dir)
+                    if f.startswith("audio_") and f.endswith(".mp3")
+                ]
                 idx = len(existing) + 1
                 output_path = os.path.join(self.output_dir, f"audio_{idx}.mp3")
 
-            os.makedirs(os.path.dirname(output_path) if os.path.dirname(output_path) else ".", exist_ok=True)
+            os.makedirs(
+                os.path.dirname(output_path) if os.path.dirname(output_path) else ".",
+                exist_ok=True,
+            )
 
             tts.save(output_path)
             file_size = os.path.getsize(output_path)
@@ -130,21 +157,27 @@ class AudioSummaryTool:
             wpm = 100 if slow else 150
             estimated_duration_sec = (word_count / wpm) * 60
 
-            return json.dumps({
-                "success": True,
-                "output_path": output_path,
-                "language": language,
-                "word_count": word_count,
-                "char_count": len(text),
-                "estimated_duration_seconds": round(estimated_duration_sec),
-                "slow_mode": slow,
-                "file_size_bytes": file_size,
-                "message": f"Audio generated ({word_count} words, ~{round(estimated_duration_sec)}s) and saved to {output_path}",
-            }, indent=2)
+            return json.dumps(
+                {
+                    "success": True,
+                    "output_path": output_path,
+                    "language": language,
+                    "word_count": word_count,
+                    "char_count": len(text),
+                    "estimated_duration_seconds": round(estimated_duration_sec),
+                    "slow_mode": slow,
+                    "file_size_bytes": file_size,
+                    "message": f"Audio generated ({word_count} words, ~{round(estimated_duration_sec)}s) and saved to {output_path}",
+                },
+                indent=2,
+            )
 
         except Exception as e:
-            return json.dumps({
-                "success": False,
-                "error": str(e),
-                "hint": "Check language code is valid. Common codes: en, es, fr, de, ja, ko, zh-CN",
-            }, indent=2)
+            return json.dumps(
+                {
+                    "success": False,
+                    "error": str(e),
+                    "hint": "Check language code is valid. Common codes: en, es, fr, de, ja, ko, zh-CN",
+                },
+                indent=2,
+            )

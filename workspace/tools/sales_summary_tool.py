@@ -1,8 +1,12 @@
 import pandas as pd
 from pydantic import BaseModel, Field
 
+
 class SalesSummaryArgs(BaseModel):
-    filepath: str = Field(..., description="Path to the sales_data.csv file (relative to workspace)")
+    filepath: str = Field(
+        ..., description="Path to the sales_data.csv file (relative to workspace)"
+    )
+
 
 class SalesSummaryTool:
     name = "sales_summary"
@@ -18,8 +22,11 @@ class SalesSummaryTool:
         except Exception as e:
             return f"Error generating summary: {str(e)}"
 
+
 def test_tool():
     tool = SalesSummaryTool()
     print(tool.run("sales_data.csv"))
+
+
 if __name__ == "__main__":
     test_tool()

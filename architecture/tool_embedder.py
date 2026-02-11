@@ -40,7 +40,9 @@ class ToolEmbedder:
         self.tool_names = list(registry.keys())
         texts = [build_embedding_text(name, registry[name]) for name in self.tool_names]
 
-        embeddings = self.model.encode(texts, convert_to_numpy=True, normalize_embeddings=True)
+        embeddings = self.model.encode(
+            texts, convert_to_numpy=True, normalize_embeddings=True
+        )
 
         dimension = embeddings.shape[1]
         self.index = faiss.IndexFlatIP(dimension)  # Inner product for cosine similarity
@@ -52,14 +54,21 @@ class ToolEmbedder:
         if self.index is None:
             return []  # No tools available yet
 
-        query_embedding = self.model.encode([query], convert_to_numpy=True, normalize_embeddings=True)
-        similarities, indices = self.index.search(query_embedding.astype("float32"), top_k)
+        query_embedding = self.model.encode(
+            [query], convert_to_numpy=True, normalize_embeddings=True
+        )
+        similarities, indices = self.index.search(
+            query_embedding.astype("float32"), top_k
+        )
 
         results = []
         for i, idx in enumerate(indices[0]):
             if idx < len(self.tool_names):
                 results.append(
-                    {"tool": self.tool_names[idx], "similarity": float(similarities[0][i])}
+                    {
+                        "tool": self.tool_names[idx],
+                        "similarity": float(similarities[0][i]),
+                    }
                 )
         return results
 
