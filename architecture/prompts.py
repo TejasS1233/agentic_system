@@ -256,3 +256,49 @@ Query: {query}
 
 Return JSON: {{"category": "DIRECT_RESPONSE" | "COMPLEX_TASK"}}
 """
+
+
+# =============================================================================
+# SELF-CORRECTION PROMPTS
+# =============================================================================
+
+
+def get_tool_fix_prompt(source_code: str, error: str) -> str:
+    """Generate a lean prompt for inline code correction.
+
+    Instead of regenerating the entire tool, this prompt asks the LLM
+    to return targeted search/replace patches that fix the specific error.
+
+    Args:
+        source_code: The full source code of the failing tool (with line numbers).
+        error: The error message / traceback from the failed execution.
+    """
+    return f"""You are a Python debugger. A tool has a bug. Fix it with MINIMAL changes.
+
+ERROR:
+```
+{error}
+```
+
+SOURCE CODE:
+```python
+{source_code}
+```
+
+Return ONLY a JSON object with fixes. Each fix is a search/replace pair:
+{{
+  "fixes": [
+    {{"search": "exact text from source to replace", "replace": "corrected text"}}
+  ],
+  "explanation": "one-line summary of what was wrong"
+}}
+
+RULES:
+1. "search" MUST be an EXACT substring of the source code (copy-paste precision).
+2. "replace" is the corrected version of that substring.
+3. Fix ONLY what is broken — do NOT rewrite unrelated code.
+4. For syntax errors: fix the specific line indicated in the traceback.
+5. For runtime/logic errors: trace the root cause and fix it.
+6. Keep fixes small — prefer a 1-3 line change over rewriting a whole function.
+7. If multiple independent issues exist, return multiple fix entries.
+"""

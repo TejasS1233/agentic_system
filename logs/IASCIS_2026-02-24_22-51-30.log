@@ -1,0 +1,95 @@
+2026-02-24 22:51:51 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-24 22:54:27 | INFO | __main__:main:235 | Starting IASCIS with Sandbox and Profiling
+2026-02-24 22:54:27 | INFO | architecture.input_loader:__init__:25 | InputLoader initialized: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-24 22:54:27 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-24 22:54:27 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-24 22:54:27 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-24 22:54:27 | INFO | __main__:__init__:74 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-24 22:54:27 | INFO | architecture.sandbox:__init__:166 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs, inputs_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-24 22:54:28 | INFO | architecture.sandbox:start:264 | Sandbox container started: d3d18e240d04
+2026-02-24 22:54:28 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-24 22:54:28 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-24 22:54:28 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-24 22:54:28 | INFO | architecture.executor:load_registry:93 | Loaded 38 tool definitions
+2026-02-24 22:54:28 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-24 22:54:28 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-24 22:54:29 | INFO | architecture.sandbox:_install_deps:292 | Installing dependencies: numpy beautifulsoup4 requests pandas typing_inspection pydantic
+2026-02-24 22:54:33 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-24 22:54:33 | INFO | __main__:_initialize_runtime:98 | Runtime initialized with Sandbox
+2026-02-24 22:54:33 | INFO | __main__:run:143 | Task received: google search for best java tutorials...
+2026-02-24 22:54:33 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-24 22:54:33 | INFO | __main__:run:147 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-24 22:54:33 | INFO | architecture.orchestrator:run:47 | Processing: google search for best java tutorials...
+2026-02-24 22:54:33 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-24_22-51-30
+2026-02-24 22:54:54 | INFO | architecture.sandbox:_pre_install_essentials:232 | Essential packages pre-installed
+2026-02-24 22:55:09 | INFO | architecture.llm_manager:generate:132 | Generation success in 35411.18ms
+2026-02-24 22:55:09 | INFO | architecture.orchestrator:run:56 | Task Classification: COMPLEX_TASK
+2026-02-24 22:55:09 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-24_22-51-30
+2026-02-24 22:55:09 | INFO | architecture.llm_manager:generate:132 | Generation success in 461.91ms
+2026-02-24 22:55:09 | INFO | architecture.orchestrator:run:63 | Decomposed into 1 subtasks
+2026-02-24 22:55:09 | INFO | architecture.orchestrator:_retrieve_tools:119 | st_1 -> SerpSearchTool (Forced by Domain.SEARCH)
+2026-02-24 22:55:09 | INFO | architecture.orchestrator:_create_plan:614 | ============================================================
+2026-02-24 22:55:09 | INFO | architecture.orchestrator:_create_plan:615 | EXECUTION PLAN: 1 steps
+2026-02-24 22:55:09 | INFO | architecture.orchestrator:_create_plan:616 | ============================================================
+2026-02-24 22:55:09 | INFO | architecture.orchestrator:_create_plan:628 |   Step 1: Google search for best Java tutorials...
+2026-02-24 22:55:09 | INFO | architecture.orchestrator:_create_plan:629 |     Tool: SerpSearchTool
+2026-02-24 22:55:09 | INFO | architecture.orchestrator:_create_plan:630 |     no dependencies, uses description
+2026-02-24 22:55:09 | INFO | architecture.orchestrator:_create_plan:631 | ============================================================
+2026-02-24 22:55:09 | INFO | architecture.executor:execute:115 | Executing plan: google search for best java tutorials
+2026-02-24 22:55:09 | INFO | architecture.executor:execute:116 | Total steps: 1
+2026-02-24 22:55:09 | INFO | architecture.executor:_execute_step:201 | Step 1: Google search for best Java tutorials using SerpSearchTool
+2026-02-24 22:55:09 | INFO | architecture.executor:load_registry:93 | Loaded 38 tool definitions
+2026-02-24 22:55:09 | INFO | architecture.executor:_execute_step:243 | Step 1: Using description as input
+2026-02-24 22:55:09 | ERROR | architecture.executor:_get_arg_names_from_file:987 | Failed to parse args from C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\serp_search_tool.py: expected ':' (<unknown>, line 9)
+2026-02-24 22:55:09 | INFO | architecture.executor:_execute_step:250 | DEBUG: Executor inferred args = {'input': 'Google search for best Java tutorials'}
+2026-02-24 22:55:09 | INFO | architecture.executor:_execute_step:251 | DEBUG: Translated args = {'input': 'Google search for best Java tutorials'}
+2026-02-24 22:55:09 | INFO | architecture.executor:_execute_step:252 | DEBUG: Args type = <class 'dict'>
+2026-02-24 22:55:09 | ERROR | architecture.sandbox:extract_dependencies:115 | Syntax error parsing C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\serp_search_tool.py: expected ':' (<unknown>, line 9)
+2026-02-24 22:55:09 | INFO | architecture.sandbox:execute_with_args:589 | DEBUG: sandbox received args = {'input': 'Google search for best Java tutorials'}
+2026-02-24 22:55:09 | INFO | architecture.sandbox:execute_with_args:590 | DEBUG: args_json = {"input": "Google search for best Java tutorials"}
+2026-02-24 22:55:09 | INFO | architecture.sandbox:execute_with_args:591 | DEBUG: Runner script line: args = json.loads('{"input": "Google search for best Java tutorials"}')
+2026-02-24 22:55:09 | INFO | architecture.sandbox:execute_with_args:596 | Executing tool with args: SerpSearchTool
+2026-02-24 22:55:09 | INFO | architecture.sandbox:execute_with_args:597 | Args JSON being passed: {"input": "Google search for best Java tutorials"}
+2026-02-24 22:55:10 | WARNING | architecture.sandbox:execute_with_args:676 | Failed to parse sandbox output: No valid JSON output found, Raw output: Traceback (most recent call last):
+  File "/tools/_runner_SerpSearchTool.py", line 21, in <module>
+    from serp_search_tool import *
+  File "/tools/serp_search_tool.py", line 9
+    class SerpSearchArgs(BaseModel)
+                                   ^
+SyntaxError: expected ':'
+
+2026-02-24 22:55:10 | ERROR | architecture.executor:_execute_step:290 | Step 1: Failed - Traceback (most recent call last):
+  File "/tools/_runner_SerpSearchTool.py", line 21, in <module>
+    from serp_search_tool import *
+  File "/tools/serp_search_tool.py", line 9
+    class SerpSearchArgs(BaseModel)
+                                   ^
+SyntaxError: expected ':'
+
+2026-02-24 22:55:10 | INFO | architecture.reflector:reflect:295 | Reflected: syntax, retry=True, remaining=2
+2026-02-24 22:55:10 | INFO | architecture.executor:_handle_failure:334 | Step 1: Failure type=tool_code, retrying...
+2026-02-24 22:55:10 | INFO | architecture.executor:_retry_with_regenerated_tool:399 | Step 1: Regenerating tool with error context
+2026-02-24 22:55:10 | INFO | architecture.executor:_retry_with_regenerated_tool:407 | Step 1: Attempting inline fix on serp_search_tool.py
+2026-02-24 22:55:10 | INFO | architecture.toolsmith:fix_tool:140 | Attempting inline fix for serp_search_tool.py (7718 chars)
+2026-02-24 22:55:10 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 1024 | Temp: 0.7 | Session: 2026-02-24_22-51-30
+2026-02-24 22:55:10 | INFO | architecture.llm_manager:generate:132 | Generation success in 579.37ms
+2026-02-24 22:55:10 | INFO | architecture.toolsmith:fix_tool:166 | fix_tool: Applying 1 fix(es): Added a colon at the end of the class definition to fix the syntax error.
+2026-02-24 22:55:10 | INFO | architecture.toolsmith:fix_tool:185 | fix_tool: Applied fix — replaced 31 chars
+2026-02-24 22:55:10 | INFO | architecture.toolsmith:fix_tool:200 | fix_tool: Patched file written to C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools\serp_search_tool.py
+2026-02-24 22:55:10 | INFO | architecture.toolsmith:fix_tool:219 | fix_tool: Fix applied (no sandbox to verify)
+2026-02-24 22:55:10 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-24_22-51-30
+2026-02-24 22:55:11 | INFO | architecture.llm_manager:generate:132 | Generation success in 257.53ms
+2026-02-24 22:55:11 | INFO | architecture.executor:_infer_args:761 | LLM extracted args: {'query': 'best Java tutorials', 'search_type': 'web', 'num_results': 10, 'language': 'en'}
+2026-02-24 22:55:11 | INFO | architecture.sandbox:execute_with_args:589 | DEBUG: sandbox received args = {'query': 'best Java tutorials', 'search_type': 'web', 'num_results': 10, 'language': 'en'}
+2026-02-24 22:55:11 | INFO | architecture.sandbox:execute_with_args:590 | DEBUG: args_json = {"query": "best Java tutorials", "search_type": "web", "num_results": 10, "language": "en"}
+2026-02-24 22:55:11 | INFO | architecture.sandbox:execute_with_args:591 | DEBUG: Runner script line: args = json.loads('{"query": "best Java tutorials", "search_type": "web", "num_results": 10, "language": "en"}')
+2026-02-24 22:55:11 | INFO | architecture.sandbox:execute_with_args:596 | Executing tool with args: SerpSearchTool
+2026-02-24 22:55:11 | INFO | architecture.sandbox:execute_with_args:597 | Args JSON being passed: {"query": "best Java tutorials", "search_type": "web", "num_results": 10, "language": "en"}
+2026-02-24 22:55:15 | INFO | architecture.executor:_retry_with_regenerated_tool:420 | Step 1: Inline fix + re-execution succeeded
+2026-02-24 22:55:15 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 500 | Temp: 0.3 | Session: 2026-02-24_22-51-30
+2026-02-24 22:55:16 | INFO | architecture.llm_manager:generate:132 | Generation success in 1286.54ms
+2026-02-24 22:55:16 | INFO | __main__:main:248 | Completed in 43331.74ms
+2026-02-24 22:55:16 | INFO | __main__:main:249 | Zone: public
+2026-02-24 22:55:16 | INFO | architecture.executor:export_profiles:631 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260224_225516.json
+2026-02-24 22:55:26 | INFO | architecture.sandbox:stop:279 | Sandbox container stopped: d3d18e240d04
+2026-02-24 22:55:26 | INFO | __main__:_shutdown_runtime:107 | Runtime shutdown complete

@@ -1,0 +1,64 @@
+2026-02-24 23:03:00 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-24 23:05:08 | INFO | __main__:main:235 | Starting IASCIS with Sandbox and Profiling
+2026-02-24 23:05:08 | INFO | architecture.input_loader:__init__:25 | InputLoader initialized: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-24 23:05:08 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-24 23:05:08 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-24 23:05:08 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-24 23:05:08 | INFO | __main__:__init__:74 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-24 23:05:08 | INFO | architecture.sandbox:__init__:166 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs, inputs_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-24 23:05:10 | INFO | architecture.sandbox:start:264 | Sandbox container started: 5daa7358a220
+2026-02-24 23:05:10 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=2)
+2026-02-24 23:05:10 | INFO | architecture.profiler:__init__:733 | Profiler initialized (mode=lightweight, psutil=True, torch=False, pynvml=False)
+2026-02-24 23:05:10 | INFO | architecture.executor:__init__:78 | ExecutorAgent profiling enabled (mode=lightweight)
+2026-02-24 23:05:10 | INFO | architecture.executor:load_registry:93 | Loaded 39 tool definitions
+2026-02-24 23:05:10 | INFO | architecture.llm_manager:__init__:72 | Loaded 1 GROQ keys
+2026-02-24 23:05:10 | INFO | architecture.executor:__init__:86 | ExecutorAgent initialized with Sandbox
+2026-02-24 23:05:11 | INFO | architecture.sandbox:_install_deps:292 | Installing dependencies: pydantic requests typing_inspection pandas beautifulsoup4 numpy
+2026-02-24 23:05:15 | INFO | architecture.orchestrator:__init__:38 | Orchestrator initialized with ToolRetriever
+2026-02-24 23:05:15 | INFO | __main__:_initialize_runtime:98 | Runtime initialized with Sandbox
+2026-02-24 23:05:15 | INFO | __main__:run:143 | Task received: google search for best java tutorials...
+2026-02-24 23:05:15 | INFO | architecture.dispatcher:route:64 | Routing decision: public (No sensitivity detected)
+2026-02-24 23:05:15 | INFO | __main__:run:147 | Routed to public zone, model: groq/llama-3.3-70b-versatile
+2026-02-24 23:05:15 | INFO | architecture.orchestrator:run:47 | Processing: google search for best java tutorials...
+2026-02-24 23:05:15 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 100 | Temp: 0.7 | Session: 2026-02-24_23-02-45
+2026-02-24 23:05:17 | INFO | architecture.llm_manager:generate:132 | Generation success in 1161.56ms
+2026-02-24 23:05:17 | INFO | architecture.orchestrator:run:56 | Task Classification: COMPLEX_TASK
+2026-02-24 23:05:17 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 2048 | Temp: 0.7 | Session: 2026-02-24_23-02-45
+2026-02-24 23:05:17 | INFO | architecture.llm_manager:generate:132 | Generation success in 460.55ms
+2026-02-24 23:05:17 | INFO | architecture.orchestrator:run:63 | Decomposed into 1 subtasks
+2026-02-24 23:05:17 | INFO | architecture.orchestrator:_retrieve_tools:119 | st_1 -> SerpSearchTool (Forced by Domain.SEARCH)
+2026-02-24 23:05:17 | INFO | architecture.orchestrator:_create_plan:614 | ============================================================
+2026-02-24 23:05:17 | INFO | architecture.orchestrator:_create_plan:615 | EXECUTION PLAN: 1 steps
+2026-02-24 23:05:17 | INFO | architecture.orchestrator:_create_plan:616 | ============================================================
+2026-02-24 23:05:17 | INFO | architecture.orchestrator:_create_plan:628 |   Step 1: Google search for best Java tutorials...
+2026-02-24 23:05:17 | INFO | architecture.orchestrator:_create_plan:629 |     Tool: SerpSearchTool
+2026-02-24 23:05:17 | INFO | architecture.orchestrator:_create_plan:630 |     no dependencies, uses description
+2026-02-24 23:05:17 | INFO | architecture.orchestrator:_create_plan:631 | ============================================================
+2026-02-24 23:05:17 | INFO | architecture.executor:execute:115 | Executing plan: google search for best java tutorials
+2026-02-24 23:05:17 | INFO | architecture.executor:execute:116 | Total steps: 1
+2026-02-24 23:05:17 | INFO | architecture.executor:_execute_step:201 | Step 1: Google search for best Java tutorials using SerpSearchTool
+2026-02-24 23:05:17 | INFO | architecture.executor:load_registry:93 | Loaded 39 tool definitions
+2026-02-24 23:05:17 | INFO | architecture.executor:_execute_step:243 | Step 1: Using description as input
+2026-02-24 23:05:17 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 256 | Temp: 0.7 | Session: 2026-02-24_23-02-45
+2026-02-24 23:05:17 | INFO | architecture.llm_manager:generate:132 | Generation success in 227.44ms
+2026-02-24 23:05:17 | INFO | architecture.executor:_infer_args:772 | LLM extracted args: {'query': 'Java tutorials', 'search_type': 'web', 'num_results': 10, 'location': 'global', 'language': 'en', 'safe_search': 'moderate'}
+2026-02-24 23:05:17 | INFO | architecture.executor:_execute_step:250 | DEBUG: Executor inferred args = {'query': 'Java tutorials', 'search_type': 'web', 'num_results': 10, 'location': 'global', 'language': 'en', 'safe_search': 'moderate'}
+2026-02-24 23:05:17 | INFO | architecture.executor:_execute_step:251 | DEBUG: Translated args = {'query': 'Java tutorials', 'search_type': 'web', 'num_results': 10, 'location': 'global', 'language': 'en', 'safe_search': 'moderate'}
+2026-02-24 23:05:17 | INFO | architecture.executor:_execute_step:252 | DEBUG: Args type = <class 'dict'>
+2026-02-24 23:05:17 | INFO | architecture.sandbox:_install_deps:292 | Installing dependencies: pydantic requests
+2026-02-24 23:05:24 | INFO | architecture.sandbox:execute_with_args:589 | DEBUG: sandbox received args = {'query': 'Java tutorials', 'search_type': 'web', 'num_results': 10, 'location': 'global', 'language': 'en', 'safe_search': 'moderate'}
+2026-02-24 23:05:24 | INFO | architecture.sandbox:execute_with_args:590 | DEBUG: args_json = {"query": "Java tutorials", "search_type": "web", "num_results": 10, "location": "global", "language": "en", "safe_search": "moderate"}
+2026-02-24 23:05:24 | INFO | architecture.sandbox:execute_with_args:591 | DEBUG: Runner script line: args = json.loads('{"query": "Java tutorials", "search_type": "web", "num_results": 10, "location": "global", "language": "en", "safe_search": "moderate"}')
+2026-02-24 23:05:24 | INFO | architecture.sandbox:execute_with_args:596 | Executing tool with args: SerpSearchTool
+2026-02-24 23:05:24 | INFO | architecture.sandbox:execute_with_args:597 | Args JSON being passed: {"query": "Java tutorials", "search_type": "web", "num_results": 10, "location": "global", "language": "en", "safe_search": "moderate"}
+2026-02-24 23:05:27 | INFO | architecture.executor:_execute_step:271 | Step 1 SANDBOX Profile: time=2733.118ms, peak_mem=0.2873MB, delta_mem=0.0758MB, efficiency=49.89%, grade=critical
+2026-02-24 23:05:27 | INFO | architecture.executor:_execute_step:281 |    (Total round-trip: 9848.90ms)
+2026-02-24 23:05:27 | INFO | architecture.executor:_execute_step:286 | Step 1: Completed in 9.85s
+2026-02-24 23:05:27 | INFO | architecture.llm_manager:generate:108 | Generating with groq/llama-3.3-70b-versatile | Tokens: 500 | Temp: 0.3 | Session: 2026-02-24_23-02-45
+2026-02-24 23:05:28 | INFO | architecture.llm_manager:generate:132 | Generation success in 1257.93ms
+2026-02-24 23:05:28 | INFO | __main__:main:248 | Completed in 12986.39ms
+2026-02-24 23:05:28 | INFO | __main__:main:249 | Zone: public
+2026-02-24 23:05:28 | INFO | architecture.executor:export_profiles:642 | Profiles exported to: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\logs\profiles_20260224_230528.json
+2026-02-24 23:05:37 | INFO | architecture.sandbox:_pre_install_essentials:232 | Essential packages pre-installed
+2026-02-24 23:05:37 | INFO | architecture.sandbox:stop:279 | Sandbox container stopped: 5daa7358a220
+2026-02-24 23:05:37 | INFO | __main__:_shutdown_runtime:107 | Runtime shutdown complete

@@ -1,0 +1,9 @@
+2026-02-24 22:39:06 | INFO | architecture.llm_manager:<module>:19 | Opik callback registered for project: Independent Autonomous Self-Correcting Intelligent System (IASCIS)
+2026-02-24 22:40:53 | INFO | __main__:main:235 | Starting IASCIS with Sandbox and Profiling
+2026-02-24 22:40:53 | INFO | architecture.input_loader:__init__:25 | InputLoader initialized: C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-24 22:40:53 | INFO | architecture.gatekeeper:__init__:242 | Gatekeeper initialized (strict=False, stateful=True)
+2026-02-24 22:40:53 | INFO | architecture.dispatcher:__init__:59 | Dispatcher initialized
+2026-02-24 22:40:53 | INFO | architecture.reflector:__init__:256 | Reflector initialized (max_retries=3)
+2026-02-24 22:40:53 | INFO | __main__:__init__:74 | IASCIS initialized (workspace=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace, profiling=True)
+2026-02-24 22:40:53 | INFO | architecture.sandbox:__init__:166 | Sandbox initialized with tools_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\tools, output_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\outputs, inputs_dir=C:\Users\tejas\Desktop\Tests\repo_to_tool\agentic_system\workspace\inputs
+2026-02-24 22:40:53 | ERROR | architecture.sandbox:start:241 | Failed to connect to Docker: Error while fetching server API version: (2, 'CreateFile', 'The system cannot find the file specified.')

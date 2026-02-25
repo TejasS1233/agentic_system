@@ -317,7 +317,14 @@ Based on this data, write a clear, concise, and helpful response that directly a
     ) -> str | None:
         """Route failure to appropriate retry strategy."""
         exec_result = ExecutionResult(success=False, error=error, exit_code=1)
-        reflection = self.reflector.reflect(exec_result)
+
+        # Read tool source code for better error analysis
+        tool_code = ""
+        try:
+            tool_code = (self.tools_dir / tool_file).read_text(encoding="utf-8")
+        except Exception:
+            pass
+        reflection = self.reflector.reflect(exec_result, code=tool_code)
 
         if not reflection.should_retry:
             logger.warning(f"Step {step.step_number}: No retry (max retries reached)")
@@ -390,6 +397,51 @@ Based on this data, write a clear, concise, and helpful response that directly a
             return None
 
         logger.info(f"Step {step.step_number}: Regenerating tool with error context")
+
+        # --- Tier 1: Try inline fix on existing tool file ---
+        definition = self._definitions.get(step.tool_name)
+        if definition and self.toolsmith:
+            tool_file = definition["file"]
+            file_path = self.tools_dir / tool_file
+            if file_path.exists():
+                # Backup original source so we can restore on failure
+                original_source = file_path.read_text(encoding="utf-8")
+                logger.info(
+                    f"Step {step.step_number}: Attempting inline fix on {tool_file}"
+                )
+                if self.toolsmith.fix_tool(file_path, error):
+                    # Re-run with fresh args after the fix
+                    new_args = self._infer_args(step, input_data, definition)
+                    translated_args = self._translate_args(new_args)
+                    result = self.sandbox.execute_with_args(
+                        step.tool_name, tool_file, translated_args
+                    )
+                    if result["success"]:
+                        step.result = result["output"]
+                        step.status = "completed"
+                        logger.info(
+                            f"Step {step.step_number}: Inline fix + re-execution succeeded"
+                        )
+                        return step.result
+                    else:
+                        logger.warning(
+                            f"Step {step.step_number}: Inline fix applied but re-execution "
+                            f"failed: {result.get('error', '')[:200]}"
+                        )
+                        # Restore original code to prevent file corruption
+                        file_path.write_text(original_source, encoding="utf-8")
+                        logger.info(
+                            f"Step {step.step_number}: Restored original {tool_file}"
+                        )
+                else:
+                    # fix_tool returned False — it already restores internally,
+                    # but ensure we have a clean file for Tier 2
+                    file_path.write_text(original_source, encoding="utf-8")
+
+        # --- Tier 2: Fall back to full regeneration ---
+        logger.info(
+            f"Step {step.step_number}: Falling back to full tool regeneration"
+        )
 
         input_sample = str(input_data)[:500] if input_data else "No input"
         regeneration_prompt = (

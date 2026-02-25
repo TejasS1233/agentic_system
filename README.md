@@ -6,7 +6,7 @@ An autonomous, self-correcting multi-agent system that **dynamically creates, pr
 
 ## Architecture
 
-![Architecture](.research/Architecture_Handdrawn.png)
+![Architecture](docs/final.drawio.svg)
 
 ### Tool Knowledge Graph
 

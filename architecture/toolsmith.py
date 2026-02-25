@@ -4,7 +4,7 @@ import time
 from pathlib import Path
 from architecture.llm_manager import get_llm_manager
 from architecture.gatekeeper import Gatekeeper
-from architecture.prompts import get_tool_generator_prompt
+from architecture.prompts import get_tool_generator_prompt, get_tool_fix_prompt
 from architecture.api_registry import format_all_sources_for_prompt
 from architecture.sandbox import Sandbox
 from utils.logger import get_logger
@@ -106,6 +106,123 @@ class Toolsmith:
         except Exception as e:
             return f"# Could not read tools.py: {e}"
 
+    def fix_tool(self, file_path: Path, error: str) -> bool:
+        """Attempt to fix a broken tool using inline search/replace patches.
+
+        Instead of regenerating the entire tool, this reads the source code,
+        asks the LLM for targeted fixes, and applies them in-place.
+
+        Args:
+            file_path: Path to the tool file to fix.
+            error: The error message / traceback from the failed execution.
+
+        Returns:
+            True if the fix was applied and the tool now passes its test.
+        """
+        file_path = Path(file_path)
+        if not file_path.exists():
+            logger.warning(f"fix_tool: File not found: {file_path}")
+            return False
+
+        # Read the failing source code
+        try:
+            source_code = file_path.read_text(encoding="utf-8")
+        except Exception as e:
+            logger.error(f"fix_tool: Could not read {file_path}: {e}")
+            return False
+
+        # Add line numbers for LLM context
+        numbered_lines = []
+        for i, line in enumerate(source_code.splitlines(), 1):
+            numbered_lines.append(f"{i}: {line}")
+        numbered_source = "\n".join(numbered_lines)
+
+        logger.info(f"Attempting inline fix for {file_path.name} ({len(source_code)} chars)")
+
+        # Build lean fix prompt and call LLM
+        llm = get_llm_manager()
+        fix_prompt = get_tool_fix_prompt(numbered_source, error[:1500])
+
+        try:
+            response = llm.generate_json(
+                messages=[
+                    {"role": "user", "content": fix_prompt},
+                ],
+                max_tokens=1024,
+            )
+
+            if response.get("error"):
+                logger.warning(f"fix_tool: LLM error: {response['error']}")
+                return False
+
+            fix_data = json.loads(response["content"])
+            fixes = fix_data.get("fixes", [])
+            explanation = fix_data.get("explanation", "")
+
+            if not fixes:
+                logger.warning("fix_tool: LLM returned no fixes")
+                return False
+
+            logger.info(f"fix_tool: Applying {len(fixes)} fix(es): {explanation}")
+
+            # Apply each search/replace fix to the raw source (no line numbers)
+            patched_code = source_code
+            for fix in fixes:
+                search = fix.get("search", "")
+                replace = fix.get("replace", "")
+
+                if not search:
+                    logger.warning("fix_tool: Empty search string, skipping")
+                    continue
+
+                # Strip line number prefixes if the LLM included them
+                import re as _re
+                search_clean = _re.sub(r"^\d+:\s?", "", search, flags=_re.MULTILINE)
+                replace_clean = _re.sub(r"^\d+:\s?", "", replace, flags=_re.MULTILINE)
+
+                if search_clean in patched_code:
+                    patched_code = patched_code.replace(search_clean, replace_clean, 1)
+                    logger.info(f"fix_tool: Applied fix — replaced {len(search_clean)} chars")
+                elif search in patched_code:
+                    patched_code = patched_code.replace(search, replace, 1)
+                    logger.info(f"fix_tool: Applied fix (raw match)")
+                else:
+                    logger.warning(f"fix_tool: Search text not found in source, skipping")
+                    continue
+
+            if patched_code == source_code:
+                logger.warning("fix_tool: No changes were actually applied")
+                return False
+
+            # Write the patched code back
+            with open(file_path, "w", encoding="utf-8") as f:
+                f.write(patched_code)
+            logger.info(f"fix_tool: Patched file written to {file_path}")
+
+            # Re-test in sandbox
+            if self.sandbox:
+                test_result = self.sandbox.run_tool_test(file_path.name)
+                if test_result["success"]:
+                    logger.info(f"fix_tool: Inline fix SUCCEEDED for {file_path.name}")
+                    return True
+                else:
+                    logger.warning(
+                        f"fix_tool: Inline fix applied but test still fails: "
+                        f"{test_result['error'][:300]}"
+                    )
+                    # Restore original code since fix didn't work
+                    with open(file_path, "w", encoding="utf-8") as f:
+                        f.write(source_code)
+                    return False
+            else:
+                # No sandbox — assume fix is good (caller will re-test)
+                logger.info(f"fix_tool: Fix applied (no sandbox to verify)")
+                return True
+
+        except Exception as e:
+            logger.error(f"fix_tool: Exception during inline fix: {e}", exc_info=True)
+            return False
+
     def create_tool(self, requirement: str) -> str:
         """Generate a new tool based on requirement with verification."""
         start_time = time.time()
@@ -201,7 +318,18 @@ Fix the code to resolve this error."""
                                 "error": last_error[:500],
                             },
                         )
-                        continue  # Retry
+
+                        # --- Tier 1: Try inline fix before full regeneration ---
+                        if self.fix_tool(file_path, last_error):
+                            logger.info(
+                                f"Inline fix succeeded for {class_name}, skipping regeneration"
+                            )
+                            # Tool is now fixed on disk, proceed to registry update
+                        else:
+                            logger.info(
+                                f"Inline fix failed for {class_name}, falling back to full regeneration"
+                            )
+                            continue  # Retry with full regeneration
                     logger.info(f"Tool test passed: {class_name}")
 
                 # Update registry
